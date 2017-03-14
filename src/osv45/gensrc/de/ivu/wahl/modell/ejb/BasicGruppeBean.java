@@ -29,11 +29,10 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Gruppe as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean, GruppeModel {
-   private static final long serialVersionUID = -384020686647664595L;
    private static final Category LOGGER = Log4J.configure(BasicGruppeBean.class);
    static {
       LOGGER.info(Log4J.dumpVersion(BasicGruppeBean.class, Log4J.extractVersion("$Revision: 1.36 $"))); //$NON-NLS-1$

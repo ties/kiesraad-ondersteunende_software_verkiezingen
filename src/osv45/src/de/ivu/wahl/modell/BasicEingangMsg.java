@@ -418,6 +418,7 @@ public abstract class BasicEingangMsg implements EingangMsg, Serializable {
     }
   }
 
+  @Override
   public String getErgebnisHash() {
     StringBuilder resultAsString = new StringBuilder();
     for (Entry<Integer, Gruppenergebnis> entry : getGruppenergebnisse().entrySet()) {
@@ -432,7 +433,7 @@ public abstract class BasicEingangMsg implements EingangMsg, Serializable {
 
   private String createDigestFromBytes(byte[] content) {
     try {
-      final String MD = "SHA-1"; //$NON-NLS-1$
+      final String MD = "SHA-256"; //$NON-NLS-1$
       MessageDigest md = MessageDigest.getInstance(MD);
       StringBuilder sb = new StringBuilder();
 

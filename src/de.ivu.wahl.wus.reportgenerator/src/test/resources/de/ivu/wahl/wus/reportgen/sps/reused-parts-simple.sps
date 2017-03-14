@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="18" html-doctype="HTML4 Transitional" compatibility-view="IE7" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="20" html-doctype="HTML4 Transitional" compatibility-view="IE7" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters/>
 	<schemasources xpathdefaultns="urn:oasis:names:tc:evs:schema:eml">
 		<namespaces>
@@ -38,7 +38,7 @@
  // </script>
 	</scripts>
 	<script-project>
-		<Project version="3" app="AuthenticView"/>
+		<Project version="4" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -136,11 +136,6 @@
 											<conditionbranch xpath="$lang=0">
 												<children>
 													<text fixtext="de verkiezing van de leden van "/>
-													<calltemplate subtype="named" match="ElectionNameSimple">
-														<parameters>
-															<parameter name="isBold" value="$isBold"/>
-														</parameters>
-													</calltemplate>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
@@ -150,6 +145,11 @@
 											</conditionbranch>
 										</children>
 									</condition>
+									<calltemplate subtype="named" match="ElectionNameSimple">
+										<parameters>
+											<parameter name="isBold" value="$isBold"/>
+										</parameters>
+									</calltemplate>
 								</children>
 							</conditionbranch>
 							<conditionbranch>
@@ -424,6 +424,179 @@
 					</template>
 				</children>
 			</globaltemplate>
+			<globaltemplate subtype="named" match="ElectionNameAcceptanceShort">
+				<parameters/>
+				<children>
+					<condition>
+						<children>
+							<conditionbranch xpath="0=1">
+								<children>
+									<text fixtext="Election name for acceptance of appointment"/>
+									<newline/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<template subtype="element" match="eml:ElectionIdentifier">
+						<children>
+							<template subtype="element" match="eml:ElectionCategory">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath=".= &quot;TK&quot; or .= &quot;EP&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="de Tweede Kamer"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_tweedeKamer"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;EK&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="de Eerste Kamer"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_eersteKamer"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;PS&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="provinciale staten"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_provincialeStaten"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;AB&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="het algemeen bestuur"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_algemeen_bestuur"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;GR&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="de raad"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_raadVanDeGemeente"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;BC&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="de bestuurscommissie"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_bestuurscommissie"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;GC&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="de gebiedscommissie"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_gebiedscommissie"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;ER&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="de eilandsraad"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptanceShort_eilandsraad"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+								<variables/>
+							</template>
+						</children>
+						<variables/>
+					</template>
+				</children>
+			</globaltemplate>
 			<globaltemplate subtype="named" match="Salutation">
 				<parameters>
 					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
@@ -639,7 +812,12 @@
 						<children>
 							<template subtype="element" match="xal:PostalCode">
 								<children>
-									<content subtype="regular"/>
+									<template subtype="element" match="xal:PostalCodeNumber">
+										<children>
+											<content subtype="regular"/>
+										</children>
+										<variables/>
+									</template>
 								</children>
 								<variables/>
 							</template>
@@ -5244,8 +5422,30 @@
 				<children>
 					<condition>
 						<children>
+							<conditionbranch xpath="$lang=0">
+								<children>
+									<text fixtext="Datum: ">
+										<styles font-size="9pt"/>
+									</text>
+								</children>
+							</conditionbranch>
+							<conditionbranch>
+								<children>
+									<autocalc xpath="$RP_FooterWithoutHashcode_datum">
+										<styles font-size="9pt"/>
+									</autocalc>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<calltemplate subtype="named" match="GenerateDate">
+						<parameters/>
+					</calltemplate>
+					<condition>
+						<children>
 							<conditionbranch xpath="$isDraft=&quot;true&quot;">
 								<children>
+									<text fixtext="     -     "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="$lang=0">
@@ -5268,27 +5468,6 @@
 							</conditionbranch>
 						</children>
 					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="Datum: ">
-										<styles font-size="9pt"/>
-									</text>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP_FooterWithoutHashcode_datum">
-										<styles font-size="9pt"/>
-									</autocalc>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<calltemplate subtype="named" match="GenerateDate">
-						<parameters/>
-					</calltemplate>
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="Checkbox">
@@ -5349,14 +5528,14 @@
 										<children>
 											<conditionbranch xpath="$lang=0">
 												<children>
-													<text fixtext="(Concept) | ">
+													<text fixtext="Datum: ">
 														<styles font-size="9pt"/>
 													</text>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
 												<children>
-													<autocalc xpath="$RP_FooterWithHashcode_concept">
+													<autocalc xpath="$RP_FooterWithoutHashcode_datum">
 														<styles font-size="9pt"/>
 													</autocalc>
 												</children>
@@ -5366,6 +5545,27 @@
 									<calltemplate subtype="named" match="GenerateDate">
 										<parameters/>
 									</calltemplate>
+									<text fixtext="     -     ">
+										<styles font-size="9pt"/>
+									</text>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext="(Concept) ">
+														<styles font-size="9pt"/>
+													</text>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_FooterWithoutHashcode_concept">
+														<styles font-size="9pt"/>
+													</autocalc>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
 								</children>
 							</conditionbranch>
 							<conditionbranch>
@@ -5374,7 +5574,31 @@
 										<children>
 											<conditionbranch xpath="$lang=0">
 												<children>
-													<text fixtext="Hashcode: ">
+													<text fixtext="Datum: ">
+														<styles font-size="8pt"/>
+													</text>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_FooterWithoutHashcode_datum">
+														<styles font-size="8pt"/>
+													</autocalc>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<calltemplate subtype="named" match="GenerateDate">
+										<parameters/>
+									</calltemplate>
+									<text fixtext="     -     ">
+										<styles font-size="9pt"/>
+									</text>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext="SHA-256-Hashcode: ">
 														<styles font-size="8pt"/>
 													</text>
 												</children>
@@ -5388,13 +5612,8 @@
 											</conditionbranch>
 										</children>
 									</condition>
+									<newline/>
 									<calltemplate subtype="named" match="HashCode">
-										<parameters/>
-									</calltemplate>
-									<text fixtext=" | ">
-										<styles font-size="8pt"/>
-									</text>
-									<calltemplate subtype="named" match="GenerateDate">
 										<parameters/>
 									</calltemplate>
 								</children>
@@ -5662,7 +5881,12 @@
 										<children>
 											<template subtype="element" match="xal:PostalCode">
 												<children>
-													<content subtype="regular"/>
+													<template subtype="element" match="xal:PostalCodeNumber">
+														<children>
+															<content subtype="regular"/>
+														</children>
+														<variables/>
+													</template>
 												</children>
 												<variables/>
 											</template>
@@ -5681,9 +5905,14 @@
 										<children>
 											<template subtype="element" match="xal:PostalCode">
 												<children>
-													<content subtype="regular">
-														<styles font-weight="bold"/>
-													</content>
+													<template subtype="element" match="xal:PostalCodeNumber">
+														<children>
+															<content subtype="regular">
+																<styles font-weight="bold"/>
+															</content>
+														</children>
+														<variables/>
+													</template>
 												</children>
 												<variables/>
 											</template>
@@ -10991,6 +11220,8 @@
 							</conditionbranch>
 						</children>
 					</condition>
+					<newline/>
+					<newline/>
 					<template subtype="element" match="eml:Affiliation">
 						<children>
 							<calltemplate subtype="named" match="PartyName">

@@ -196,10 +196,28 @@ public class AnomalyFactory {
     }
   }
 
-  public void absoluteMajority(GeneralList winner, GeneralList looser) {
-    add(Messages
-        .bind(MessageKeys.Result_User_List_0_HasAbsoluteMajorityOfVotesAndReceivesSeatFromList_1,
-            winner.getName(),
-            looser.getName()));
+  /**
+   * @param looser may be null if isFictitiousSeatDistribution == true
+   * @param isFictitiousSeatDistribution
+   */
+  public void absoluteMajority(GeneralList winner, GeneralList looser,
+      boolean isFictitiousSeatDistribution) {
+    if (isFictitiousSeatDistribution) {
+      if (looser == null) {
+        add(Messages
+            .bind(MessageKeys.Result_User_List_0_HasAbsoluteMajorityOfVotesInFictitiousDistributionAndReceivesSeatWithoutLooser,
+                winner.getName()));
+      } else {
+        add(Messages
+            .bind(MessageKeys.Result_User_List_0_HasAbsoluteMajorityOfVotesInFictitiousDistributionAndReceivesSeatFromList_1,
+                winner.getName(),
+                looser.getName()));
+      }
+    } else {
+      add(Messages
+          .bind(MessageKeys.Result_User_List_0_HasAbsoluteMajorityOfVotesAndReceivesSeatFromList_1,
+              winner.getName(),
+              looser.getName()));
+    }
   }
 }

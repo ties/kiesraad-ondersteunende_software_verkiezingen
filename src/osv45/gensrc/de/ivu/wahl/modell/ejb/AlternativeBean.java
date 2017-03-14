@@ -29,11 +29,10 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Alternative as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class AlternativeBean extends BMPBeanBase implements EntityBean, AlternativeModel {
-   private static final long serialVersionUID = -3902901927395770245L;
    private static final Category LOGGER = Log4J.configure(AlternativeBean.class);
    static {
       LOGGER.info(Log4J.dumpVersion(AlternativeBean.class, Log4J.extractVersion("$Revision: 1.36 $"))); //$NON-NLS-1$

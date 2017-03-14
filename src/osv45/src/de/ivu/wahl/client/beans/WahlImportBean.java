@@ -6,14 +6,8 @@
  */
 package de.ivu.wahl.client.beans;
 
-import static de.ivu.ejb.EJBUtil.lookupLocal;
-import static de.ivu.wahl.Konstanten.PROP_UPLOADDIR;
 import static java.io.File.separatorChar;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -26,17 +20,14 @@ import org.apache.log4j.Logger;
 
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.SystemInfo;
-import de.ivu.wahl.admin.PropertyHandling;
-import de.ivu.wahl.admin.PropertyHandlingBean;
 import de.ivu.wahl.dataimport.AbstractImportEML;
+import de.ivu.wahl.dataimport.AbstractImportEML.UploadStreamHandler;
 import de.ivu.wahl.dataimport.IImportEML;
 import de.ivu.wahl.dataimport.ImportClientDb;
 import de.ivu.wahl.dataimport.ImportElectionMetadata;
 import de.ivu.wahl.dataimport.ImportReferendumMetadata;
-import de.ivu.wahl.dataimport.AbstractImportEML.UploadStreamHandler;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
-import de.ivu.wahl.util.EMLFilenameCheck;
 
 /**
  * Importieren einer neuen Wahl in die Datenbank aus hochgeladenen Metadaten.
@@ -102,8 +93,8 @@ public class WahlImportBean extends BasicUploadBean {
   public WahlImportBean() {
     final SystemInfo systemInfo = SystemInfo.getSystemInfo();
 
-    _importMetadata = new ImportElectionMetadata(systemInfo.getWahlModus(), systemInfo
-        .getWahlEbene());
+    _importMetadata = new ImportElectionMetadata(systemInfo.getWahlModus(),
+        systemInfo.getWahlEbene());
 
     _commandMap.put("imp_import_Wahl", new Command( //$NON-NLS-1$
         Messages.getString("Logger_ImportierenNeuerWahlInDieDatenbankGestartet")) { //$NON-NLS-1$
@@ -125,12 +116,10 @@ public class WahlImportBean extends BasicUploadBean {
                 _importMetadata.reset();
               } else if (request.getParameter(FELD_ACCEPT_ELECTIONDEFINITION) != null) {
                 _importMetadata.setDefinitionAccepted(true);
-              } else if (request.getParameter(FELD_HASHCODE_230 + "1") != null) { //$NON-NLS-1$
-                _importMetadata.setTeilHashWert230(request.getParameter(FELD_HASHCODE_230 + "1"), //$NON-NLS-1$
-                    request.getParameter(FELD_HASHCODE_230 + "2")); //$NON-NLS-1$
+              } else if (request.getParameter(FELD_HASHCODE_230) != null) {
+                _importMetadata.setTeilHashWert230(request.getParameter(FELD_HASHCODE_230));
               } else if (request.getParameter(FELD_GEBIETSNUMMER) != null) {
-                LOGGER
-                    .info(Messages.getString("Logger_Gebiet") + request.getParameter(FELD_GEBIETSNUMMER)); //$NON-NLS-1$
+                LOGGER.info(Messages.getString("Logger_Gebiet") + request.getParameter(FELD_GEBIETSNUMMER)); //$NON-NLS-1$
                 _importMetadata.setGebietsNr(Integer.parseInt(request
                     .getParameter(FELD_GEBIETSNUMMER)));
               } else {
@@ -139,11 +128,10 @@ public class WahlImportBean extends BasicUploadBean {
                   UploadStreamHandler handler = new UploadStreamHandler();
                   for (FileItem item : getItems(request)) {
                     if (item.isFormField()) {
-                      LOGGER
-                          .debug(Messages
-                              .bind(MessageKeys.Logger_POSTEnthaeltUnerwarteteDatenSieWerdenIgnoriert_0_1,
-                                  item.getFieldName(),
-                                  item.getString()));
+                      LOGGER.debug(Messages
+                          .bind(MessageKeys.Logger_POSTEnthaeltUnerwarteteDatenSieWerdenIgnoriert_0_1,
+                              item.getFieldName(),
+                              item.getString()));
                     } else {
                       writeFileIntoArchiveFolder(item, _importMetadata);
                       String fileName = item.getName();
@@ -151,9 +139,8 @@ public class WahlImportBean extends BasicUploadBean {
                       if (fileName != null && !fileName.isEmpty()) {
                         fileName = ("/" + fileName).replace('\\', separatorChar); //$NON-NLS-1$
 
-                        info(printWriter, Messages.bind(MessageKeys.Logger_DateinameFuer_0_1,
-                            feldName,
-                            fileName));
+                        info(printWriter,
+                            Messages.bind(MessageKeys.Logger_DateinameFuer_0_1, feldName, fileName));
                         byte[] input = item.get();
                         URL url = handler.add(remoteHost, fileName, input);
                         if (FELD_WAHLDEFINITION.equals(feldName)) {
@@ -209,8 +196,7 @@ public class WahlImportBean extends BasicUploadBean {
               } else if (request.getParameter(FELD_ACCEPT_ELECTIONDEFINITION) != null) {
                 _importMetadata.setDefinitionAccepted(true);
               } else if (request.getParameter(FELD_GEBIETSNUMMER) != null) {
-                LOGGER
-                    .info(Messages.getString("Logger_Gebiet") + request.getParameter(FELD_GEBIETSNUMMER)); //$NON-NLS-1$
+                LOGGER.info(Messages.getString("Logger_Gebiet") + request.getParameter(FELD_GEBIETSNUMMER)); //$NON-NLS-1$
                 _importMetadata.setGebietsNr(Integer.parseInt(request
                     .getParameter(FELD_GEBIETSNUMMER)));
               } else {
@@ -219,11 +205,10 @@ public class WahlImportBean extends BasicUploadBean {
                   UploadStreamHandler handler = new UploadStreamHandler();
                   for (FileItem item : getItems(request)) {
                     if (item.isFormField()) {
-                      LOGGER
-                          .debug(Messages
-                              .bind(MessageKeys.Logger_POSTEnthaeltUnerwarteteDatenSieWerdenIgnoriert_0_1,
-                                  item.getFieldName(),
-                                  item.getString()));
+                      LOGGER.debug(Messages
+                          .bind(MessageKeys.Logger_POSTEnthaeltUnerwarteteDatenSieWerdenIgnoriert_0_1,
+                              item.getFieldName(),
+                              item.getString()));
                     } else {
                       writeFileIntoArchiveFolder(item, _importMetadata);
                       String fileName = item.getName();
@@ -231,9 +216,8 @@ public class WahlImportBean extends BasicUploadBean {
                       if (fileName != null && !fileName.isEmpty()) {
                         fileName = ("/" + fileName).replace('\\', separatorChar); //$NON-NLS-1$
 
-                        info(printWriter, Messages.bind(MessageKeys.Logger_DateinameFuer_0_1,
-                            feldName,
-                            fileName));
+                        info(printWriter,
+                            Messages.bind(MessageKeys.Logger_DateinameFuer_0_1, feldName, fileName));
                         byte[] input = item.get();
                         URL url = handler.add(remoteHost, fileName, input);
                         if (FELD_EML630.equals(feldName)) {

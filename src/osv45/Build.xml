@@ -20,6 +20,7 @@
     <property name="lib.dir" value="${basedir}/lib" />
     <property name="websrc.dir" value="${basedir}/websrc" />
     <property name="web.lib.dir" value="${websrc.dir}/WEB-INF/lib" />
+    <property name="toolssrc.dir" value="${basedir}/toolssrc" />
     <property name="gensrc.dir" value="${basedir}/gensrc" />
     <property name="reportgensrc.dir" value="${reportgenbasedir}/src/main/java" />
     <property name="electioncategorysrc.dir" value="${electioncategorybasedir}/src/main/java" />
@@ -31,6 +32,7 @@
     <property name="xmlbind.dir" value="${xmlbinddir}/src/main/java" />
     <property name="jsp.dir" value="${websrc.dir}/jsp" />
     <property name="class.dir" value="${basedir}/websrc/WEB-INF/classes" />
+    <property name="toolsclass.dir" value="${basedir}/toolsclasses" />
     <property name="build.dir" value="${basedir}/build" />
     <property name="work.dir" value="${basedir}/temp" />
     <property name="dist.dir" value="${basedir}/dist" />
@@ -46,7 +48,7 @@
     <property file="${src.dir}/de/ivu/wahl/tablegen.properties" />
     <property name="db.create.mysql" value="${basedir}/docs/db/create_db_mysql.sql" />
     <condition property="jboss.dir" value="${basedir}">
-        <isset property="hudson.build" />
+        <isset property="jenkins.build" />
     </condition>
     <condition property="jboss.dir" value="D:/develop/jboss-4.2.3.GA">
         <os family="windows" />
@@ -102,10 +104,10 @@
         <include name="**/EML-v5.0-os/external/xmldsig-core-schema.xsd" />
     </fileset>
 
-    <target name="buildgenerator">
-        <mkdir dir="${class.dir}" />
-        <javac destdir="${class.dir}" classpathref="compile.class.path" debug="on" source="1.6" target="1.6" includeantruntime="false">
-            <src path="${src.dir}" />
+    <target name="buildgenerator" description="Compiliert die Generierungs-Tools TableGen und GBAGen">
+        <mkdir dir="${toolsclass.dir}" />
+        <javac destdir="${toolsclass.dir}" classpathref="compile.class.path" debug="on" source="1.6" target="1.6" includeantruntime="false">
+            <src path="${toolssrc.dir}" />
             <include name="de/ivu/util/tools/**" />
         </javac>
     </target>
@@ -136,7 +138,7 @@
             <arg value="-bicdes" />
             <arg value="${src.dir}/de/ivu/wahl/tablegen.properties" />
             <classpath>
-                <pathelement path="${class.dir}" />
+                <pathelement path="${toolsclass.dir}" />
                 <path refid="compile.class.path" />
             </classpath>
         </java>
@@ -829,7 +831,7 @@
         </java>
     </target>
 
-    <target name="splash" unless="hudson.build">
+    <target name="splash" unless="jenkins.build">
         <splash showduration="0" />
     </target>
 
@@ -865,7 +867,7 @@
     </target>
 
 
-    <target name="hudson" depends="gen, ear_build_all, ear_zip_all, dist_d2tewahl, static, alg_test" />
+    <target name="jenkins" depends="gen, ear_build_all, ear_zip_all, dist_d2tewahl, static, alg_test" />
 
     <property name="cobertura.home" value="lib.code.quality/cobertura/cobertura-1.9.3" />
     <path id="cobertura.path">
@@ -926,7 +928,7 @@
             </classpath>
             <formatter type="plain" />
 
-            <test name="de.ivu.wahl.result.test.testcases.GenerateAndRunExcelTestCases" haltonfailure="no" outfile="junit-test-result">
+            <test name="de.ivu.wahl.result.test.testcases.GenerateAndRunExcelTestCases" haltonfailure="yes" outfile="junit-test-result">
                 <formatter type="xml" />
             </test>
 

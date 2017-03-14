@@ -1140,16 +1140,18 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
    */
   public String getBackgroundColor() {
     String digit = "0123456789ABCDEF"; //$NON-NLS-1$
-    int red = _propertyHandling.getIntProperty(Konstanten.PROP_BACKGROUND_COLOR_RED,
-        Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    int red = getColorValue(Konstanten.PROP_BACKGROUND_COLOR_RED);
     red = Math.max(0, Math.min(255, red));
-    int green = _propertyHandling.getIntProperty(Konstanten.PROP_BACKGROUND_COLOR_GREEN,
-        Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    int green = getColorValue(Konstanten.PROP_BACKGROUND_COLOR_GREEN);
     green = Math.max(0, Math.min(255, green));
-    int blue = _propertyHandling.getIntProperty(Konstanten.PROP_BACKGROUND_COLOR_BLUE,
-        Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    int blue = getColorValue(Konstanten.PROP_BACKGROUND_COLOR_BLUE);
     blue = Math.max(0, Math.min(255, blue));
     return "#" + digit.charAt(red / 16) + digit.charAt(red % 16) + digit.charAt(green / 16) + digit.charAt(green % 16) + digit.charAt(blue / 16) + digit.charAt(blue % 16); //$NON-NLS-1$
+  }
+
+  private int getColorValue(String component) {
+    return _propertyHandling == null ? Konstanten.DEFAULT_BACKGROUND_COLOR_GREY : _propertyHandling
+        .getIntProperty(component, Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
   }
 
   /**

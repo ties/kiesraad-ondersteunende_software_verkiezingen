@@ -7,12 +7,10 @@
 package de.ivu.wahl.client.beans;
 
 import static de.ivu.ejb.EJBUtil.lookupLocal;
-import static de.ivu.wahl.Konstanten.PROP_UPLOADDIR;
 import static de.ivu.wahl.client.beans.ApplicationBean.getAnwContext;
 import static java.io.File.separatorChar;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -34,17 +32,15 @@ import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.admin.AdminHandling;
 import de.ivu.wahl.admin.AdminHandlingBean;
-import de.ivu.wahl.admin.PropertyHandling;
-import de.ivu.wahl.admin.PropertyHandlingBean;
 import de.ivu.wahl.client.util.ClientHelper;
 import de.ivu.wahl.dataimport.AbstractImportEML;
+import de.ivu.wahl.dataimport.AbstractImportEML.UploadStreamHandler;
 import de.ivu.wahl.dataimport.EingangMsgXML;
 import de.ivu.wahl.dataimport.EingangMsgXMLFactory;
 import de.ivu.wahl.dataimport.ErgebnisImportHandlerDb;
 import de.ivu.wahl.dataimport.ErgebnisImportHandlerMsg;
 import de.ivu.wahl.dataimport.ImportClientErgebnis;
 import de.ivu.wahl.dataimport.ImportEML510;
-import de.ivu.wahl.dataimport.AbstractImportEML.UploadStreamHandler;
 import de.ivu.wahl.eingang.EingangHandling;
 import de.ivu.wahl.eingang.EingangHandlingBean;
 import de.ivu.wahl.eingang.EingangMsg;
@@ -53,7 +49,6 @@ import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.exception.ImportException;
-import de.ivu.wahl.util.EMLFilenameCheck;
 
 /**
  * Importieren der Ergebnisse in die Datenbank aus hochgeladenen Metadaten.
@@ -127,9 +122,8 @@ public class ErgebnisImportBean extends BasicUploadBean {
           if (request.getParameter(FELD_RESET) != null) {
             importEML510.reset();
             return;
-          } else if (request.getParameter(FELD_HASHCODE_510 + "1") != null) { //$NON-NLS-1$
-            importEML510.setTeilHashWert510(request.getParameter(FELD_HASHCODE_510 + "1"), request //$NON-NLS-1$
-                .getParameter(FELD_HASHCODE_510 + "2")); //$NON-NLS-1$
+          } else if (request.getParameter(FELD_HASHCODE_510) != null) {
+            importEML510.setTeilHashWert510(request.getParameter(FELD_HASHCODE_510));
           } else {
             String remoteHost = request.getRemoteHost();
             try {
@@ -150,9 +144,8 @@ public class ErgebnisImportBean extends BasicUploadBean {
                   fileName = new File(fileName.replace('\\', separatorChar)).getName();
                   String feldName = item.getFieldName();
                   if (fileName != null && !fileName.isEmpty()) {
-                    info(printWriter, Messages.bind(MessageKeys.Msg_DateinameFuer_0_1,
-                        feldName,
-                        fileName));
+                    info(printWriter,
+                        Messages.bind(MessageKeys.Msg_DateinameFuer_0_1, feldName, fileName));
                     byte[] input = item.get();
                     URL url510 = handler.add(remoteHost, "/" + fileName, input); //$NON-NLS-1$
                     importEML510.setEML510(url510);
@@ -177,8 +170,10 @@ public class ErgebnisImportBean extends BasicUploadBean {
                   .setAttribute("defaultSessionTimeout", Integer.toString(defaultSessionTimeout)); //$NON-NLS-1$
               session.setMaxInactiveInterval(60 * 60); // set to 60 minutes
 
-              readMsg(getAnwContext(request), importEML510.getEML510(), importEML510
-                  .getGebietsart(), importEML510.getGebietsNr());
+              readMsg(getAnwContext(request),
+                  importEML510.getEML510(),
+                  importEML510.getGebietsart(),
+                  importEML510.getGebietsNr());
               String filename = importEML510.getEML510().getPath();
               WahlInfo wahlInfo = WahlInfo.getWahlInfo(getAnwContext(request));
               String gebietname = wahlInfo.getName4Gebiet(importEML510.getGebietsart(),
@@ -272,8 +267,8 @@ public class ErgebnisImportBean extends BasicUploadBean {
    */
   EingangMsg readMsg(AnwContext anwContext, URL url, int gebietsart, int gebietsnummer)
       throws ImportException, EJBException {
-    LOGGER.info(Messages.bind(MessageKeys.Logger_Datei_0_istZumLesenEingegangen, url
-        .toExternalForm()));
+    LOGGER.info(Messages.bind(MessageKeys.Logger_Datei_0_istZumLesenEingegangen,
+        url.toExternalForm()));
 
     WahlInfo wahlInfo = WahlInfo.getWahlInfo();
     wahlInfo.getWahl().lock();

@@ -32,6 +32,7 @@
 			<designfragment match="OverviewCandidateListsEP" isactive="1"/>
 			<designfragment match="OverviewCandidateListsTK" isactive="1"/>
 			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptanceShort" spsfile="reused-parts-simple.sps" isactive="0"/>
 		</designfragments>
 		<pagelayouts/>
 		<xpath-functions/>

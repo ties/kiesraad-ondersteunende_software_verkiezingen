@@ -1,4 +1,4 @@
-set svb="C:\Program Files (x86)\Altova\StyleVision2015\StyleVision"
+set svb="C:\Program Files (x86)\Altova\StyleVision2017\StyleVision"
 set spsdir=D:\projekte\de.ivu.wahl.wus.reportgenerator\src\test\resources\de\ivu\wahl\wus\reportgen\sps
 set tpldir=D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\templates
 

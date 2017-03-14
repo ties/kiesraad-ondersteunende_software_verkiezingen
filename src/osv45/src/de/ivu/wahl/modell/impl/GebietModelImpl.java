@@ -42,6 +42,7 @@ public class GebietModelImpl extends BasicGebietModelImpl {
     super(id_Gebiet);
   }
 
+  @Override
   public String getNumber4Display() {
     if (_gebietsart == GebietModel.GEBIETSART_GEMEINDE) {
       return formatNumber(_nummer, 4);

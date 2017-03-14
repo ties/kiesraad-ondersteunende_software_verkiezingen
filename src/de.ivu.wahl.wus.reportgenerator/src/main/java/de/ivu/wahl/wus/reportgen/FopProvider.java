@@ -58,6 +58,9 @@ public class FopProvider {
   }
 
   private URL fixMalformedURL(URL url) throws MalformedURLException {
+    if ("bundleresource".equalsIgnoreCase(url.getProtocol())) {
+      return url;
+    }
     File file = null;
     try {
       file = new File(url.toURI());

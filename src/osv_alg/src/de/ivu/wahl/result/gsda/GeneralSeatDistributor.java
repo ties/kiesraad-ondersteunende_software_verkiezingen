@@ -515,12 +515,17 @@ public class GeneralSeatDistributor<T extends GeneralList, P extends GeneralList
     assert lastAssignedLists.size() > 0 : Messages.bind(MessageKeys.Builder_Assert_MustNotBeEmpty,
         "lastAssignedLists"); //$NON-NLS-1$
     // Determine looser
-    final T listLosingOneSeat;
+    final T listLosingOneSeat; // may be null
     final boolean drawingLotsRequired = (lastAssignedLists.size() > 1);
     if (drawingLotsRequired) {
-      listLosingOneSeat = selectListByLot(_drawingLotsCallback,
-          lastAssignedLists,
-          DecisionType.ABSOLUTE_MAJORITY);
+      if (_parameters.isB1_fictitious()) {
+        // In fictitious seat distribution no list looses a seat here
+        listLosingOneSeat = null;
+      } else {
+        listLosingOneSeat = selectListByLot(_drawingLotsCallback,
+            lastAssignedLists,
+            DecisionType.ABSOLUTE_MAJORITY);
+      }
     } else {
       listLosingOneSeat = lastAssignedLists.get(0);
     }
@@ -557,10 +562,19 @@ public class GeneralSeatDistributor<T extends GeneralList, P extends GeneralList
         listWithAbsoluteMajority.getName(),
         absoluteMajorityOfVotes,
         absoluteMajorityOfSeats));
+    String nameOfListLoosingSeat;
+    if (listLosingOneSeat == null) {
+      nameOfListLoosingSeat = Messages
+          .bind(MessageKeys.Result_Tracelog_notApplicableInCurrentSituationInFictitiousDistribution);
+    } else {
+      nameOfListLoosingSeat = listLosingOneSeat.getName();
+    }
     APPLOG.info(Messages.bind(MessageKeys.Result_Tracelog_IsAssignedAnAdditionalSeat,
         listWithAbsoluteMajority.getName(),
-        listLosingOneSeat.getName()));
-    _anomalyFactory.absoluteMajority(listWithAbsoluteMajority, listLosingOneSeat);
+        nameOfListLoosingSeat));
+    _anomalyFactory.absoluteMajority(listWithAbsoluteMajority,
+        listLosingOneSeat,
+        _parameters.isB1_fictitious());
   }
 
   private void assignment(T list, AssignmentType assignmentType, boolean byLot, long seats) {

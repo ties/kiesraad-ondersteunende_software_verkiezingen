@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="20" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
-		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
+		<parameter name="hashCode" default="1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 	</parameters>
@@ -41,6 +41,7 @@
 			<designfragment match="ElectionFractionPart1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptanceShort" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameP2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameSimple" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Filter0" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -69,7 +70,7 @@
 		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="3" app="AuthenticView"/>
+		<Project version="4" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -588,7 +589,7 @@
 																												<children>
 																													<conditionbranch xpath="$lang=0">
 																														<children>
-																															<text fixtext=" Een verklaring van de gemachtigde(n) van de politieke groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen  want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2)."/>
+																															<text fixtext=" Een verklaring van de gemachtigde(n) van de politieke groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen, want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2)."/>
 																														</children>
 																													</conditionbranch>
 																													<conditionbranch>
@@ -606,7 +607,7 @@
 																												<children>
 																													<conditionbranch xpath="$lang=0">
 																														<children>
-																															<text fixtext=" Een verklaring van de gemachtigde(n) van de (politieke) groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen  want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2)."/>
+																															<text fixtext=" Een verklaring van de gemachtigde(n) van de (politieke) groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen, want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2)."/>
 																														</children>
 																													</conditionbranch>
 																													<conditionbranch>
@@ -641,7 +642,7 @@
 																								<children>
 																									<conditionbranch xpath="$lang=0">
 																										<children>
-																											<text fixtext=" Verklaringen van kiezers dat zij de lijst ondersteunen want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H4)."/>
+																											<text fixtext=" Verklaringen van kiezers dat zij de lijst ondersteunen, want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H4)."/>
 																										</children>
 																									</conditionbranch>
 																									<conditionbranch>

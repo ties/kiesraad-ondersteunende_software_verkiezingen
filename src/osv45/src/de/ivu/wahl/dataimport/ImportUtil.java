@@ -100,7 +100,7 @@ public abstract class ImportUtil {
           inputStream.close();
         } catch (IOException e) {
           throw new ImportException(
-              Messages.getString(MessageKeys.Error_FehlerBeimSchlie\u00DFenDesInputStreams));
+              Messages.getString(MessageKeys.Error_FehlerBeimSchliessenDesInputStreams));
         }
       }
     }
@@ -110,8 +110,7 @@ public abstract class ImportUtil {
     try {
       InputStream inputStream = url.openStream();
       try {
-        Element root = getRootElement(inputStream);
-        return root;
+        return getRootElement(inputStream);
       } catch (Exception e) {
         LOGGER.error(e, e);
         throw new ImportException(url, Messages.getString(MessageKeys.Error_KannXMLNichtParsen), 0,
@@ -126,8 +125,7 @@ public abstract class ImportUtil {
 
   public static Element readXMLRoot(String docAsString) throws ImportException {
     try {
-      Element root = new Builder().build(new StringReader(docAsString)).getRootElement();
-      return root;
+      return new Builder().build(new StringReader(docAsString)).getRootElement();
     } catch (Exception e) {
       LOGGER.error(e, e);
       throw new ImportException(
@@ -139,8 +137,7 @@ public abstract class ImportUtil {
     InputStream inputStream = null;
     try {
       inputStream = url.openStream();
-      Element root = getRootElement(inputStream, schema);
-      return root;
+      return getRootElement(inputStream, schema);
     } catch (IOException e) {
       throw new ImportException(url, Messages.getString(MessageKeys.Error_URLNichtLesbar), 0, e);
     } finally {

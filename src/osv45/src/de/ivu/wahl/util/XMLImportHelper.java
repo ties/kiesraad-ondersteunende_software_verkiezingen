@@ -211,7 +211,7 @@ public abstract class XMLImportHelper {
       throws ImportException {
     Elements children = node.getChildElements(elementName, namespace);
     if (children.size() == 0) {
-      LOGGER.info("Child " + elementName + " not found "); //$NON-NLS-1$ //$NON-NLS-2$
+      LOGGER.debug("Child " + elementName + " not found "); //$NON-NLS-1$ //$NON-NLS-2$
       return null;
     }
     if (children.size() > 1) {

@@ -36,10 +36,12 @@ import de.ivu.wahl.admin.PropertyHandling;
 import de.ivu.wahl.dataimport.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
+import de.ivu.wahl.modell.ErgebniseingangKonstanten;
 import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.Wahldaten;
+import de.ivu.wahl.modell.ejb.Ergebniseingang;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.Wahl;
 import de.ivu.wahl.modell.ejb.WahlHome;
@@ -456,6 +458,35 @@ public class WahlInfo implements Serializable, Cloneable {
   public boolean useShortCode() {
     int level = SystemInfo.getSystemInfo().getWahlEbene();
     return (level == GebietModel.EBENE_CSB) && isElectionWithListGroups();
+  }
+
+  /**
+   * @return if the election may be released
+   */
+  public boolean darfWahlFreigegebenWerden() {
+    return isWahlVollstaendig() && !hasMissingSecondInput();
+  }
+
+  /**
+   * @return if a region has a last result with status STATE_FIRST_RESULT_OK, STATE_WARNING or
+   *         STATE_ERROR
+   */
+  private boolean hasMissingSecondInput() {
+    Collection<Gebiet> gebiete = _wahl.getGebietCol();
+    for (Gebiet gebiet : gebiete) {
+      if (gebiet.isErfassungseinheit()) {
+        Ergebniseingang letzterEingang = gebiet.getLetzterEingang();
+        if (letzterEingang != null) {
+          if (letzterEingang.getStatus() == ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK
+              || letzterEingang.getStatus() == ErgebniseingangKonstanten.STATE_WARNING
+              || letzterEingang.getStatus() == ErgebniseingangKonstanten.STATE_ERROR) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   /**

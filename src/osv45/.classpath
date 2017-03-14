@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry excluding="**/*.bat|**/*.prj|**/*.spp|**/*.txt|**/*.xls|**/.cvsignore|**/batch/**|**/data/**|add.*/**|model/**" kind="src" output="websrc/WEB-INF/classes" path="src"/>
 	<classpathentry excluding="*.xml" kind="src" output="websrc/WEB-INF/classes" path="gensrc"/>
+	<classpathentry kind="src" path="toolssrc"/>
 	<classpathentry kind="lib" path="jboss/server/osv/lib/jboss-j2ee.jar" sourcepath="libsrc/jboss-4.2.3.GA-src.zip"/>
 	<classpathentry kind="lib" path="jboss/server/osv/lib/commons-httpclient.jar" sourcepath="libsrc/commons-httpclient-3.1-src.zip">
 		<attributes>
@@ -42,9 +43,9 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/osv45/libdoc/commons-fileupload-1.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="jboss/server/osv/lib/xom-1.1.jar" sourcepath="libsrc/xom-1.1.zip">
+	<classpathentry kind="lib" path="jboss/server/osv/lib/xom-1.2.10.jar" sourcepath="libsrc/xom-1.2.10.zip">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/osv45/libsrc/xom-1.1.zip!/XOM/apidocs"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/osv45/libsrc/xom-1.2.10.zip!/XOM/apidocs"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>

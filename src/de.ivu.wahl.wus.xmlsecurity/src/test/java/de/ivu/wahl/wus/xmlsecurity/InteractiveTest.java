@@ -53,7 +53,7 @@ public class InteractiveTest {
         InputStream source = new FileInputStream(file);
         try {
           String digest = __hashWertErmittlung.unconditionalCreateDigest(source);
-          System.out.println("SHA1(" + file.getName() + ")=" + digest);
+          System.out.println("SHA-256(" + file.getName() + ")=" + digest);
         } catch (Exception e) {
           System.out.println("Cannot calculate hash for " + file.getName());
         }

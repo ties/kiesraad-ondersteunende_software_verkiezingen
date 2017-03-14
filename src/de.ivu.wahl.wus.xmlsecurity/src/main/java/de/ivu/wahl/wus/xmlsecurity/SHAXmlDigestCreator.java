@@ -30,7 +30,7 @@ import nu.xom.XPathContext;
 import nu.xom.canonical.Canonicalizer;
 
 public class SHAXmlDigestCreator implements IXmlDigestCreator {
-  private static final String MD = "SHA-1"; //$NON-NLS-1$
+  private static final String MD = "SHA-256"; //$NON-NLS-1$
   final static int BUFFER_SIZE = 10000;
   final static byte[] BUFFER = new byte[BUFFER_SIZE];
   private byte[] _canonicalXml;
@@ -84,6 +84,7 @@ public class SHAXmlDigestCreator implements IXmlDigestCreator {
       MessageDigest md = MessageDigest.getInstance(MD);
       final String charSeparator = separateCharactersWithBlank ? " " : ""; //$NON-NLS-1$ //$NON-NLS-2$
       StringBuilder sb = new StringBuilder();
+      boolean withSeparator = false;
 
       byte[] digest = md.digest(content);
       for (byte digit : digest) {
@@ -91,7 +92,11 @@ public class SHAXmlDigestCreator implements IXmlDigestCreator {
         if (hexString.length() < 2) {
           hexString = "0" + hexString; //$NON-NLS-1$
         }
-        sb.append(hexString + charSeparator);
+        sb.append(hexString);
+        if (withSeparator) {
+          sb.append(charSeparator);
+        }
+        withSeparator = !withSeparator;
       }
 
       return sb.toString().trim();

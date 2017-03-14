@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="20" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
-		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
+		<parameter name="hashCode" default="1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 	</parameters>
@@ -21,82 +21,24 @@
 		</schemasources>
 	</schemasources>
 	<modules>
-		<module spsfile="reused-parts.sps"/>
-	</modules>
+		<module spsfile="reused-parts-simple.sps"/>	</modules>
 	<flags>
 		<scripts/>
 		<mainparts>
-			<mainpart match="/" spsfile="reused-parts.sps" isactive="0"/>
-		</mainparts>
+			<mainpart match="/" spsfile="reused-parts-simple.sps" isactive="0"/>		</mainparts>
 		<globalparts/>
 		<designfragments>
-			<designfragment match="Address" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="Checkbox" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="City" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="CombinedList2" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="CombinedListI17" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="CombinedListListName" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="CombinedListListNumber" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="CompleteAddress" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="CompleteContactAddress" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ContestIdentifier" spsfile="reused-parts.sps" isactive="1"/>
-			<designfragment match="DateOfBirth" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ElectionFraction" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ElectionFractionPart1" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ElectionFractionPart2" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ElectionNameP2" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="FirstCandidateName" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="FirstNameH1" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="FooterWithoutHashcode" spsfile="reused-parts.sps" isactive="1"/>
-			<designfragment match="FootnoteKieskring" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="FootnoteSign" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="Gender" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="Gender3" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="HashCode" spsfile="reused-parts.sps" isactive="1"/>
-			<designfragment match="Initials" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="Kieskring" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="KieskringParty" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="LastNameH1" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="LineBreak" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="LineBreakTable" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="LivingAddress" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="NameBCEF" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ObjectionsByVoters1" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ObjectionsByVoters1b" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ObjectionsByVoters2" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="ObjectionsReference" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="PartyName" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="PartyNameInOmissions" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="PostalCode" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="PostalCodeCity" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="QualifyingAddressCity" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="Salutation" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="SignatureBlock" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="SignatureBlock-3" spsfile="reused-parts.sps" isactive="0"/>
-		</designfragments>
+			<designfragment match="Address" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="AffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CandidatesOnListTable" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ChapterDistrictsOptions" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ChapterDistrictsTitle" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ChapterElection" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ChapterPartyName" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ChapterStemming" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Checkbox" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="City" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CombinedListI17" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CombinedListListName" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CombinedListListNumber" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CombinedListNames" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CombinedListNumbers" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CompleteAddress" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="CompleteContactAddress" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ContestIdentifier" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Contests" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Date" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="DateOfBirth" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionDomain" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="ElectionFraction" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionFractionPart1" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionName" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionNameAcceptanceShort" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionNameP2" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionNameShort" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ElectionNameSimple" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="Filter0" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="FirstNameH1" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="FooterLine" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="FooterWithHashcode" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="FooterWithoutHashcode" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="FootnoteKieskring" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="FootnoteSign" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Gender" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="GenderGeneral" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="GenerateDate" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="Initials" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="KieskringParty" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="LastNameH1" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="LegacyFooter" spsfile="reused-parts-simple.sps" isactive="1"/>			<designfragment match="Line" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="LineBreak" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="LineBreakPdf" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="LineBreakTable" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="LivingAddress" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="NameBCEF" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ObjectionsByVoters1" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ObjectionsByVoters1b" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ObjectionsByVoters2" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="PartyName" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="PostalCodeCity" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="QualifyingAddressCity" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Salutation" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="SignatureBlock" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="SignatureBlock-3" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="SmallLineBreak" spsfile="reused-parts-simple.sps" isactive="0"/>			<designfragment match="Space" spsfile="reused-parts-simple.sps" isactive="0"/>		</designfragments>
 		<pagelayouts/>
 		<xpath-functions/>
 	</flags>
 	<scripts>
-		<script language="javascript">
- function doInitialize() {
- markLoaded();
- return false;
- }
- function doIntref(inVerwijzingRef, inLabelRef) {
- var myWin = window;
- var myLabel = &apos;label-&apos; + inLabelRef;
- myWin.location.replace(&apos;#&apos; + myLabel);
- }
- // </script>
-	</scripts>
+		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>	</scripts>
 	<script-project>
-		<Project version="3" app="AuthenticView"/>
+		<Project version="4" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
-		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-text.xslt"/>
+		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\osv3-6-text.xslt"/>
 	</importedxslt>
 	<globalstyles>
@@ -104,32 +46,7 @@
 			<media>
 				<media value="all"/>
 			</media>
-			<rule font-family="Arial"/>
-		</rules>
-		<rules selector="td">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="small"/>
-		</rules>
-		<rules selector="div">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule margin="0" padding="0"/>
-		</rules>
-		<rules selector="h4">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="medium" font-weight="bold"/>
-		</rules>
-		<rules selector="p">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule/>
-		</rules>
+			<rule font-family="Arial" font-size="13pt"/>		</rules>
 	</globalstyles>
 	<mainparts>
 		<children>
@@ -137,16 +54,12 @@
 				<document-properties title="Model osv 3-3"/>
 				<children>
 					<documentsection>
-						<properties columncount="1" columngap="0.50in" headerfooterheight="variable" pagemultiplepages="0" pagenumberingformat="1" pagenumberingstartat="auto" pagestart="next" paperheight="11.69in" papermarginbottom="1.2in" papermarginfooter="0.0in" papermarginheader="0.0in" papermarginleft="0.6in" papermarginright="0.6in" papermargintop="0.79in" paperwidth="8.27in" title="Model osv 3-3"/>
+						<properties columncount="1" columngap="0.50in" headerfooterheight="variable" pagemultiplepages="0" pagenumberingformat="1" pagenumberingstartat="auto" pagestart="next" paperheight="11.69in" papermarginbottom="1.2in" papermarginfooter="0.0in" papermarginheader="0.0in" papermarginleft="1.0in" papermarginright="1.0in" papermargintop="0.9in" paperwidth="8.27in" title="Model osv 3-6"/>
 						<children>
 							<globaltemplate subtype="pagelayout" match="footerall">
 								<children>
 									<calltemplate subtype="named" match="LegacyFooter">
-										<parameters>
-											<parameter name="isHashcode"/>
-											<parameter name="isPagenumber"/>
-										</parameters>
-									</calltemplate>
+										<parameters/>									</calltemplate>
 								</children>
 							</globaltemplate>
 						</children>
@@ -156,7 +69,7 @@
 						</watermark>
 					</documentsection>
 					<paragraph>
-						<children>
+						<styles text-align="center"/>						<children>
 							<template subtype="source" match="XML">
 								<children>
 									<template subtype="element" match="eml:EML">
@@ -216,7 +129,7 @@
 																						<children>
 																							<conditionbranch xpath="$lang=0">
 																								<children>
-																									<text fixtext="De SHA1 hashcode van het EML 230c bestand genaamd Totaallijsten is"/>
+																									<text fixtext="De SHA-256 hashcode van het EML 230c bestand genaamd Totaallijsten is"/>
 																								</children>
 																							</conditionbranch>
 																							<conditionbranch>

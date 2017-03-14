@@ -396,10 +396,8 @@ public class GebietInfo extends Ergebnis {
   public String getCompleteDisplay(String separator) {
     if (WahlInfo.getWahlInfo().isEK() && getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
       return Gebietsart.LAND.getKlartext() + " " + getName(); //$NON-NLS-1$
-    } else if (getGebietsart() == GebietModel.GEBIETSART_GEMEINDE) {
-      return getGebietsartKlartext() + " " + getNumber4Display() + separator + getName(); //$NON-NLS-1$
     } else {
-      return getGebietsartKlartext() + " " + getName(); //$NON-NLS-1$
+      return getGebietsartKlartext() + " " + getNumber4Display() + separator + getName(); //$NON-NLS-1$
     }
   }
 

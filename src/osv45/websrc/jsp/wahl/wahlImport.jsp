@@ -286,18 +286,16 @@ String helpKey = "wahlImp";
                 <% if (SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel())) {
                     String hashCode = impDef.getHashWert230();
                     String[] hashCodeParts = hashCode.split(" ");
-                    if (hashCodeParts.length < 2) { %>
+                    if (hashCodeParts.length < 1) { %>
                         <%= BundleHelper.getBundleString("Error_Illegal_HashCode_Format") %>
                     <% } else { %>
                         <%= BundleHelper.getBundleString("Neue_Wahl_HashWert_Confirm_230_" + systemInfo.getEbenenklartext()+"_"+systemInfo.getModusklartext()) %>:<br/><br/>
                         <%= hashCode %>
-                        <input type="hidden" size="2" maxlength="2" name="<%=WahlImportBean.FELD_HASHCODE_230 %>1" value="<%= hashCodeParts[0] %>" />&nbsp;
-                        <input type="hidden" size="2" maxlength="2" name="<%=WahlImportBean.FELD_HASHCODE_230 %>2" value="<%= hashCodeParts[1] %>" />&nbsp;
+                        <input type="hidden" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230 %>" value="<%= hashCodeParts[0] %>" />&nbsp;
                     <% } %>
                 <% } else { %>
                     <%= BundleHelper.getBundleString("Neue_Wahl_HashWert_230_" + systemInfo.getEbenenklartext()+"_"+systemInfo.getModusklartext()) %>:<br/><br/>
-                    <input type="text" size="2" maxlength="2" name="<%=WahlImportBean.FELD_HASHCODE_230 %>1" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 2) document.wahlImport.<%=WahlImportBean.FELD_HASHCODE_230 %>2.focus();" autocomplete="off" />&nbsp;
-                    <input type="text" size="2" maxlength="2" name="<%=WahlImportBean.FELD_HASHCODE_230 %>2" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 2) document.wahlImport.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
+                    <input type="text" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230 %>" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.wahlImport.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
                     <%=impDef.getTeilHashWert230() %>
                 <% } %>
             </div>

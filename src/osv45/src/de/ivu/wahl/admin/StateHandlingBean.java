@@ -104,8 +104,8 @@ public class StateHandlingBean extends WahlStatelessSessionBeanBase implements S
     Wahl w = wahlInfo.getWahl();
     if (w.isFreigegeben() != freigabe) {
 
-      // TODO Pr�fen, ob in der Wahl bereits ein Ergebnis vorliegt
-      if (!wahlInfo.isWahlVollstaendig() && freigabe) {
+      // TODO Prüfen, ob in der Wahl bereits ein Ergebnis vorliegt
+      if (!wahlInfo.darfWahlFreigegebenWerden() && freigabe) {
         String msg = Messages
             .getString(MessageKeys.Msg_EsWurdeVersuchtDieWahlFreizugebenFreigabeNichtMoeglichDaFuerDieWahlNochKeinErgebnisVorliegt);
         LOGGER.warn(msg);

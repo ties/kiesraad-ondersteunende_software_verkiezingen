@@ -60,8 +60,12 @@
    <link rel="SHORTCUT ICON" href="<%= request.getContextPath() %>/FAVICON.ICO" type="image/ico">
    <link rel="icon" href="<%= request.getContextPath() %>/FAVICON.ICO" type="image/ico">
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
+   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery-entropizer.css">
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.12.4.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/capslock.js"></script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/entropizer.js"></script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-entropizer.js"></script>
 </head>
 
 <script language="JavaScript">
@@ -106,7 +110,8 @@
                            <td><b><ivu:int key="Passwort_veraendern_neues_Passwort" />:</b></td>
                            <td>&nbsp;</td>
                            <td align="left">
-                              <input <%= !check ? "class='ergdisable' disabled='disabled'": "" %> type="password" name="<%=prefix%>anw_new_pw1" value="" onkeypress="capsLock(event)">
+                              <input id="newOne1" <%= !check ? "class='ergdisable' disabled='disabled'": "" %> type="password" name="<%=prefix%>anw_new_pw1" value="" onkeypress="capsLock(event)">
+                              <div id="meter2"></div>
                            </td>
                         </tr>
                         <tr align="left">

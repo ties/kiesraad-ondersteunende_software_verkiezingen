@@ -383,7 +383,7 @@ public class MessageKeys {
   public static final String Error_FehlerBeimErzeugenDerAdministrativenDaten = "Error_FehlerBeimErzeugenDerAdministrativenDaten"; //$NON-NLS-1$
   public static final String Error_FehlerBeimAnlegenDerWahl = "Error_FehlerBeimAnlegenDerWahl"; //$NON-NLS-1$
   public static final String Error_URLNichtLesbar = "Error_URLNichtLesbar"; //$NON-NLS-1$
-  public static final String Error_FehlerBeimSchlie\u00DFenDesInputStreams = "Error_FehlerBeimSchlie\u00DFenDesInputStreams"; //$NON-NLS-1$
+  public static final String Error_FehlerBeimSchliessenDesInputStreams = "Error_FehlerBeimSchliessenDesInputStreams"; //$NON-NLS-1$
   public static final String Error_KannXMLNichtParsen = "Error_KannXMLNichtParsen"; //$NON-NLS-1$
   public static final String Error_FehlerBeimParserBauen = "Error_FehlerBeimParserBauen"; //$NON-NLS-1$
   public static final String Error_UngueltigerFilename = "Error_UngueltigerFilename"; //$NON-NLS-1$
@@ -477,6 +477,8 @@ public class MessageKeys {
   public static final String Msg_QuestionNumber = "Msg_QuestionNumber"; //$NON-NLS-1$
   public static final String Msg_PositionOnList = "Msg_PositionOnList"; //$NON-NLS-1$
   public static final String Msg_Total = "Msg_Total"; //$NON-NLS-1$
+  public static final String Msg_Postcode = "Msg_Postcode"; //$NON-NLS-1$
+  public static final String Msg_RegionNumber = "Msg_RegionNumber"; //$NON-NLS-1$
 
   public static final String placeholder_municipality = "placeholder_municipality"; //$NON-NLS-1$
   public static final String placeholder_electoralDistrict = "placeholder_electoralDistrict"; //$NON-NLS-1$

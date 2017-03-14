@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
-		<parameter name="generateDate" default="(date missing)"/>
-		<parameter name="hashCode" default="SHA1"/>
+		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
+		<parameter name="hashCode" default="1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF"/>
 		<parameter name="isDraft" default="true"/>
 		<parameter name="lang" default="0"/>
 	</parameters>
@@ -36,7 +36,7 @@
 		<Project version="2" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
-		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-text.xslt"/>
+		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\H1-text.xslt"/>
 	</importedxslt>
 	<globalstyles>

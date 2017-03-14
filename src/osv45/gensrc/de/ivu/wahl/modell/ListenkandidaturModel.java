@@ -15,7 +15,7 @@ import de.ivu.ejb.bmp.Model;
   * Contains the list of properties including the IDs of the associated objects.
   * A navigation is not implemented (1:1, 1:n, m:n)
   *
-  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface ListenkandidaturModel extends Model {

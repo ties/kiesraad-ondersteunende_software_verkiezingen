@@ -105,14 +105,20 @@
     height:13px;
     vertical-align:bottom;
    }
-   span.c5 {
-    margin-left:5px;
+   span.c0 {
+    margin-left:0px;
+   }
+   span.c4 {
+    margin-left:4px;
    }
    span.c9 {
     margin-left:9px;
    }
-   span.c14 {
-    margin-left:14px;
+   span.c13 {
+    margin-left:13px;
+   }
+   span.c18 {
+    margin-left:18px;
    }
    a.adminMessage {
     background-image: url('/img/icon/pfeil_right.gif'); 
@@ -229,8 +235,7 @@
       level = treeNode.getLevel() + 1;
       String classText = "level" + level;
       String id = isSelected ? "current" : naviAnker;
-      boolean fillC5 = false;
-      boolean fillC9 = false;
+      int fill = 18;
       
       if (divBreak) {//%>
      <div class='<%=classText%>'><%
@@ -245,28 +250,28 @@
         %><div class='fl'><%
         if (gebietInfo.isVollstaendig() ){//
          %><img class='c9' src='<%=request.getContextPath() %>/img/icon/check_ja_schmal.gif' alt='OK' /><%
-        } else {
-         fillC9 = true;
+         fill = fill - 9;
         }
         if (status == ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK) {//
-          %><img class='c5' src='<%= request.getContextPath() %>/img/icon/achtungHellgruen.gif' alt='!' /><%
+          %><img class='c9' src='<%= request.getContextPath() %>/img/icon/acceptOrange.gif' alt='!' /><%
+         fill = fill - 9;
         } else if (status == ErgebniseingangKonstanten.STATE_WARNING) {//
          %><img class='c5' src='<%= request.getContextPath() %>/img/icon/achtungGelb.gif' alt='!' /><%
+         fill = fill - 5;
         } else if (status == ErgebniseingangKonstanten.STATE_ERROR) {//
          %><img class='c5' src='<%= request.getContextPath() %>/img/icon/achtungRot.gif' alt='!' /><%
-        } else {
-         fillC5 = true;
+         fill = fill - 5;
         }
-        if (fillC9) {
-         if (fillC5) {//
-          %><span class='c14'></span><%
-         } else {//
+        if (fill >= 18) {
+          %><span class='c18'></span><%
+        } else if (fill >= 13) {//
+          %><span class='c13'></span><%
+        } else if (fill >= 9) {//
           %><span class='c9'></span><%
-         }
-        } else {
-         if (fillC5) {//
-          %><span class='c5'></span><%
-         }
+        } else if (fill >= 4) {//
+          %><span class='c4'></span><%
+        } else {//
+          %><span class='c0'></span><%
         }
         %></div><%
         if (anzahlText != null){ //

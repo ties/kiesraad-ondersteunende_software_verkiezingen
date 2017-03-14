@@ -41,8 +41,12 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
 <head>
    <title><ivu:int key="Passwort_veraendern_titel"/> </title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
+   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery-entropizer.css">
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.12.4.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/capslock.js"></script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/entropizer.js"></script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-entropizer.js"></script>
 </head>
 
 <script language="JavaScript">
@@ -115,7 +119,7 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                                                     <ivu:int key="Passwort_veraendern_altes_Passwort"/>
                                              </td>
                                              <td>
-                                                <input type="password" style="font-size: 1em" name="<%=prefix%>anw_old_pw" value="" id="oldOne"/ onkeypress="capsLock(event)">
+                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_old_pw" value="" id="oldOne"/ onkeypress="capsLock(event)">
                                              </td>
                                           </tr>
                                           <tr>
@@ -123,7 +127,8 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                                                     <ivu:int key="Passwort_veraendern_neues_Passwort"/>
                                              </td>
                                              <td>
-                                                <input type="password" style="font-size: 1em" name="<%=prefix%>anw_new_pw1" value="" id="newOne1"/ onkeypress="capsLock(event)">
+                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_new_pw1" value="" id="newOne1"/ onkeypress="capsLock(event)">
+                                                <div id="meter2"></div>
                                              </td>
                                           </tr>
                                           <tr>
@@ -131,7 +136,7 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                                                     <ivu:int key="Passwort_veraendern_neues_Passwort_wiederholung"/>
                                              </td>
                                              <td>
-                                                <input type="password" style="font-size: 1em" name="<%=prefix%>anw_new_pw2" value="" id="newOne2"/ onkeypress="capsLock(event)">
+                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_new_pw2" value="" id="newOne2"/ onkeypress="capsLock(event)">
                                                 <span id="capsLock" style="visibility:hidden"><%= BundleHelper.getBundleString("Caps_Lock_Hint") %></span>
                                              </td>
                                           </tr>

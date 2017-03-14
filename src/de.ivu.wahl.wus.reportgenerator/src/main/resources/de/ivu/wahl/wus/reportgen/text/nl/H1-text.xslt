@@ -16,9 +16,9 @@
 
     <xsl:param name="H1_100_InTeLeveren" select="'In te leveren bij de kandidatenlijst'"/>
     <xsl:param name="H1_110_IkBenVerplicht" select="'Ik ben verplicht de volgende bijlag(e) in te leveren bij de kandidatenlijst (aanvinken wat van toepassing is):'"/>
-    <xsl:param name="H1_120_modelH3"      select="'Een verklaring van de gemachtigde(n) van de politieke groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen  want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2).'"/>
-    <xsl:param name="H1_120_modelH3_BC" select="'Een verklaring van de gemachtigde(n) van de (politieke) groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen  want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2).'"/>
-    <xsl:param name="H1_130_modelH4" select="'Verklaringen van kiezers dat zij de lijst ondersteunen want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H 4).'"/>
+    <xsl:param name="H1_120_modelH3" select="'Een verklaring van de gemachtigde(n) van de politieke groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen, want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2).'"/>
+    <xsl:param name="H1_120_modelH3_BC" select="'Een verklaring van de gemachtigde(n) van de (politieke) groepering(en) waarmee aan mij toestemming wordt gegeven om de aanduiding boven de kandidatenlijst te plaatsen, want ik heb een aanduiding boven de lijst geplaatst (model H 3-1 of H 3-2).'"/>
+    <xsl:param name="H1_130_modelH4" select="'Verklaringen van kiezers dat zij de lijst ondersteunen, want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H 4).'"/>
     <xsl:param name="H1_140_modelH9" select="'Een verklaring van iedere op de lijst voorkomende kandidaat dat hij instemt met zijn kandidaatstelling op de lijst (model H 9).'"/>
     <xsl:param name="H1_150_modelIdentiteitsbewijs" select="'Een kopie van een geldig identiteitsbewijs van iedere kandidaat die géén zitting heeft in het orgaan waarvoor de verkiezing wordt gehouden.'"/>
     <xsl:param name="H1_160_modelH12" select="'Een betalingsbewijs van de waarborgsom, want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H 12).'"/>

@@ -42,7 +42,7 @@ public class ReportConfigurationImpl implements ReportConfiguration {
   private final Date timestamp;
   private final ReportNameComponents reportNameComponents;
   private final boolean draft;
-  private final String sha1HashCode;
+  private final String shaHashCode;
   private final boolean openDocumentInViewer;
   private final IPDFOpener pdfOpener;
   private final ExportEml exportEml;
@@ -61,7 +61,7 @@ public class ReportConfigurationImpl implements ReportConfiguration {
    *          name is derived from this timestamp.
    * @param reportNameComponents
    * @param draft
-   * @param sha1HashCode is ignored if draft == true
+   * @param shaHashCode is ignored if draft == true
    * @param openDocumentInViewer is ignored unless selectedFormat is PDF
    * @param pdfOpener
    * @param exportEml
@@ -74,7 +74,7 @@ public class ReportConfigurationImpl implements ReportConfiguration {
       Date timestamp,
       ReportNameComponents reportNameComponents,
       boolean draft,
-      String sha1HashCode,
+      String shaHashCode,
       boolean openDocumentInViewer,
       IPDFOpener pdfOpener,
       ExportEml exportEml,
@@ -93,7 +93,7 @@ public class ReportConfigurationImpl implements ReportConfiguration {
     this.timestamp = timestamp;
     this.reportNameComponents = reportNameComponents;
     this.draft = draft;
-    this.sha1HashCode = sha1HashCode;
+    this.shaHashCode = shaHashCode;
     this.openDocumentInViewer = openDocumentInViewer;
     this.pdfOpener = pdfOpener;
     this.exportEml = exportEml;
@@ -142,8 +142,8 @@ public class ReportConfigurationImpl implements ReportConfiguration {
     return openDocumentInViewer;
   }
 
-  public String getSha1HashCode() {
-    return sha1HashCode;
+  public String getShaHashCode() {
+    return shaHashCode;
   }
 
   public File getExportSelectionPath() {

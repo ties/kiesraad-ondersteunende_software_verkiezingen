@@ -53,12 +53,12 @@ public class SHAXmlDigestCreatorTest {
 
   @Test
   public void testCreateDigestFromBytes() throws UnsupportedEncodingException {
-    assertEquals("95 cb 0b fd 29 77 c7 61 29 8d 96 24 e4 b4 d4 c7 2a 39 97 4a".toUpperCase(), cut
-        .createDigestFromBytes("y".getBytes(UTF8), true));
-    assertEquals("7e 5e e1 18 ec e7 9e 5a 2d 22 71 1a 5b d0 f3 0d 61 7b 43 21".toUpperCase(), cut
-        .createDigestFromBytes("sample message".getBytes(UTF8), true));
-    assertEquals("7e5ee118ece79e5a2d22711a5bd0f30d617b4321".toUpperCase(), cut
-        .createDigestFromBytes("sample message".getBytes(UTF8), false));
+    assertEquals("A1FC E436 3854 FF88 8CFF 4B8E 7875 D600 C268 2390 412A 8CF7 9B37 D0B1 1148 B0FA".toUpperCase(),
+        cut.createDigestFromBytes("y".getBytes(UTF8), true));
+    assertEquals("5916 2C6B 059F 619B 0538 F592 DE24 E163 0613 1657 2869 FFC9 A264 8315 DBE7 5997".toUpperCase(),
+        cut.createDigestFromBytes("sample message".getBytes(UTF8), true));
+    assertEquals("59162c6b059f619b0538f592de24e163061316572869ffc9a2648315dbe75997".toUpperCase(),
+        cut.createDigestFromBytes("sample message".getBytes(UTF8), false));
   }
 
   @Test(expected = XmlParseException.class)
@@ -71,7 +71,7 @@ public class SHAXmlDigestCreatorTest {
     // refernce SHA created using: http://holger.thoelking.name/skripten/md5
     {
       String expDigest =
-                         "97 3f 44 c3 82 b8 a1 58 0f bd 20 54 2e fd a0 6e 7c 7a 87 34"
+                         "b51d c19c c2e1 5197 81d4 49d7 641c 66fb 1368 e85a 01fc 89ad 40a3 c0d2 9db0 c38d"
                              .toUpperCase();
       assertEquals(expDigest, cut.unconditionalCreateDigest(asStream("<a>xyz</a>")));
       assertEquals(expDigest, cut.unconditionalCreateDigest(asSource("<a>xyz</a>")));
@@ -79,13 +79,15 @@ public class SHAXmlDigestCreatorTest {
       assertEquals(expDigest, cut.unconditionalCreateDigest(asSource("<a  >xyz</a>")));
     }
 
-    String expDigest = "D4 80 31 36 30 BA B3 90 34 F8 78 0C D3 3A BE 8A 2A F9 5B 6C";
-    assertEquals(expDigest, cut.unconditionalCreateDigest(getClass()
-        .getResourceAsStream("input4.xml")));
+    String expDigest =
+                       "79d7 f437 1feb 9cd6 3371 3020 9232 b70c dc68 8d5a b4eb dff7 8172 4fe2 44c9 8445"
+                           .toUpperCase();
+    assertEquals(expDigest,
+        cut.unconditionalCreateDigest(getClass().getResourceAsStream("input4.xml")));
     assertEquals(expDigest, cut.unconditionalCreateDigest(new DOMSource(parse(getClass()
         .getResourceAsStream("input4.xml")))));
-    assertEquals(expDigest, cut.unconditionalCreateDigest(getClass()
-        .getResourceAsStream("input4.canonized")));
+    assertEquals(expDigest,
+        cut.unconditionalCreateDigest(getClass().getResourceAsStream("input4.canonized")));
     assertEquals(expDigest, cut.unconditionalCreateDigest(new DOMSource(parse(getClass()
         .getResourceAsStream("input4.canonized")))));
   }

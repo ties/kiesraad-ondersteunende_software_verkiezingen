@@ -20,7 +20,7 @@ public interface ReportConfiguration {
   }
 
   /**
-   * @return a copy of the receiver with the sha1HashCode replaced by newHashCode
+   * @return a copy of the receiver with the shaHashCode replaced by newHashCode
    */
   public ReportConfiguration copyWithHashCode(String newHashCode);
 
@@ -64,10 +64,10 @@ public interface ReportConfiguration {
   public ReportLanguage getLanguage();
 
   /**
-   * @return the sha1 hash code that is to be printed in the footer of the generated document. May
-   *         be <code>null</code>.
+   * @return the sha-256 hash code that is to be printed in the footer of the generated document.
+   *         May be <code>null</code>.
    */
-  public String getSha1HashCode();
+  public String getShaHashCode();
 
   public Date getTimestamp();
 

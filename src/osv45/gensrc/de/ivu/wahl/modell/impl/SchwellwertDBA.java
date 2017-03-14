@@ -28,11 +28,10 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Schwellwert.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class SchwellwertDBA extends DBABase {
-   private static final long serialVersionUID = 849273908494349255L;
    private static final Category LOGGER = Log4J.configure(SchwellwertDBA.class);
    static {
       LOGGER.info(Log4J.dumpVersion(SchwellwertDBA.class, Log4J.extractVersion("$Revision: 1.36 $"))); //$NON-NLS-1$

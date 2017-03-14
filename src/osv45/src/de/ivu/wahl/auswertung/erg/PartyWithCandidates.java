@@ -135,9 +135,46 @@ public class PartyWithCandidates implements Comparable<PartyWithCandidates> {
     return _gruppenPosition - o._gruppenPosition;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    PartyWithCandidates other = (PartyWithCandidates) obj;
+    if (_gruppenID == null) {
+      if (other._gruppenID != null)
+        return false;
+    } else if (!_gruppenID.equals(other._gruppenID))
+      return false;
+    if (_gruppenName == null) {
+      if (other._gruppenName != null)
+        return false;
+    } else if (!_gruppenName.equals(other._gruppenName))
+      return false;
+    if (_gruppenPosition != other._gruppenPosition)
+      return false;
+    return true;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
   @Override
   public int hashCode() {
-    return _gruppenName.hashCode();
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((_gruppenID == null) ? 0 : _gruppenID.hashCode());
+    result = prime * result + ((_gruppenName == null) ? 0 : _gruppenName.hashCode());
+    result = prime * result + _gruppenPosition;
+    return result;
   }
 
   /**

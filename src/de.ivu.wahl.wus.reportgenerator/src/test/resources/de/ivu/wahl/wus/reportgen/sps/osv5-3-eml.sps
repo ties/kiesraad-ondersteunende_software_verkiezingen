@@ -2,7 +2,7 @@
 <structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
-		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
+		<parameter name="hashCode" default="1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 	</parameters>
@@ -59,6 +59,7 @@
 			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionName" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptanceShort" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameP2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameShort" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameSimple" spsfile="reused-parts-simple.sps" isactive="1"/>

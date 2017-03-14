@@ -753,24 +753,39 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
   }
 
   /**
-   * Calculate and set numer of GUELTIGE votes if it is invisible (necessary for OSV-1462)
+   * Calculate and set sum of votes for system groups GUELTIGE, GUELTIG_ODER_LEER, WAEHLER if it is
+   * invisible (necessary for OSV-1462, OSV-1857)
    */
   private void calculateAndSetGueltigeIfInvisible(EingangMsg msg, Gebiet gebiet) {
     if (!GruppeKonstanten.GruppeAllgemein.isVisible(GUELTIGE, gebiet)) {
-      int votes = calculateValidVotes(msg, gebiet, false);
+      int votes = calculateSumOfVotes(msg, gebiet, false, false);
       msg.setGruppenstimmen(GUELTIGE.getPosition(), votes);
     }
     if (!GruppeKonstanten.GruppeAllgemein.isVisible(GUELTIG_ODER_LEER, gebiet)) {
-      int votes = calculateValidVotes(msg, gebiet, true);
+      int votes = calculateSumOfVotes(msg, gebiet, true, false);
       msg.setGruppenstimmen(GUELTIG_ODER_LEER.getPosition(), votes);
+    }
+    if (!GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
+      int votes = calculateSumOfVotes(msg, gebiet, true, true);
+      msg.setGruppenstimmen(WAEHLER.getPosition(), votes);
     }
   }
 
-  private int calculateValidVotes(EingangMsg msg, Gebiet gebiet, boolean includeBlankVotes) {
+  /**
+   * Calculates the sum of all votes cast to political groups
+   * 
+   * @param includeBlankVotes include blanc votes in the sum
+   * @param includeInvalidVotes include invalid votes in the sum
+   */
+  private int calculateSumOfVotes(EingangMsg msg,
+      Gebiet gebiet,
+      boolean includeBlankVotes,
+      boolean includeInvalidVotes) {
     int sumListVotes = 0;
     for (GruppeGebietsspezifisch gruppeGebietsspezifisch : gebiet.getGruppeGebietsspezifischCol()) {
       int position = gruppeGebietsspezifisch.getPosition();
-      if (position > 0 || includeBlankVotes && LEER.hasPosition(position)) {
+      if (position > 0 || includeBlankVotes && LEER.hasPosition(position) || includeInvalidVotes
+          && UNGUELTIGE.hasPosition(position)) {
         int listVotes = msg.getGruppenstimmen(position);
         if (listVotes >= 0) {
           sumListVotes += listVotes;
@@ -922,7 +937,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
         && GruppeKonstanten.GruppeAllgemein.isVisible(UNGUELTIGE, gebiet)
         && GruppeKonstanten.GruppeAllgemein.isVisible(LEER, gebiet)
         && GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
-      int validVotesOnAnswers = calculateValidVotes(msg, gebiet, false);
+      int validVotesOnAnswers = calculateSumOfVotes(msg, gebiet, false, false);
       checkSummeWarning(msg,
           Messages.getString(MessageKeys.Msg_ausDenReferendumOptionenUngueltigenUndLeerenStimmen),
           WAEHLER.kurzname,

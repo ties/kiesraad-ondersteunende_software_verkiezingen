@@ -57,7 +57,7 @@ public class ReportConfigurationCsvExport implements ReportConfiguration {
     return ReportOutputFormatEnum.CSV;
   }
 
-  public String getSha1HashCode() {
+  public String getShaHashCode() {
     return null;
   }
 

@@ -115,12 +115,14 @@ public abstract class AbstractImportEML implements IImportEML {
   protected URL _definition = null;
   protected boolean _definitionAccepted = false;
   protected String _hashWertDefinition = null;
+
   protected URL _EML230 = null;
   protected String _hashWert230 = null;
-  protected String _hashWertTeil230 = null;
+  protected String _hashWertTeil230 = null; // die ersten 4 Ziffern
+
   protected URL _EML510 = null;
   protected String _hashWert510 = null;
-  protected String _hashWertTeil510 = null;
+  protected String _hashWertTeil510 = null; // die ersten 4 Ziffern
 
   protected WahlModel _electionDetails = null;
 
@@ -146,6 +148,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getImportType()
    */
+  @Override
   public ImportType getImportType() {
     return _importType;
   }
@@ -154,6 +157,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setImportType(de.ivu.wahl.dataimport.ImportType)
    */
+  @Override
   public void setImportType(ImportType importType) {
     this._importType = importType;
   }
@@ -162,6 +166,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getDefinition()
    */
+  @Override
   public URL getDefinition() {
     return _definition;
   }
@@ -170,6 +175,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setDefinition(java.net.URL)
    */
+  @Override
   public void setDefinition(URL definition) {
     _definition = definition;
   }
@@ -178,6 +184,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#isDefinitionAccepted()
    */
+  @Override
   public boolean isDefinitionAccepted() {
     return _definitionAccepted;
   }
@@ -186,6 +193,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setDefinitionAccepted(boolean)
    */
+  @Override
   public void setDefinitionAccepted(boolean definitionAccepted) {
     _definitionAccepted = definitionAccepted;
   }
@@ -194,6 +202,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getEML230()
    */
+  @Override
   public URL getEML230() {
     return _EML230;
   }
@@ -202,6 +211,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setEML230(java.net.URL)
    */
+  @Override
   public void setEML230(URL eml230) {
     _EML230 = eml230;
   }
@@ -210,6 +220,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getEML510()
    */
+  @Override
   public URL getEML510() {
     return this._EML510;
   }
@@ -218,6 +229,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setEML510(java.net.URL)
    */
+  @Override
   public void setEML510(URL eml510) {
     this._EML510 = eml510;
   }
@@ -225,6 +237,7 @@ public abstract class AbstractImportEML implements IImportEML {
   /*
    * Hashert getter/setter
    */
+  @Override
   public String getHashWertWahldefinition() {
     return _hashWertDefinition;
   }
@@ -233,6 +246,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setHashWertWahldefinition(java.lang.String)
    */
+  @Override
   public void setHashWertWahldefinition(String hashWert) {
     _hashWertDefinition = hashWert;
   }
@@ -241,6 +255,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getHashWert230()
    */
+  @Override
   public String getHashWert230() {
     return _hashWert230;
   }
@@ -249,6 +264,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setHashWert230(java.lang.String)
    */
+  @Override
   public void setHashWert230(String hashWert) {
     _hashWert230 = hashWert;
   }
@@ -257,6 +273,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getHashWert510()
    */
+  @Override
   public String getHashWert510() {
     return _hashWert510;
   }
@@ -265,6 +282,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setHashWert510(java.lang.String)
    */
+  @Override
   public void setHashWert510(String hashWert) {
     _hashWert510 = hashWert;
   }
@@ -273,6 +291,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getTeilHashWertWahldefinition()
    */
+  @Override
   public String getTeilHashWertWahldefinition() {
     return _hashWertDefinition.substring(TEILINDEX);
   }
@@ -281,6 +300,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getTeilHashWert230()
    */
+  @Override
   public String getTeilHashWert230() {
     return _hashWert230.substring(TEILINDEX);
   }
@@ -289,14 +309,16 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setTeilHashWert230(java.lang.String, java.lang.String)
    */
-  public void setTeilHashWert230(String teil1, String teil2) {
-    _hashWertTeil230 = calcTeilHashWert(teil1, teil2);
+  @Override
+  public void setTeilHashWert230(String teil1) {
+    _hashWertTeil230 = calcTeilHashWert(teil1);
   }
 
   /*
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getTeilHashWert510()
    */
+  @Override
   public String getTeilHashWert510() {
     return _hashWert510.substring(TEILINDEX);
   }
@@ -305,14 +327,16 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setTeilHashWert510(java.lang.String, java.lang.String)
    */
-  public void setTeilHashWert510(String teil1, String teil2) {
-    _hashWertTeil510 = calcTeilHashWert(teil1, teil2);
+  @Override
+  public void setTeilHashWert510(String teil1) {
+    _hashWertTeil510 = calcTeilHashWert(teil1);
   }
 
   /*
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getWahlModel()
    */
+  @Override
   public WahlModel getElectionDetails() {
     return _electionDetails;
   }
@@ -321,6 +345,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setWahlModel(de.ivu.wahl.modell.WahlModel)
    */
+  @Override
   public void setElectionDetails(WahlModel wahlModel) {
     _electionDetails = wahlModel;
   }
@@ -329,6 +354,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getSecurityLevel()
    */
+  @Override
   public SecurityLevel getSecurityLevel() {
     return _securityLevel;
   }
@@ -337,6 +363,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getModus()
    */
+  @Override
   public int getModus() {
     return this._modus;
   }
@@ -345,6 +372,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getLevel()
    */
+  @Override
   public int getLevel() {
     return _level;
   }
@@ -353,6 +381,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getElectionCategory()
    */
+  @Override
   public ElectionCategory getElectionCategory() {
     return _electionCategory;
   }
@@ -362,6 +391,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * @seede.ivu.wahl.dataimport.IImportEML#setElectionCategory(de.ivu.wahl.wus.electioncategory.
    * ElectionCategory)
    */
+  @Override
   public void setElectionCategory(ElectionCategory electionCategory) {
     _electionCategory = electionCategory;
   }
@@ -370,6 +400,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getElectionDomain()
    */
+  @Override
   public String getElectionDomain() {
     return _electionDomain;
   }
@@ -378,6 +409,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getElectionDomain()
    */
+  @Override
   public String getElectionDomainId() {
     return _electionDomainId;
   }
@@ -386,6 +418,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getGebietsart()
    */
+  @Override
   public int getGebietsart() {
     return _gebietsart;
   }
@@ -394,6 +427,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setGebietsart(int)
    */
+  @Override
   public void setGebietsart(int gebietsart) {
     _gebietsart = gebietsart;
   }
@@ -402,6 +436,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getGebietsNr()
    */
+  @Override
   public int getGebietsNr() {
     return _gebietsNr;
   }
@@ -410,6 +445,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setGebietsNr(int)
    */
+  @Override
   public void setGebietsNr(int gebietsNr) {
     _gebietsNr = gebietsNr;
   }
@@ -418,6 +454,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getGebietsauswahl()
    */
+  @Override
   public List<GebietModel> getGebietsauswahl() {
     return _gebietsauswahl;
   }
@@ -426,6 +463,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getStatus()
    */
+  @Override
   public int getStatus() {
     return _status;
   }
@@ -434,6 +472,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setStatus(int)
    */
+  @Override
   public void setStatus(int status) {
     _status = status;
   }
@@ -442,6 +481,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#getFehlermeldung()
    */
+  @Override
   public String getFehlermeldung() {
     return _fehlermeldung != null && !_fehlermeldung.isEmpty() ? _fehlermeldung : null;
   }
@@ -450,6 +490,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#setFehlermeldung(java.lang.String)
    */
+  @Override
   public void setFehlermeldung(String fehlermeldung) {
     _fehlermeldung = fehlermeldung;
   }
@@ -458,6 +499,7 @@ public abstract class AbstractImportEML implements IImportEML {
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.IImportEML#reset()
    */
+  @Override
   public void reset() {
     _importType = null;
     _definition = null;
@@ -476,11 +518,11 @@ public abstract class AbstractImportEML implements IImportEML {
     _electionDetails = null;
   }
 
-  private String calcTeilHashWert(String teil1, String teil2) {
-    if (teil1 == null || teil1.isEmpty() || teil2 == null || teil2.isEmpty()) {
+  private String calcTeilHashWert(String teil1) {
+    if (teil1 == null || teil1.isEmpty()) {
       return null;
     } else {
-      return teil1 + SINGLE_SPACE + teil2;
+      return teil1;
     }
   }
 

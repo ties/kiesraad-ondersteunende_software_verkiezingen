@@ -71,7 +71,7 @@ public class ReportConfigurationMTP implements ReportConfiguration {
     return openDocumentInViewer;
   }
 
-  public String getSha1HashCode() {
+  public String getShaHashCode() {
     return "";
   }
 

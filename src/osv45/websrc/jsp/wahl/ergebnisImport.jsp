@@ -241,18 +241,16 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
                                 <% if (SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel())) {
                                     String hashCode = impDef.getHashWert510();
                                     String[] hashCodeParts = hashCode.split(" ");
-                                    if (hashCodeParts.length < 2) { %>
+                                    if (hashCodeParts.length < 1) { %>
                                         <%= BundleHelper.getBundleString("Error_Illegal_HashCode_Format") %>
                                     <% } else { %>
                                         <%= BundleHelper.getBundleString("Ergebnisse_importieren_HashWert_Confirm_" + shortMessageKeySuffix) %>:<br/><br/>
                                         <%= hashCode %>
-                                        <input type="hidden" size="2" maxlength="2" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>1" value="<%= hashCodeParts[0] %>" />&nbsp;
-                                        <input type="hidden" size="2" maxlength="2" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>2" value="<%= hashCodeParts[1] %>" />&nbsp;
+                                        <input type="hidden" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>" value="<%= hashCodeParts[0] %>" />&nbsp;
                                     <% } %>
                                 <% } else { %>
                                     <%= BundleHelper.getBundleString("Ergebnisse_importieren_HashWert_" + shortMessageKeySuffix) %>:<br/><br/>
-                                    <input type="text" size="2" maxlength="2" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>1" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 2) document.myform.<%=ErgebnisImportBean.FELD_HASHCODE_510 %>2.focus();" autocomplete="off" />&nbsp;
-                                    <input type="text" size="2" maxlength="2" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>2" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 2) document.myform.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
+                                    <input type="text" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.myform.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
                                     <%=impDef.getTeilHashWert510() %>
                                 <% } %>
                             </div>

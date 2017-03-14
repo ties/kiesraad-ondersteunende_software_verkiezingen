@@ -4,5 +4,5 @@
     <xsl:param name="o3-3_015_Kieskring" select="'Kieskring '"/>
     <xsl:param name="o3-3_015_Provincie" select="'Provincie '"/>
     <xsl:param name="o3-3_020_omTechnischeRedenen" select="'Dit document wordt om technische redenen aangemaakt.'"/>
-    <xsl:param name="o3-3_010_hashcode" select="'De SHA1 hashcode van het EML 230b bestand genaamd Kandidatenlijsten is'"/>
+    <xsl:param name="o3-3_010_hashcode" select="'De SHA-256-Hashcode van het EML 230b bestand genaamd Kandidatenlijsten is'"/>
 </xsl:stylesheet>

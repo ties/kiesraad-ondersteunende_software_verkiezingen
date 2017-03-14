@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:param name="RP_ChapterElection_Verkiezing" select="'Verkiezing'" />
-    <xsl:param name="RP_ChapterElection_HetGaatOmVerkiezing" select="'Dit proces-verbaal heeft betrekking op:'" />
+    <xsl:param name="RP_ChapterElection_HetGaatOmVerkiezing" select="'Het gaat om de verkiezing van:'" />
     <xsl:param name="RP_ChapterElection_HetGaatOmVerkiezingVanLeden" select="'Het gaat om de verkiezing van de leden van:'" />
     <xsl:param name="RP_ChapterElection_HetGaatOmKandidatenlijst" select="'Het gaat om de kandidatenlijst voor de verkiezing van:'" />
     <xsl:param name="RP_ChapterElection_VoorDeProvincie" select="' voor de provincie '" />
@@ -104,7 +104,7 @@
     <xsl:param name="RP_FooterWithoutHashcode_datum" select="'Datum: '" />
 
     <xsl:param name="RP_FooterWithHashcode_concept" select="'(Concept) | '" />
-    <xsl:param name="RP_FooterWithHashcode_hashcode" select="'Hashcode: '" />
+    <xsl:param name="RP_FooterWithHashcode_hashcode" select="'SHA-256-Hashcode: '" />
 
     <xsl:param name="RP_CombinedList_en" select="'en '" />
 
@@ -161,6 +161,15 @@
     <xsl:param name="RP_ElectionNameAcceptance_eilandsraad" select="'de eilandsraad van het openbaar lichaam'" />
     <xsl:param name="RP_ElectionNameAcceptance_bestuurscommissie" select="'de bestuurscommissie'" />
     <xsl:param name="RP_ElectionNameAcceptance_gebiedscommissie" select="'de gebiedscommissie'" />
+
+    <xsl:param name="RP_ElectionNameAcceptanceShort_tweedeKamer" select="'de Tweede Kamer'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_eersteKamer" select="'de Eerste Kamer'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_provincialeStaten" select="'provinciale staten'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_algemeen_bestuur" select="'het algemeen bestuur'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_raadVanDeGemeente" select="'de raad'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_eilandsraad" select="'de eilandsraad'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_bestuurscommissie" select="'de bestuurscommissie'" />
+    <xsl:param name="RP_ElectionNameAcceptanceShort_gebiedscommissie" select="'de gebiedscommissie'" />
 
     <xsl:param name="RP_ObjectionsByVoters1_aanwezigeKiezers" select="'Door de in de zittingsruimte aanwezige kiezers zijn'" />
 

@@ -80,7 +80,7 @@ GE  Georgië
 GH  Ghana
 GI  Gibraltar
 GD  Grenada
-EL  Griekenland
+GR  Griekenland
 GL  Groenland
 GP  Guadeloupe
 GU  Guam
@@ -231,7 +231,7 @@ UY  Uruguay
 VU  Vanuatu
 VE  Venezuela
 UM  verafgelegen eilandjes van de Verenigde Staten
-UK  Verenigd Koninkrijk
+GB  Verenigd Koninkrijk
 AE  Verenigde Arabische Emiraten
 US  Verenigde Staten
 VN  Vietnam

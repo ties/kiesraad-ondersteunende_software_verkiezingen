@@ -88,6 +88,7 @@ public class MessageKeys {
   public static final String Result_Tracelog_FirstAssignmentFor = "Result_Tracelog_FirstAssignmentFor"; //$NON-NLS-1$
   public static final String Result_Tracelog_InformationInParenthesis = "Result_Tracelog_InformationInParenthesis"; //$NON-NLS-1$
   public static final String Result_Tracelog_IsAssignedAnAdditionalSeat = "Result_Tracelog_IsAssignedAnAdditionalSeat"; //$NON-NLS-1$
+  public static final String Result_Tracelog_notApplicableInCurrentSituationInFictitiousDistribution = "Result_Tracelog_notApplicableInCurrentSituationInFictitiousDistribution"; //$NON-NLS-1$
   public static final String Result_Tracelog_List_0 = "Result_Tracelog_List_0"; //$NON-NLS-1$
   public static final String Result_Tracelog_List_0_1 = "Result_Tracelog_List_0_1"; //$NON-NLS-1$
   public static final String Result_Tracelog_ListExhausted = "Result_Tracelog_ListExhausted"; //$NON-NLS-1$
@@ -135,6 +136,8 @@ public class MessageKeys {
   public static final String Result_User_ListExhaustionEKFor_0_1_SeatsLostToOtherList = "Result_User_ListExhaustionEKFor_0_1_SeatsLostToOtherList"; //$NON-NLS-1$
   public static final String Result_User_ListExhaustionEKFor_0_SeatLostToOtherList = "Result_User_ListExhaustionEKFor_0_SeatLostToOtherList"; //$NON-NLS-1$
   public static final String Result_User_List_0_HasAbsoluteMajorityOfVotesAndReceivesSeatFromList_1 = "Result_User_List_0_HasAbsoluteMajorityOfVotesAndReceivesSeatFromList_1"; //$NON-NLS-1$
+  public static final String Result_User_List_0_HasAbsoluteMajorityOfVotesInFictitiousDistributionAndReceivesSeatFromList_1 = "Result_User_List_0_HasAbsoluteMajorityOfVotesInFictitiousDistributionAndReceivesSeatFromList_1"; //$NON-NLS-1$
+  public static final String Result_User_List_0_HasAbsoluteMajorityOfVotesInFictitiousDistributionAndReceivesSeatWithoutLooser = "Result_User_List_0_HasAbsoluteMajorityOfVotesInFictitiousDistributionAndReceivesSeatWithoutLooser"; //$NON-NLS-1$
 
   /**
    * DecisionType

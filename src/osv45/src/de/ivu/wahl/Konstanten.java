@@ -5,8 +5,6 @@
  */
 package de.ivu.wahl;
 
-import static de.ivu.wahl.util.BundleHelper.getBundleString;
-
 import java.util.Locale;
 
 import de.ivu.wahl.export.XMLTags;
@@ -22,11 +20,11 @@ import de.ivu.wahl.util.BundleHelper;
 
 public interface Konstanten {
   /** Version des Wahlabwicklungssystems */
-  String VERSION_P4 = "2.17.2"; //$NON-NLS-1$
-  String VERSION_P5 = "2.17.2"; //$NON-NLS-1$
+  String VERSION_P4 = "2.19.2"; //$NON-NLS-1$
+  String VERSION_P5 = "2.19.2"; //$NON-NLS-1$
 
   /** Datum aus dem CVS (beim Einchecken vergeben) */
-  String CVS_DATUM = "$Date: 2016-01-15 08:34:32 +0100 (Fr, 15. Jan 2016) $"; //$NON-NLS-1$
+  String CVS_DATUM = "$Date: 2017-01-18 15:18:01 +0100 (Mi, 18. Jan 2017) $"; //$NON-NLS-1$
 
   /** Aus CVS_DATUM automatisch gebildetes Datum in normaler Schreibweise */
   String DATUM = CVS_DATUM.substring(15, 17) + '.' + CVS_DATUM.substring(12, 14) + '.'
@@ -203,7 +201,7 @@ public interface Konstanten {
       }
     }
   };
-  String PROP_ALLG_KEY = getBundleString("DOUBLE_INPUT_titel"); //$NON-NLS-1$
+  String PROP_ALLG_KEY = BundleHelper.getBundleString("DOUBLE_INPUT_titel"); //$NON-NLS-1$
   BasiseinstellungMultiMap PROP_ALLG = BasiseinstellungMultiMap.key(PROP_ALLG_KEY, PROP_ALLG_BASIS);
 
   BasiseinstellungList PROP_P22_1_D1_BASIS = new BasiseinstellungList() {

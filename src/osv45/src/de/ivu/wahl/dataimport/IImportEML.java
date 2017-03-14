@@ -57,11 +57,11 @@ public interface IImportEML {
 
   String getTeilHashWert230();
 
-  void setTeilHashWert230(String teil1, String teil2);
+  void setTeilHashWert230(String teil1);
 
   String getTeilHashWert510();
 
-  void setTeilHashWert510(String teil1, String teil2);
+  void setTeilHashWert510(String teil1);
 
   WahlModel getElectionDetails();
 

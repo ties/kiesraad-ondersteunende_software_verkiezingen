@@ -96,7 +96,11 @@
       <title><ivu:int key="Anwender_veraendern_titel"/></title>
       <% } %>
       <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
+      <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery-entropizer.css">
+      <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.12.4.js"></script>
       <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
+      <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/entropizer.js"></script>
+      <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-entropizer.js"></script>
    </head>
    
    <script language="JavaScript">
@@ -223,18 +227,20 @@
                                                    <tr>
                                                       <%
                                                       String name = ""; //$NON-NLS-1$
-                                                      //request.getParameter(prefix+"anw_name");
-                                                      //name = name != null ? name : "";
                                                       %>
                                                       <td><ivu:int key="Anwender_bearbeiten_Anwendername"/></td>
-                                                      <td><input type="text" style="font-size:11px" name="<%=prefix%>anw_name" value="<%= (newAnw)? name : ClientHelper.forHTML(model.getName()) %>" /></td>                                                   </tr>
+                                                      <td><input type="text" style="font-size:11px;width:100%" name="<%=prefix%>anw_name" value="<%= (newAnw)? name : ClientHelper.forHTML(model.getName()) %>" /></td>
+                                                   </tr>
                                                    <tr>
                                                       <td><ivu:int key="Anwender_bearbeiten_Passwort"/></td>
-                                                      <td><input type="password" style="font-size:11px" name="<%=prefix%>anw_passwort1" value=""  id="newOne"/></td>
+                                                      <td>
+                                                        <input type="password" style="font-size:11px;width:100%" name="<%=prefix%>anw_passwort1" value=""  id="newOne1"/>
+                                                        <div id="meter2">
+                                                      </td>
                                                    </tr>
                                                    <tr>
                                                       <td><ivu:int key="Anwender_bearbeiten_Passwort_wiederholung"/></td>
-                                                      <td><input type="password" style="font-size:11px" name="<%=prefix%>anw_passwort2" value="" id="newOne"//></td>
+                                                      <td><input type="password" style="font-size:11px;width:100%" name="<%=prefix%>anw_passwort2" value="" id="newOne2"/></td>
                                                    </tr>
                                                    <tr>
                                                       <td><br /><b><ivu:int key="Anwender_bearbeiten_Rechtegruppe_zuweisen"/></b></td>

@@ -204,7 +204,6 @@ Berlicum
 Berltsum
 Bern
 Bernheze
-Bernisse
 Best
 Beugen
 Beuningen
@@ -376,7 +375,7 @@ De Blesse
 De Bult
 De Cocksdorp
 De Falom
-De Friese Meren
+De Fryske Marren
 De Glind
 De Goorn
 De Groeve
@@ -722,6 +721,7 @@ Goeree-Overflakkee
 Goes
 Goingarijp
 Goirle
+Gooise Meren
 Goor
 Gorinchem
 Gorredijk
@@ -734,7 +734,6 @@ Goutum
 Graauw
 Grafhorst
 Graft
-Graft-De Rijp
 Gramsbergen
 Grashoek
 Grathem
@@ -922,6 +921,7 @@ Hippolytushoef
 Hitzum
 Hobrede
 Hoedekenskerke
+Hoef en Haag
 Hoek
 Hoek van Holland
 Hoenderloo
@@ -1286,7 +1286,6 @@ Maasbracht
 Maasbree
 Maasdam
 Maasdijk
-Maasdonk
 Maasdriel
 Maasgouw
 Maashees
@@ -1336,6 +1335,7 @@ Meerstad
 Meeuwen
 Megchelen
 Megen
+Meierijstad
 Meijel
 Melderslo
 Melick
@@ -1418,7 +1418,6 @@ Neder-Betuwe
 Nederhemert
 Nederhorst den Berg
 Nederland
-Nederlek
 Nederweert
 Nederweert-Eind
 Neede
@@ -1508,7 +1507,7 @@ Nijmegen
 Nijverdal
 Nispen
 Nisse
-Nissenwaard
+Nissewaard
 Nistelrode
 Noardburgum
 Nooitgedacht
@@ -1537,6 +1536,7 @@ Nootdorp
 Norg
 Notter
 Nuenen
+Nuenen, Gerwen en Nederwetten
 Nuis
 Nuland
 Numansdorp
@@ -1590,7 +1590,6 @@ Onnen
 Onstwedde
 Ooij
 Ooltgensplaat
-Oost-
 Oost Gelre
 Oost West en Middelbeers
 Oostburg
@@ -1673,7 +1672,6 @@ Oudenbosch
 Oudendijk
 Oudenhoorn
 Ouder-Amstel
-Ouderkerk
 Ouderkerk aan de Amstel
 Ouderkerk aan den IJssel
 Oudeschans
@@ -1875,7 +1873,6 @@ Scheemda
 Scheerwolde
 Schellinkhout
 Schelluinen
-Schermer
 Schermerhorn
 Scherpenisse
 Scherpenzeel
@@ -2488,7 +2485,6 @@ Zederik
 Zeegse
 Zeeland
 Zeerijp
-Zeevang
 Zeewolde
 Zegge
 Zegveld

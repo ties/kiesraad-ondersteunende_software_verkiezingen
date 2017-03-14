@@ -393,7 +393,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
     try {
       // logging
       String logMsgEmlFile = "Creating EML file: " + emlFile;
-      String logMsgHashCode = "SHA1-HashCode: " + hashCode;
+      String logMsgHashCode = "SHA-256-Hashcode: " + hashCode;
       if (userActionLogger != null) {
         userActionLogger.logInfo(logMsgEmlFile);
         userActionLogger.logInfo(logMsgHashCode);
@@ -580,7 +580,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
     String formattedTimestamp = df.format(timestamp) + " " + tf.format(timestamp); //$NON-NLS-1$
 
     params.put(GENERATION_DATE, formattedTimestamp);
-    params.put(HASH_CODE, config.getSha1HashCode());
+    params.put(HASH_CODE, config.getShaHashCode());
     params.put(IS_DRAFT, String.valueOf(config.isDraft()));
 
     if (additionalParameters != null) {

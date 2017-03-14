@@ -116,10 +116,12 @@ public class CsvVotesExportHelper {
     table.add(emptyList);
 
     table.add(getFirstLine(regions));
-    List<String> secondLine = getSecondLine(regions);
+    table.add(getLineWithRegionNumbers(regions));
+    List<String> secondLine = getLineWithPostcodes(regions);
     if (secondLine != null) {
       table.add(secondLine);
     }
+
     for (PartyWithCandidates partyWithCandidates : resultSummary.getAllGroupsAndCandidates()) {
       if (regions.isEmpty() || isVisible(regions, partyWithCandidates.getGruppenPosition())) {
         table.add(getLineForGroup(partyWithCandidates, regions));
@@ -214,16 +216,22 @@ public class CsvVotesExportHelper {
   }
 
   /**
+   * Generates a line with the numbers of the regions
+   */
+  private List<String> getLineWithRegionNumbers(List<Gebiet> regions) {
+    List<String> line = initLineForRegions(Messages.getString(MessageKeys.Msg_RegionNumber));
+    for (Gebiet gebiet : regions) {
+      line.add(gebiet.getNumber4Display());
+    }
+    return line;
+  }
+
+  /**
    * Generates the second line with the post codes of regions
    */
-  private List<String> getSecondLine(List<Gebiet> regions) {
+  private List<String> getLineWithPostcodes(List<Gebiet> regions) {
     boolean isStembureauWithPostCode = false;
-    List<String> line = new ArrayList<String>();
-    line.add(EMPTY_STRING);
-    line.add(EMPTY_STRING);
-    line.add(EMPTY_STRING);
-    line.add(EMPTY_STRING);
-    line.add(EMPTY_STRING);
+    List<String> line = initLineForRegions(Messages.getString(MessageKeys.Msg_Postcode));
     for (Gebiet gebiet : regions) {
       if (gebiet.getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
         if (!StringUtils.isBlank(gebiet.getZipcode())) {
@@ -240,6 +248,16 @@ public class CsvVotesExportHelper {
       return line;
     }
     return null;
+  }
+
+  private List<String> initLineForRegions(String title) {
+    List<String> line = new ArrayList<String>();
+    line.add(title);
+    line.add(EMPTY_STRING);
+    line.add(EMPTY_STRING);
+    line.add(EMPTY_STRING);
+    line.add(EMPTY_STRING);
+    return line;
   }
 
   /**

@@ -92,7 +92,7 @@
               <tr>
                <td width="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
                <td valign="top"><% 
-                if (!wahlInfo.isWahlVollstaendig()){ %>  
+                if (!wahlInfo.darfWahlFreigegebenWerden()){ %>  
                             <p><ivu:int key="Freigabe_nicht_erfolgt"/> <ivu:int key="Noch_Nicht_Alle_Ergebniseingaenge"/></p><%
                     } else if (wahlInfo.getStatus() == WahlModel.STATE_METADATA_P5){ %>  
                             <p><ivu:int key="Freigabe_nicht_erfolgt"/> <ivu:int key="Sitzverteilung_Kein_Ergebniseingang"/></p><%

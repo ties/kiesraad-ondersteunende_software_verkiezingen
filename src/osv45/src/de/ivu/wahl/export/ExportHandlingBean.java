@@ -736,13 +736,13 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     }
     // Polling stations are marked with "SB"
     if (region.getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
-      identifier = "SB" + identifier; //$NON-NLS-1$
+      identifier = AuthorityLevel.EBENE_SB.getShortName() + identifier;
     }
     if (level == GebietModel.EBENE_HSB) {
-      identifier = "HSB" + identifier; //$NON-NLS-1$
+      identifier = AuthorityLevel.EBENE_HSB.getShortName() + identifier;
     }
     if (level == GebietModel.EBENE_CSB) {
-      identifier = "CSB"; //$NON-NLS-1$
+      identifier = AuthorityLevel.EBENE_CSB.getShortName();
     }
     // prepend superior region
     if (isSubregion && level != GebietModel.EBENE_HSB) {

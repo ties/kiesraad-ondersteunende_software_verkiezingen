@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="20" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="(date missing)"/>
-		<parameter name="hashCode" default="SHA1"/>
+		<parameter name="hashCode" default="1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF 1234 5678 90AB CDEF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 	</parameters>
@@ -31,7 +31,6 @@
 		<globalparts/>
 		<designfragments>
 			<designfragment match="Address" spsfile="reused-parts-simple.sps" isactive="0"/>
-			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="AffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CandidatesOnListTable" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterDistrictsOptions" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -54,6 +53,7 @@
 			<designfragment match="ElectionFractionPart1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptanceShort" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameP2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Filter0" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -63,6 +63,7 @@
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -101,7 +102,7 @@
  // </script>
 	</scripts>
 	<script-project>
-		<Project version="3" app="AuthenticView"/>
+		<Project version="4" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -308,6 +309,15 @@
 																</children>
 															</tgridbody-rows>
 														</children>
+														<wizard-data-repeat>
+															<children/>
+														</wizard-data-repeat>
+														<wizard-data-rows>
+															<children/>
+														</wizard-data-rows>
+														<wizard-data-columns>
+															<children/>
+														</wizard-data-columns>
 													</tgrid>
 													<condition>
 														<children>
@@ -363,6 +373,15 @@
 																								</children>
 																							</tgridbody-rows>
 																						</children>
+																						<wizard-data-repeat>
+																							<children/>
+																						</wizard-data-repeat>
+																						<wizard-data-rows>
+																							<children/>
+																						</wizard-data-rows>
+																						<wizard-data-columns>
+																							<children/>
+																						</wizard-data-columns>
 																					</tgrid>
 																				</children>
 																				<variables/>
@@ -445,6 +464,15 @@
 																				</children>
 																			</tgridbody-rows>
 																		</children>
+																		<wizard-data-repeat>
+																			<children/>
+																		</wizard-data-repeat>
+																		<wizard-data-rows>
+																			<children/>
+																		</wizard-data-rows>
+																		<wizard-data-columns>
+																			<children/>
+																		</wizard-data-columns>
 																	</tgrid>
 																</children>
 															</conditionbranch>
@@ -684,6 +712,15 @@
 																</children>
 															</tgridbody-rows>
 														</children>
+														<wizard-data-repeat>
+															<children/>
+														</wizard-data-repeat>
+														<wizard-data-rows>
+															<children/>
+														</wizard-data-rows>
+														<wizard-data-columns>
+															<children/>
+														</wizard-data-columns>
 													</tgrid>
 													<calltemplate subtype="named" match="LineBreakTable">
 														<parameters/>
@@ -948,6 +985,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 					<calltemplate subtype="named" match="LineBreakTable">
 						<parameters/>
