@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EML Id="230c" SchemaVersion="5" xsi:schemaLocation="urn:oasis:names:tc:evs:schema:eml 230-extended.xsd http://www.kiesraad.nl/extensions kiesraad-eml-extensions.xsd http://www.kiesraad.nl/reportgenerator reportgenerator-eml-extensions.xsd" xmlns="urn:oasis:names:tc:evs:schema:eml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xal="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" xmlns:xnl="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:kr="http://www.kiesraad.nl/extensions" xmlns:rg="http://www.kiesraad.nl/reportgenerator">
+    <TransactionId>1</TransactionId>
+    <ManagingAuthority>
+        <AuthorityIdentifier Id="CSB">Centrale Stembureau Limburg</AuthorityIdentifier>
+        <AuthorityAddress/>
+    </ManagingAuthority>
+    <IssueDate>2003-02-27</IssueDate>
+    <kr:CreationDateTime>2009-02-19T21:04:05.123+01:00</kr:CreationDateTime>
+    <ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>
+    <CandidateList>
+        <ListDate>2003-01-27</ListDate>
+        <Election>
+            <ElectionIdentifier Id="PS2003">
+                <ElectionName>Provinciale Staten Limburg</ElectionName>
+                <ElectionCategory>PS</ElectionCategory>
+                <kr:ElectionDomain>Limburg</kr:ElectionDomain>
+                <kr:ElectionDate>2003-03-11</kr:ElectionDate>
+                <kr:NominationDate>2002-10-24</kr:NominationDate>
+            </ElectionIdentifier>
+            <Contest>
+                <ContestIdentifier Id="I">
+                    <ContestName>Maastricht</ContestName>
+                </ContestIdentifier>
+                <Affiliation>
+                    <AffiliationIdentifier Id="1">
+                        <RegisteredName>Christen Democratisch Appèl (CDA)</RegisteredName>
+                    </AffiliationIdentifier>
+                    <Type>lijstengroep</Type>
+                    <rg:RG230cCandidateList>
+                        <rg:CombinedWithList>4711</rg:CombinedWithList>
+                        <rg:CombinedWithList>0815</rg:CombinedWithList>
+                    </rg:RG230cCandidateList>
+                    <kr:ListData PublishGender="true" BelongsToSet="1" BelongsToCombination="a"/>
+                    <Candidate>
+                        <CandidateIdentifier Id="1" ShortCode="SleijpenRLM"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">R.L.M.</xnl:NameLine>
+                                <xnl:FirstName>Remy</xnl:FirstName>
+                                <xnl:LastName>Sleijpen</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Lange Janstraat 17</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6361 AS</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="2" ShortCode="SourenHJM"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">H.J.M.</xnl:NameLine>
+                                <xnl:FirstName>Hub</xnl:FirstName>
+                                <xnl:LastName>Souren</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Westerbrink 17</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6362 AD</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="3" ShortCode="WiekkenHGM"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">H.G.M.</xnl:NameLine>
+                                <xnl:FirstName>Hub</xnl:FirstName>
+                                <xnl:LastName>Wiekken</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Valkenburgstraat 14</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6363 BF</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="4" ShortCode="WaltmansJLWH"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">J.L.W.H.</xnl:NameLine>
+                                <xnl:FirstName>Jan</xnl:FirstName>
+                                <xnl:LastName>Waltmans</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Zijdestraat 15</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6361 KC</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="5" ShortCode="BergJJC"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">J.J.C.</xnl:NameLine>
+                                <xnl:FirstName>Jacques</xnl:FirstName>
+                                <xnl:NamePrefix>van den</xnl:NamePrefix>
+                                <xnl:LastName>Berg</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Mijnstraat 65</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6363 XC</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="6" ShortCode="GootjesTJA"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">T.J.A.</xnl:NameLine>
+                                <xnl:FirstName>Theo</xnl:FirstName>
+                                <xnl:LastName>Gootjes</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Maasstraat 14</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6361 KA</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                </Affiliation>
+                <Affiliation>
+                    <AffiliationIdentifier Id="2">
+                        <RegisteredName>Lijst Lenoir</RegisteredName>
+                    </AffiliationIdentifier>
+                    <Type>lijstengroep</Type>
+                    <rg:RG230cCandidateList>
+                        <rg:CombinedWithList>1234</rg:CombinedWithList>
+                    </rg:RG230cCandidateList>
+                    <kr:ListData PublishGender="true" BelongsToCombination="a"/>
+                    <Candidate>
+                        <CandidateIdentifier Id="1" ShortCode="NameI"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">I.</xnl:NameLine>
+                                <xnl:LastName>Name</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                    </Candidate>
+                </Affiliation>
+            </Contest>
+            <Contest>
+                <ContestIdentifier Id="II">
+                    <ContestName>Venlo</ContestName>
+                </ContestIdentifier>
+                <Affiliation>
+                    <AffiliationIdentifier Id="1">
+                        <RegisteredName>Christen Democratisch Appèl (CDA)</RegisteredName>
+                    </AffiliationIdentifier>
+                    <Type>lijstengroep</Type>
+                    <kr:ListData PublishGender="true" BelongsToSet="1" BelongsToCombination="a"/>
+                    <Candidate>
+                        <CandidateIdentifier Id="1">
+                            <ShortCode>SleijpenRLM</ShortCode>
+                        </CandidateIdentifier>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="2">
+                            <ShortCode>SourenHJM</ShortCode>
+                        </CandidateIdentifier>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="3">
+                            <ShortCode>WiekkenHGM</ShortCode>
+                        </CandidateIdentifier>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="4">
+                            <ShortCode>WaltmansJLWH</ShortCode>
+                        </CandidateIdentifier>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="5">
+                            <ShortCode>BergJJC</ShortCode>
+                        </CandidateIdentifier>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="6" ShortCode="GootjesJJA"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">J.J.A.</xnl:NameLine>
+                                <xnl:FirstName>Jan</xnl:FirstName>
+                                <xnl:LastName>Gootjes</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Maasstraat 24</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6361 KA</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                </Affiliation>
+                <Affiliation>
+                    <AffiliationIdentifier Id="2">
+                        <RegisteredName>Lijst Lenoir</RegisteredName>
+                    </AffiliationIdentifier>
+                    <Type>lijstengroep</Type>
+                    <kr:ListData PublishGender="true" BelongsToCombination="a"/>
+                    <Candidate>
+                        <CandidateIdentifier Id="1">
+                            <ShortCode>NameI</ShortCode>
+                        </CandidateIdentifier>
+                    </Candidate>
+                </Affiliation>
+                <Affiliation>
+                    <AffiliationIdentifier Id="3">
+                        <RegisteredName>Lijst Hermans</RegisteredName>
+                    </AffiliationIdentifier>
+                    <Type>op zichzelf staande lijst</Type>
+                    <kr:ListData PublishGender="true"/>
+                    <Candidate>
+                        <CandidateIdentifier Id="1" ShortCode="HermansACMS"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">A.C.M.S.</xnl:NameLine>
+                                <xnl:FirstName>Fons</xnl:FirstName>
+                                <xnl:NamePrefix>Baron</xnl:NamePrefix>
+                                <xnl:LastName>Hermans</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <Gender>male</Gender>
+                        <QualifyingAddress>
+                            <xal:Country>
+                                <xal:CountryNameCode>DE</xal:CountryNameCode>
+                                <xal:Locality>
+                                    <xal:AddressLine>Bundesallee 88</xal:AddressLine>
+                                    <xal:LocalityName>Berlin</xal:LocalityName>
+                                    <xal:PostalCode>
+                                        <xal:PostalCodeNumber>12161</xal:PostalCodeNumber>
+                                    </xal:PostalCode>
+                                </xal:Locality>
+                            </xal:Country>
+                        </QualifyingAddress>
+                        <Agent>
+                            <AgentIdentifier>
+                                <AgentName>
+                                    <xnl:PersonName>
+                                        <xnl:NameLine NameType="Initials">A.J.</xnl:NameLine>
+                                        <xnl:FirstName>Joep</xnl:FirstName>
+                                        <xnl:LastName>Hendriks jr</xnl:LastName>
+                                    </xnl:PersonName>
+                                </AgentName>
+                            </AgentIdentifier>
+                            <Contact>
+                                <MailingAddress>
+                                    <xal:Locality>
+                                        <xal:AddressLine>Oosterbrink 7</xal:AddressLine>
+                                        <xal:LocalityName>Nuth</xal:LocalityName>
+                                        <xal:PostalCode>
+                                            <xal:PostalCodeNumber>6362 CD</xal:PostalCodeNumber>
+                                        </xal:PostalCode>
+                                    </xal:Locality>
+                                </MailingAddress>
+                            </Contact>
+                        </Agent>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="2" ShortCode="HendriksMJ"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">M.J.</xnl:NameLine>
+                                <xnl:FirstName>Joep</xnl:FirstName>
+                                <xnl:LastName>Hendriks sr</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <Gender>male</Gender>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Oosterbrink 7</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6362 CD</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="3" ShortCode="SoonsHertJHG"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">J.H.G.</xnl:NameLine>
+                                <xnl:FirstName>Johanna</xnl:FirstName>
+                                <xnl:LastName>Soons-Hert</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <Gender>female</Gender>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Valleiweg 16</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6362 FF</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                    <Candidate>
+                        <CandidateIdentifier Id="4" ShortCode="HeuvelvanDommKC"/>
+                        <CandidateFullName>
+                            <xnl:PersonName>
+                                <xnl:NameLine NameType="Initials">K.C.</xnl:NameLine>
+                                <xnl:FirstName>Karien</xnl:FirstName>
+                                <xnl:NamePrefix>van den</xnl:NamePrefix>
+                                <xnl:LastName>Heuvel-van Dommelen</xnl:LastName>
+                            </xnl:PersonName>
+                        </CandidateFullName>
+                        <Gender>female</Gender>
+                        <QualifyingAddress>
+                            <xal:Locality>
+                                <xal:AddressLine>Zijstraat 17</xal:AddressLine>
+                                <xal:LocalityName>Nuth</xal:LocalityName>
+                                <xal:PostalCode>
+                                    <xal:PostalCodeNumber>6361 CK</xal:PostalCodeNumber>
+                                </xal:PostalCode>
+                            </xal:Locality>
+                        </QualifyingAddress>
+                    </Candidate>
+                </Affiliation>
+            </Contest>
+        </Election>
+        <rg:RG230c>
+            <rg:DateOfMeetingI12>2002-10-24</rg:DateOfMeetingI12>
+            <rg:TimeOfMeetingI12>15:30</rg:TimeOfMeetingI12>
+            <rg:NumberedCandidateList>
+                <rg:CandidateListName>
+                    <AffiliationIdentifier Id="1">
+                        <RegisteredName>ABC</RegisteredName>
+                    </AffiliationIdentifier>
+                    <rg:FirstCandidateName>
+                        <xnl:PersonName>
+                            <xnl:NameLine NameType="Initials">R.L.M.</xnl:NameLine>
+                            <xnl:FirstName>Remy</xnl:FirstName>
+                            <xnl:LastName>Sleijpen</xnl:LastName>
+                        </xnl:PersonName>
+                        <Gender>male</Gender>
+                    </rg:FirstCandidateName>
+                </rg:CandidateListName>
+                <rg:ArticleI14Subsection>1</rg:ArticleI14Subsection>
+                <rg:NumberOfVotesInLastElection>123456</rg:NumberOfVotesInLastElection>
+            </rg:NumberedCandidateList>
+            <rg:NumberedCandidateList>
+                <rg:CandidateListName>
+                    <AffiliationIdentifier Id="2">
+                        <RegisteredName>XYZ</RegisteredName>
+                    </AffiliationIdentifier>
+                    <rg:FirstCandidateName>
+                        <xnl:PersonName>
+                            <xnl:NameLine NameType="Initials">R.L.M.</xnl:NameLine>
+                            <xnl:FirstName>Remy</xnl:FirstName>
+                            <xnl:LastName>Sleijpen</xnl:LastName>
+                        </xnl:PersonName>
+                        <Gender>male</Gender>
+                    </rg:FirstCandidateName>
+                </rg:CandidateListName>
+                <rg:ArticleI14Subsection>5</rg:ArticleI14Subsection>
+            </rg:NumberedCandidateList>
+            <rg:NumberedCandidateList>
+                <rg:CandidateListName>
+                    <AffiliationIdentifier Id="3">
+                        <RegisteredName/>
+                    </AffiliationIdentifier>
+                    <rg:FirstCandidateName>
+                        <xnl:PersonName>
+                            <xnl:NameLine NameType="Initials">R.L.M.</xnl:NameLine>
+                            <xnl:FirstName>Remy</xnl:FirstName>
+                            <xnl:LastName>Sleijpen</xnl:LastName>
+                        </xnl:PersonName>
+                        <Gender>male</Gender>
+                    </rg:FirstCandidateName>
+                </rg:CandidateListName>
+                <rg:ArticleI14Subsection>5</rg:ArticleI14Subsection>
+            </rg:NumberedCandidateList>
+            <rg:CombinedList valid="false" id="a">
+                <AffiliationIdentifier Id="101">
+                    <RegisteredName>P1</RegisteredName>
+                </AffiliationIdentifier>
+                <AffiliationIdentifier Id="102">
+                    <RegisteredName>P2</RegisteredName>
+                </AffiliationIdentifier>
+                <rg:Reason>P2 not nominated in KK 7</rg:Reason>
+            </rg:CombinedList>
+            <rg:CombinedList valid="true" id="b">
+                <AffiliationIdentifier Id="103">
+                    <RegisteredName>P3</RegisteredName>
+                </AffiliationIdentifier>
+                <AffiliationIdentifier Id="104">
+                    <RegisteredName>P4</RegisteredName>
+                </AffiliationIdentifier>
+                <AffiliationIdentifier Id="105">
+                    <RegisteredName>P5</RegisteredName>
+                </AffiliationIdentifier>
+            </rg:CombinedList>
+            <rg:P3PublicationSignature>
+                <rg:Place>‘s-Gravenhage</rg:Place>
+                <rg:Date>2006-10-24</rg:Date>
+                <rg:Name>H.R.B.M. Kummeling</rg:Name>
+            </rg:P3PublicationSignature>
+            <rg:OverviewOfListsAndDistricts>
+                <rg:CandidateListName>
+                    <AffiliationIdentifier>
+                        <RegisteredName>Christen Democratisch Appèl (CDA)</RegisteredName>
+                    </AffiliationIdentifier>
+                    <rg:FirstCandidateName>
+                        <xnl:PersonName>
+                            <xnl:NameLine NameType="Initials">B.L.A.</xnl:NameLine>
+                            <xnl:FirstName>Bla</xnl:FirstName>
+                            <xnl:LastName>Blub</xnl:LastName>
+                        </xnl:PersonName>
+                    </rg:FirstCandidateName>
+                </rg:CandidateListName>
+                <rg:Type>stel gelijkluidende lijsten</rg:Type>
+                <rg:SubmittedInElectoralDistrict id="1">true</rg:SubmittedInElectoralDistrict>
+                <rg:SubmittedInElectoralDistrict id="2">true</rg:SubmittedInElectoralDistrict>
+                <rg:SubmittedInElectoralDistrict id="3">true</rg:SubmittedInElectoralDistrict>
+                <rg:SubmittedInElectoralDistrict id="4">true</rg:SubmittedInElectoralDistrict>
+            </rg:OverviewOfListsAndDistricts>
+            <rg:OverviewOfListsAndDistricts>
+                <rg:CandidateListName>
+                    <AffiliationIdentifier>
+                        <RegisteredName>Partij van de Arbeid (P.v.d.A.)</RegisteredName>
+                    </AffiliationIdentifier>
+                    <rg:FirstCandidateName>
+                        <xnl:PersonName>
+                            <xnl:NameLine NameType="Initials">B.L.A.</xnl:NameLine>
+                            <xnl:FirstName>Bla</xnl:FirstName>
+                            <xnl:LastName>Blub</xnl:LastName>
+                        </xnl:PersonName>
+                    </rg:FirstCandidateName>
+                </rg:CandidateListName>
+                <rg:Type>stel gelijkluidende lijsten</rg:Type>
+                <rg:SubmittedInElectoralDistrict id="1">true</rg:SubmittedInElectoralDistrict>
+                <rg:SubmittedInElectoralDistrict id="2">false</rg:SubmittedInElectoralDistrict>
+                <rg:SubmittedInElectoralDistrict id="3">true</rg:SubmittedInElectoralDistrict>
+                <rg:SubmittedInElectoralDistrict id="4">true</rg:SubmittedInElectoralDistrict>
+            </rg:OverviewOfListsAndDistricts>
+        </rg:RG230c>
+    </CandidateList>
+</EML>

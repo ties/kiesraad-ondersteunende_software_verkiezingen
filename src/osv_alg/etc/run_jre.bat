@@ -1,0 +1,1 @@
+jre\bin\java -Duser.language=nl -Duser.country=NL -jar lib\osv_alg.jar %1 %2 %3 %4 

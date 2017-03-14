@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/batik-all-1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/avalon-framework-4.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/serializer-2.7.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/commons-io-1.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/commons-logging-1.0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/fop.jar" sourcepath="external-libs/Fop-0.95/fop-0.95-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/xalan-2.7.0.jar" sourcepath="external-libs-src/xalan-j_2_7_0-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/xercesImpl-2.7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/xml-apis-1.3.04.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/xml-apis-ext-1.3.04.jar"/>
+	<classpathentry exported="true" kind="lib" path="external-libs/Fop-0.95/xmlgraphics-commons-1.3.1.jar"/>
+	<classpathentry kind="lib" path="external-libs/xom-1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="external-libs/log4j/log4j-1.2.14.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
