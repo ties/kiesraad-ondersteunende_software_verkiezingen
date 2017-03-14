@@ -7,4 +7,6 @@
     <xsl:param name="o3-9_050_naam" select="'naam kandidaat'"/>
     <xsl:param name="o3-9_060_voorletters" select="'voorletters'"/>
     <xsl:param name="o3-9_070_woonplaats" select="'woonplaats'"/>
+    <xsl:param name="o3-9_080_GecombineerdMet" select="'Gecombineerd met '"/>
+    <xsl:param name="o3-9_090_en" select="' en '"/>
 </xsl:stylesheet>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="17" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters/>
 	<schemasources xpathdefaultns="urn:oasis:names:tc:evs:schema:eml">
 		<namespaces>
@@ -25,6 +25,7 @@
 		</mainparts>
 		<globalparts/>
 		<designfragments>
+			<designfragment match="CandidateInTable2" isactive="1"/>
 			<designfragment match="O3-H-CandidateVotes" isactive="1"/>
 			<designfragment match="O3CandidateVotes" isactive="1"/>
 			<designfragment match="OverviewAssignmentWithinCombinedLists" isactive="1"/>
@@ -1124,6 +1125,11 @@
 										<children>
 											<tgridcell>
 												<styles border-bottom="1px solid #000" line-height="97pt" vertical-align="bottom"/>
+												<children>
+													<text fixtext=" ">
+														<styles font-size="smaller"/>
+													</text>
+												</children>
 											</tgridcell>
 											<tgridcell>
 												<properties align="left"/>
@@ -1140,7 +1146,7 @@
 												</children>
 											</tgridcell>
 											<tgridcell rotation="vertical-left">
-												<styles border-bottom="1px solid #000" vertical-align="bottom"/>
+												<styles border-bottom="1px solid #000"/>
 												<children>
 													<text fixtext="lijstengroep (gelijkluidende">
 														<styles font-size="8pt"/>
@@ -1155,7 +1161,7 @@
 												</children>
 											</tgridcell>
 											<tgridcell rotation="vertical-left">
-												<styles border-bottom="1px solid #000" vertical-align="bottom"/>
+												<styles border-bottom="1px solid #000"/>
 												<children>
 													<text fixtext="lijstengroep">
 														<styles font-size="8pt"/>
@@ -1179,7 +1185,7 @@
 												</children>
 											</tgridcell>
 											<tgridcell rotation="vertical-left">
-												<styles border-bottom="1px solid #000" vertical-align="bottom"/>
+												<styles border-bottom="1px solid #000"/>
 												<children>
 													<text fixtext="op">
 														<styles font-size="8pt"/>
@@ -1325,20 +1331,22 @@
 																									<text fixtext=" ">
 																										<styles font-size="smaller"/>
 																									</text>
-																									<template subtype="element" match="eml:AffiliationIdentifier">
+																									<template subtype="element" match="rg:CandidateListName">
 																										<children>
-																											<template subtype="element" match="eml:RegisteredName">
+																											<template subtype="element" match="eml:AffiliationIdentifier">
 																												<children>
-																													<content subtype="regular">
-																														<format basic-type="xsd" datatype="token"/>
-																													</content>
+																													<template subtype="element" match="eml:RegisteredName">
+																														<children>
+																															<content subtype="regular">
+																																<format basic-type="xsd" datatype="token"/>
+																															</content>
+																														</children>
+																														<variables/>
+																													</template>
 																												</children>
 																												<variables/>
 																											</template>
 																										</children>
-																										<variables/>
-																									</template>
-																									<template subtype="element" match="rg:CandidateListName">
 																										<variables/>
 																									</template>
 																								</children>
@@ -1513,413 +1521,364 @@
 							<tgridbody-cols>
 								<children>
 									<tgridcol>
-										<styles width="20pt"/>
+										<styles width="28pt"/>
 									</tgridcol>
 									<tgridcol>
-										<styles width="68pt"/>
+										<styles width="150pt"/>
 									</tgridcol>
 									<tgridcol>
-										<styles width="72pt"/>
+										<styles width="25pt"/>
 									</tgridcol>
 									<tgridcol>
-										<styles width="60pt"/>
+										<styles width="25pt"/>
 									</tgridcol>
 									<tgridcol>
-										<styles width="24pt"/>
+										<styles width="25pt"/>
 									</tgridcol>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
+									<tgridcol>
+										<styles width="18pt"/>
+									</tgridcol>
 								</children>
 							</tgridbody-cols>
 							<tgridheader-rows>
 								<children>
-									<tgridrow>
+									<template subtype="element" match="rg:ElectoralDistrictsOverview">
 										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
+											<tgridrow>
 												<children>
-													<condition>
+													<tgridcell>
+														<properties align="left"/>
+														<styles border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="left" vertical-align="top"/>
 														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Lijst-"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_Lijst"/>
-																</children>
-															</conditionbranch>
+															<text fixtext="lijstnr.">
+																<properties class="columnheader"/>
+															</text>
 														</children>
-													</condition>
-													<newline/>
-													<condition>
+													</tgridcell>
+													<tgridcell>
+														<properties align="left"/>
+														<styles border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="left" vertical-align="top"/>
 														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="nummer"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_nummer"/>
-																</children>
-															</conditionbranch>
+															<text fixtext="aanduiding">
+																<properties class="columnheader"/>
+															</text>
 														</children>
-													</condition>
+													</tgridcell>
+													<tgridcell>
+														<properties align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="left" vertical-align="top"/>
+														<children>
+															<text fixtext="ingeleverd">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="left" vertical-align="top"/>
+														<children>
+															<text fixtext="provincie">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+													</tgridcell>
 												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000" vertical-align="top" white-space="nowrap"/>
+											</tgridrow>
+											<tgridrow>
 												<children>
-													<condition>
+													<tgridcell>
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" line-height="97pt" vertical-align="bottom"/>
 														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Aanduiding"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_Aanduiding"/>
-																</children>
-															</conditionbranch>
+															<text fixtext=" ">
+																<styles font-size="smaller"/>
+															</text>
 														</children>
-													</condition>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<text fixtext="  ">
+																<styles font-size="smaller"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+														<children>
+															<text fixtext="lijstengroep">
+																<styles font-size="8pt"/>
+															</text>
+															<text fixtext="t">
+																<styles color="white" font-size="8pt"/>
+															</text>
+															<text fixtext="(gelijkluidende lijsten)">
+																<styles font-size="8pt"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+														<children>
+															<text fixtext="lijstengroep">
+																<styles font-size="8pt"/>
+															</text>
+															<newline/>
+															<text fixtext="(niet">
+																<styles font-size="8pt"/>
+															</text>
+															<text fixtext="t">
+																<styles color="white" font-size="8pt"/>
+															</text>
+															<text fixtext="gelijkluidende">
+																<styles font-size="8pt"/>
+															</text>
+															<text fixtext="t">
+																<styles color="white" font-size="8pt"/>
+															</text>
+															<text fixtext="lijsten)">
+																<styles font-size="8pt"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
+														<children>
+															<text fixtext="op">
+																<styles font-size="8pt"/>
+															</text>
+															<text fixtext="t">
+																<styles color="white" font-size="8pt"/>
+															</text>
+															<text fixtext="zichzelf">
+																<styles font-size="8pt"/>
+															</text>
+															<text fixtext="t">
+																<styles color="white" font-size="8pt"/>
+															</text>
+															<text fixtext="staande">
+																<styles font-size="8pt"/>
+															</text>
+															<text fixtext="t">
+																<styles color="white" font-size="8pt"/>
+															</text>
+															<text fixtext="lijst">
+																<styles font-size="8pt"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="1"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="2"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="3"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="4"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="5"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="6"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="7"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="8"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="9"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="10"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="11"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
+													<tgridcell rotation="vertical-left">
+														<properties align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="bottom"/>
+														<children>
+															<calltemplate subtype="named" match="ProvinceNameEK">
+																<parameters>
+																	<parameter name="id" value="12"/>
+																</parameters>
+															</calltemplate>
+														</children>
+													</tgridcell>
 												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="center"/>
-												<styles border-top="1px solid #000" text-align="left" vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="De groepering heeft">
-																		<styles text-align="left"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_groeperingHeeft">
-																		<styles text-align="left"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="ingediend: ">
-																		<styles text-align="left"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_ingediend">
-																		<styles text-align="left"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="1) een lijstengroep">
-																		<styles text-align="left"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_lijstengroep">
-																		<styles text-align="left"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="2) een stel gelijk-">
-																		<styles text-align="left"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_stelGelijk">
-																		<styles text-align="left"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="luidende lijsten">
-																		<styles text-align="left"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_luidendeLijsten">
-																		<styles text-align="left"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="3) een op zichzelf staande lijst.">
-																		<styles text-align="left"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_zichzelfStaandeLijst">
-																		<styles text-align="left"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<styles border-top="1px solid #000" text-align="center" vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Provincie(s)"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateListsEK_Provincies"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
+											</tgridrow>
 										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles border-bottom="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="1"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="2"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="3"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="4"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="5"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="6"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="7"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="8"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="9"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="10"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="11"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="center"/>
-												<children>
-													<calltemplate subtype="named" match="CandidateListSubmittedHeader">
-														<parameters>
-															<parameter name="districtId" value="12"/>
-															<parameter name="smaller" value="0"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
+										<variables/>
+									</template>
 								</children>
 							</tgridheader-rows>
 							<tgridbody-rows>
@@ -1932,6 +1891,8 @@
 											<tgridrow>
 												<children>
 													<tgridcell>
+														<properties align="right"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" vertical-align="top"/>
 														<children>
 															<template subtype="element" match="rg:CandidateListName">
 																<children>
@@ -1940,6 +1901,7 @@
 																			<template subtype="attribute" match="Id">
 																				<children>
 																					<content subtype="regular">
+																						<styles font-size="smaller"/>
 																						<format basic-type="xsd" datatype="NMTOKEN"/>
 																					</content>
 																				</children>
@@ -1954,7 +1916,7 @@
 														</children>
 													</tgridcell>
 													<tgridcell>
-														<styles text-align="left"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray"/>
 														<children>
 															<condition>
 																<children>
@@ -1974,6 +1936,7 @@
 																											<template subtype="element" match="eml:RegisteredName">
 																												<children>
 																													<content subtype="regular">
+																														<styles font-size="smaller"/>
 																														<format basic-type="xsd" datatype="token"/>
 																													</content>
 																												</children>
@@ -1989,25 +1952,20 @@
 																					</conditionbranch>
 																					<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
 																						<children>
-																							<text fixtext=" ">
-																								<styles font-size="smaller"/>
-																							</text>
-																							<template subtype="element" match="rg:CandidateListName">
+																							<paragraph paragraphtag="pre-wrap">
+																								<styles white-space="pre-wrap"/>
 																								<children>
-																									<paragraph paragraphtag="pre-wrap">
-																										<styles white-space="pre-wrap"/>
+																									<text fixtext=" ">
+																										<styles font-size="smaller"/>
+																									</text>
+																									<template subtype="element" match="rg:CandidateListName">
 																										<children>
-																											<text fixtext=" ">
-																												<styles font-size="smaller"/>
-																											</text>
-																											<template subtype="element" match="rg:CandidateListName">
-																												<variables/>
-																											</template>
 																											<template subtype="element" match="eml:AffiliationIdentifier">
 																												<children>
 																													<template subtype="element" match="eml:RegisteredName">
 																														<children>
 																															<content subtype="regular">
+																																<styles font-size="smaller"/>
 																																<format basic-type="xsd" datatype="token"/>
 																															</content>
 																														</children>
@@ -2017,10 +1975,10 @@
 																												<variables/>
 																											</template>
 																										</children>
-																									</paragraph>
+																										<variables/>
+																									</template>
 																								</children>
-																								<variables/>
-																							</template>
+																							</paragraph>
 																						</children>
 																					</conditionbranch>
 																				</children>
@@ -2029,9 +1987,6 @@
 																	</conditionbranch>
 																	<conditionbranch>
 																		<children>
-																			<text fixtext=" ">
-																				<styles font-size="smaller"/>
-																			</text>
 																			<text fixtext="invisible">
 																				<styles color="white" font-size="smaller"/>
 																			</text>
@@ -2041,172 +1996,180 @@
 															</condition>
 														</children>
 													</tgridcell>
-													<tgridcell joinleft="1"/>
-													<tgridcell joinleft="1"/>
 													<tgridcell>
-														<properties align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath="./rg:Type[text() = &quot;stel gelijkluidende lijsten&quot;]">
+																		<children>
+																			<text fixtext="*"/>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch/>
+																</children>
+															</condition>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<condition>
 																<children>
 																	<conditionbranch xpath="./rg:Type[text() = &quot;lijstengroep&quot;]">
 																		<children>
-																			<text fixtext="1"/>
+																			<text fixtext="*"/>
 																		</children>
 																	</conditionbranch>
-																	<conditionbranch xpath="./rg:Type[text() = &quot;stel gelijkluidende lijsten&quot;]">
-																		<children>
-																			<text fixtext="2"/>
-																		</children>
-																	</conditionbranch>
+																	<conditionbranch/>
+																</children>
+															</condition>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<properties align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
+														<children>
+															<condition>
+																<children>
 																	<conditionbranch xpath="./rg:Type[text() = &quot;op zichzelf staande lijst&quot;]">
 																		<children>
-																			<text fixtext="3"/>
+																			<text fixtext="*"/>
 																		</children>
 																	</conditionbranch>
+																	<conditionbranch/>
 																</children>
 															</condition>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="1"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="2"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="3"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="4"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="5"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="6"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="7"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="8"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="9"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="10"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="11"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<properties valign="top"/>
-														<styles text-align="center"/>
+														<styles border-bottom="1px solid gray" border-left="1px solid gray" border-right="1px solid gray" border-top="1px solid gray" text-align="center"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateListSubmitted">
 																<parameters>
 																	<parameter name="districtId" value="12"/>
-																	<parameter name="smaller" value="0"/>
 																</parameters>
 															</calltemplate>
 														</children>
@@ -2216,61 +2179,6 @@
 										</children>
 										<variables/>
 									</template>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top-color="black" border-top-style="solid" border-top-width="1px"/>
-											</tgridcell>
-										</children>
-									</tgridrow>
 								</children>
 							</tgridbody-rows>
 						</children>
@@ -4150,1175 +4058,6 @@
 					</tgrid>
 				</children>
 			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewVotesEK">
-				<parameters/>
-				<children>
-					<tgrid>
-						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-						<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-						<children>
-							<tgridbody-cols>
-								<children>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol>
-										<styles width="50pt"/>
-									</tgridcol>
-								</children>
-							</tgridbody-cols>
-							<tgridbody-rows>
-								<children>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Lijst-">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_Lijst">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="nummer">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_nummer">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Provincie">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_Provincie">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Totaal aantal">
-																		<styles font-size="xx-small"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_TotaalAantal">
-																		<styles font-size="xx-small"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="stemmen per">
-																		<styles font-size="xx-small"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_stemmenPer">
-																		<styles font-size="xx-small"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="groepering">
-																		<styles font-size="xx-small"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_groepering">
-																		<styles font-size="xx-small"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<styles height="31pt"/>
-										<children>
-											<tgridcell joinabove="1">
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell joinleft="1" joinabove="1">
-												<styles width="35pt"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="1">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="2">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="3">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="4">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="5">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="6">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="7">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="8">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="9">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="10">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="11">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext="12">
-														<styles font-size="smaller"/>
-													</text>
-												</children>
-											</tgridcell>
-											<tgridcell joinabove="1">
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<template subtype="element" match="rg:OverviewOfListsAndDistrictsAndVotes">
-										<children>
-											<tgridrow>
-												<styles height="1pt"/>
-												<children>
-													<tgridcell>
-														<properties align="center"/>
-														<styles vertical-align="top" width="13pt"/>
-														<children>
-															<template subtype="attribute" match="listNumber">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																		<format basic-type="xsd" datatype="NMTOKEN"/>
-																	</content>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles vertical-align="top" width="76pt"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="aantal stemmen:">
-																				<styles font-size="smaller"/>
-																			</text>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewVotesEK_aantalStemmen">
-																				<styles font-size="smaller"/>
-																			</autocalc>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-															<newline/>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="gelden voor:">
-																				<styles font-size="smaller"/>
-																			</text>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewVotesEK_geldenVoor">
-																				<styles font-size="smaller"/>
-																			</autocalc>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 1" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 2" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 3" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 4" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 5" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 6" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 7" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 8" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 9" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 10" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 11" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter="position() = 12" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<template subtype="element" filter=" @id = &quot;alle&quot; " match="rg:VotesInElectoralDistrict">
-																<children>
-																	<text fixtext=" "/>
-																	<newline/>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Totaal aantal stemmen per provincie">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_stemmenPerProvincie">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 1" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 2" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 3" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 4" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 5" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 6" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 7" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 8" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 9" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 10" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<autocalc xpath=".*//rg:ElectoralDistrictsOverview/rg:ElectoralDistrictName[position() = 10]/@voteValue">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 11" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<autocalc xpath=".*//rg:ElectoralDistrictsOverview/rg:ElectoralDistrictName[position() = 11]/@voteValue">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="position() = 12" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<autocalc xpath=".*//rg:ElectoralDistrictsOverview/rg:ElectoralDistrictName[position() = 12]/@voteValue">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Totaal aantal uitgebrachte stemmen">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewVotesEK_uitgebrachteStemmen">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" match="rg:OverviewOfDistrictsVotes">
-														<children>
-															<template subtype="element" filter="@id = &quot;alle&quot;" match="rg:VotesInElectoralDistrict">
-																<children>
-																	<template subtype="attribute" match="weighted">
-																		<children>
-																			<content subtype="regular">
-																				<styles font-size="smaller"/>
-																				<format basic-type="xsd" datatype="integer"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-													<text fixtext=" "/>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-								</children>
-							</tgridbody-rows>
-						</children>
-					</tgrid>
-				</children>
-			</globaltemplate>
 			<globaltemplate subtype="named" match="OverviewCheckedLists">
 				<parameters/>
 				<children>
@@ -5547,9 +4286,20 @@
 														<properties align="left"/>
 														<styles border-bottom="1px solid #000" vertical-align="top"/>
 														<children>
-															<text fixtext="lijstnummer of letter lijstencombinatie">
+															<text fixtext="lijstnummer">
 																<properties class="columnheader"/>
 															</text>
+															<condition>
+																<children>
+																	<conditionbranch xpath="$isEK = 0">
+																		<children>
+																			<text fixtext=" of letter lijstencombinatie">
+																				<properties class="columnheader"/>
+																			</text>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
 														</children>
 													</tgridcell>
 													<tgridcell joinleft="1"/>
@@ -5678,20 +4428,7 @@
 																								<children>
 																									<conditionbranch xpath="@districtNumber">
 																										<children>
-																											<condition>
-																												<children>
-																													<conditionbranch xpath="$lang=0">
-																														<children>
-																															<text fixtext="(Kieskring "/>
-																														</children>
-																													</conditionbranch>
-																													<conditionbranch>
-																														<children>
-																															<autocalc xpath="$RP22_OverviewFirstAssigment_Kieskring"/>
-																														</children>
-																													</conditionbranch>
-																												</children>
-																											</condition>
+																											<text fixtext="(Kieskring "/>
 																											<template subtype="attribute" match="districtNumber">
 																												<children>
 																													<content subtype="regular">
@@ -6012,20 +4749,7 @@
 								<children>
 									<newline/>
 									<newline/>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Overeenkomstig artikel "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewDHondtAssignment_Overeenkomstig"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Overeenkomstig artikel "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="$articleLoting != &quot;&quot;">
@@ -6039,56 +4763,17 @@
 														<children>
 															<conditionbranch xpath="@article = &quot;P13&quot;">
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="P 13"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewDHondtAssignment_P13"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="P 13"/>
 																</children>
 															</conditionbranch>
 															<conditionbranch xpath="@article = &quot;U13&quot;">
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="U 13"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewDHondtAssignment_U13"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="U 13"/>
 																</children>
 															</conditionbranch>
 															<conditionbranch>
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="P 7"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewDHondtAssignment_P7"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="P 7"/>
 																</children>
 															</conditionbranch>
 														</children>
@@ -6097,20 +4782,7 @@
 											</conditionbranch>
 										</children>
 									</condition>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=", eerste lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewDHondtAssignment_eersteLid"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=", eerste lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedList">
@@ -6121,40 +4793,14 @@
 									</template>
 									<template subtype="element" match="rg:Looser">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext=" en "/>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_OverviewDHondtAssignment_en"/>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext=" en "/>
 											<calltemplate subtype="named" match="ListOrCombinedList">
 												<parameters/>
 											</calltemplate>
 										</children>
 										<variables/>
 									</template>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewDHondtAssignment_AlsGevolg"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedList">
@@ -6190,11 +4836,21 @@
 							</template>
 							<newline/>
 							<newline/>
+							<text fixtext="I. Combinatiekiesdeler van deze lijstencombinatie">
+								<styles font-weight="bold" text-decoration="underline"/>
+							</text>
+							<newline/>
 							<calltemplate subtype="named" match="Kiesdeler">
 								<parameters>
 									<parameter name="inCombinedList" value="true()"/>
 								</parameters>
 							</calltemplate>
+							<newline/>
+							<newline/>
+							<text fixtext="II. Verdeling van de volle zetels binnen deze lijstencombinatie">
+								<styles font-weight="bold" text-decoration="underline"/>
+							</text>
+							<newline/>
 							<newline/>
 							<tgrid>
 								<properties border="0" cellpadding="1" cellspacing="0"/>
@@ -6208,22 +4864,16 @@
 												<styles width="70pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="30pt"/>
+												<styles width="15pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="25pt"/>
+												<styles width="100pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="20pt"/>
+												<styles width="15pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="35pt"/>
-											</tgridcol>
-											<tgridcol>
-												<styles width="60pt"/>
-											</tgridcol>
-											<tgridcol>
-												<styles width="60pt"/>
+												<styles width="70pt"/>
 											</tgridcol>
 										</children>
 									</tgridbody-cols>
@@ -6251,41 +4901,31 @@
 														</children>
 													</tgridcell>
 													<tgridcell>
-														<properties align="left"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="center" vertical-align="top"/>
 														<children>
-															<text fixtext="aantal volle zetels per lijst">
-																<properties class="columnheader"/>
-															</text>
+															<text fixtext=":"/>
 														</children>
-													</tgridcell>
-													<tgridcell joinleft="1">
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
 													</tgridcell>
 													<tgridcell>
 														<properties align="left"/>
 														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
 														<children>
-															<text fixtext="overschot">
-																<properties class="columnheader"/>
-															</text>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1">
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="right"/>
-													</tgridcell>
-													<tgridcell>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<text fixtext="toegewezen restzetels">
+															<text fixtext="combinatiekiesdeler">
 																<properties class="columnheader"/>
 															</text>
 														</children>
 													</tgridcell>
 													<tgridcell>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="center" vertical-align="top"/>
 														<children>
-															<text fixtext="totaal aantal zetels">
+															<text fixtext="="/>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<properties align="left"/>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
+														<children>
+															<text fixtext="aantal volle zetels">
 																<properties class="columnheader"/>
 															</text>
 														</children>
@@ -6344,8 +4984,273 @@
 																</children>
 															</tgridcell>
 															<tgridcell>
+																<styles text-align="center" vertical-align="top"/>
+																<children>
+																	<text fixtext=":"/>
+																</children>
+															</tgridcell>
+															<tgridcell>
+																<styles text-align="center" vertical-align="top"/>
+																<children>
+																	<template subtype="userdefined" match="..">
+																		<children>
+																			<template subtype="element" match="rg:ElectoralQuota">
+																				<children>
+																					<calltemplate subtype="named" match="ElectionFraction">
+																						<parameters/>
+																					</calltemplate>
+																				</children>
+																				<variables/>
+																			</template>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</tgridcell>
+															<tgridcell>
 																<properties align="left"/>
-																<styles text-align="right" vertical-align="top"/>
+																<styles text-align="center" vertical-align="top"/>
+																<children>
+																	<text fixtext="="/>
+																</children>
+															</tgridcell>
+															<tgridcell>
+																<styles text-align="center" vertical-align="top"/>
+																<children>
+																	<template subtype="element" match="rg:PriorSeats">
+																		<children>
+																			<content subtype="regular">
+																				<format basic-type="xsd" datatype="integer"/>
+																			</content>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</tgridcell>
+														</children>
+													</tgridrow>
+												</children>
+												<variables/>
+											</template>
+										</children>
+									</tgridbody-rows>
+								</children>
+							</tgrid>
+							<newline/>
+							<newline/>
+							<tgrid>
+								<properties border="0"/>
+								<children>
+									<tgridbody-cols>
+										<children>
+											<tgridcol>
+												<styles width="260pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="25pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="10pt"/>
+											</tgridcol>
+										</children>
+									</tgridbody-cols>
+									<tgridbody-rows>
+										<children>
+											<tgridrow>
+												<children>
+													<tgridcell>
+														<children>
+															<text fixtext="Aantal zetels van deze lijstencombinatie"/>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<styles text-align="right"/>
+														<children>
+															<autocalc xpath="@PriorSeats + @NewSeats"/>
+														</children>
+													</tgridcell>
+													<tgridcell/>
+												</children>
+											</tgridrow>
+											<tgridrow>
+												<children>
+													<tgridcell>
+														<children>
+															<text fixtext="Aantal toegewezen volle zetels binnen deze lijstencombinatie"/>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<styles border-bottom="1px solid #000" text-align="right"/>
+														<children>
+															<template subtype="attribute" match="PriorSeats">
+																<children>
+																	<content subtype="regular">
+																		<format basic-type="xsd" datatype="integer"/>
+																	</content>
+																</children>
+																<variables/>
+															</template>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<children>
+															<text fixtext="-"/>
+														</children>
+													</tgridcell>
+												</children>
+											</tgridrow>
+											<tgridrow>
+												<children>
+													<tgridcell>
+														<children>
+															<text fixtext="Restzetels lijstencombinatie"/>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<styles text-align="right"/>
+														<children>
+															<template subtype="attribute" match="NewSeats">
+																<children>
+																	<content subtype="regular">
+																		<format basic-type="xsd" datatype="integer"/>
+																	</content>
+																</children>
+																<variables/>
+															</template>
+														</children>
+													</tgridcell>
+													<tgridcell/>
+												</children>
+											</tgridrow>
+										</children>
+									</tgridbody-rows>
+								</children>
+							</tgrid>
+							<newline/>
+							<newline/>
+							<text fixtext="III.	Verdeling van de restzetels binnen deze lijstencombinatie">
+								<styles font-weight="bold" text-decoration="underline"/>
+							</text>
+							<newline/>
+							<newline/>
+							<tgrid>
+								<properties border="0" cellpadding="1" cellspacing="0"/>
+								<children>
+									<tgridbody-cols>
+										<children>
+											<tgridcol>
+												<styles width="80pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="70pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="50pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="50pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="60pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="70pt"/>
+											</tgridcol>
+										</children>
+									</tgridbody-cols>
+									<tgridheader-rows>
+										<children>
+											<tgridrow>
+												<styles font-size="smaller"/>
+												<children>
+													<tgridcell>
+														<properties align="left"/>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
+														<children>
+															<text fixtext="verbonden lijsten">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<properties align="left"/>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
+														<children>
+															<text fixtext="aantal volle zetels">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="center" vertical-align="top"/>
+														<children>
+															<text fixtext="overschot">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell joinleft="1">
+														<properties align="left"/>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
+													</tgridcell>
+													<tgridcell>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
+														<children>
+															<text fixtext="toegewezen restzetels">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+													<tgridcell>
+														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
+														<children>
+															<text fixtext="totaal aantal zetels">
+																<properties class="columnheader"/>
+															</text>
+														</children>
+													</tgridcell>
+												</children>
+											</tgridrow>
+										</children>
+									</tgridheader-rows>
+									<tgridbody-rows>
+										<children>
+											<template subtype="element" match="rg:AssignmentWithinCombinedListsLine">
+												<children>
+													<tgridrow>
+														<styles font-size="smaller"/>
+														<children>
+															<tgridcell>
+																<properties align="left"/>
+																<styles vertical-align="top"/>
+																<children>
+																	<template subtype="element" match="rg:ListOrCombinedList">
+																		<children>
+																			<template subtype="attribute" match="listNumber">
+																				<children>
+																					<text fixtext="Lijst "/>
+																					<content subtype="regular">
+																						<format basic-type="xsd" datatype="integer"/>
+																					</content>
+																				</children>
+																				<variables/>
+																			</template>
+																			<template subtype="attribute" match="combinationId">
+																				<children>
+																					<text fixtext="combinatie "/>
+																					<content subtype="regular">
+																						<format basic-type="xsd" datatype="token"/>
+																					</content>
+																				</children>
+																				<variables/>
+																			</template>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</tgridcell>
+															<tgridcell>
+																<styles text-align="center" vertical-align="top"/>
 																<children>
 																	<template subtype="element" match="rg:PriorSeats">
 																		<children>
@@ -6372,7 +5277,6 @@
 																	</template>
 																</children>
 															</tgridcell>
-															<tgridcell joinleft="1"/>
 															<tgridcell>
 																<properties align="left"/>
 																<styles text-align="left" vertical-align="top"/>
@@ -6434,20 +5338,7 @@
 								<children>
 									<newline/>
 									<newline/>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Overeenkomstig artikel P 11, vijfde lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_OvereenkomstigP11"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Overeenkomstig artikel P 11, vijfde lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedList">
@@ -6458,40 +5349,14 @@
 									</template>
 									<template subtype="element" match="rg:Looser">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext=" en "/>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_en"/>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext=" en "/>
 											<calltemplate subtype="named" match="ListOrCombinedList">
 												<parameters/>
 											</calltemplate>
 										</children>
 										<variables/>
 									</template>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_AlsGevolg"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedList">
@@ -6508,38 +5373,12 @@
 								<children>
 									<newline/>
 									<newline/>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Overeenkomstig artikel P 13, eerste lid van de Kieswet vindt er een overgang plaats van "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_OvereenkomstigP13"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Overeenkomstig artikel P 13, eerste lid van de Kieswet vindt er een overgang plaats van "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="@lostSeats = 1">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="een zetel"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_eenZetel"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="een zetel van "/>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
@@ -6552,34 +5391,7 @@
 														</children>
 														<variables/>
 													</template>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=" zetels"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_zetels"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=" van "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_van"/>
+													<text fixtext=" zetels van "/>
 												</children>
 											</conditionbranch>
 										</children>
@@ -6587,56 +5399,17 @@
 									<calltemplate subtype="named" match="ListOrCombinedList">
 										<parameters/>
 									</calltemplate>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=" naar "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_naar"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=" naar "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="@lostSeats = 1">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="een ander lijst"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_anderLijst"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="een ander lijst"/>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="andere lijsten"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_andereLijsten"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="andere lijsten"/>
 												</children>
 											</conditionbranch>
 										</children>
@@ -6654,20 +5427,7 @@
 													<calltemplate subtype="named" match="LineBreak">
 														<parameters/>
 													</calltemplate>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Hierna zijn overeenkomstig artikel P 13, tweede lid van de volgende restzetels toegewezen volgens het stelsel van de grootste gemiddelden:"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinCombinedLists_HiernaZijn"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Hierna zijn overeenkomstig artikel P 13, tweede lid de volgende restzetels toegewezen volgens het stelsel van de grootste gemiddelden:"/>
 													<calltemplate subtype="named" match="LineBreakTable">
 														<parameters/>
 													</calltemplate>
@@ -6848,80 +5608,28 @@
 												<properties align="left"/>
 												<styles border-bottom="1px solid #000"/>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Aanduiding van de groepering"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewListResultAndSeats_Aanduiding"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Aanduiding van de groepering"/>
 												</children>
 											</tgridcell>
 											<tgridcell>
 												<properties align="left"/>
 												<styles border-bottom="1px solid #000"/>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Lijst"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewListResultAndSeats_Lijst"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Lijst"/>
 												</children>
 											</tgridcell>
 											<tgridcell>
 												<properties align="left"/>
 												<styles border-bottom="1px solid #000"/>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Totaal aantal stemmen"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewListResultAndSeats_aantalStemmen"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Totaal aantal stemmen"/>
 												</children>
 											</tgridcell>
 											<tgridcell>
 												<properties align="left"/>
 												<styles border-bottom="1px solid #000"/>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Toegewezen aantal zetels"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewListResultAndSeats_aantalZetels"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Toegewezen aantal zetels"/>
 												</children>
 											</tgridcell>
 										</children>
@@ -7132,7 +5840,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										<parameters>
 											<parameter name="isEvenOdd" value="1"/>
 											<parameter name="isSeats" value="$isSeats"/>
-											<parameter name="ab" value="0"/>
 										</parameters>
 									</calltemplate>
 									<calltemplate subtype="named" match="OverviewCandidateResult1-1-4">
@@ -7154,7 +5861,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										<parameters>
 											<parameter name="isEvenOdd" value="1"/>
 											<parameter name="isSeats" value="$isSeats"/>
-											<parameter name="ab" value="0"/>
 										</parameters>
 									</calltemplate>
 									<calltemplate subtype="named" match="OverviewCandidateResult1-1-7">
@@ -7173,7 +5879,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														<parameters>
 															<parameter name="isEvenOdd" value="0"/>
 															<parameter name="isSeats" value="$isSeats"/>
-															<parameter name="ab" value="0"/>
 														</parameters>
 													</calltemplate>
 													<calltemplate subtype="named" match="OverviewCandidateResult1-8-20">
@@ -7246,7 +5951,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														<children>
 															<calltemplate subtype="named" match="PartyHeader4Lines">
 																<parameters>
-																	<parameter name="ab" value="0"/>
 																	<parameter name="withList" value="false()"/>
 																	<parameter name="withVotes" value="true()"/>
 																</parameters>
@@ -7285,7 +5989,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										<children>
 											<calltemplate subtype="named" match="PartyHeader4Lines">
 												<parameters>
-													<parameter name="ab" value="0"/>
 													<parameter name="withList"/>
 													<parameter name="withVotes" value="false()"/>
 													<parameter name="toegewezen" value="true()"/>
@@ -7312,220 +6015,12 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 					</template>
 				</children>
 			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewCandidateResultU16-IJ">
-				<parameters>
-					<parameter name="isSeats" type="xs:int" occurrence="none-or-one" default-value="1"/>
-				</parameters>
-				<children>
-					<template subtype="element" match="rg:OverviewOfCandidatesAndResults">
-						<children>
-							<template subtype="element" filter="($isSeats = 1 and rg:Seats &gt; 0) or ($isSeats = 0 and rg:Seats = 0)" match="rg:ListGroupAndResults">
-								<children>
-									<template subtype="element" match="rg:ListAndResults">
-										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$candidateCount != 36 and $candidateCount != 71 and $candidateCount != 72">
-														<children>
-															<calltemplate subtype="named" match="OverviewCandidateResultU16-IJ-Base">
-																<parameters>
-																	<parameter name="isSeats" value="$isSeats"/>
-																	<parameter name="fromLine" value="1"/>
-																	<parameter name="tillLine" value="35"/>
-																	<parameter name="candidateCount" value="$candidateCount"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<calltemplate subtype="named" match="OverviewCandidateResultU16-IJ-Base">
-																<parameters>
-																	<parameter name="isSeats" value="$isSeats"/>
-																	<parameter name="fromLine" value="1"/>
-																	<parameter name="tillLine" value="36"/>
-																	<parameter name="candidateCount" value="$candidateCount"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
-											<condition>
-												<children>
-													<conditionbranch xpath="$candidateCount &gt;= 37 and $candidateCount != 71 and $candidateCount != 72">
-														<children>
-															<calltemplate subtype="named" match="OverviewCandidateResultU16-IJ-Base">
-																<parameters>
-																	<parameter name="isSeats" value="$isSeats"/>
-																	<parameter name="fromLine" value="36"/>
-																	<parameter name="tillLine" value="70"/>
-																	<parameter name="candidateCount" value="$candidateCount"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</conditionbranch>
-													<conditionbranch xpath="$candidateCount = 71 or $candidateCount = 72">
-														<children>
-															<calltemplate subtype="named" match="OverviewCandidateResultU16-IJ-Base">
-																<parameters>
-																	<parameter name="isSeats" value="$isSeats"/>
-																	<parameter name="fromLine" value="37"/>
-																	<parameter name="tillLine" value="72"/>
-																	<parameter name="candidateCount" value="$candidateCount"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
-											<condition>
-												<children>
-													<conditionbranch xpath="$candidateCount &gt;= 72">
-														<children>
-															<calltemplate subtype="named" match="OverviewCandidateResultU16-IJ-Base">
-																<parameters>
-																	<parameter name="isSeats" value="$isSeats"/>
-																	<parameter name="fromLine" value="71"/>
-																	<parameter name="tillLine" value="80"/>
-																	<parameter name="candidateCount" value="$candidateCount"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
-										</children>
-										<variables>
-											<variable name="candidateCount" value="count( rg:CandidateAndResult )" valuetype="&lt;auto&gt;"/>
-										</variables>
-									</template>
-									<condition>
-										<children>
-											<conditionbranch xpath="$isSeats = 1">
-												<children>
-													<newline/>
-													<newline break="page"/>
-													<newline/>
-													<calltemplate subtype="named" match="PartyHeader3Lines">
-														<parameters/>
-													</calltemplate>
-													<newline/>
-													<newline/>
-													<calltemplate subtype="named" match="OverviewCandidateResultElected">
-														<parameters/>
-													</calltemplate>
-													<calltemplate subtype="named" match="LineBreakTable">
-														<parameters/>
-													</calltemplate>
-													<calltemplate subtype="named" match="OverviewCandidateResultNewListOrder">
-														<parameters/>
-													</calltemplate>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-								<variables/>
-							</template>
-						</children>
-						<variables/>
-					</template>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewCandidateResultU16-IJ-Base">
-				<parameters>
-					<parameter name="isSeats" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="fromLine" type="xs:int"/>
-					<parameter name="tillLine" type="xs:int"/>
-					<parameter name="candidateCount" type="xs:int"/>
-				</parameters>
-				<children>
-					<condition>
-						<children>
-							<conditionbranch xpath="count(rg:CandidateAndResult[position() = 1]/rg:VotesInElectoralDistrictPart[position() = 1]/rg:VotesInElectoralDistrict) &lt;= 3">
-								<children>
-									<calltemplate subtype="named" match="PartyHeaderEvenOdd">
-										<parameters>
-											<parameter name="isEvenOdd" value="0"/>
-											<parameter name="isSeats" value="$isSeats"/>
-											<parameter name="ab" value="1"/>
-										</parameters>
-									</calltemplate>
-									<calltemplate subtype="named" match="OverviewCandidateResult-EK-1-2">
-										<parameters>
-											<parameter name="fromLine" value="$fromLine"/>
-											<parameter name="tillLine" value="$tillLine"/>
-											<parameter name="remainingCandidates" value="$candidateCount - $tillLine"/>
-										</parameters>
-									</calltemplate>
-								</children>
-							</conditionbranch>
-							<conditionbranch xpath="count(rg:CandidateAndResult[position() = 1]/rg:VotesInElectoralDistrictPart) = 1">
-								<children>
-									<calltemplate subtype="named" match="PartyHeaderEvenOdd">
-										<parameters>
-											<parameter name="isEvenOdd" value="0"/>
-											<parameter name="isSeats" value="$isSeats"/>
-											<parameter name="ab" value="1"/>
-										</parameters>
-									</calltemplate>
-									<calltemplate subtype="named" match="OverviewCandidateResult-EK-1-4">
-										<parameters>
-											<parameter name="fromLine" value="$fromLine"/>
-											<parameter name="tillLine" value="$tillLine"/>
-											<parameter name="remainingCandidates" value="$candidateCount - $tillLine"/>
-										</parameters>
-									</calltemplate>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<calltemplate subtype="named" match="PartyHeaderEvenOdd">
-										<parameters>
-											<parameter name="isEvenOdd" value="1"/>
-											<parameter name="isSeats" value="$isSeats"/>
-											<parameter name="ab" value="1"/>
-										</parameters>
-									</calltemplate>
-									<calltemplate subtype="named" match="OverviewCandidateResult-EK-1-5">
-										<parameters>
-											<parameter name="fromLine" value="$fromLine"/>
-											<parameter name="tillLine" value="$tillLine"/>
-											<parameter name="remainingCandidates" value="$candidateCount - $tillLine"/>
-										</parameters>
-									</calltemplate>
-									<condition>
-										<children>
-											<conditionbranch xpath="count(rg:CandidateAndResult[position() = 1]/rg:VotesInElectoralDistrictPart) = 2">
-												<children>
-													<calltemplate subtype="named" match="PartyHeaderEvenOdd">
-														<parameters>
-															<parameter name="isEvenOdd" value="0"/>
-															<parameter name="isSeats" value="$isSeats"/>
-															<parameter name="ab" value="1"/>
-														</parameters>
-													</calltemplate>
-													<calltemplate subtype="named" match="OverviewCandidateResult-EK-6-12">
-														<parameters>
-															<parameter name="fromLine" value="$fromLine"/>
-															<parameter name="tillLine" value="$tillLine"/>
-															<parameter name="remainingCandidates" value="$candidateCount - $tillLine"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<newline/>
-				</children>
-			</globaltemplate>
 			<globaltemplate subtype="named" match="OverviewCandidateResultElected">
-				<parameters/>
+				<parameters>
+					<parameter name="PublishGender" occurrence="none-or-one" default-value="rg:ListAndResults[ position() = 1 ]/kr:ListData/@PublishGender"/>
+					<parameter name="PublicationLanguage" occurrence="none-or-one" default-value="rg:ListAndResults[ position() = 1 ]/kr:ListData/@PublicationLanguage"/>
+					<parameter name="isEK" type="xs:int" occurrence="none-or-one" default-value="count(//eml:ElectionCategory[text() = &apos;EK&apos;])"/>
+				</parameters>
 				<children>
 					<calltemplate subtype="named" match="LineBreakPdf">
 						<parameters/>
@@ -7535,37 +6030,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 					</calltemplate>
 					<template subtype="element" match="rg:DeadCandidate">
 						<children>
-							<condition>
-								<children>
-									<conditionbranch xpath="$lang=0">
-										<children>
-											<text fixtext="Bij de toewijzing van de zetels aan de kandidaten wordt ingevolge artikel P 19a van de Kieswet de kandidaat "/>
-										</children>
-									</conditionbranch>
-									<conditionbranch>
-										<children>
-											<autocalc xpath="$RP22_OverviewCandidateResultElected_BijDeToewijzing"/>
-										</children>
-									</conditionbranch>
-								</children>
-							</condition>
+							<text fixtext="Bij de toewijzing van de zetels aan de kandidaten wordt ingevolge artikel P 19a van de Kieswet de kandidaat "/>
 							<calltemplate subtype="named" match="CandidateInTable2">
-								<parameters/>
+								<parameters>
+									<parameter name="PublishGender" value="$PublishGender"/>
+									<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+								</parameters>
 							</calltemplate>
-							<condition>
-								<children>
-									<conditionbranch xpath="$lang=0">
-										<children>
-											<text fixtext=" buiten beschouwing gelaten, aangezien deze is overleden."/>
-										</children>
-									</conditionbranch>
-									<conditionbranch>
-										<children>
-											<autocalc xpath="$RP22_OverviewCandidateResultElected_buitenBeschouwing"/>
-										</children>
-									</conditionbranch>
-								</children>
-							</condition>
+							<text fixtext=" buiten beschouwing gelaten, aangezien deze is overleden."/>
 							<calltemplate subtype="named" match="LineBreak">
 								<parameters/>
 							</calltemplate>
@@ -7581,42 +6053,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 						</children>
 						<variables/>
 					</template>
-					<text fixtext="I. Met voorkeur">
-						<styles font-weight="bold"/>
-					</text>
-					<condition>
-						<children>
-							<conditionbranch xpath="//kr:ElectionSubcategory[text() = &quot;TK&quot; or text() = &quot;PS2&quot;  or text() = &quot;EP&quot; or text() = &quot;EK&quot;]">
-								<children>
-									<text fixtext="stemmen">
-										<styles font-weight="bold"/>
-									</text>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<text fixtext=" gekozen kandidaten bij ">
-						<styles font-weight="bold"/>
-					</text>
-					<condition>
-						<children>
-							<conditionbranch xpath="//kr:ElectionSubcategory[text() = &quot;BC&quot; or text() = &quot;GC&quot;  or text() = &quot;GR1&quot; or text() = &quot;ER1&quot;]">
-								<children>
-									<text fixtext="minder dan 19 te verdelen">
-										<styles font-weight="bold"/>
-									</text>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<text fixtext="19 of meer te verdelen">
-										<styles font-weight="bold"/>
-									</text>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<text fixtext=" zetels">
+					<text fixtext="I. Met voorkeurstemmen gekozen kandidaten">
 						<styles font-weight="bold"/>
 					</text>
 					<newline/>
@@ -7625,47 +6062,60 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 						<children>
 							<conditionbranch xpath="rg:PriorityCandidate">
 								<children>
-									<text fixtext="De volgende kandidaten zijn met voorkeurstemmen gekozen. Deze kandidaten hebben "/>
 									<condition>
 										<children>
-											<conditionbranch xpath="//kr:ElectionSubcategory[text() = &quot;TK&quot; or text() = &quot;PS2&quot;  or text() = &quot;EP&quot; or text() = &quot;EK&quot;]">
+											<conditionbranch xpath="$isEK = 0">
 												<children>
-													<text fixtext="ten minste "/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-									<condition>
-										<children>
-											<conditionbranch xpath="//kr:ElectionSubcategory[ text() = &quot;GR1&quot; or text()  = &quot;BC&quot; ]">
-												<children>
-													<text fixtext="50% van"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch xpath="//kr:ElectionSubcategory[ text()  = &quot;EP&quot; ]">
-												<children>
-													<text fixtext="10% van"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch xpath="//kr:ElectionSubcategory[ text()  = &quot;EK&quot; or text()  = &quot;GC&quot; ]">
-												<children>
-													<text fixtext="of gelijk aan"/>
+													<text fixtext="De volgende kandidaten zijn met voorkeurstemmen gekozen. Deze kandidaten hebben "/>
+													<condition>
+														<children>
+															<conditionbranch xpath="//kr:ElectionSubcategory[text() = &quot;TK&quot; or text() = &quot;PS2&quot;  or text() = &quot;EP&quot; or text() = &quot;EK&quot;]">
+																<children>
+																	<text fixtext="ten minste "/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+													<condition>
+														<children>
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text() = &quot;GR1&quot; or text()  = &quot;BC&quot; ]">
+																<children>
+																	<text fixtext="50% van"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text()  = &quot;EP&quot; ]">
+																<children>
+																	<text fixtext="10% van"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text()  = &quot;EK&quot; or text()  = &quot;GC&quot; ]">
+																<children>
+																	<text fixtext="of gelijk aan"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<text fixtext="25% van"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+													<text fixtext=" de kiesdeler gehaald."/>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
 												<children>
-													<text fixtext="25% van"/>
+													<text fixtext="Op basis van artikel U 15 jo. artikel P 15 en artikel P 16 van de Kieswet zijn de volgende kandidaten met voorkeurstemmen gekozen. Deze kandidaten hebben de kiesdeler behaald en krijgen een zetel toegewezen."/>
 												</children>
 											</conditionbranch>
 										</children>
 									</condition>
-									<text fixtext=" de kiesdeler gehaald."/>
 									<calltemplate subtype="named" match="LineBreakRTF">
 										<parameters/>
 									</calltemplate>
 									<condition>
 										<children>
-											<conditionbranch xpath="rg:Type = &apos;lijstengroep&apos;">
+											<conditionbranch xpath="$isEK = 1 or rg:Type = &apos;lijstengroep&apos;">
 												<children>
 													<newline/>
 													<tgrid>
@@ -7675,16 +6125,16 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															<tgridbody-cols>
 																<children>
 																	<tgridcol>
-																		<styles width="200pt"/>
+																		<styles width="177pt"/>
 																	</tgridcol>
 																	<tgridcol>
-																		<styles width="120pt"/>
+																		<styles width="106pt"/>
 																	</tgridcol>
 																	<tgridcol>
-																		<styles width="110pt"/>
+																		<styles width="98pt"/>
 																	</tgridcol>
 																	<tgridcol>
-																		<styles width="78pt"/>
+																		<styles width="70pt"/>
 																	</tgridcol>
 																</children>
 															</tgridbody-cols>
@@ -7714,7 +6164,11 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<properties align="right"/>
 																				<styles border-bottom="1px solid #000" border-top="1px solid #000" padding-right="5pt" vertical-align="top"/>
 																				<children>
-																					<text fixtext="aantal stemmen">
+																					<text fixtext="aantal stemmen op">
+																						<properties class="columnheader"/>
+																					</text>
+																					<newline/>
+																					<text fixtext="gezamenlijke lijsten">
 																						<properties class="columnheader"/>
 																					</text>
 																				</children>
@@ -7723,6 +6177,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<properties align="left"/>
 																				<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
 																				<children>
+																					<text fixtext="lijst waarop zetel">
+																						<properties class="columnheader"/>
+																					</text>
+																					<newline/>
 																					<text fixtext="wordt toegewezen">
 																						<properties class="columnheader"/>
 																					</text>
@@ -7746,7 +6204,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																						<styles padding-top="2pt" vertical-align="top"/>
 																						<children>
 																							<calltemplate subtype="named" match="CandidateInTable2">
-																								<parameters/>
+																								<parameters>
+																									<parameter name="PublishGender" value="$PublishGender"/>
+																									<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+																								</parameters>
 																							</calltemplate>
 																						</children>
 																					</tgridcell>
@@ -7781,20 +6242,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																								<children>
 																									<conditionbranch xpath="@setNumber">
 																										<children>
-																											<condition>
-																												<children>
-																													<conditionbranch xpath="$lang=0">
-																														<children>
-																															<text fixtext="Stel "/>
-																														</children>
-																													</conditionbranch>
-																													<conditionbranch>
-																														<children>
-																															<autocalc xpath="$RP22_OverviewCandidateResultElected_Stel"/>
-																														</children>
-																													</conditionbranch>
-																												</children>
-																											</condition>
+																											<text fixtext="Stel "/>
 																											<template subtype="attribute" match="setNumber">
 																												<children>
 																													<content subtype="regular">
@@ -7811,20 +6259,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																												<children>
 																													<conditionbranch xpath="//eml:ElectionCategory[ text() != &quot;EK&quot; ]">
 																														<children>
-																															<condition>
-																																<children>
-																																	<conditionbranch xpath="$lang=0">
-																																		<children>
-																																			<text fixtext="Kieskring "/>
-																																		</children>
-																																	</conditionbranch>
-																																	<conditionbranch>
-																																		<children>
-																																			<autocalc xpath="$RP22_OverviewCandidateResultElected_Kieskring1"/>
-																																		</children>
-																																	</conditionbranch>
-																																</children>
-																															</condition>
+																															<text fixtext="Kieskring "/>
 																															<template subtype="attribute" match="districtNumber">
 																																<children>
 																																	<content subtype="regular">
@@ -7933,7 +6368,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																						<styles padding-top="2pt" vertical-align="top"/>
 																						<children>
 																							<calltemplate subtype="named" match="CandidateInTable2">
-																								<parameters/>
+																								<parameters>
+																									<parameter name="PublishGender" value="$PublishGender"/>
+																									<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+																								</parameters>
 																							</calltemplate>
 																						</children>
 																					</tgridcell>
@@ -7984,20 +6422,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 						<children>
 							<conditionbranch xpath="count( rg:ListAndResults/rg:CandidateAndResult/rg:Elected[ @byLot = &quot;true&quot; ] ) &gt; 0">
 								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Overeenkomstig artikel P 15, eerste lid van de Kieswet heeft een loting plaatsgevonden tuss"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewCandidateResultElected_Overeenkomstig"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Overeenkomstig artikel P 15, eerste lid van de Kieswet heeft een loting plaatsgevonden tuss"/>
 									<template subtype="element" match="rg:ListAndResults">
 										<children>
 											<template subtype="element" match="rg:CandidateAndResult">
@@ -8009,22 +6434,12 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														<children>
 															<conditionbranch xpath="rg:Elected/@byLot = &quot;true&quot;">
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="en "/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewCandidateResultElected_en"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="en "/>
 																	<calltemplate subtype="named" match="CandidateInTable2">
-																		<parameters/>
+																		<parameters>
+																			<parameter name="PublishGender" value="$PublishGender"/>
+																			<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+																		</parameters>
 																	</calltemplate>
 																	<text fixtext=" "/>
 																</children>
@@ -8037,20 +6452,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										</children>
 										<variables/>
 									</template>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=". Als gevolg hiervan is/zijn gekozen "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewCandidateResultElected_AlsGevolg"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=". Als gevolg hiervan is/zijn gekozen "/>
 									<newline/>
 									<tgrid>
 										<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
@@ -8070,40 +6472,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																<properties align="left"/>
 																<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top" width="60%"/>
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="Naam"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewCandidateResultElected_Naam"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="Naam"/>
 																</children>
 															</tgridcell>
 															<tgridcell>
 																<properties align="left"/>
 																<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="Woonplaats"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewCandidateResultElected_Woonplaats"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="Woonplaats"/>
 																</children>
 															</tgridcell>
 														</children>
@@ -8122,7 +6498,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<styles vertical-align="top" width="60%"/>
 																				<children>
 																					<calltemplate subtype="named" match="CandidateInTable2">
-																						<parameters/>
+																						<parameters>
+																							<parameter name="PublishGender" value="$PublishGender"/>
+																							<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+																						</parameters>
 																					</calltemplate>
 																				</children>
 																			</tgridcell>
@@ -8159,7 +6538,20 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 					</text>
 					<newline/>
 					<newline/>
-					<text fixtext="De overige aan de lijst toegewezen zetels gaan naar de volgende kandidaten."/>
+					<condition>
+						<children>
+							<conditionbranch xpath="$isEK = 0">
+								<children>
+									<text fixtext="De overige aan de lijst toegewezen zetels gaan naar de volgende kandidaten."/>
+								</children>
+							</conditionbranch>
+							<conditionbranch>
+								<children>
+									<text fixtext="Op basis van artikel U 15 jo. artikel P 17 en artikel P 18 van de Kieswet gaan de overige aan de lijst toegewezen zetels naar de volgende kandidaten:"/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
 					<newline/>
 					<condition>
 						<children>
@@ -8287,17 +6679,9 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																		<properties align="right"/>
 																		<styles border-bottom="1px solid #000" border-top="1px solid #000" padding-right="5pt" vertical-align="top"/>
 																		<children>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="//eml:ElectionCategory != &quot;EK&quot;">
-																						<children>
-																							<text fixtext="aantal stemmen">
-																								<properties class="columnheader"/>
-																							</text>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
+																			<text fixtext="aantal stemmen">
+																				<properties class="columnheader"/>
+																			</text>
 																		</children>
 																	</tgridcell>
 																</children>
@@ -8315,7 +6699,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<styles padding-top="2pt" vertical-align="top"/>
 																				<children>
 																					<calltemplate subtype="named" match="CandidateInTable2">
-																						<parameters/>
+																						<parameters>
+																							<parameter name="PublishGender" value="$PublishGender"/>
+																							<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+																						</parameters>
 																					</calltemplate>
 																				</children>
 																			</tgridcell>
@@ -8332,22 +6719,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<properties align="right"/>
 																				<styles padding-right="5pt" padding-top="2pt" vertical-align="top"/>
 																				<children>
-																					<condition>
+																					<template subtype="element" match="rg:Votes">
 																						<children>
-																							<conditionbranch xpath="//eml:ElectionCategory != &quot;EK&quot;">
-																								<children>
-																									<template subtype="element" match="rg:Votes">
-																										<children>
-																											<content subtype="regular">
-																												<format basic-type="xsd" datatype="integer"/>
-																											</content>
-																										</children>
-																										<variables/>
-																									</template>
-																								</children>
-																							</conditionbranch>
+																							<content subtype="regular">
+																								<format basic-type="xsd" datatype="integer"/>
+																							</content>
 																						</children>
-																					</condition>
+																						<variables/>
+																					</template>
 																				</children>
 																			</tgridcell>
 																		</children>
@@ -8444,7 +6823,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<styles vertical-align="top"/>
 																				<children>
 																					<calltemplate subtype="named" match="CandidateInTable2">
-																						<parameters/>
+																						<parameters>
+																							<parameter name="PublishGender" value="../kr:ListData/@PublishGender"/>
+																							<parameter name="PublicationLanguage" value="../kr:ListData/@PublicationLanguage"/>
+																						</parameters>
 																					</calltemplate>
 																				</children>
 																			</tgridcell>
@@ -8509,51 +6891,62 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									</tgridheader-rows>
 									<tgridbody-rows>
 										<children>
-											<template subtype="element" match="eml:Candidate">
+											<template subtype="element" match="rg:ElectedCandidate">
 												<children>
-													<tgridrow>
+													<template subtype="element" match="eml:Candidate">
 														<children>
-															<tgridcell>
-																<properties align="left"/>
-																<styles padding-top="2pt" vertical-align="top" width="60%"/>
+															<tgridrow>
 																<children>
-																	<template subtype="element" match="eml:CandidateFullName">
+																	<tgridcell>
+																		<properties align="left"/>
+																		<styles padding-top="2pt" vertical-align="top" width="60%"/>
 																		<children>
-																			<calltemplate subtype="named" match="LastNameH1">
-																				<parameters/>
-																			</calltemplate>
-																			<text fixtext=", "/>
-																			<calltemplate subtype="named" match="FirstNameH1">
-																				<parameters/>
+																			<template subtype="element" match="eml:CandidateFullName">
+																				<children>
+																					<calltemplate subtype="named" match="LastNameH1">
+																						<parameters/>
+																					</calltemplate>
+																					<text fixtext=", "/>
+																					<calltemplate subtype="named" match="FirstNameH1">
+																						<parameters/>
+																					</calltemplate>
+																				</children>
+																				<variables/>
+																			</template>
+																			<calltemplate subtype="named" match="GenderGeneral">
+																				<parameters>
+																					<parameter name="Gender" value="eml:Gender"/>
+																					<parameter name="PublishGender" value="$PublishGender"/>
+																					<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
+																					<parameter name="isBold"/>
+																					<parameter name="fontSize"/>
+																				</parameters>
 																			</calltemplate>
 																		</children>
-																		<variables/>
-																	</template>
-																	<calltemplate subtype="named" match="Gender2">
-																		<parameters/>
-																	</calltemplate>
-																</children>
-															</tgridcell>
-															<tgridcell>
-																<properties align="left"/>
-																<styles padding-top="2pt" vertical-align="top"/>
-																<children>
-																	<template subtype="element" match="eml:QualifyingAddress">
+																	</tgridcell>
+																	<tgridcell>
+																		<properties align="left"/>
+																		<styles padding-top="2pt" vertical-align="top"/>
 																		<children>
-																			<calltemplate subtype="named" match="City">
-																				<parameters/>
-																			</calltemplate>
-																			<template subtype="element" match="xal:Country">
+																			<template subtype="element" match="eml:QualifyingAddress">
 																				<children>
 																					<calltemplate subtype="named" match="City">
 																						<parameters/>
 																					</calltemplate>
-																					<text fixtext=" "/>
-																					<template subtype="element" match="xal:CountryNameCode">
+																					<template subtype="element" match="xal:Country">
 																						<children>
-																							<text fixtext="("/>
-																							<content subtype="regular"/>
-																							<text fixtext=")"/>
+																							<calltemplate subtype="named" match="City">
+																								<parameters/>
+																							</calltemplate>
+																							<text fixtext=" "/>
+																							<template subtype="element" match="xal:CountryNameCode">
+																								<children>
+																									<text fixtext="("/>
+																									<content subtype="regular"/>
+																									<text fixtext=")"/>
+																								</children>
+																								<variables/>
+																							</template>
 																						</children>
 																						<variables/>
 																					</template>
@@ -8561,14 +6954,17 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																				<variables/>
 																			</template>
 																		</children>
-																		<variables/>
-																	</template>
+																	</tgridcell>
 																</children>
-															</tgridcell>
+															</tgridrow>
 														</children>
-													</tgridrow>
+														<variables/>
+													</template>
 												</children>
-												<variables/>
+												<variables>
+													<variable name="PublishGender" value="kr:ListData/@PublishGender" valuetype="&lt;auto&gt;"/>
+													<variable name="PublicationLanguage" value="kr:ListData/@PublicationLanguage" valuetype="&lt;auto&gt;"/>
+												</variables>
 											</template>
 										</children>
 									</tgridbody-rows>
@@ -8960,20 +7356,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 													</template>
 													<template subtype="element" match="rg:Looser">
 														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext=" en "/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewDHondtAssignmentSpecial_en"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
+															<text fixtext=" en "/>
 															<calltemplate subtype="named" match="ListOrCombinedList">
 																<parameters>
 																	<parameter name="smaller"/>
@@ -8982,20 +7365,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														</children>
 														<variables/>
 													</template>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=". Als gevolg hiervan vervalt een zetel die was toegewezen aan "/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewDHondtAssignmentSpecial_AlsGevolg"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext=". Als gevolg hiervan vervalt een zetel die was toegewezen aan "/>
 													<template subtype="element" match="rg:Winner">
 														<children>
 															<calltemplate subtype="named" match="ListOrCombinedList">
@@ -9088,7 +7458,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="CandidateInTable">
-				<parameters/>
+				<parameters>
+					<parameter name="PublishGender" type="xs:string"/>
+					<parameter name="PublicationLanguage" type="xs:string"/>
+				</parameters>
 				<children>
 					<condition>
 						<children>
@@ -9121,10 +7494,13 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 								</children>
 								<variables/>
 							</template>
-							<calltemplate subtype="named" match="Gender2">
+							<calltemplate subtype="named" match="GenderGeneral">
 								<parameters>
+									<parameter name="Gender" value="eml:Gender"/>
+									<parameter name="PublishGender" value="$PublishGender"/>
+									<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
 									<parameter name="isBold"/>
-									<parameter name="isSmaller" value="1"/>
+									<parameter name="fontSize" value="&apos;smaller&apos;"/>
 								</parameters>
 							</calltemplate>
 						</children>
@@ -9133,7 +7509,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="CandidateInTable2">
-				<parameters/>
+				<parameters>
+					<parameter name="PublishGender" type="xs:string"/>
+					<parameter name="PublicationLanguage" type="xs:string"/>
+				</parameters>
 				<children>
 					<template subtype="element" match="eml:Candidate">
 						<children>
@@ -9155,10 +7534,13 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 								</children>
 								<variables/>
 							</template>
-							<calltemplate subtype="named" match="Gender2">
+							<calltemplate subtype="named" match="GenderGeneral">
 								<parameters>
+									<parameter name="Gender" value="eml:Gender"/>
+									<parameter name="PublishGender" value="$PublishGender"/>
+									<parameter name="PublicationLanguage" value="$PublicationLanguage"/>
 									<parameter name="isBold"/>
-									<parameter name="isSmaller"/>
+									<parameter name="fontSize"/>
 								</parameters>
 							</calltemplate>
 						</children>
@@ -9202,9 +7584,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="PartyHeader2Lines">
-				<parameters>
-					<parameter name="ab" default-value="0"/>
-				</parameters>
+				<parameters/>
 				<children>
 					<condition>
 						<children>
@@ -9290,30 +7670,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															<tgridcell>
 																<properties align="left"/>
 																<styles width="200pt"/>
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$ab = 1">
-																				<children>
-																					<condition>
-																						<children>
-																							<conditionbranch xpath="$lang=0">
-																								<children>
-																									<text fixtext="A = Aantal uitgebrachte stemmen"/>
-																								</children>
-																							</conditionbranch>
-																							<conditionbranch>
-																								<children>
-																									<autocalc xpath="$RP22_PartyHeader2Lines_AAantal"/>
-																								</children>
-																							</conditionbranch>
-																						</children>
-																					</condition>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
 															</tgridcell>
 														</children>
 													</tgridrow>
@@ -9444,225 +7800,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															<tgridcell>
 																<properties align="left"/>
 																<styles border-bottom="1px solid #000"/>
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$ab = 1">
-																				<children>
-																					<condition>
-																						<children>
-																							<conditionbranch xpath="$lang=0">
-																								<children>
-																									<text fixtext="B = Gelden voor"/>
-																								</children>
-																							</conditionbranch>
-																							<conditionbranch>
-																								<children>
-																									<autocalc xpath="$RP22_PartyHeader2Lines_BGeldenVoor"/>
-																								</children>
-																							</conditionbranch>
-																						</children>
-																					</condition>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</tgridcell>
-														</children>
-													</tgridrow>
-												</children>
-											</tgridbody-rows>
-										</children>
-									</tgrid>
-								</children>
-							</conditionbranch>
-							<conditionbranch xpath="$ab = 1">
-								<children>
-									<tgrid>
-										<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-										<styles vertical-align="top"/>
-										<children>
-											<tgridbody-cols>
-												<children>
-													<tgridcol>
-														<styles width="160pt"/>
-													</tgridcol>
-													<tgridcol/>
-													<tgridcol>
-														<styles width="170pt"/>
-													</tgridcol>
-												</children>
-											</tgridbody-cols>
-											<tgridbody-rows>
-												<children>
-													<tgridrow>
-														<children>
-															<tgridcell>
-																<properties align="left"/>
-																<styles border-top="1px solid #000"/>
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="Aanduiding van de groepering:"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_PartyHeader2Lines_Aanduiding"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</tgridcell>
-															<tgridcell>
-																<properties align="left"/>
-																<styles border-top="1px solid #000"/>
-																<children>
-																	<template subtype="element" match="eml:AffiliationIdentifier">
-																		<children>
-																			<template subtype="element" match="eml:RegisteredName">
-																				<children>
-																					<content subtype="regular">
-																						<format basic-type="xsd" datatype="token"/>
-																					</content>
-																				</children>
-																				<variables/>
-																			</template>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-															</tgridcell>
-															<tgridcell>
-																<properties align="left"/>
-																<styles border-top="1px solid #000" width="200pt"/>
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="A = Aantal uitgebrachte stemmen"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_PartyHeader2Lines_AAantal"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</tgridcell>
-														</children>
-													</tgridrow>
-													<tgridrow>
-														<children>
-															<tgridcell>
-																<properties align="left"/>
-																<styles border-bottom="1px solid #000"/>
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;TK&quot; and text() != &quot;PS2&quot; ]">
-																				<children>
-																					<condition>
-																						<children>
-																							<conditionbranch xpath="$lang=0">
-																								<children>
-																									<text fixtext="Lijst:"/>
-																								</children>
-																							</conditionbranch>
-																							<conditionbranch>
-																								<children>
-																									<autocalc xpath="$RP22_PartyHeader2Lines_Lijst"/>
-																								</children>
-																							</conditionbranch>
-																						</children>
-																					</condition>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch xpath="../rg:Type = &quot;op zichzelf staande lijst&quot;">
-																				<children>
-																					<condition>
-																						<children>
-																							<conditionbranch xpath="$lang=0">
-																								<children>
-																									<text fixtext="Op zichzelf staande lijst:"/>
-																								</children>
-																							</conditionbranch>
-																							<conditionbranch>
-																								<children>
-																									<autocalc xpath="$RP22_PartyHeader2Lines_zichzelf"/>
-																								</children>
-																							</conditionbranch>
-																						</children>
-																					</condition>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch xpath="../rg:Type = &quot;stel gelijkluidende lijsten&quot;">
-																				<children>
-																					<condition>
-																						<children>
-																							<conditionbranch xpath="$lang=0">
-																								<children>
-																									<text fixtext="Stel gelijkluidende lijsten:"/>
-																								</children>
-																							</conditionbranch>
-																							<conditionbranch>
-																								<children>
-																									<autocalc xpath="$RP22_PartyHeader2Lines_StelGelijkluidendeLijsten"/>
-																								</children>
-																							</conditionbranch>
-																						</children>
-																					</condition>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</tgridcell>
-															<tgridcell>
-																<properties align="left"/>
-																<styles border-bottom="1px solid #000"/>
-																<children>
-																	<template subtype="element" match="eml:AffiliationIdentifier">
-																		<children>
-																			<template subtype="attribute" match="Id">
-																				<children>
-																					<content subtype="regular">
-																						<format basic-type="xsd" datatype="NMTOKEN"/>
-																					</content>
-																				</children>
-																				<variables/>
-																			</template>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-															</tgridcell>
-															<tgridcell>
-																<properties align="left"/>
-																<styles border-bottom="1px solid #000"/>
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="B = Gelden voor"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_PartyHeader2Lines_BGeldenVoor"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
 															</tgridcell>
 														</children>
 													</tgridrow>
@@ -9829,9 +7966,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="PartyHeader3Lines">
-				<parameters>
-					<parameter name="ab" default-value="0"/>
-				</parameters>
+				<parameters/>
 				<children>
 					<tgrid>
 						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
@@ -9928,7 +8063,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 			</globaltemplate>
 			<globaltemplate subtype="named" match="PartyHeader4Lines">
 				<parameters>
-					<parameter name="ab" default-value="0"/>
 					<parameter name="withList" occurrence="none-or-one" default-value="true()"/>
 					<parameter name="withVotes" occurrence="none-or-one" default-value="true()"/>
 					<parameter name="toegewezen" type="xs:boolean" occurrence="none-or-one" default-value="false()"/>
@@ -9946,9 +8080,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<styles width="160pt"/>
 											</tgridcol>
 											<tgridcol/>
-											<tgridcol>
-												<styles width="170pt"/>
-											</tgridcol>
 										</children>
 									</tgridbody-cols>
 									<tgridbody-rows>
@@ -9971,7 +8102,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															</calltemplate>
 														</children>
 													</tgridcell>
-													<tgridcell joinleft="1"/>
 												</children>
 											</tgridrow>
 											<tgridrow conditional-processing="$withList and $isListengroup">
@@ -10013,7 +8143,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															</template>
 														</children>
 													</tgridcell>
-													<tgridcell joinleft="1"/>
 												</children>
 											</tgridrow>
 											<tgridrow conditional-processing="$withList and $isListengroup">
@@ -10099,7 +8228,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															</condition>
 														</children>
 													</tgridcell>
-													<tgridcell joinleft="1"/>
 												</children>
 											</tgridrow>
 											<tgridrow conditional-processing="$withList and not($isListengroup)">
@@ -10146,7 +8274,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															</template>
 														</children>
 													</tgridcell>
-													<tgridcell joinleft="1"/>
 												</children>
 											</tgridrow>
 											<tgridrow conditional-processing="$withVotes">
@@ -10168,32 +8295,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																</children>
 																<variables/>
 															</template>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$ab = 1">
-																		<children>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="A = Aantal uitgebrachte stemmen"/>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$RP22_PartyHeader4Lines_AAantal"/>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
 														</children>
 													</tgridcell>
 												</children>
@@ -10235,34 +8336,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															</template>
 														</children>
 													</tgridcell>
-													<tgridcell>
-														<properties align="left"/>
-														<styles border-bottom="1px solid #000"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$ab = 1">
-																		<children>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="B = Gelden voor"/>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$RP22_PartyHeader4Lines_BGeldenVoor"/>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</tgridcell>
 												</children>
 											</tgridrow>
 										</children>
@@ -10277,9 +8350,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="PartyHeader5Lines">
-				<parameters>
-					<parameter name="ab" default-value="0"/>
-				</parameters>
+				<parameters/>
 				<children>
 					<tgrid>
 						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
@@ -10823,8 +8894,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																		</children>
 																		<variables/>
 																	</template>
-																	<calltemplate subtype="named" match="Gender2">
-																		<parameters/>
+																	<calltemplate subtype="named" match="GenderGeneral">
+																		<parameters>
+																			<parameter name="Gender" value="eml:Gender"/>
+																			<parameter name="PublishGender" value="../../kr:ListData/@PublishGender"/>
+																			<parameter name="PublicationLanguage" value="../../kr:ListData/@PublicationLanguage"/>
+																			<parameter name="isBold"/>
+																			<parameter name="fontSize"/>
+																		</parameters>
 																	</calltemplate>
 																</children>
 																<variables/>
@@ -11201,11 +9278,21 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 								<children>
 									<tgridbody-cols>
 										<children>
-											<tgridcol/>
-											<tgridcol/>
-											<tgridcol/>
-											<tgridcol/>
-											<tgridcol/>
+											<tgridcol>
+												<styles width="130pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="70pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="90pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="80pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="80pt"/>
+											</tgridcol>
 										</children>
 									</tgridbody-cols>
 									<tgridheader-rows>
@@ -11214,7 +9301,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<children>
 													<tgridcell>
 														<properties align="left"/>
-														<styles border-bottom="1px solid #000" vertical-align="top" width="130pt"/>
+														<styles border-bottom="1px solid #000" vertical-align="top"/>
 														<children>
 															<text fixtext="lijstnummer of letter lijstencombinatie">
 																<properties class="columnheader"/>
@@ -11222,7 +9309,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														</children>
 													</tgridcell>
 													<tgridcell>
-														<styles border-bottom="1px solid #000" text-align="right" vertical-align="top" width="90pt"/>
+														<styles border-bottom="1px solid #000" text-align="right" vertical-align="top"/>
 														<children>
 															<text fixtext="aantal zetels">
 																<properties class="columnheader"/>
@@ -11230,7 +9317,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														</children>
 													</tgridcell>
 													<tgridcell>
-														<styles border-bottom="1px solid #000" text-align="right" vertical-align="top" width="100pt"/>
+														<styles border-bottom="1px solid #000" text-align="right" vertical-align="top"/>
 														<children>
 															<text fixtext="overschot">
 																<properties class="columnheader"/>
@@ -11239,11 +9326,11 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 													</tgridcell>
 													<tgridcell>
 														<properties align="left"/>
-														<styles border-bottom="1px solid #000" vertical-align="top" width="100pt"/>
+														<styles border-bottom="1px solid #000" vertical-align="top"/>
 													</tgridcell>
 													<tgridcell>
 														<properties align="left"/>
-														<styles border-bottom="1px solid #000" vertical-align="top" width="100pt"/>
+														<styles border-bottom="1px solid #000" vertical-align="top"/>
 														<children>
 															<text fixtext="aantal restzetels">
 																<properties class="columnheader"/>
@@ -11261,7 +9348,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 													<tgridrow>
 														<children>
 															<tgridcell>
-																<styles vertical-align="top" width="130pt"/>
+																<styles vertical-align="top"/>
 																<children>
 																	<calltemplate subtype="named" match="ListOrCombinedList2">
 																		<parameters/>
@@ -11269,7 +9356,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																</children>
 															</tgridcell>
 															<tgridcell>
-																<styles padding-right="10pt" text-align="right" vertical-align="top" width="90pt"/>
+																<styles padding-right="10pt" text-align="right" vertical-align="top"/>
 																<children>
 																	<template subtype="element" match="rg:PriorSeats">
 																		<children>
@@ -11282,7 +9369,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																</children>
 															</tgridcell>
 															<tgridcell>
-																<styles text-align="right" vertical-align="top" width="90pt"/>
+																<styles text-align="right" vertical-align="top"/>
 																<children>
 																	<template subtype="element" match="rg:Remainder">
 																		<children>
@@ -11295,7 +9382,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																</children>
 															</tgridcell>
 															<tgridcell>
-																<styles vertical-align="top" width="90pt"/>
+																<styles vertical-align="top"/>
 																<children>
 																	<template subtype="element" match="rg:Remainder">
 																		<children>
@@ -11308,7 +9395,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																</children>
 															</tgridcell>
 															<tgridcell>
-																<styles vertical-align="top" width="100pt"/>
+																<styles vertical-align="top"/>
 																<children>
 																	<condition>
 																		<children>
@@ -11342,38 +9429,12 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									<calltemplate subtype="named" match="LineBreak">
 										<parameters/>
 									</calltemplate>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Overeenkomstig artikel "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewNiemeyerAssignment_Overeenkomstig"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Overeenkomstig artikel "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="@article = &quot;P13&quot;">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="P 13"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewNiemeyerAssignment_P13"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="P 13"/>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
@@ -11383,20 +9444,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 											</conditionbranch>
 										</children>
 									</condition>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=", eerste lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewNiemeyerAssignment_Kieswet"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=", eerste lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedList">
@@ -11409,20 +9457,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									</template>
 									<template subtype="element" match="rg:Looser">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext=" en "/>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_OverviewNiemeyerAssignment_en"/>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext=" en "/>
 											<calltemplate subtype="named" match="ListOrCombinedList">
 												<parameters>
 													<parameter name="smaller"/>
@@ -11431,20 +9466,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										</children>
 										<variables/>
 									</template>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewNiemeyerAssignment_AlsGevolg"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedList">
@@ -11490,16 +9512,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									<tgridbody-cols>
 										<children>
 											<tgridcol>
-												<styles width="100pt"/>
-											</tgridcol>
-											<tgridcol>
-												<styles width="70pt"/>
-											</tgridcol>
-											<tgridcol>
-												<styles width="70pt"/>
-											</tgridcol>
-											<tgridcol>
-												<styles width="60pt"/>
+												<styles width="90pt"/>
 											</tgridcol>
 											<tgridcol>
 												<styles width="60pt"/>
@@ -11508,7 +9521,16 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<styles width="70pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="70pt"/>
+												<styles width="55pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="55pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="60pt"/>
+											</tgridcol>
+											<tgridcol>
+												<styles width="60pt"/>
 											</tgridcol>
 										</children>
 									</tgridbody-cols>
@@ -11520,38 +9542,50 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 													<tgridcell>
 														<styles border-bottom="1px solid #000"/>
 														<children>
-															<text fixtext="lijst of stel gelijkluidende lijsten "/>
+															<text fixtext="lijst of stel gelijkluidende lijsten ">
+																<properties class="columnheader"/>
+															</text>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<styles border-bottom="1px solid #000" text-align="right"/>
 														<children>
-															<text fixtext="aantal stemmen"/>
+															<text fixtext="aantal stemmen">
+																<properties class="columnheader"/>
+															</text>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<styles border-bottom="1px solid #000" padding-left="10pt" text-align="center"/>
 														<children>
-															<text fixtext="aantal volle zetels per lijst"/>
+															<text fixtext="aantal volle zetels per lijst">
+																<properties class="columnheader"/>
+															</text>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<styles border-bottom="1px solid #000" text-align="center"/>
 														<children>
-															<text fixtext="overschot"/>
+															<text fixtext="overschot">
+																<properties class="columnheader"/>
+															</text>
 														</children>
 													</tgridcell>
 													<tgridcell joinleft="1"/>
 													<tgridcell>
 														<styles border-bottom="1px solid #000" text-align="center"/>
 														<children>
-															<text fixtext="toegewezen aantal restzetels"/>
+															<text fixtext="toegewezen aantal restzetels">
+																<properties class="columnheader"/>
+															</text>
 														</children>
 													</tgridcell>
 													<tgridcell>
 														<styles border-bottom="1px solid #000" text-align="center"/>
 														<children>
-															<text fixtext="totaal aantal zetels"/>
+															<text fixtext="totaal aantal zetels">
+																<properties class="columnheader"/>
+															</text>
 														</children>
 													</tgridcell>
 												</children>
@@ -11577,20 +9611,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																						<children>
 																							<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
 																								<children>
-																									<condition>
-																										<children>
-																											<conditionbranch xpath="$lang=0">
-																												<children>
-																													<text fixtext="Kieskring "/>
-																												</children>
-																											</conditionbranch>
-																											<conditionbranch>
-																												<children>
-																													<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_Kieskring"/>
-																												</children>
-																											</conditionbranch>
-																										</children>
-																									</condition>
+																									<text fixtext="Kieskring "/>
 																									<template subtype="attribute" match="districtNumber">
 																										<children>
 																											<content subtype="regular">
@@ -11619,20 +9640,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																			</conditionbranch>
 																			<conditionbranch xpath="@setNumber != &apos;&apos;">
 																				<children>
-																					<condition>
-																						<children>
-																							<conditionbranch xpath="$lang=0">
-																								<children>
-																									<text fixtext="Totaal stel "/>
-																								</children>
-																							</conditionbranch>
-																							<conditionbranch>
-																								<children>
-																									<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_TotaalStel"/>
-																								</children>
-																							</conditionbranch>
-																						</children>
-																					</condition>
+																					<text fixtext="Totaal stel "/>
 																					<template subtype="attribute" match="setNumber">
 																						<children>
 																							<content subtype="regular">
@@ -11761,74 +9769,22 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 							</calltemplate>
 							<template subtype="element" match="rg:Allotting">
 								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Overeenkomstig artikel "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_Overeenkomstig1"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Overeenkomstig artikel "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="P 12"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_P12"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="P 12"/>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="U 11"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_U11"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="U 12"/>
 												</children>
 											</conditionbranch>
 										</children>
 									</condition>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=", vijfde lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_vijfdeLid"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=", vijfde lid van de Kieswet heeft een loting plaatsgevonden tussen "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedListUni">
@@ -11839,40 +9795,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									</template>
 									<template subtype="element" match="rg:Looser">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext=" en "/>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_en"/>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext=" en "/>
 											<calltemplate subtype="named" match="ListOrCombinedListUni">
 												<parameters/>
 											</calltemplate>
 										</children>
 										<variables/>
 									</template>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_AlsGevolg"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=". Als gevolg hiervan is een restzetel toegewezen aan "/>
 									<template subtype="element" match="rg:Winner">
 										<children>
 											<calltemplate subtype="named" match="ListOrCombinedListUni">
@@ -11894,163 +9824,46 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										<children>
 											<conditionbranch xpath="@lostSeats = 1">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Overeenkomstig artikel "/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_Overeenkomstig2"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Overeenkomstig artikel "/>
 													<condition>
 														<children>
 															<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="P 13"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_P13"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="P 13"/>
 																</children>
 															</conditionbranch>
 															<conditionbranch>
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="U 13"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_U13"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="U 13"/>
 																</children>
 															</conditionbranch>
 														</children>
 													</condition>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=", eerste lid van de Kieswet, vindt er een overgang plaats van een zetel van "/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_eersteLidEenZetel"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext=", eerste lid van de Kieswet, vindt er een overgang plaats van een zetel van "/>
 													<calltemplate subtype="named" match="ListOrCombinedListUni">
 														<parameters/>
 													</calltemplate>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=" naar een ander lijst."/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_eenAnderLijst"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext=" naar een ander lijst."/>
 												</children>
 											</conditionbranch>
 											<conditionbranch xpath="@lostSeats &gt; 1">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Overeenkomstig artikel "/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_Overeenkomstig2"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="Overeenkomstig artikel "/>
 													<condition>
 														<children>
 															<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="P 13"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_P13"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="P 13"/>
 																</children>
 															</conditionbranch>
 															<conditionbranch>
 																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="U 13"/>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_U13"/>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
+																	<text fixtext="U 13"/>
 																</children>
 															</conditionbranch>
 														</children>
 													</condition>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=", eerste lid van de Kieswet, vindt er een overgang plaats van "/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_eersteLid"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext=", eerste lid van de Kieswet, vindt er een overgang plaats van "/>
 													<template subtype="attribute" match="lostSeats">
 														<children>
 															<content subtype="regular">
@@ -12059,37 +9872,11 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														</children>
 														<variables/>
 													</template>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=" zetels van "/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_zetels"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext=" zetels van "/>
 													<calltemplate subtype="named" match="ListOrCombinedListUni">
 														<parameters/>
 													</calltemplate>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext=" naar andere lijsten."/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_andereLijsten"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext=" naar andere lijsten."/>
 												</children>
 											</conditionbranch>
 										</children>
@@ -12102,74 +9889,22 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 							</template>
 							<template subtype="element" match="rg:DHondtAssignment">
 								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="Hierna zijn overeenkomstig artikel "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_Hierna"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext="Hierna zijn overeenkomstig artikel "/>
 									<condition>
 										<children>
 											<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="P 13"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_P13"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="P 13"/>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="U 13"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_U13"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="U 13"/>
 												</children>
 											</conditionbranch>
 										</children>
 									</condition>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext=", tweede lid van de Kieswet volgende restzetels toegewezen volgens het stelsel van de grootste gemiddelden:"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_OverviewAssignmentWithinListGroups_tweedeLid"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
+									<text fixtext=", tweede lid van de Kieswet volgende restzetels toegewezen volgens het stelsel van de grootste gemiddelden:"/>
 									<calltemplate subtype="named" match="LineBreakTable">
 										<parameters/>
 									</calltemplate>
@@ -12204,26 +9939,8 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 										<children>
 											<template subtype="attribute" match="combinationId">
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="lijstencombinatie ">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ListOrCombinedListUni_lijstencombinatie">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="lijstencombinatie "/>
 													<content subtype="regular">
-														<styles font-size="smaller"/>
 														<format basic-type="xsd" datatype="token"/>
 													</content>
 												</children>
@@ -12233,22 +9950,17 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<children>
 													<conditionbranch xpath="count( rg:ListInCombination ) &gt; 0">
 														<children>
-															<text fixtext=" (">
-																<styles font-size="smaller"/>
-															</text>
+															<text fixtext=" ("/>
 															<template subtype="element" match="rg:ListInCombination">
 																<children>
 																	<content subtype="regular">
-																		<styles font-size="smaller"/>
 																		<format basic-type="xsd" datatype="integer"/>
 																	</content>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath="position() != last()">
 																				<children>
-																					<text fixtext=", ">
-																						<styles font-size="smaller"/>
-																					</text>
+																					<text fixtext=", "/>
 																				</children>
 																			</conditionbranch>
 																		</children>
@@ -12256,9 +9968,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 																</children>
 																<variables/>
 															</template>
-															<text fixtext=")">
-																<styles font-size="smaller"/>
-															</text>
+															<text fixtext=")"/>
 														</children>
 													</conditionbranch>
 												</children>
@@ -12267,28 +9977,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									</conditionbranch>
 									<conditionbranch xpath="@districtNumber">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext="kieskring ">
-																<styles font-size="smaller"/>
-															</text>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_ListOrCombinedListUni_kieskring">
-																<styles font-size="smaller"/>
-															</autocalc>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext="kieskring "/>
 											<template subtype="attribute" match="districtNumber">
 												<children>
 													<content subtype="regular">
-														<styles font-size="smaller"/>
 														<format basic-type="xsd" datatype="integer"/>
 													</content>
 												</children>
@@ -12298,28 +9990,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									</conditionbranch>
 									<conditionbranch xpath="@setNumber">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext="stel ">
-																<styles font-size="smaller"/>
-															</text>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_ListOrCombinedListUni_stel">
-																<styles font-size="smaller"/>
-															</autocalc>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext="stel "/>
 											<template subtype="attribute" match="setNumber">
 												<children>
 													<content subtype="regular">
-														<styles font-size="smaller"/>
 														<format basic-type="xsd" datatype="integer"/>
 													</content>
 												</children>
@@ -12329,28 +10003,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 									</conditionbranch>
 									<conditionbranch xpath="@listNumber">
 										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext="lijst ">
-																<styles font-size="smaller"/>
-															</text>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_ListOrCombinedListUni_lijst">
-																<styles font-size="smaller"/>
-															</autocalc>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
+											<text fixtext="lijst "/>
 											<template subtype="attribute" match="listNumber">
 												<children>
 													<content subtype="regular">
-														<styles font-size="smaller"/>
 														<format basic-type="xsd" datatype="integer"/>
 													</content>
 												</children>
@@ -13640,9 +11296,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 											<tgridcol>
 												<styles width="15pt"/>
 											</tgridcol>
-											<tgridcol>
-												<styles width="50pt"/>
-											</tgridcol>
+											<tgridcol/>
 											<tgridcol>
 												<styles width="15pt"/>
 											</tgridcol>
@@ -13660,9 +11314,17 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														<children>
 															<condition>
 																<children>
-																	<conditionbranch xpath="$inCombinedList or $inListGroup">
+																	<conditionbranch xpath="$inListGroup">
 																		<children>
 																			<text fixtext="aantal stemmen">
+																				<properties class="columnheader"/>
+																				<styles font-weight="normal"/>
+																			</text>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath="$inCombinedList">
+																		<children>
+																			<text fixtext="aantal stemmen lijstencombinatie">
 																				<properties class="columnheader"/>
 																				<styles font-weight="normal"/>
 																			</text>
@@ -13684,10 +11346,38 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 													<tgridcell>
 														<styles text-align="left"/>
 														<children>
-															<text fixtext="aantal zetels">
-																<properties class="columnheader"/>
-																<styles font-weight="normal"/>
-															</text>
+															<condition>
+																<children>
+																	<conditionbranch xpath="$inCombinedList">
+																		<children>
+																			<text fixtext="aantal zetels lijstencombinatie">
+																				<properties class="columnheader"/>
+																				<styles font-weight="normal"/>
+																			</text>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch>
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$inListGroup and //kr:ElectionSubcategory = &apos;EK&apos;">
+																						<children>
+																							<text fixtext="toegewezen ">
+																								<properties class="columnheader"/>
+																								<styles font-weight="normal"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																			<text fixtext="aantal zetels">
+																				<properties class="columnheader"/>
+																				<styles font-weight="normal"/>
+																			</text>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
 														</children>
 													</tgridcell>
 													<tgridcell/>
@@ -14052,7 +11742,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<children>
 													<condition>
 														<children>
-															<conditionbranch xpath="@article = &quot;P13&quot; or //kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+																<children>
+																	<text fixtext="lijstnummer">
+																		<properties class="columnheader"/>
+																	</text>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="@article = &quot;P13&quot;">
 																<children>
 																	<text fixtext="Lijst">
 																		<properties class="columnheader"/>
@@ -14339,7 +12036,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<children>
 													<condition>
 														<children>
-															<conditionbranch xpath="@article = &quot;P13&quot; or //kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+																<children>
+																	<text fixtext="lijstnummer">
+																		<properties class="columnheader"/>
+																	</text>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="@article = &quot;P13&quot;">
 																<children>
 																	<text fixtext="Lijst">
 																		<properties class="columnheader"/>
@@ -14677,7 +12381,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<children>
 													<condition>
 														<children>
-															<conditionbranch xpath="@article = &quot;P13&quot; or //kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+																<children>
+																	<text fixtext="lijstnummer">
+																		<properties class="columnheader"/>
+																	</text>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="@article = &quot;P13&quot;">
 																<children>
 																	<text fixtext="Lijst">
 																		<properties class="columnheader"/>
@@ -15070,7 +12781,14 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<children>
 													<condition>
 														<children>
-															<conditionbranch xpath="@article = &quot;P13&quot; or //kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+															<conditionbranch xpath="//kr:ElectionSubcategory[ text() = &quot;EK&quot; ]">
+																<children>
+																	<text fixtext="lijstnummer">
+																		<properties class="columnheader"/>
+																	</text>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="@article = &quot;P13&quot;">
 																<children>
 																	<text fixtext="Lijst">
 																		<properties class="columnheader"/>
@@ -15654,43 +13372,13 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 												<properties align="right"/>
 												<styles border-bottom="1px solid #000" vertical-align="bottom"/>
 												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="aantal">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult1-1-4_aantal">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="aantal">
+														<styles font-size="smaller"/>
+													</text>
 													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="stemmen">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult1-1-4_stemmen">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
+													<text fixtext="stemmen">
+														<styles font-size="smaller"/>
+													</text>
 												</children>
 											</tgridcell>
 										</children>
@@ -15716,7 +13404,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														<styles padding-left="5pt" vertical-align="top"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateInTable">
-																<parameters/>
+																<parameters>
+																	<parameter name="PublishGender" value="../kr:ListData/@PublishGender"/>
+																	<parameter name="PublicationLanguage" value="../kr:ListData/@PublicationLanguage"/>
+																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
@@ -16070,7 +13761,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 														<styles padding-left="5pt" vertical-align="top"/>
 														<children>
 															<calltemplate subtype="named" match="CandidateInTable">
-																<parameters/>
+																<parameters>
+																	<parameter name="PublishGender" value="../kr:ListData/@PublishGender"/>
+																	<parameter name="PublicationLanguage" value="../kr:ListData/@PublicationLanguage"/>
+																</parameters>
 															</calltemplate>
 														</children>
 													</tgridcell>
@@ -16914,3208 +14608,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 					</tgrid>
 				</children>
 			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewCandidateResult-EK-1-2">
-				<parameters>
-					<parameter name="fromLine" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="tillLine" type="xs:int" occurrence="none-or-one" default-value="80"/>
-					<parameter name="remainingCandidates" type="xs:int"/>
-				</parameters>
-				<children>
-					<tgrid>
-						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-						<children>
-							<tgridbody-cols>
-								<children>
-									<tgridcol>
-										<styles width="15pt"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="45pt"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="155pt"/>
-									</tgridcol>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-								</children>
-							</tgridbody-cols>
-							<tgridheader-rows>
-								<children>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Volgnummer">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_Volgnummer">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Kandidaten">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_Kandidaten">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Aantal stemmen (per provincie)">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_AantalStemmen">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<styles border-top="1px solid #000" text-align="right"/>
-												<children>
-													<template subtype="element" filter="position() = 1" match="rg:CandidateAndResult">
-														<children>
-															<template subtype="element" filter="position() = 1" match="rg:VotesInElectoralDistrictPart">
-																<children>
-																	<template subtype="element" filter="@id = &apos;alle&apos;" match="rg:VotesInElectoralDistrict">
-																		<children>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="Totaal">
-																								<styles font-size="smaller"/>
-																							</text>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_Totaal">
-																								<styles font-size="smaller"/>
-																							</autocalc>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="op de lijst">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_opDeLijst">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell/>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<template subtype="element" filter="position() = 1" match="rg:CandidateAndResult">
-														<children>
-															<template subtype="element" filter="position() = 1" match="rg:VotesInElectoralDistrictPart">
-																<children>
-																	<template subtype="element" filter="@id = &apos;alle&apos;" match="rg:VotesInElectoralDistrict">
-																		<children>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="aantal">
-																								<styles font-size="smaller"/>
-																							</text>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_aantal">
-																								<styles font-size="smaller"/>
-																							</autocalc>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<template subtype="element" filter="position() = 1" match="rg:CandidateAndResult">
-														<children>
-															<template subtype="element" filter="position() = 1" match="rg:VotesInElectoralDistrictPart">
-																<children>
-																	<template subtype="element" filter="@id = &apos;alle&apos;" match="rg:VotesInElectoralDistrict">
-																		<children>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="stemmen">
-																								<styles font-size="smaller"/>
-																							</text>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_stemmen">
-																								<styles font-size="smaller"/>
-																							</autocalc>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="*"/>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_FootnoteSign1"/>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-								</children>
-							</tgridheader-rows>
-							<tgridbody-rows>
-								<children>
-									<template subtype="element" filter="position()&gt;=$fromLine and position()&lt;=$tillLine" match="rg:CandidateAndResult">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="CandidateId">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles padding-left="5pt" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="CandidateInTable">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1"/>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="3"/>
-																	<parameter name="alle" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-									<template subtype="element" filter="position()=1 and $remainingCandidates &lt; 1" match="rg:VotesInElectoralDistrictPart">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="left"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="Totaal">
-																				<styles font-size="smaller"/>
-																			</text>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_Totaal2">
-																				<styles font-size="smaller"/>
-																			</autocalc>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1"/>
-													<tgridcell joinleft="1"/>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																	<parameter name="alle" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-								</children>
-							</tgridbody-rows>
-						</children>
-					</tgrid>
-					<template subtype="element" filter="position() = 1" match="rg:CandidateAndResult">
-						<children>
-							<template subtype="element" filter="position() = 1" match="rg:VotesInElectoralDistrictPart">
-								<children>
-									<template subtype="element" filter="@id = &apos;alle&apos;" match="rg:VotesInElectoralDistrict">
-										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext="* ">
-																<styles font-size="smaller"/>
-															</text>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_FootnoteSign2">
-																<styles font-size="smaller"/>
-															</autocalc>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
-											<condition>
-												<children>
-													<conditionbranch xpath="$lang=0">
-														<children>
-															<text fixtext="Voor zover sprake is van gelijkluidende lijsten.">
-																<styles font-size="smaller"/>
-															</text>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-2_VoorZoverSprake">
-																<styles font-size="smaller"/>
-															</autocalc>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
-										</children>
-										<variables/>
-									</template>
-								</children>
-								<variables/>
-							</template>
-						</children>
-						<variables/>
-					</template>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewCandidateResult-EK-1-4">
-				<parameters>
-					<parameter name="fromLine" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="tillLine" type="xs:int" occurrence="none-or-one" default-value="80"/>
-					<parameter name="remainingCandidates" type="xs:int"/>
-				</parameters>
-				<children>
-					<tgrid>
-						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-						<children>
-							<tgridbody-cols>
-								<children>
-									<tgridcol>
-										<styles width="15pt"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="45pt"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="155pt"/>
-									</tgridcol>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-								</children>
-							</tgridbody-cols>
-							<tgridheader-rows>
-								<children>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Volgnummer">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_Volgnummer">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Kandidaten">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_Kandidaten">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="count ( rg:Type[ text() = &quot;op zichzelf staande lijst&quot; ] ) = 0">
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="Aantal stemmen (per provincie)">
-																						<styles font-size="smaller"/>
-																					</text>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_AantalStemmen">
-																						<styles font-size="smaller"/>
-																					</autocalc>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<styles border-top="1px solid #000" text-align="right"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Totaal">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_Totaal">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="op de lijst">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_opDeLijst">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="aantal">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_aantal">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top" width="44pt"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="stemmen">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_stemmen">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="*">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_FootnoteSign1">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-								</children>
-							</tgridheader-rows>
-							<tgridbody-rows>
-								<children>
-									<template subtype="element" filter="position()&gt;=$fromLine and position()&lt;=$tillLine" match="rg:CandidateAndResult">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="CandidateId">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<children>
-															<calltemplate subtype="named" match="CandidateInTable">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1">
-														<styles padding-left="5pt" vertical-align="top"/>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="3"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="3"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="4"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="4"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="5"/>
-																	<parameter name="alle" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-									<template subtype="element" filter="position()=1 and $remainingCandidates &lt; 1" match="rg:VotesInElectoralDistrictPart">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="left"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="Totaal">
-																				<styles font-size="smaller"/>
-																			</text>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_Totaal2">
-																				<styles font-size="smaller"/>
-																			</autocalc>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1"/>
-													<tgridcell joinleft="1"/>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="4"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="right" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="4"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="right" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="5"/>
-																	<parameter name="alle" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-								</children>
-							</tgridbody-rows>
-						</children>
-					</tgrid>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="* ">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_FootnoteSign2">
-										<styles font-size="smaller"/>
-									</autocalc>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="Voor zover sprake is van gelijkluidende lijsten.">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-4_VoorZoverSprake">
-										<styles font-size="smaller"/>
-									</autocalc>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewCandidateResult-EK-1-5">
-				<parameters>
-					<parameter name="fromLine" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="tillLine" type="xs:int" occurrence="none-or-one" default-value="80"/>
-					<parameter name="remainingCandidates" type="xs:int"/>
-				</parameters>
-				<children>
-					<tgrid>
-						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-						<styles vertical-align="top"/>
-						<children>
-							<tgridbody-cols>
-								<children>
-									<tgridcol>
-										<styles width="15pt"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="45pt"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="155pt"/>
-									</tgridcol>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-								</children>
-							</tgridbody-cols>
-							<tgridheader-rows>
-								<children>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Volgnummer">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-5_Volgnummer">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Kandidaten">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-5_Kandidaten">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="count ( rg:Type[ text() = &quot;op zichzelf staande lijst&quot; ] ) = 0">
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="Aantal stemmen (per provincie)">
-																						<styles font-size="smaller"/>
-																					</text>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-5_AantalStemmen">
-																						<styles font-size="smaller"/>
-																					</autocalc>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-											</tgridcell>
-											<tgridcell joinleft="1">
-												<styles border-top="1px solid #000" text-align="right"/>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="op de lijst">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-5_opDeLijst">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-bottom="1px solid #000"/>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-								</children>
-							</tgridheader-rows>
-							<tgridbody-rows>
-								<children>
-									<template subtype="element" filter="position()&gt;=$fromLine and position()&lt;=$tillLine" match="rg:CandidateAndResult">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="CandidateId">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<children>
-															<calltemplate subtype="named" match="CandidateInTable">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1">
-														<styles padding-left="5pt"/>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="3"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="3"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="4"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="4"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="5"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part"/>
-																	<parameter name="position" value="5"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-									<template subtype="element" filter="position()=1 and $remainingCandidates &lt; 1" match="rg:VotesInElectoralDistrictPart">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="left"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="Totaal">
-																				<styles font-size="smaller"/>
-																			</text>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewCandidateResult-EK-1-5_Totaal2">
-																				<styles font-size="smaller"/>
-																			</autocalc>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</tgridcell>
-													<tgridcell joinleft="1"/>
-													<tgridcell joinleft="1"/>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="4"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="4"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="5"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" text-align="right"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="5"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-								</children>
-							</tgridbody-rows>
-						</children>
-					</tgrid>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="OverviewCandidateResult-EK-6-12">
-				<parameters>
-					<parameter name="fromLine" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="tillLine" type="xs:int" occurrence="none-or-one" default-value="80"/>
-					<parameter name="remainingCandidates" type="xs:int"/>
-				</parameters>
-				<children>
-					<tgrid>
-						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-						<styles vertical-align="top"/>
-						<children>
-							<tgridbody-cols>
-								<children>
-									<tgridcol>
-										<styles width="26pt"/>
-									</tgridcol>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol/>
-									<tgridcol>
-										<styles width="44pt"/>
-									</tgridcol>
-								</children>
-							</tgridbody-cols>
-							<tgridheader-rows>
-								<children>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000" width="40pt"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Volgnummer">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_Volgnummer">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<properties align="left"/>
-												<styles border-top="1px solid #000"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="count ( rg:Type[ text() = &quot;op zichzelf staande lijst&quot; ] ) = 0 and count(rg:CandidateAndResult[position() = 1]/rg:VotesInElectoralDistrictPart[position() = 2]/rg:VotesInElectoralDistrict) &gt; 1">
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="$lang=0">
-																				<children>
-																					<text fixtext="Aantal stemmen (per provincie)">
-																						<styles font-size="smaller"/>
-																					</text>
-																				</children>
-																			</conditionbranch>
-																			<conditionbranch>
-																				<children>
-																					<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_AantalStemmen">
-																						<styles font-size="smaller"/>
-																					</autocalc>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell joinleft="1"/>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-top="1px solid #000" vertical-align="bottom"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="Totaal">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_Totaal">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles text-align="left" width="40pt"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="op de ">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_opDe">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="6"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="6"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="right"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictNumber">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="7"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<styles text-align="left"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictABLine">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="7"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles vertical-align="bottom"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="aantal">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_aantal">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<styles border-bottom="1px solid #000" text-align="left" vertical-align="top" width="40pt"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="lijst">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_lijst">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="1"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="2"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="3"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="4"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="5"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="6"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="6"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteA">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="7"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="top"/>
-												<children>
-													<calltemplate subtype="named" match="DistrictVoteB">
-														<parameters>
-															<parameter name="part" value="2"/>
-															<parameter name="position" value="7"/>
-														</parameters>
-													</calltemplate>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<properties align="right"/>
-												<styles border-bottom="1px solid #000" vertical-align="bottom"/>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="stemmen">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_stemmen">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="*">
-																		<styles font-size="smaller"/>
-																	</text>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_FootnoteSign1">
-																		<styles font-size="smaller"/>
-																	</autocalc>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-								</children>
-							</tgridheader-rows>
-							<tgridbody-rows>
-								<children>
-									<template subtype="element" filter="position()&gt;=$fromLine and position()&lt;=$tillLine" match="rg:CandidateAndResult">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top" width="40pt"/>
-														<children>
-															<calltemplate subtype="named" match="CandidateId">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="3"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="3"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="4"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="4"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="5"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="5"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="6"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="6"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="7"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="7"/>
-																	<parameter name="weighted" value="1"/>
-																	<parameter name="alle"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="Vote">
-																<parameters>
-																	<parameter name="part" value="2"/>
-																	<parameter name="position" value="8"/>
-																	<parameter name="alle" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-									<template subtype="element" filter="position()=2 and $remainingCandidates &lt; 1" match="rg:VotesInElectoralDistrictPart">
-										<children>
-											<tgridrow>
-												<children>
-													<tgridcell>
-														<properties align="left"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" width="40pt"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="Totaal">
-																				<styles font-size="smaller"/>
-																			</text>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_Totaal2">
-																				<styles font-size="smaller"/>
-																			</autocalc>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="2"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="3"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="4"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="4"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="5"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="5"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="6"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="6"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="7"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="7"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-													<tgridcell>
-														<properties align="right"/>
-														<styles border-bottom="1px solid #000" border-top="1px solid #000" vertical-align="top"/>
-														<children>
-															<calltemplate subtype="named" match="TotalVotes2">
-																<parameters>
-																	<parameter name="position" value="8"/>
-																	<parameter name="alle" value="1"/>
-																	<parameter name="weighted" value="1"/>
-																</parameters>
-															</calltemplate>
-														</children>
-													</tgridcell>
-												</children>
-											</tgridrow>
-										</children>
-										<variables/>
-									</template>
-								</children>
-							</tgridbody-rows>
-						</children>
-					</tgrid>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="* ">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_FootnoteSign2">
-										<styles font-size="smaller"/>
-									</autocalc>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="Voor zover sprake is van gelijkluidende lijsten.">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_OverviewCandidateResult-EK-6-12_VoorZoverSprake">
-										<styles font-size="smaller"/>
-									</autocalc>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-				</children>
-			</globaltemplate>
 			<globaltemplate subtype="named" match="CheckingCombinedListsWithFictitiousDistribution">
 				<parameters/>
 				<children>
@@ -20183,187 +14675,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 					</condition>
 				</children>
 			</globaltemplate>
-			<globaltemplate subtype="named" match="ResidualSeatsAssignment">
-				<parameters>
-					<parameter name="articleLoting" type="xs:token" occurrence="none-or-one" default-value="&apos;&apos;"/>
-				</parameters>
-				<children>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="De restzetels zijn met toepassing van artikel "/>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_ResidualSeatsAssignment_restzetelsZijn"/>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
-								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="P 7"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_ResidualSeatsAssignment_P7"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="U 9"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_ResidualSeatsAssignment_U9"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext=" van de Kieswet toegewezen aan de "/>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_ResidualSeatsAssignment_toegewezen"/>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
-								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="lijstencombinaties onderscheidenlijk "/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_ResidualSeatsAssignment_lijstencombinaties"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext="lijsten die na toewijzing van de zetel het grootste "/>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_ResidualSeatsAssignment_naToewijzing"/>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="//kr:ElectionSubcategory[ text() != &quot;EK&quot; ]">
-								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="gemiddeld"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_ResidualSeatsAssignment_gemiddeld"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="$lang=0">
-												<children>
-													<text fixtext="gemiddelde"/>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<autocalc xpath="$RP22_ResidualSeatsAssignment_gemiddelde"/>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$lang=0">
-								<children>
-									<text fixtext=" aantal stemmen per zetel hebben."/>
-								</children>
-							</conditionbranch>
-							<conditionbranch>
-								<children>
-									<autocalc xpath="$RP22_ResidualSeatsAssignment_stemmenPerZetel"/>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<calltemplate subtype="named" match="LineBreak">
-						<parameters/>
-					</calltemplate>
-					<template subtype="element" match="rg:RG520">
-						<children>
-							<calltemplate subtype="named" match="OverviewDHondtAssignment">
-								<parameters>
-									<parameter name="articleLoting" value="$articleLoting"/>
-								</parameters>
-							</calltemplate>
-							<calltemplate subtype="named" match="OverviewDHondtAssignmentSpecial">
-								<parameters/>
-							</calltemplate>
-						</children>
-						<variables/>
-					</template>
-				</children>
-			</globaltemplate>
 			<globaltemplate subtype="named" match="AssignmentWithinCombinedLists">
 				<parameters/>
 				<children>
@@ -20371,7 +14682,7 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 						<children>
 							<conditionbranch xpath="//rg:AssignmentWithinCombinedLists">
 								<children>
-									<text fixtext="Bij de verdeling van zetels binnen een lijstencombinatie wordt eerst de combinatiekiesdeler bepaald. Vervolgens wordt het aantal stemmen per lijst gedeeld door de combinatiekiesdeler. Dat levert het aantal volle zetels per lijst op. De lijst die na verdeling van de zetels het grootste overschot heeft, krijgt de restzetel(s)."/>
+									<text fixtext="Bij de verdeling van zetels binnen een lijstencombinatie wordt eerst de combinatiekiesdeler bepaald. Vervolgens wordt het aantal stemmen per lijst gedeeld door de combinatiekiesdeler. Dat levert het aantal volle zetels per lijst op. Tot slot worden de restzetels achtereenvolgens toegewezen aan de lijsten die na verdeling van de volle zetels het grootste overschot aan stemmen hebben."/>
 									<newline/>
 									<calltemplate subtype="named" match="LineBreak">
 										<parameters/>
@@ -20482,6 +14793,10 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 															</conditionbranch>
 															<conditionbranch xpath="$weighted = 1">
 																<children>
+																	<content subtype="regular">
+																		<styles font-size="smaller"/>
+																	</content>
+																	<newline/>
 																	<template subtype="attribute" match="weighted">
 																		<children>
 																			<content subtype="regular">
@@ -20847,7 +15162,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 				<parameters>
 					<parameter name="isEvenOdd" type="xs:int"/>
 					<parameter name="isSeats" type="xs:int"/>
-					<parameter name="ab" type="xs:int"/>
 				</parameters>
 				<children>
 					<condition>
@@ -20878,7 +15192,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 											<calltemplate subtype="named" match="PartyHeader2or4Lines">
 												<parameters>
 													<parameter name="isSeats" value="$isSeats"/>
-													<parameter name="ab" value="$ab"/>
 												</parameters>
 											</calltemplate>
 										</children>
@@ -20893,7 +15206,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 											<calltemplate subtype="named" match="PartyHeader2or4Lines">
 												<parameters>
 													<parameter name="isSeats" value="$isSeats"/>
-													<parameter name="ab" value="$ab"/>
 												</parameters>
 											</calltemplate>
 										</children>
@@ -20907,7 +15219,6 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 			<globaltemplate subtype="named" match="PartyHeader2or4Lines">
 				<parameters>
 					<parameter name="isSeats" type="xs:int"/>
-					<parameter name="ab" type="xs:int"/>
 				</parameters>
 				<children>
 					<condition>
@@ -20915,340 +15226,19 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 							<conditionbranch xpath="$isSeats = 1">
 								<children>
 									<calltemplate subtype="named" match="PartyHeader4Lines">
-										<parameters>
-											<parameter name="ab" value="$ab"/>
-										</parameters>
+										<parameters/>
 									</calltemplate>
 								</children>
 							</conditionbranch>
 							<conditionbranch>
 								<children>
 									<calltemplate subtype="named" match="PartyHeader2Lines">
-										<parameters>
-											<parameter name="ab" value="$ab"/>
-										</parameters>
+										<parameters/>
 									</calltemplate>
 								</children>
 							</conditionbranch>
 						</children>
 					</condition>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="DistrictVoteA">
-				<parameters>
-					<parameter name="part" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="position" occurrence="none-or-one" default-value="&apos;&apos;"/>
-				</parameters>
-				<children>
-					<condition>
-						<children>
-							<conditionbranch xpath="rg:CandidateAndResult[position()=1]/rg:VotesInElectoralDistrictPart[position()=$part]/rg:VotesInElectoralDistrict[position()=$position and @id!=&apos;alle&apos;]">
-								<children>
-									<text fixtext="A">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="DistrictVoteB">
-				<parameters>
-					<parameter name="part" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="position" occurrence="none-or-one" default-value="&apos;&apos;"/>
-				</parameters>
-				<children>
-					<condition>
-						<children>
-							<conditionbranch xpath="rg:CandidateAndResult[position()=1]/rg:VotesInElectoralDistrictPart[position()=$part]/rg:VotesInElectoralDistrict[position()=$position and @id!=&apos;alle&apos;]">
-								<children>
-									<text fixtext="B">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="DistrictABLine">
-				<parameters>
-					<parameter name="part" type="xs:int" occurrence="none-or-one" default-value="1"/>
-					<parameter name="position" occurrence="none-or-one" default-value="&apos;&apos;"/>
-				</parameters>
-				<children>
-					<condition>
-						<children>
-							<conditionbranch xpath="rg:CandidateAndResult[position()=1]/rg:VotesInElectoralDistrictPart[position()=$part]/rg:VotesInElectoralDistrict[position()=$position and @id!=&apos;alle&apos;]">
-								<children>
-									<text fixtext="_____">
-										<styles font-size="smaller"/>
-									</text>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-				</children>
-			</globaltemplate>
-			<globaltemplate subtype="named" match="ProvincesTable">
-				<parameters/>
-				<children>
-					<tgrid>
-						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-						<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-						<children>
-							<tgridbody-cols>
-								<children>
-									<tgridcol>
-										<styles width="33.3%"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="33.3%"/>
-									</tgridcol>
-									<tgridcol>
-										<styles width="33.3%"/>
-									</tgridcol>
-								</children>
-							</tgridbody-cols>
-							<tgridbody-rows>
-								<children>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="1. Groningen"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_1"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="5. Flevoland"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_5"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="9. Zuid-Holland"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_9"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="2. Fryslân"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_2"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="6. Gelderland"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_6"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="10. Zeeland"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_10"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="3. Drenthe"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_3"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="7. Utrecht"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_7"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="11. Noord-Brabant"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_11"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-									<tgridrow>
-										<children>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="4. Overijssel"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_4"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="8. Noord-Holland"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_8"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-											<tgridcell>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="12. Limburg"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP22_ProvincesTable_12"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-												</children>
-											</tgridcell>
-										</children>
-									</tgridrow>
-								</children>
-							</tgridbody-rows>
-						</children>
-					</tgrid>
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="CandidateListSubmitted">
@@ -21820,6 +15810,138 @@ $candidateCount = ($noOfCandidatesPerPage * 2 + 2)">
 							</conditionbranch>
 						</children>
 					</condition>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="ElectoralDistrictsOverview">
+				<parameters/>
+				<children>
+					<text fixtext="Kieskringen en gemeente of openbaar lichaam waar het hoofdstembureau is gevestigd:"/>
+					<newline/>
+					<newline/>
+					<tgrid>
+						<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
+						<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
+						<children>
+							<tgridbody-cols>
+								<children>
+									<tgridcol/>
+									<tgridcol/>
+								</children>
+							</tgridbody-cols>
+							<tgridbody-rows>
+								<children>
+									<template subtype="element" match="rg:ElectoralDistrictsOverview">
+										<children>
+											<template subtype="element" match="rg:ElectoralDistrictName">
+												<children>
+													<tgridrow>
+														<children>
+															<tgridcell>
+																<styles vertical-align="top" width="30pt"/>
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																				<children>
+																					<paragraph>
+																						<children>
+																							<autocalc xpath="@id"/>
+																							<text fixtext="."/>
+																						</children>
+																					</paragraph>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="@id"/>
+																					<text fixtext="."/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</tgridcell>
+															<tgridcell>
+																<styles vertical-align="top"/>
+																<children>
+																	<content subtype="regular">
+																		<format basic-type="xsd" datatype="string"/>
+																	</content>
+																</children>
+															</tgridcell>
+														</children>
+													</tgridrow>
+												</children>
+												<variables/>
+											</template>
+										</children>
+										<variables/>
+									</template>
+								</children>
+							</tgridbody-rows>
+						</children>
+					</tgrid>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="ProvinceNameEK">
+				<parameters>
+					<parameter name="id" type="xs:int"/>
+				</parameters>
+				<children>
+					<paragraph paragraphtag="pre">
+						<styles white-space="pre"/>
+						<children>
+							<condition>
+								<children>
+									<conditionbranch xpath="rg:ElectoralDistrictName[position() = $id and text() != &apos;&apos;]">
+										<children>
+											<template subtype="element" filter="position() = $id" match="rg:ElectoralDistrictName">
+												<children>
+													<content subtype="regular"/>
+												</children>
+												<variables/>
+											</template>
+										</children>
+									</conditionbranch>
+									<conditionbranch>
+										<children>
+											<template subtype="source" match="XML">
+												<children>
+													<template subtype="element" match="eml:EML">
+														<children>
+															<template subtype="element" match="eml:Result">
+																<children>
+																	<template subtype="element" match="rg:RG520">
+																		<children>
+																			<template subtype="element" match="rg:ElectoralDistrictsOverview">
+																				<children>
+																					<template subtype="element" filter="position() = $id" match="rg:ElectoralDistrictName">
+																						<children>
+																							<content subtype="regular"/>
+																						</children>
+																						<variables/>
+																					</template>
+																				</children>
+																				<variables/>
+																			</template>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+																<variables/>
+															</template>
+														</children>
+														<variables/>
+													</template>
+												</children>
+												<variables/>
+											</template>
+										</children>
+									</conditionbranch>
+								</children>
+							</condition>
+						</children>
+					</paragraph>
 				</children>
 			</globaltemplate>
 		</children>

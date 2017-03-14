@@ -7,7 +7,7 @@
  * DEBUG: Rechte
  * Zeigt alle Rechte des angemeldeten Anwenders an
  *
- * author:  tst@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  tst@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: debug_rechte.jsp,v 1.3 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>

@@ -10,7 +10,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * WahlModel. Defines constants for the election.
  * 
- * @author cos@ivu.de (c) 2003 IVU Traffic Technologies AG
+ * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface WahlModel extends BasicWahlModel {
@@ -34,7 +34,7 @@ public interface WahlModel extends BasicWahlModel {
   public static final int STATE_CALCULATION_SUCCESSFUL = 7;
 
   /**
-   * Konstante für die bei der Wahlart TWEEDE_KAMER in den Niederlanden beinhalteten Gebiete
+   * Konstante fÃ¼r die bei der Wahlart TWEEDE_KAMER in den Niederlanden beinhalteten Gebiete
    */
   int[] GEBIETE_TWEEDE_KAMER = {GebietModel.GEBIETSART_BUND, GebietModel.GEBIETSART_WAHLKREIS,
       GebietModel.GEBIETSART_GEMEINDE, GebietModel.GEBIETSART_STIMMBEZIRK};
@@ -50,6 +50,14 @@ public interface WahlModel extends BasicWahlModel {
    */
   int[] GEBIETE_PROVINCE_NL = {GebietModel.GEBIETSART_LAND, GebietModel.GEBIETSART_WAHLKREIS,
       GebietModel.GEBIETSART_GEMEINDE, GebietModel.GEBIETSART_STIMMBEZIRK};
+
+  /**
+   * Constant for the involved districts for the election ALGEMEEN_BESTUUR (Waterschap) in the
+   * Netherlands
+   */
+  int[] GEBIETE_ALGEMEEN_BESTUUR_NL = {GebietModel.GEBIETSART_ALGEMEEN_BESTUUR,
+      GebietModel.GEBIETSART_WAHLKREIS, GebietModel.GEBIETSART_GEMEINDE,
+      GebietModel.GEBIETSART_STIMMBEZIRK};
 
   /**
    * Constant for the involved districts for the election GEMEENTERAAD in the Netherlands
@@ -98,7 +106,7 @@ public interface WahlModel extends BasicWahlModel {
       GebietModel.GEBIETSART_STIMMBEZIRK};
 
   /**
-   * Konstante für die Abbildung der Wahlart auf die jeweils beinhalteten Gebiete
+   * Konstante fÃ¼r die Abbildung der Wahlart auf die jeweils beinhalteten Gebiete
    */
   Map<ElectionCategory, int[]> WAHLGEBIETSARTEN = new ConstantMap<ElectionCategory, int[]>() {
     {
@@ -110,6 +118,7 @@ public interface WahlModel extends BasicWahlModel {
       add(ElectionCategory.BC, GEBIETE_DEELRAAD_NL);
       add(ElectionCategory.GC, GEBIETE_DEELRAAD_NL);
       add(ElectionCategory.PS, GEBIETE_PROVINCE_NL);
+      add(ElectionCategory.AB, GEBIETE_ALGEMEEN_BESTUUR_NL);
       add(ElectionCategory.NR, GEBIETE_REFERENDUM_NR);
       add(ElectionCategory.PR, GEBIETE_REFERENDUM_PR);
       add(ElectionCategory.LR, GEBIETE_REFERENDUM_LR);
@@ -160,6 +169,11 @@ public interface WahlModel extends BasicWahlModel {
       put(ElectionCategory.PS, GebietModel.EBENE_PSB, GebietModel.GEBIETSART_GEMEINDE);
       put(ElectionCategory.PS, GebietModel.EBENE_SB, GebietModel.GEBIETSART_STIMMBEZIRK);
 
+      put(ElectionCategory.AB, GebietModel.EBENE_CSB, GebietModel.GEBIETSART_ALGEMEEN_BESTUUR);
+      put(ElectionCategory.AB, GebietModel.EBENE_HSB, GebietModel.GEBIETSART_WAHLKREIS);
+      put(ElectionCategory.AB, GebietModel.EBENE_PSB, GebietModel.GEBIETSART_GEMEINDE);
+      put(ElectionCategory.AB, GebietModel.EBENE_SB, GebietModel.GEBIETSART_STIMMBEZIRK);
+
       put(ElectionCategory.NR, GebietModel.EBENE_CSB, GebietModel.GEBIETSART_BUND);
       put(ElectionCategory.NR, GebietModel.EBENE_HSB, GebietModel.GEBIETSART_WAHLKREIS);
       put(ElectionCategory.NR, GebietModel.EBENE_PSB, GebietModel.GEBIETSART_GEMEINDE);
@@ -179,7 +193,7 @@ public interface WahlModel extends BasicWahlModel {
   };
 
   /**
-   * Konstante für die Abbildung der Wahlart auf ihre Bezeichner
+   * Konstante fÃ¼r die Abbildung der Wahlart auf ihre Bezeichner
    */
   Map<ElectionCategory, String> WAHLART_KLARTEXT = new ConstantMap<ElectionCategory, String>() {
     {
@@ -190,6 +204,7 @@ public interface WahlModel extends BasicWahlModel {
       add(ElectionCategory.BC, "Bestuurscommissie"); //$NON-NLS-1$
       add(ElectionCategory.GC, "Gebiedscommissie"); //$NON-NLS-1$
       add(ElectionCategory.PS, "Provinciale staten"); //$NON-NLS-1$
+      add(ElectionCategory.AB, "Algemeen bestuur"); //$NON-NLS-1$
       add(ElectionCategory.EP, "Verkiezing Europees Parlement"); //$NON-NLS-1$
       add(ElectionCategory.NR, "National Referendum"); //$NON-NLS-1$
       add(ElectionCategory.PR, "Provincial Referendum"); //$NON-NLS-1$
@@ -199,7 +214,7 @@ public interface WahlModel extends BasicWahlModel {
   };
 
   /**
-   * Konstante für die Abbildung des Wahlmodus auf ihre Kurzbezeichner
+   * Konstante fÃ¼r die Abbildung des Wahlmodus auf ihre Kurzbezeichner
    */
   Map<Integer, String> WAHLMODUS_KLARTEXT = new ConstantMap<Integer, String>() {
     {

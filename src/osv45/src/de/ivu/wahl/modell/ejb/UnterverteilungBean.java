@@ -15,7 +15,7 @@ import de.ivu.wahl.modell.impl.UnterverteilungDBA;
 /**
  * UnterverteilungBean
  * 
- * @author jon@ivu.de (c) 2009 IVU Traffic Technologies AG
+ * @author jon@ivu.de (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class UnterverteilungBean extends BasicUnterverteilungBean {
   private static final long serialVersionUID = 8121532146432498292L;

@@ -8,7 +8,7 @@
  *
  * Die Funktion soll Administratoren vorbehalten bleiben
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_wahl_zuruecksetzen.jsp,v 1.7 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>

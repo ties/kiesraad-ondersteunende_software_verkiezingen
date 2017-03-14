@@ -2,7 +2,7 @@
  * AnmeldeFehlversuchException
  * 
  * Created on 23.04.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.anwender;
 

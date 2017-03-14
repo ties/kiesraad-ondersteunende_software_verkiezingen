@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="17" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
 		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
@@ -56,6 +56,7 @@
 			<designfragment match="ElectionFractionPart1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameP2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameShort" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="ElectionNameSimple" spsfile="reused-parts-simple.sps" isactive="1"/>
@@ -68,9 +69,13 @@
 			<designfragment match="FootnoteKieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FootnoteSign" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender" spsfile="reused-parts-simple.sps" isactive="0"/>
-			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="1"/>
+			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderGeneral" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="1"/>
+			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="GenerateDate" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Initials" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -90,7 +95,6 @@
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyName" spsfile="reused-parts-simple.sps" isactive="1"/>
-			<designfragment match="PartyName2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -109,7 +113,7 @@
 		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -122,7 +126,7 @@
 				<document-properties title="Model T 11"/>
 				<children>
 					<documentsection>
-						<properties columncount="1" columngap="0.50in" headerfooterheight="variable" pagemultiplepages="0" pagenumberingformat="1" pagenumberingstartat="auto" pagestart="next" paperheight="11.69in" papermarginbottom="1.2in" papermarginfooter="0.0in" papermarginheader="0.0in" papermarginleft="0.6in" papermarginright="0.6in" papermargintop="0.79in" paperwidth="8.27in" title="Model T 11"/>
+						<properties columncount="1" columngap="0.50in" headerfooterheight="variable" pagemultiplepages="0" pagenumberingformat="1" pagenumberingstartat="auto" pagestart="next" paperheight="11.69in" papermarginbottom="1.2in" papermarginfooter="0.0in" papermarginheader="0.0in" papermarginleft="1.0in" papermarginright="1.0in" papermargintop="0.9in" paperwidth="8.27in" title="Model T 11"/>
 						<children>
 							<globaltemplate subtype="pagelayout" match="footerall">
 								<children>
@@ -307,7 +311,7 @@
 																					<tgridcell>
 																						<styles font-size="small"/>
 																						<children>
-																							<text fixtext="Datum zitting"/>
+																							<text fixtext="Datum"/>
 																						</children>
 																					</tgridcell>
 																					<tgridcell>
@@ -333,7 +337,7 @@
 																					<tgridcell>
 																						<styles font-size="small"/>
 																						<children>
-																							<text fixtext="Tijdstip zitting"/>
+																							<text fixtext="Tijdstip"/>
 																						</children>
 																					</tgridcell>
 																					<tgridcell>
@@ -390,7 +394,7 @@
 																					<tgridcell>
 																						<styles font-size="small"/>
 																						<children>
-																							<text fixtext="Vorzitter"/>
+																							<text fixtext="Voorzitter"/>
 																						</children>
 																					</tgridcell>
 																					<tgridcell>
@@ -513,7 +517,7 @@
 																								</children>
 																							</tgridcell>
 																							<tgridcell>
-																								<styles text-align="left"/>
+																								<styles text-align="right"/>
 																								<children>
 																									<newline/>
 																									<text fixtext="____________________">
@@ -633,13 +637,19 @@
 																	<paragraph>
 																		<styles line-height="13.5pt"/>
 																		<children>
-																			<text fixtext="□ 	Nee"/>
+																			<text fixtext="□">
+																				<styles font-size="18pt"/>
+																			</text>
+																			<text fixtext=" Nee"/>
 																		</children>
 																	</paragraph>
 																	<paragraph>
 																		<styles line-height="13.5pt"/>
 																		<children>
-																			<text fixtext="□ 	Ja, dan is de stemming nietig en moet er opnieuw worden gestemd. "/>
+																			<text fixtext="□">
+																				<styles font-size="18pt"/>
+																			</text>
+																			<text fixtext=" Ja, dan is de stemming nietig en moet er opnieuw worden gestemd. "/>
 																		</children>
 																	</paragraph>
 																	<newline break="page"/>
@@ -661,7 +671,7 @@
 																			<tgridbody-cols>
 																				<children>
 																					<tgridcol>
-																						<styles width="180pt"/>
+																						<styles width="290pt"/>
 																					</tgridcol>
 																					<tgridcol>
 																						<styles width="40pt"/>
@@ -760,148 +770,268 @@
 																</children>
 																<variables/>
 															</template>
+															<condition>
+																<children>
+																	<conditionbranch xpath="$SV_OutputFormat = &apos;RTF&apos;">
+																		<children>
+																			<calltemplate subtype="named" match="SmallLineBreak">
+																				<parameters/>
+																			</calltemplate>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+															<calltemplate subtype="named" match="LineBreakPdf">
+																<parameters/>
+															</calltemplate>
+															<newline/>
+															<text fixtext="7. Ondertekening">
+																<properties class="heading"/>
+															</text>
+															<calltemplate subtype="named" match="LineBreakPdf">
+																<parameters/>
+															</calltemplate>
+															<newline/>
+															<tgrid>
+																<properties border="0" width="100%"/>
+																<children>
+																	<tgridbody-cols>
+																		<children>
+																			<tgridcol>
+																				<styles width="140pt"/>
+																			</tgridcol>
+																			<tgridcol>
+																				<styles width="100pt"/>
+																			</tgridcol>
+																			<tgridcol>
+																				<styles width="120pt"/>
+																			</tgridcol>
+																		</children>
+																	</tgridbody-cols>
+																	<tgridbody-rows>
+																		<children>
+																			<tgridrow>
+																				<children>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="Datum"/>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<properties valign="bottom"/>
+																						<children>
+																							<template subtype="element" match="rg:DateOfMeeting">
+																								<children>
+																									<calltemplate subtype="named" match="Date">
+																										<parameters>
+																											<parameter name="isBold"/>
+																											<parameter name="fontSize"/>
+																										</parameters>
+																									</calltemplate>
+																								</children>
+																								<variables/>
+																							</template>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="_____________________________________">
+																								<properties class="underline"/>
+																							</text>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																										<children>
+																											<text fixtext="___">
+																												<properties class="underline"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</tgridcell>
+																				</children>
+																			</tgridrow>
+																			<tgridrow>
+																				<children>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="Naam en handtekening voorzitter"/>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<properties valign="bottom"/>
+																						<children>
+																							<template subtype="element" filter="position() = 1" match="rg:MemberOfElectoralCommittee">
+																								<children>
+																									<content subtype="regular"/>
+																								</children>
+																								<variables/>
+																							</template>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="_____________________________________">
+																								<properties class="underline"/>
+																							</text>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																										<children>
+																											<text fixtext="___">
+																												<properties class="underline"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</tgridcell>
+																				</children>
+																			</tgridrow>
+																			<tgridrow>
+																				<children>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="Naam en handtekening leden"/>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<properties valign="bottom"/>
+																						<children>
+																							<template subtype="element" filter="position() = 2" match="rg:MemberOfElectoralCommittee">
+																								<children>
+																									<content subtype="regular"/>
+																								</children>
+																								<variables/>
+																							</template>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="_____________________________________">
+																								<properties class="underline"/>
+																							</text>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																										<children>
+																											<text fixtext="___">
+																												<properties class="underline"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</tgridcell>
+																				</children>
+																			</tgridrow>
+																			<tgridrow>
+																				<children>
+																					<tgridcell/>
+																					<tgridcell>
+																						<properties valign="bottom"/>
+																						<children>
+																							<template subtype="element" filter="position() = 3" match="rg:MemberOfElectoralCommittee">
+																								<children>
+																									<content subtype="regular"/>
+																								</children>
+																								<variables/>
+																							</template>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="_____________________________________">
+																								<properties class="underline"/>
+																							</text>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																										<children>
+																											<text fixtext="___">
+																												<properties class="underline"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</tgridcell>
+																				</children>
+																			</tgridrow>
+																			<tgridrow>
+																				<children>
+																					<tgridcell/>
+																					<tgridcell>
+																						<properties valign="bottom"/>
+																						<children>
+																							<template subtype="element" filter="position() = 4" match="rg:MemberOfElectoralCommittee">
+																								<children>
+																									<content subtype="regular"/>
+																								</children>
+																								<variables/>
+																							</template>
+																						</children>
+																					</tgridcell>
+																					<tgridcell>
+																						<children>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<newline/>
+																							<text fixtext="_____________________________________">
+																								<properties class="underline"/>
+																							</text>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																										<children>
+																											<text fixtext="___">
+																												<properties class="underline"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</tgridcell>
+																				</children>
+																			</tgridrow>
+																		</children>
+																	</tgridbody-rows>
+																</children>
+															</tgrid>
 														</children>
 														<variables/>
 													</template>
-													<condition>
-														<children>
-															<conditionbranch xpath="$SV_OutputFormat = &apos;RTF&apos;">
-																<children>
-																	<calltemplate subtype="named" match="SmallLineBreak">
-																		<parameters/>
-																	</calltemplate>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<calltemplate subtype="named" match="LineBreakPdf">
-														<parameters/>
-													</calltemplate>
-													<newline/>
-													<text fixtext="7. Ondertekening">
-														<properties class="heading"/>
-													</text>
-													<calltemplate subtype="named" match="LineBreakPdf">
-														<parameters/>
-													</calltemplate>
-													<newline/>
-													<tgrid>
-														<properties border="0" width="100%"/>
-														<children>
-															<tgridbody-cols>
-																<children>
-																	<tgridcol>
-																		<styles width="157.50pt"/>
-																	</tgridcol>
-																	<tgridcol/>
-																</children>
-															</tgridbody-cols>
-															<tgridbody-rows>
-																<children>
-																	<tgridrow>
-																		<children>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="Datum"/>
-																				</children>
-																			</tgridcell>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="_________________________________________________________">
-																						<properties class="underline"/>
-																					</text>
-																				</children>
-																			</tgridcell>
-																		</children>
-																	</tgridrow>
-																	<tgridrow>
-																		<children>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="Naam en handtekening voorzitter"/>
-																				</children>
-																			</tgridcell>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="_________________________________________________________">
-																						<properties class="underline"/>
-																					</text>
-																				</children>
-																			</tgridcell>
-																		</children>
-																	</tgridrow>
-																	<tgridrow>
-																		<children>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="Naam en handtekening leden"/>
-																				</children>
-																			</tgridcell>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="_________________________________________________________">
-																						<properties class="underline"/>
-																					</text>
-																				</children>
-																			</tgridcell>
-																		</children>
-																	</tgridrow>
-																	<tgridrow>
-																		<children>
-																			<tgridcell/>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="_________________________________________________________">
-																						<properties class="underline"/>
-																					</text>
-																				</children>
-																			</tgridcell>
-																		</children>
-																	</tgridrow>
-																	<tgridrow>
-																		<children>
-																			<tgridcell/>
-																			<tgridcell>
-																				<children>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<newline/>
-																					<text fixtext="_________________________________________________________">
-																						<properties class="underline"/>
-																					</text>
-																				</children>
-																			</tgridcell>
-																		</children>
-																	</tgridrow>
-																</children>
-															</tgridbody-rows>
-														</children>
-													</tgrid>
 												</children>
 												<variables/>
 											</template>
@@ -935,7 +1065,7 @@
 									<tgridbody-cols>
 										<children>
 											<tgridcol>
-												<styles width="160pt"/>
+												<styles width="110pt"/>
 											</tgridcol>
 											<tgridcol>
 												<styles width="340pt"/>
@@ -950,7 +1080,7 @@
 													<tgridcell>
 														<styles border-left-color="#C0C0C0" border-left-style="solid" border-left-width="1px" border-top-color="#C0C0C0" border-top-style="solid" border-top-width="1px" margin-bottom="4pt"/>
 														<children>
-															<text fixtext="Aanduiding politieke groepering">
+															<text fixtext="Partijnaam">
 																<styles font-weight="bold"/>
 															</text>
 														</children>
@@ -1020,13 +1150,13 @@
 													<tgridbody-cols>
 														<children>
 															<tgridcol>
-																<styles width="60pt"/>
+																<styles width="55pt"/>
 															</tgridcol>
 															<tgridcol>
-																<styles width="362pt"/>
+																<styles width="320pt"/>
 															</tgridcol>
 															<tgridcol>
-																<styles width="78pt"/>
+																<styles width="75pt"/>
 															</tgridcol>
 														</children>
 													</tgridbody-cols>
@@ -1038,7 +1168,7 @@
 																		<properties align="left"/>
 																		<styles border-bottom-color="#C0C0C0" border-bottom-style="solid" border-bottom-width="1px" border-left-color="#C0C0C0" border-left-style="solid" border-left-width="1px" border-right-color="#C0C0C0" border-right-style="solid" border-right-width="1px" border-top-color="#C0C0C0" border-top-style="solid" border-top-width="1px" vertical-align="top"/>
 																		<children>
-																			<text fixtext="Volgnummer">
+																			<text fixtext="Nummer">
 																				<styles font-weight="bold"/>
 																			</text>
 																			<newline/>
@@ -1121,7 +1251,7 @@
 																								</children>
 																								<variables/>
 																							</template>
-																							<calltemplate subtype="named" match="Gender2">
+																							<calltemplate subtype="named" match="GenderInAffiliationVotes">
 																								<parameters/>
 																							</calltemplate>
 																						</children>
@@ -1150,9 +1280,10 @@
 																	<tgridcell>
 																		<styles border-bottom-color="#C0C0C0" border-bottom-style="solid" border-bottom-width="1px" border-left-color="#C0C0C0" border-left-style="solid" border-left-width="1px" border-right-color="#C0C0C0" border-right-style="solid" border-right-width="1px" border-top-color="#C0C0C0" border-top-style="solid" border-top-width="1px" padding-right="5pt" text-align="right" vertical-align="middle"/>
 																		<children>
-																			<text fixtext="totaal">
+																			<text fixtext="Totaal (stemcijfer)">
 																				<styles font-weight="bold"/>
 																			</text>
+																			<newline/>
 																		</children>
 																	</tgridcell>
 																	<tgridcell>

@@ -4,7 +4,7 @@
  * Arbeits-JSP für die Administration von Properties. Dies sind insbesondere auch die
  * für Ausgaben und Eingaben verwendeten Verzeichnisse.
  *
- * author:  klie@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  klie@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_props.jsp,v 1.25 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -26,6 +26,7 @@
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%
+   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    String breite = "100%";
    int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0);
    SystemInfo systemInfo = SystemInfo.getSystemInfo();
@@ -91,12 +92,7 @@
 
 <body class="hghell" onload="sc()">
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="<%=helpKey%>"/></td>
-   </tr>
-    <tr class="hgeeeeee">
-      <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
@@ -178,6 +174,7 @@
                                      }%>
                                      </td>
                                     </tr><%
+                                    boolean isBackgroundColor = false;
                                     if (selectedKey != null) {
                                      String formurl = "/osv?cmd=adm_propEingabe&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
                                       + "&" + ClientHelper.getParametersDoNotStartWith(request, ApplicationBeanKonstanten.PREFIX); %>
@@ -201,6 +198,9 @@
                                           <td>
                                           <%
                                            String property = basiseinstellung.getProperty();
+                                           if (Konstanten.PROP_BACKGROUND_COLOR_RED.equals(property) || Konstanten.PROP_BACKGROUND_COLOR_GREEN.equals(property) || Konstanten.PROP_BACKGROUND_COLOR_BLUE.equals(property)) {
+                                             isBackgroundColor = true;
+                                           }
                                            String wert = admBean.getProperty(property);
                                            session.setAttribute(property, wert);
                                            property = ApplicationBeanKonstanten.PREFIX + property;
@@ -261,7 +261,10 @@
                                         } %>
                                        </table>
                                        <div align="center" style="margin-top: 1em; margin-bottom: 1em;">
-                                          <input id="box2" type="submit" value="<%= BundleHelper.getBundleString("Uebernehmen") %>" name="<%=ApplicationBeanKonstanten.PREFIX%>propuebernehmen">
+                                         <input id="box2" type="submit" value="<%= BundleHelper.getBundleString("Uebernehmen") %>" name="<%=ApplicationBeanKonstanten.PREFIX%>propuebernehmen"><% 
+                                         if (isBackgroundColor)  { %>
+                                           <input id="box2" type="submit" value="<%= BundleHelper.getBundleString("Reset_color") %>" name="<%=ApplicationBeanKonstanten.PREFIX%>propuebernehmen"><%
+                                         } %>
                                        </div>
                                        </ivu:form>
                                       </td>

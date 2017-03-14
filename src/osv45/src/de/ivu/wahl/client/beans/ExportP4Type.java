@@ -1,6 +1,6 @@
 /*
  * Created on 26.08.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -44,7 +44,13 @@ enum ExportP4Type implements ExportP4Commands {
       MessageKeys.Error_EmptyEml_KonnteNichtExportiertWerden),
 
   VOTES_CSV(EXP_P4_EXPORT_P4_VOTES_CSV, null, ReportTemplateEnum.OSV4_3,
-      MessageKeys.Error_CSV_KonnteNichtExportiertWerden);
+      MessageKeys.Error_CSV_KonnteNichtExportiertWerden),
+
+  WRR83(EXP_P4_EXPORT_P4_WRR83, EXP_P4_EXPORT_P4_BACK_WRR83, ReportTemplateEnum.Wrr83,
+      MessageKeys.Error_WRR83_KonnteNichtExportiertWerden),
+
+  OSV4_6(EXP_P4_EXPORT_P4_OSV4_6, EXP_P4_EXPORT_P4_BACK_OSV4_6, ReportTemplateEnum.OSV4_6,
+      MessageKeys.Error_OSV4_6_KonnteNichtExportiertWerden);
 
   private final String exportCommand;
   private final String backCommand;

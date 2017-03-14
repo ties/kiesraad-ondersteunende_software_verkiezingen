@@ -4,7 +4,7 @@
  *
  * Initialisiert Rechte und Administration values
  *
- * author:  klie@ivu.de cos@ivu.de  Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * author:  klie@ivu.de cos@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adminInit.jsp,v 1.8 2010/11/19 09:45:17 jon Exp $
  *******************************************************************************
  --%>

@@ -2,7 +2,7 @@
  * StateHandlingBean
  * 
  * Created on 12.09.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -104,7 +104,7 @@ public class StateHandlingBean extends WahlStatelessSessionBeanBase implements S
     Wahl w = wahlInfo.getWahl();
     if (w.isFreigegeben() != freigabe) {
 
-      // TODO Prüfen, ob in der Wahl bereits ein Ergebnis vorliegt
+      // TODO Prï¿½fen, ob in der Wahl bereits ein Ergebnis vorliegt
       if (!wahlInfo.isWahlVollstaendig() && freigabe) {
         String msg = Messages
             .getString(MessageKeys.Msg_EsWurdeVersuchtDieWahlFreizugebenFreigabeNichtMoeglichDaFuerDieWahlNochKeinErgebnisVorliegt);

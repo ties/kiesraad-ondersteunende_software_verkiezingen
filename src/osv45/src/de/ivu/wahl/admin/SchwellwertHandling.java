@@ -2,7 +2,7 @@
  * SchwellwertHandling
  * 
  * Created on 12.09.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -25,7 +25,7 @@ public interface SchwellwertHandling {
   int getSchwellwert(AnwContext c, String name) throws EJBException;
 
   /**
-   * Setzt den angegebenen Schwellwert, welcher für die gesammte Wahl gilt
+   * Setzt den angegebenen Schwellwert, welcher fï¿½r die gesammte Wahl gilt
    * 
    * @param c Anwenderkontext
    * @param schwellwertKey Bezeichnung des Schwellwerts

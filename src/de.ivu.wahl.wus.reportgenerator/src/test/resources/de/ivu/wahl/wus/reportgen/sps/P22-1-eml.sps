@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="17" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
 		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
@@ -17,7 +17,7 @@
 			<nspair prefix="xnl" uri="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0"/>
 		</namespaces>
 		<schemasources>
-			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\Eml-kiesraad\EML-v5.0-os\520-extended.xsd" workingxmlfile="D:\projekte\EML-kiesraad\Examples-2.10\EML 520 Testcase-TK111.P22-1.emlpp.xml"/>
+			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\Eml-kiesraad\EML-v5.0-os\520-extended.xsd" workingxmlfile="D:\projekte\EML-kiesraad\Examples-2.14\EML 520 Testcase-TK111.P22-1.emlpp.xml"/>
 		</schemasources>
 	</schemasources>
 	<modules>
@@ -31,23 +31,25 @@
 		</mainparts>
 		<globalparts/>
 		<designfragments>
+			<designfragment match="CandidateInTable2" spsfile="reused-parts-P22.sps" isactive="1"/>
 			<designfragment match="O3-H-CandidateVotes" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="O3CandidateVotes" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewAssignmentWithinCombinedLists" spsfile="reused-parts-P22.sps" isactive="1"/>
 			<designfragment match="OverviewCandidateListsEK" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateListsEP" spsfile="reused-parts-P22.sps" isactive="1"/>
 			<designfragment match="OverviewCandidateListsTK" spsfile="reused-parts-P22.sps" isactive="1"/>
-			<designfragment match="OverviewCandidateResult-EK-1-2" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResult-EK-1-4" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResult-EK-1-5" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResult-EK-6-12" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResultP22-2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResultP22-2-H" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResultU16-IJ" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResultU16-IJ-Base" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewVotesEK" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewVotesP22-2" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="CandidatesOnListTable" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 		</designfragments>
 		<pagelayouts/>
 		<xpath-functions/>
@@ -347,13 +349,6 @@
 															<newline/>
 															<condition>
 																<children>
-																	<conditionbranch xpath="//eml:ElectionCategory = &quot;EP&quot;">
-																		<children>
-																			<calltemplate subtype="named" match="OverviewCandidateListsEP">
-																				<parameters/>
-																			</calltemplate>
-																		</children>
-																	</conditionbranch>
 																	<conditionbranch xpath="//eml:ElectionCategory = &quot;TK&quot;">
 																		<children>
 																			<calltemplate subtype="named" match="OverviewCandidateListsTK">
@@ -361,9 +356,16 @@
 																			</calltemplate>
 																		</children>
 																	</conditionbranch>
-																	<conditionbranch>
+																	<conditionbranch xpath="//eml:ElectionCategory = &quot;PS&quot;">
 																		<children>
 																			<calltemplate subtype="named" match="OverviewCandidateListsPS2">
+																				<parameters/>
+																			</calltemplate>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath="//eml:ElectionCategory = &quot;EP&quot;">
+																		<children>
+																			<calltemplate subtype="named" match="OverviewCandidateListsEP">
 																				<parameters/>
 																			</calltemplate>
 																		</children>
@@ -393,72 +395,9 @@
 																<parameters/>
 															</calltemplate>
 															<newline/>
-															<text fixtext="Kieskringen en gemeente of openbaar lichaam waar hoofdstembureau is gevestigd:"/>
-															<newline/>
-															<newline/>
-															<tgrid>
-																<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
-																<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
-																<children>
-																	<tgridbody-cols>
-																		<children>
-																			<tgridcol/>
-																			<tgridcol/>
-																		</children>
-																	</tgridbody-cols>
-																	<tgridbody-rows>
-																		<children>
-																			<template subtype="element" match="rg:ElectoralDistrictsOverview">
-																				<children>
-																					<template subtype="element" match="rg:ElectoralDistrictName">
-																						<children>
-																							<tgridrow>
-																								<children>
-																									<tgridcell>
-																										<styles vertical-align="top" width="30pt"/>
-																										<children>
-																											<condition>
-																												<children>
-																													<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
-																														<children>
-																															<paragraph>
-																																<children>
-																																	<autocalc xpath="@id"/>
-																																	<text fixtext="."/>
-																																</children>
-																															</paragraph>
-																														</children>
-																													</conditionbranch>
-																													<conditionbranch>
-																														<children>
-																															<autocalc xpath="@id"/>
-																															<text fixtext="."/>
-																														</children>
-																													</conditionbranch>
-																												</children>
-																											</condition>
-																										</children>
-																									</tgridcell>
-																									<tgridcell>
-																										<styles vertical-align="top"/>
-																										<children>
-																											<content subtype="regular">
-																												<format basic-type="xsd" datatype="string"/>
-																											</content>
-																										</children>
-																									</tgridcell>
-																								</children>
-																							</tgridrow>
-																						</children>
-																						<variables/>
-																					</template>
-																				</children>
-																				<variables/>
-																			</template>
-																		</children>
-																	</tgridbody-rows>
-																</children>
-															</tgrid>
+															<calltemplate subtype="named" match="ElectoralDistrictsOverview">
+																<parameters/>
+															</calltemplate>
 															<newline/>
 															<newline break="page"/>
 															<calltemplate subtype="named" match="Line">
@@ -583,7 +522,7 @@
 																	<paragraph>
 																		<styles line-height="13.5pt"/>
 																		<children>
-																			<text fixtext="-	minder stembiljetten zijn geteld, dan dat er kiezers zijn toegelaten;">
+																			<text fixtext="-	minder stembiljetten zijn geteld, dan dat er kiezers zijn toegelaten.">
 																				<styles font-style="italic"/>
 																			</text>
 																		</children>
@@ -605,7 +544,7 @@
 																	<paragraph>
 																		<styles line-height="13.5pt"/>
 																		<children>
-																			<text fixtext="Welke verschillen zijn in de processen-verbaal vastgesteld, tussen het aantal toegelaten kiezers en getelde stembiljetten?">
+																			<text fixtext="Welke verschillen zijn in de processen-verbaal vastgesteld tussen het aantal toegelaten kiezers en getelde stembiljetten?">
 																				<styles line-height="13.5pt" text-decoration="underline"/>
 																			</text>
 																		</children>
@@ -700,7 +639,7 @@
 																								<properties align="left"/>
 																								<styles padding-left="0" vertical-align="top"/>
 																								<children>
-																									<text fixtext="Mogelijke reden van het verschil">
+																									<text fixtext="Mogelijke reden voor het verschil">
 																										<styles font-weight="bold"/>
 																									</text>
 																								</children>
@@ -824,6 +763,7 @@
 																									<text fixtext="(bij briefstembureaus)">
 																										<styles font-style="italic"/>
 																									</text>
+																									<text fixtext="."/>
 																								</children>
 																							</tgridcell>
 																							<tgridcell>
@@ -851,6 +791,7 @@
 																									<text fixtext="(bij briefstembureaus)">
 																										<styles font-style="italic"/>
 																									</text>
+																									<text fixtext="."/>
 																								</children>
 																							</tgridcell>
 																							<tgridcell>
@@ -1156,7 +1097,32 @@
 														<parameters/>
 													</calltemplate>
 													<newline/>
-													<text fixtext="15. Toewijzing van zetels aan kandidaten en rangschikking per lijst ">
+													<text fixtext="15. Toewijzing van zetels aan kandidaten en rangschikking per lijst">
+														<properties class="heading"/>
+													</text>
+													<newline/>
+													<newline/>
+													<template subtype="element" match="rg:RG520">
+														<children>
+															<template subtype="element" match="rg:OverviewOfCandidatesAndResults">
+																<children>
+																	<template subtype="element" match="rg:AnomalyInSeatDistribution">
+																		<children>
+																			<content subtype="regular"/>
+																			<calltemplate subtype="named" match="LineBreakPdf">
+																				<parameters/>
+																			</calltemplate>
+																			<newline/>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+																<variables/>
+															</template>
+														</children>
+														<variables/>
+													</template>
+													<text fixtext=" ">
 														<properties class="heading"/>
 													</text>
 													<newline break="page"/>

@@ -2,7 +2,7 @@
  * ImportEML510
  * 
  * Created on 27.04.2007
- * Copyright (c) 2007 IVU Traffic Technologies AG
+ * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -377,7 +377,8 @@ public class ImportEML510 extends AbstractImportEML {
               || _electionCategory.equals(ElectionCategory.LR)
               || _electionCategory.equals(ElectionCategory.IR)) {
             _securityLevel = SecurityLevel.NO_HASH_CODE;
-          } else if (wahlInfo.getElectionSubcategory().equals(ElectionSubcategory.PS1)) {
+          } else if (wahlInfo.getElectionSubcategory().equals(ElectionSubcategory.PS1)
+              || _electionCategory.equals(ElectionCategory.AB)) {
             _securityLevel = SecurityLevel.NO_HASH_CODE;
           } else if ((_electionCategory.equals(ElectionCategory.PS) || _electionCategory
               .equals(ElectionCategory.PR)) && isAuthoritySameRegion) {

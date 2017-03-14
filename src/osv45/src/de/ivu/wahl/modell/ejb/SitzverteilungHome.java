@@ -1,7 +1,7 @@
 /*
  * SitzverteilungHome
  * 
- * Copyright (c) 2007 IVU Traffic Technologies AG
+ * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb;
 
@@ -12,7 +12,7 @@ import javax.ejb.FinderException;
 /**
  * SitzverteilungHome
  * 
- * @author cos@ivu.de (c) 2007 IVU Traffic Technologies AG
+ * @author cos@ivu.de (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface SitzverteilungHome extends BasicSitzverteilungHome {

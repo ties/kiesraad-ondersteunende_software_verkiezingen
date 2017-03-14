@@ -6,7 +6,7 @@
  *
  * Besonderheit: Überprüfung der Eingabe mit JavaScript
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>

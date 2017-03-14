@@ -21,7 +21,7 @@ import de.ivu.wahl.modell.ListeModel;
   * Contains the list of properties including the IDs of the associated objects.
   * A navigation is not implemented (1:1, 1:n, m:n)
   *
-  * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 
@@ -60,6 +60,7 @@ public class ListeModelImpl extends ModelImpl implements ListeModel, Serializabl
       setSatz(other._satz);
       setName(other._name);
       setGeschlechtSichtbar(other._geschlechtSichtbar);
+      setPublicationLanguage(other._publicationLanguage);
    }
 
    /**
@@ -245,6 +246,32 @@ public class ListeModelImpl extends ModelImpl implements ListeModel, Serializabl
    }
 
    /**
+     * Type : VARCHAR Name : PublicationLanguage
+     */
+   protected String _publicationLanguage;
+
+   /**
+     * Sets the value of publicationLanguage in the entity Liste
+     *
+     * @param publicationLanguage new value of the attribute publicationLanguage
+     */
+   public void setPublicationLanguage(String publicationLanguage) {
+      if (different(_publicationLanguage, publicationLanguage)) {
+         _publicationLanguage = checkLength(publicationLanguage, ListeModel.PUBLICATIONLANGUAGE_LENGTH);
+         setModified();
+      }
+   }
+
+   /**
+     * Gets the value of publicationLanguage in the entity Liste
+     *
+     * @return value of the attribute publicationLanguage
+     */
+   public String getPublicationLanguage() {
+      return _publicationLanguage;
+   }
+
+   /**
      * Overwrites the hashCode method in Object
      *
      * @return hash code, calculated as XOR-composition of the hash codes of the elements of the primary keys
@@ -296,6 +323,9 @@ public class ListeModelImpl extends ModelImpl implements ListeModel, Serializabl
             string +=  ", name = " + getName(); //$NON-NLS-1$
          }
          string +=  ", geschlechtSichtbar = " + isGeschlechtSichtbar(); //$NON-NLS-1$
+         if (getPublicationLanguage() != null) {
+            string +=  ", publicationLanguage = " + getPublicationLanguage(); //$NON-NLS-1$
+         }
          return string  + "]" ; //$NON-NLS-1$
       } catch (Exception e) {
          LOGGER.error(e, e);

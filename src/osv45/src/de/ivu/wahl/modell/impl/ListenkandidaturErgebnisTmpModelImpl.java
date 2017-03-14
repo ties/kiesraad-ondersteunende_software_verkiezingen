@@ -2,7 +2,7 @@
  * ListenkandidaturErgebnisTmpModelImpl
  * 
  * Created on 18.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.impl;
 
@@ -10,7 +10,7 @@ import de.ivu.wahl.modell.ListenkandidaturErgebnisTmpModel;
 
 /**
  * @author ugo@ivu.de, IVU Traffic Technologies AG
- * @version $Id$
+
  */
 public class ListenkandidaturErgebnisTmpModelImpl extends ListenkandidaturErgebnisModelImpl
     implements
@@ -31,7 +31,7 @@ public class ListenkandidaturErgebnisTmpModelImpl extends ListenkandidaturErgebn
   }
 
   /**
-   * Gibt id_Liste zurück.
+   * Gibt id_Liste zurï¿½ck.
    * 
    * @return id_Liste.
    */
@@ -40,7 +40,7 @@ public class ListenkandidaturErgebnisTmpModelImpl extends ListenkandidaturErgebn
   }
 
   /**
-   * Gibt listenposition zurück.
+   * Gibt listenposition zurï¿½ck.
    * 
    * @return listenposition.
    */

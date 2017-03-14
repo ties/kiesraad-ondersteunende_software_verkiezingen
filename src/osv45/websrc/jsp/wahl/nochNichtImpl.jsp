@@ -2,7 +2,7 @@
  *******************************************************************************
  * Noch nicht Implementiert
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: nochNichtImpl.jsp,v 1.5 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%> 

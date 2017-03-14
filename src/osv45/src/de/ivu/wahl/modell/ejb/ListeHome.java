@@ -8,8 +8,8 @@ import javax.ejb.FinderException;
 /**
  * ListeHome
  * 
- * @author cos@ivu.de (c) 2003-7 IVU Traffic Technologies AG
- * @version $Id$
+ * @author cos@ivu.de (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+
  */
 
 public interface ListeHome extends BasicListeHome {

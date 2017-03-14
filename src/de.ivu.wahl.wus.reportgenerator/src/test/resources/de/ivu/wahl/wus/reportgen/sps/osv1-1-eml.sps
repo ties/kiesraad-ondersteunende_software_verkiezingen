@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
-		<parameter name="generateDate" default="(date missing)"/>
-		<parameter name="hashCode" default="SHA1"/>
+		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
+		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 		<parameter name="parameter1" default="all"/>
@@ -37,6 +37,7 @@
 			<designfragment match="ChapterDistrictsTitle" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterElection" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterPartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterStemming" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Checkbox" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedListI17" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -61,6 +62,8 @@
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="1"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="KieskringParty" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -82,49 +85,21 @@
 		<xpath-functions/>
 	</flags>
 	<scripts>
-		<script language="javascript">
- function doInitialize() {
- markLoaded();
- return false;
- }
- function doIntref(inVerwijzingRef, inLabelRef) {
- var myWin = window;
- var myLabel = &apos;label-&apos; + inLabelRef;
- myWin.location.replace(&apos;#&apos; + myLabel);
- }
- // </script>
+		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\osv1-1-text.xslt"/>
 	</importedxslt>
 	<globalstyles>
-		<rules selector="*">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-family="Arial" font-size="small"/>
-		</rules>
 		<rules selector="td">
 			<media>
 				<media value="all"/>
 			</media>
 			<rule line-height="22pt"/>
-		</rules>
-		<rules selector="div">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule margin="0" padding="0"/>
-		</rules>
-		<rules selector="h4">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="medium" font-weight="bold"/>
 		</rules>
 		<rules selector="p">
 			<media>
@@ -165,6 +140,78 @@
 										<children>
 											<template subtype="element" match="eml:Nomination">
 												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$parameter1 = &apos;all&apos; and //kr:ElectionSubcategory = &quot;PS2&quot; and eml:Affiliation/eml:Type = &quot;lijstengroep&quot;">
+																<children>
+																	<paragraph paragraphtag="h4">
+																		<styles text-align="center"/>
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext="Verklaring kandidaat van voornemen tot vestiging ">
+																								<styles font-size="medium"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$osv1-1_010_1_title">
+																								<styles font-size="medium"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																			<newline/>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext="in de provincie">
+																								<styles font-size="medium"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$osv1-1_020_provincie">
+																								<styles font-size="medium"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																			<calltemplate subtype="named" match="ElectionDomain">
+																				<parameters>
+																					<parameter name="isBold" value="1"/>
+																					<parameter name="font-size" value="&apos;medium&apos;"/>
+																				</parameters>
+																			</calltemplate>
+																			<paragraph paragraphtag="p">
+																				<styles text-align="center"/>
+																			</paragraph>
+																		</children>
+																	</paragraph>
+																	<paragraph paragraphtag="p">
+																		<children>
+																			<text fixtext="Let op:">
+																				<styles font-weight="bold"/>
+																			</text>
+																			<newline/>
+																			<text fixtext="De verklaringen van voorgenomen vestiging worden voor elke kieskring afzonderlijk aangemaakt en deze staan in afzonderlijke bestanden. Hierdoor kan het zijn dat er voor een kandidaten meerdere verklaringen worden aangemaakt. Er dient voor elke kandidaat echter maar één verklaring te worden ingeleverd bij de kandidaatstelling. Doordat de verklaringen in verschillende bestanden staan, is het verstandig om na te gaan dat uiteindelijk van alle kandidaten de benodigde verklaringen zijn uitgeprint en ondertekend."/>
+																		</children>
+																	</paragraph>
+																	<newline/>
+																	<newline/>
+																	<newline/>
+																	<newline break="page"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
 													<template subtype="element" match="rg:RG210">
 														<children>
 															<template subtype="element" match="rg:IntendedSettlement">
@@ -229,6 +276,34 @@
 																																									</conditionbranch>
 																																								</children>
 																																							</condition>
+																																						</children>
+																																					</conditionbranch>
+																																					<conditionbranch xpath="eml:ElectionIdentifier/eml:ElectionCategory=&quot;AB&quot;">
+																																						<children>
+																																							<condition>
+																																								<children>
+																																									<conditionbranch xpath="$lang=0">
+																																										<children>
+																																											<text fixtext="in het ">
+																																												<styles font-size="medium"/>
+																																											</text>
+																																										</children>
+																																									</conditionbranch>
+																																									<conditionbranch>
+																																										<children>
+																																											<autocalc xpath="$osv1-1_021_in_het">
+																																												<styles font-size="medium"/>
+																																											</autocalc>
+																																										</children>
+																																									</conditionbranch>
+																																								</children>
+																																							</condition>
+																																							<calltemplate subtype="named" match="WaterschapTypeName">
+																																								<parameters>
+																																									<parameter name="isBold" value="1"/>
+																																									<parameter name="font-size" value="&apos;medium&apos;"/>
+																																								</parameters>
+																																							</calltemplate>
 																																						</children>
 																																					</conditionbranch>
 																																					<conditionbranch xpath="eml:ElectionIdentifier/eml:ElectionCategory=&quot;ER&quot;">
@@ -381,7 +456,7 @@
 																																				</children>
 																																				<variables/>
 																																			</template>
-																																			<calltemplate subtype="named" match="Gender">
+																																			<calltemplate subtype="named" match="GenderP1">
 																																				<parameters/>
 																																			</calltemplate>
 																																		</children>
@@ -464,6 +539,7 @@
 																											<newline/>
 																											<newline/>
 																											<paragraph paragraphtag="p">
+																												<styles white-space="pre-wrap"/>
 																												<children>
 																													<condition>
 																														<children>
@@ -598,7 +674,7 @@
 																																																</children>
 																																																<variables/>
 																																															</template>
-																																															<calltemplate subtype="named" match="Gender">
+																																															<calltemplate subtype="named" match="GenderP1">
 																																																<parameters/>
 																																															</calltemplate>
 																																														</children>
@@ -739,6 +815,30 @@
 																																															</conditionbranch>
 																																														</children>
 																																													</condition>
+																																												</children>
+																																											</conditionbranch>
+																																											<conditionbranch xpath="eml:ElectionIdentifier/eml:ElectionCategory=&quot;AB&quot;">
+																																												<children>
+																																													<condition>
+																																														<children>
+																																															<conditionbranch xpath="$lang=0">
+																																																<children>
+																																																	<text fixtext="in het "/>
+																																																</children>
+																																															</conditionbranch>
+																																															<conditionbranch>
+																																																<children>
+																																																	<autocalc xpath="$osv1-1_021_in_het"/>
+																																																</children>
+																																															</conditionbranch>
+																																														</children>
+																																													</condition>
+																																													<calltemplate subtype="named" match="WaterschapTypeName">
+																																														<parameters>
+																																															<parameter name="isBold" value="0"/>
+																																															<parameter name="font-size"/>
+																																														</parameters>
+																																													</calltemplate>
 																																												</children>
 																																											</conditionbranch>
 																																											<conditionbranch xpath="eml:ElectionIdentifier/eml:ElectionCategory=&quot;ER&quot;">

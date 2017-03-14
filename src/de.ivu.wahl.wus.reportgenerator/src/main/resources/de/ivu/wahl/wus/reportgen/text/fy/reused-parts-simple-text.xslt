@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:param name="RP_ChapterElection_Verkiezing" select="'Ferkiezing'" />
+    <xsl:param name="RP_ChapterElection_Stemming" select="'[FY]Stemming'" />
     <xsl:param name="RP_ChapterElection_HetGaatOmVerkiezing" select="'It giet om de ferkiezing fan:'" />
+    <xsl:param name="RP_ChapterElection_HetGaatOmVerkiezingVanLeden" select="'It giet om de ferkiezing fan:'" />
     <xsl:param name="RP_ChapterElection_HetGaatOmKandidatenlijst" select="'It giet om de kandidatelist foar de ferkiezing fan:'" />
+    <xsl:param name="RP_ChapterElection_VoorDeProvincie" select="' voor de provincie '" />
+
+    <xsl:param name="RP_ChapterStemming_Stemming" select="'[FY]Stemming'" />
+    <xsl:param name="RP_ChapterStemming_deVerkiezingVan" select="'[FY]de verkiezing van '" />
+    <xsl:param name="RP_ChapterStemming_het" select="'[FY]het '" />
+    <xsl:param name="RP_ChapterStemming_referendum" select="'[FY]referendum '" />
+    <xsl:param name="RP_ChapterStemming_over" select="'[FY]over '" />
+    <xsl:param name="RP_ChapterStemming_DitProcesVerbaalHeeftBetrekkingOp" select="'[FY]Dit proces-verbaal heeft betrekking op:'" />
+    <xsl:param name="RP_ChapterStemming_HetGaatOmVerkiezingVanLeden" select="'[FY]Het gaat om de verkiezing van de leden van:'" />
+    <xsl:param name="RP_ChapterStemming_VoorDeProvincie" select="' voor de provincie '" />
 
     <xsl:param name="RP_ChapterPartyName_AanduidingVan" select="'Oantsjutting fan de politike groepearring'" />
     <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC" select="'Oantsjutting fan de (politike) groepearring'" />
@@ -25,12 +37,17 @@
     <xsl:param name="RP_CandidatesOnListTable-woonplaats" select="'wenplak'" />
     
     <xsl:param name="RP_ElectionName_verkiezingLeden" select="'de ferkiezing fan de leden fan '" />
+    <xsl:param name="RP_ElectionName_referendumOver" select="'it referendum oer '" />
     <xsl:param name="RP_ElectionName_op" select="' op '" />
 
     <xsl:param name="RP_ElectionNameP2_verkiezingLeden" select="'ferkiezing fan de leden fan '" />
 
     <xsl:param name="RP_Salutation_dhr" select="'dhr. '" />
     <xsl:param name="RP_Salutation_mevr" select="'mfr. '" />
+
+    <xsl:param name="RP_GenderP1_m" select="' (m)'" />
+    <xsl:param name="RP_GenderP1_v" select="' (f)'" />
+    <xsl:param name="RP_GenderP1_unknown" select="' (f)'" />
 
     <xsl:param name="RP_Gender_m" select="' (m)'" />
     <xsl:param name="RP_Gender_v" select="' (v)'" />
@@ -118,6 +135,7 @@
     <xsl:param name="RP_ElectionNameSimple_tweedeKamer" select="'Twadde Keamer fan de Steaten-Generaal'" />
     <xsl:param name="RP_ElectionNameSimple_eersteKamer" select="'Earste Keamer fan de Steaten-Generaal'" />
     <xsl:param name="RP_ElectionNameSimple_provincialeStaten" select="'provinsjale steaten'" />
+    <xsl:param name="RP_ElectionNameSimple_algemeen_bestuur" select="'algemien bestjoer fan it '" />
     <xsl:param name="RP_ElectionNameSimple_hetEuropeesParlement" select="'Europeesk Parlemint'" />
     <xsl:param name="RP_ElectionNameSimple_raadVanDeGemeente" select="'gemeenterie'" />
     <xsl:param name="RP_ElectionNameSimple_eilandsraad" select="'eilânsrie'" />
@@ -130,6 +148,20 @@
     <xsl:param name="RP_ElectionNameSimple_van" select="' fan'" />
     <xsl:param name="RP_ElectionNameSimple_van_eilandsraad" select="' fan it iepenbier lichem'" />
     <xsl:param name="RP_ElectionNameSimple_van_stadsdeel" select="' fan stadsdeel'" />
+
+    <xsl:param name="RP_WaterschapTypeName_Waterschap" select="'wetterskip'" />
+    <xsl:param name="RP_WaterschapTypeName_Wetterskip" select="'wetterskip'" />
+    <xsl:param name="RP_WaterschapTypeName_Hoogheemraadschap" select="'hoogheemraadschap'" />
+    <xsl:param name="RP_WaterschapTypeName_Hoogheemraadschap_van" select="'hoogheemraadschap van'" />
+
+    <xsl:param name="RP_ElectionNameAcceptance_tweedeKamer" select="'de Tweede Kamer der Staten-Generaal'" />
+    <xsl:param name="RP_ElectionNameAcceptance_eersteKamer" select="'de Eerste Kamer der Staten-Generaal'" />
+    <xsl:param name="RP_ElectionNameAcceptance_provincialeStaten" select="'provinciale staten van'" />
+    <xsl:param name="RP_ElectionNameAcceptance_algemeen_bestuur" select="'het algemeen bestuur van het '" />
+    <xsl:param name="RP_ElectionNameAcceptance_raadVanDeGemeente" select="'de raad van de gemeente'" />
+    <xsl:param name="RP_ElectionNameAcceptance_eilandsraad" select="'de eilandsraad van het openbaar lichaam'" />
+    <xsl:param name="RP_ElectionNameAcceptance_bestuurscommissie" select="'de bestuurscommissie'" />
+    <xsl:param name="RP_ElectionNameAcceptance_gebiedscommissie" select="'de gebiedscommissie'" />
 
     <xsl:param name="RP_ObjectionsByVoters1_aanwezigeKiezers" select="'Door de in de zittingsruimte aanwezige kiezers zijn'" />
 

@@ -2,7 +2,7 @@
  * AuswertungHandling
  * 
  * Created on 15.10.2003
- * Copyright (c) 2003-2010 IVU Traffic Technologies AG
+ * Copyright (c) 2003-2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung;
 
@@ -27,28 +27,28 @@ import de.ivu.wahl.modell.ejb.Personendaten;
 public interface AuswertungHandling {
   /**
    * Liefert ein Status-Objekt, welches Informationen zur aktuellen Wahl und zum Applikationszustand
-   * hält
+   * hï¿½lt
    * 
-   * @param anwContext Anwenderkontext für die Bestimmung der Wahl und der Rechte
+   * @param anwContext Anwenderkontext fï¿½r die Bestimmung der Wahl und der Rechte
    * @return Statusinfos der Wahl und der Applikation
    * @throws EJBException Bei einem allgemeinen Problem
    */
   Status getStatus(AnwContext anwContext) throws EJBException;
 
   /**
-   * Liefert eine Liste von GruppeGebietsspezifisch mit Parteien/Gruppen für eine bestimmte Wahl
+   * Liefert eine Liste von GruppeGebietsspezifisch mit Parteien/Gruppen fï¿½r eine bestimmte Wahl
    * 
-   * @param anwContext Anwenderkontext für die Bestimmung der Wahl und der Rechte
+   * @param anwContext Anwenderkontext fï¿½r die Bestimmung der Wahl und der Rechte
    * @return alle Parteien, die an der Wahl teilnehmen, in alphabetischer Reihenfolge
    * @throws EJBException Bei einem allgemeinen Problem
    */
   List<GruppeModel> getParteienForWahl(AnwContext anwContext) throws EJBException;
 
   /**
-   * Liefert eine Liste mit Gebieten, welche eine Wahleinheit sind, mit übergebenen ID einem
-   * gemeinsamen Übergebiet zugeordnert werden können und noch keinen gültigen Eingang haben.
+   * Liefert eine Liste mit Gebieten, welche eine Wahleinheit sind, mit ï¿½bergebenen ID einem
+   * gemeinsamen ï¿½bergebiet zugeordnert werden kï¿½nnen und noch keinen gï¿½ltigen Eingang haben.
    * 
-   * @param anwContext Anwenderkontext für die Bestimmung der Wahl und der Rechte
+   * @param anwContext Anwenderkontext fï¿½r die Bestimmung der Wahl und der Rechte
    * @param id_uebergeordnetesGebiet
    * @return List mit Gebiet-Objekten
    * @throws EJBException Bei einem allgemeinen Problem
@@ -59,7 +59,7 @@ public interface AuswertungHandling {
   /**
    * Liefert alle teilnehmen Kandiaten als Personendaten-Objekt alphabetisch sortiert
    * 
-   * @param anwContext Anwenderkontext für die Bestimmung der Wahl und der Rechte
+   * @param anwContext Anwenderkontext fï¿½r die Bestimmung der Wahl und der Rechte
    * @return Personendaten, alphabetisch sortiert
    * @throws EJBException Bei einem allgemeinen Problem
    */

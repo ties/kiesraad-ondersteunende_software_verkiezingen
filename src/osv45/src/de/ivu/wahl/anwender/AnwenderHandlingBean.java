@@ -1,7 +1,7 @@
 /*
  * AnwenderHandlingBean
  * 
- * Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.anwender;
 

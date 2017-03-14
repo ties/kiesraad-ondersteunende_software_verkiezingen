@@ -1,7 +1,7 @@
 /*
  * EingangMsgXML
  * 
- * Copyright (c) 2002-4 IVU Traffic Technologies AG
+ * Copyright (c) 2002-4 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -23,7 +23,7 @@ import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.BasicEingangMsg;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
-import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.GruppeGebietsspezifisch;
 
@@ -65,13 +65,13 @@ public class EingangMsgXML extends BasicEingangMsg {
     } else {
       setEingangszeit(new Date());
     }
-    
+
     int source = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT;
     if (SystemInfo.getSystemInfo().isFileInputWithManualConfirmation()) {
       source = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT_AS_FIRST_INPUT;
     }
     setSource(source);
-    
+
     setInputMode(EingangMsg.MODE_IGNORE_WARNINGS);
     init(gebiet);
   }
@@ -91,7 +91,7 @@ public class EingangMsgXML extends BasicEingangMsg {
   public String getMsgName() {
     // Klartextidentifikation
     return Messages.bind(MessageKeys.Msg_GebietsergebnisXML_0_1,
-        GebietModel.GEBIETSART_KLARTEXT[_gebietsartErfassungseinheit],
+        Gebietsart.getKlartext(_gebietsartErfassungseinheit),
         _nummerErfassungseinheit);
   }
 

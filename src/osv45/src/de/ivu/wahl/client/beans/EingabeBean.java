@@ -63,7 +63,8 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
 /**
  * Organisiert die Eingabe von Gebietsergebnissen
  * 
- * @author cos@ivu.de mur@ivu.de klie@ivu.de tdu@ivu.de (c) 2003-2010 IVU Traffic Technologies AG
+ * @author cos@ivu.de mur@ivu.de klie@ivu.de tdu@ivu.de 
+ * (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class EingabeBean implements Executer, Serializable {
@@ -155,7 +156,10 @@ public class EingabeBean implements Executer, Serializable {
       // Fehler zurücksetzen ... wenn es welche gibt werden diese durch die
       // neue Eingabe bestimmt
       geMsg.resetGruppeUndKandidatenfehler(posGruppe);
-      if (!(systemInfo.getWahlEbene() == GebietModel.EBENE_PSB && posGruppe == GruppeAllgemein.WAHLBERECHTIGTE.position)) {
+
+      // On PSB level, do not let the user enter the number of elidgible voters
+      if (!(systemInfo.getWahlEbene() == GebietModel.EBENE_PSB && posGruppe == GruppeAllgemein.WAHLBERECHTIGTE
+          .getPosition())) {
         final String paramNameGruppe = PREFIX + "GRUPPE_" + posGruppe; //$NON-NLS-1$
         fehler = transferInputGruppe(request,
             paramNameGruppe,
@@ -372,7 +376,7 @@ public class EingabeBean implements Executer, Serializable {
   public GUIEingangMsg getGUIMsg(HttpServletRequest request,
       GebietInfo gebietInfo,
       boolean forDisplay) {
-    
+
     int gebietsart = gebietInfo.getGebietsart();
     int gebietsnummer = gebietInfo.getNummer();
     return getGUIMsg(request, gebietsart, gebietsnummer, forDisplay);
@@ -415,6 +419,21 @@ public class EingabeBean implements Executer, Serializable {
 
         // Save data message in step object
         step.put(GUI_EE_EINGANG_KEY, geMsg);
+      } else {
+        // OSV-1652 check source. If other souce is needed, get new GUIEingangMsg
+        int newSource = getEingangHandling().sourceForGUIMsg(getAnwContext(request),
+            gebietsart,
+            gebietsnummer,
+            forDisplay);
+        int oldSource = geMsg.getSource();
+        if (oldSource != newSource) {
+          LOGGER.info("EingabeBean.getGUIMsg(): Fetching new GUIEingangMsg, bypass the cache. This solves OSV-1652. If this log line occurs often, review OSV-1652.");
+          geMsg = getEingangHandling().getGUIMsg(getAnwContext(request),
+              gebietsart,
+              gebietsnummer,
+              forDisplay);
+        }
+
       }
       return geMsg;
     } catch (Exception e) {

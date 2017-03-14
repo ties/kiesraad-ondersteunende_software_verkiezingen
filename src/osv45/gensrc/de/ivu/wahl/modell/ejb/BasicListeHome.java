@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.ListeModel;
 /**
   * LocalHome interface for the entity Liste as BMP Entity Bean.
   *
-  * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicListeHome extends EJBLocalHome {
@@ -154,4 +154,22 @@ public interface BasicListeHome extends EJBLocalHome {
      * @throws FinderException if an error occurred while searching (does NOT mean "not found").
      */
    Collection<Liste> findAllByGeschlechtSichtbar(boolean geschlechtSichtbar) throws FinderException;
+
+   /**
+     * Returns the set of entities of the type {@link Liste}, filtered by publicationLanguage.
+     *
+     * @param publicationLanguage searching condition
+     * @return  {@link Collection} of {@link EJBLocalObject}s of the type {@link Liste}
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   Collection<Liste> findAllByPublicationLanguage(String publicationLanguage) throws FinderException;
+
+   /**
+     * Returns the set of entities of the type {@link Liste}, filtered by publicationLanguage.
+     *
+     * @param publicationLanguage searching condition
+     * @return  {@link Collection} of {@link EJBLocalObject}s of the type {@link Liste}
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   Collection<Liste> findAllLikePublicationLanguage(String publicationLanguage) throws FinderException;
 }

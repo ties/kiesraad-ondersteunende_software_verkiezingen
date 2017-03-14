@@ -1,6 +1,6 @@
 /*
  * Created on 04.11.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -18,14 +18,16 @@ import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.XPathContext;
 
+import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.WahlInfo;
+import de.ivu.wahl.admin.PropertyHandling;
 import de.ivu.wahl.auswertung.erg.CandidateVotesPerRegion;
 import de.ivu.wahl.auswertung.erg.PartyWithCandidates;
 import de.ivu.wahl.auswertung.erg.ResultSummary;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
-import de.ivu.wahl.modell.GruppeKonstanten;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
@@ -44,10 +46,11 @@ public class CsvVotesExportHelper {
 
   private static final String DOUBLE_SLASH = "//"; //$NON-NLS-1$
   private static final String COLON = ":"; //$NON-NLS-1$
-  private static final String STIMMBEZIRK_PREFIX = GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_STIMMBEZIRK]
-      + " "; // "Stembureau " //$NON-NLS-1$
+  private static final String STIMMBEZIRK_PREFIX = Gebietsart.STIMMBEZIRK.getKlartext() + " "; // "Stembureau " //$NON-NLS-1$
 
   private final XPathContext xpathContext;
+  private final boolean isReferendum = WahlInfo.getWahlInfo().isReferendum();
+  private final boolean isEK = WahlInfo.getWahlInfo().isEK();
 
   /**
    * Constructor
@@ -61,9 +64,12 @@ public class CsvVotesExportHelper {
 
   /**
    * @param resultSummary
+   * @param propertyHandling
    * @return
    */
-  public String createCsvExport(ResultSummary resultSummary, Document eml510) {
+  public String createCsvExport(ResultSummary resultSummary,
+      Document eml510,
+      PropertyHandling propertyHandling) {
     List<List<String>> table = new ArrayList<List<String>>();
     List<Gebiet> regions = new ArrayList<Gebiet>(resultSummary.getGebiete());
 
@@ -123,22 +129,29 @@ public class CsvVotesExportHelper {
         }
       }
     }
+    if (isReferendum) {
+      for (PartyWithCandidates partyWithCandidates : resultSummary.getAllGroupsAndCandidates()) {
+        if (partyWithCandidates.getGruppenPosition() == GruppeAllgemein.GUELTIGE.getPosition()) {
+          table.add(getLineForReferendumQuestion(partyWithCandidates, regions, propertyHandling));
+        }
+        if (partyWithCandidates.getGruppenPosition() > 0) {
+          table.add(getLineForReferendumAnswer(partyWithCandidates, regions, propertyHandling));
+        }
+      }
+    }
 
     return createCsvExport(table);
   }
 
   private boolean isVisible(List<Gebiet> regions, int gruppenPosition) {
+    if (isReferendum && gruppenPosition > 0) {
+      return false;
+    }
     for (Gebiet gebiet : regions) {
-      if (isVisible(gebiet, gruppenPosition))
+      if (GruppeAllgemein.isVisibleInOverview(gruppenPosition, gebiet))
         return true;
     }
     return false;
-  }
-
-  private boolean isVisible(Gebiet gebiet, int position) {
-    return GruppeKonstanten.GruppeAllgemein.isVisible(position, gebiet)
-        || position == GruppeAllgemein.GUELTIGE.position
-        || position == GruppeAllgemein.WAEHLER.position;
   }
 
   /**
@@ -166,9 +179,9 @@ public class CsvVotesExportHelper {
     }
 
     if (de.ivu.wahl.dataimport.XMLTags.ATTR_VAL_EML_ID_510b.equals(emlId.getValue())) {
-      return GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_GEMEINDE] + " "; //$NON-NLS-1$
+      return Gebietsart.GEMEINDE.getKlartext() + " "; //$NON-NLS-1$
     } else if (de.ivu.wahl.dataimport.XMLTags.ATTR_VAL_EML_ID_510c.equals(emlId.getValue())) {
-      return GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_WAHLKREIS] + " "; //$NON-NLS-1$
+      return Gebietsart.WAHLKREIS.getKlartext() + " "; //$NON-NLS-1$
     } else {
       return StringUtils.EMPTY;
     }
@@ -179,19 +192,18 @@ public class CsvVotesExportHelper {
    */
   private List<String> getFirstLine(List<Gebiet> regions) {
     List<String> line = new ArrayList<String>();
-    line.add(Messages.getString(MessageKeys.Msg_ListNumber));
+    line.add(Messages.getString(isReferendum
+        ? MessageKeys.Msg_QuestionNumber
+        : MessageKeys.Msg_ListNumber));
     line.add(Messages.getString(MessageKeys.Msg_ListName));
     line.add(Messages.getString(MessageKeys.Msg_PositionOnList));
-    line.add(Messages.getString(MessageKeys.Msg_CandidateName));
+    line.add(Messages.getString(isReferendum
+        ? MessageKeys.Msg_Answer
+        : MessageKeys.Msg_CandidateName));
     line.add(Messages.getString(MessageKeys.Msg_Total));
     for (Gebiet gebiet : regions) {
       String regionName = gebiet.getName();
-      // not needed anymore, see OSV-1062
-      // if (gebiet.getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
-      //        regionName = GebietModel.GEBIETSART_KLARTEXT[gebiet.getGebietsart()] + " " //$NON-NLS-1$
-      // + ExportHandlingBean.appendZipcode(regionName, gebiet.getZipcode());
-      // }
-      if (WahlInfo.getWahlInfo().isEK() && regionName.startsWith(STIMMBEZIRK_PREFIX)) {
+      if (isEK && regionName.startsWith(STIMMBEZIRK_PREFIX)) {
         regionName = regionName.substring(STIMMBEZIRK_PREFIX.length());
       }
 
@@ -214,7 +226,7 @@ public class CsvVotesExportHelper {
     line.add(EMPTY_STRING);
     for (Gebiet gebiet : regions) {
       if (gebiet.getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
-        if (gebiet.getZipcode() != null) {
+        if (!StringUtils.isBlank(gebiet.getZipcode())) {
           isStembureauWithPostCode = true;
           line.add(gebiet.getZipcode());
         } else {
@@ -243,6 +255,50 @@ public class CsvVotesExportHelper {
     }
 
     result.add(partyWithCandidates.getGruppenName());
+    result.add(EMPTY_STRING);
+    result.add(EMPTY_STRING);
+    add(result, partyWithCandidates.getSumme());
+    for (Gebiet gebiet : regions) {
+      result.add(partyWithCandidates.getGruppenstimmeProGebiet(gebiet));
+    }
+
+    return result;
+  }
+
+  /**
+   * This line contains the hard-coded number 1, the text of the referendum question and the vote
+   * numbers of the GruppeAllgemein.GUELTIGE.
+   */
+  private List<String> getLineForReferendumAnswer(PartyWithCandidates partyWithCandidates,
+      List<Gebiet> regions,
+      PropertyHandling propertyHandling) {
+    List<String> result = new ArrayList<String>();
+    result.add(EMPTY_STRING);
+    result.add(EMPTY_STRING);
+
+    int gruppenPosition = partyWithCandidates.getGruppenPosition();
+    add(result, gruppenPosition);
+    String answer = propertyHandling.getProperty(Konstanten.KEY_REFERENDUM_ANSW + gruppenPosition);
+    result.add(answer);
+    add(result, partyWithCandidates.getSumme());
+    for (Gebiet gebiet : regions) {
+      result.add(partyWithCandidates.getGruppenstimmeProGebiet(gebiet));
+    }
+
+    return result;
+  }
+
+  /**
+   * This line contains the hard-coded number 1, the text of the referendum question and the vote
+   * numbers of the GruppeAllgemein.GUELTIGE.
+   */
+  private List<String> getLineForReferendumQuestion(PartyWithCandidates partyWithCandidates,
+      List<Gebiet> regions,
+      PropertyHandling propertyHandling) {
+    List<String> result = new ArrayList<String>();
+    result.add("1"); //$NON-NLS-1$
+    String proposalName = propertyHandling.getProperty(Konstanten.KEY_REFERENDUM_TEXT);
+    result.add(proposalName);
     result.add(EMPTY_STRING);
     result.add(EMPTY_STRING);
     add(result, partyWithCandidates.getSumme());

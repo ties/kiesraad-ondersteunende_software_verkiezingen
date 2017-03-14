@@ -2,7 +2,7 @@
  * UniCacheHome
  * 
  * Created on 17.03.2005
- * Copyright (c) 2005 IVU Traffic Technologies AG
+ * Copyright (c) 2005 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.runtime;
 
@@ -24,11 +24,11 @@ public interface UniCacheHome extends EJBLocalHome {
   }
 
   /**
-   * Gibt das UniCache-Objekt für den Schlüssel zurück
+   * Gibt das UniCache-Objekt fï¿½r den Schlï¿½ssel zurï¿½ck
    * 
-   * @param cachePK Schlüssel des UniCache-Objekts, welches geholt werden soll
+   * @param cachePK Schlï¿½ssel des UniCache-Objekts, welches geholt werden soll
    * @param <T> Typ der Objekte, die im Cache gehalten werden
-   * @return UniCache-Objekt für den angegebenen Schlüssel
+   * @return UniCache-Objekt fï¿½r den angegebenen Schlï¿½ssel
    * @throws FinderException nie, aber notwendig laut Spez.
    */
   <T extends Object> UniCache<T> findByPrimaryKey(UniCachePK cachePK) throws FinderException;

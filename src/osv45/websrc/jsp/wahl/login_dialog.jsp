@@ -112,7 +112,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  /
                            <td width="10%"><ivu:int key="Anwender" />:</td>
                            <td width="8">&nbsp;</td>
                            <td align="left">
-                              <input style="background-color:#FFFFFF;" type="text" name="User" title="<%=BundleHelper.getBundleString("Anwender_titel") %>" value="">
+                              <input style="background-color:#FFFFFF;" type="text" name="User" title="<%=BundleHelper.getBundleString("Anwender_titel") %>" value="" autocomplete="off"/>
                            </td>
                         </tr>
                         <tr align="left">

@@ -2,7 +2,7 @@
  * PropertyHandler
  * 
  * Created on 19.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -89,6 +89,7 @@ public class RepositoryPropertyHandler {
   public static final String WEITER = BundleHelper.getBundleString("weiter"); //$NON-NLS-1$
   public static final String RESET = BundleHelper.getBundleString("abbruch"); //$NON-NLS-1$
   public static final String NEU = BundleHelper.getBundleString("neu"); //$NON-NLS-1$
+  public static final String RESET_COLOR = BundleHelper.getBundleString("Reset_color"); //$NON-NLS-1$
 
   private transient AdminHandling _admHandling;
   private transient AnwenderHandling _anwHandling;
@@ -101,9 +102,33 @@ public class RepositoryPropertyHandler {
   private transient StateHandling _stateHandling;
   private transient VotesHandling _votesHandling;
 
+  protected void handlePropEingabeAllg(HttpServletRequest request) {
+    String gotoModus = request.getParameter(ApplicationBeanKonstanten.PREFIX + "propuebernehmen"); //$NON-NLS-1$
+    handlePropEingabeAllg(request, Konstanten.PROP_ALLG);
+    if (RESET_COLOR.equals(gotoModus)) {
+      resetColor(request);
+    }
+  }
+
+  private void resetColor(HttpServletRequest request) {
+    AnwContext anwContext = getAnwContext(request);
+    AdminHandling adminHandling = getAdminHandling();
+
+    adminHandling.setProperty(anwContext,
+        Konstanten.PROP_BACKGROUND_COLOR_RED,
+        String.valueOf(Konstanten.DEFAULT_BACKGROUND_COLOR_GREY));
+    adminHandling.setProperty(anwContext,
+        Konstanten.PROP_BACKGROUND_COLOR_GREEN,
+        String.valueOf(Konstanten.DEFAULT_BACKGROUND_COLOR_GREY));
+    adminHandling.setProperty(anwContext,
+        Konstanten.PROP_BACKGROUND_COLOR_BLUE,
+        String.valueOf(Konstanten.DEFAULT_BACKGROUND_COLOR_GREY));
+
+  }
+
   /**
-   * Verarbeitet das abgesendete Formular der JSP für Properties Dabei wird auf das in Konstanten
-   * definieret Array von Bezeichnern zurückgegriffen
+   * Verarbeitet das abgesendete Formular der JSP fï¿½r Properties Dabei wird auf das in Konstanten
+   * definieret Array von Bezeichnern zurï¿½ckgegriffen
    * 
    * @param request der HttpRequest mit den submitteten Werten
    */
@@ -153,14 +178,14 @@ public class RepositoryPropertyHandler {
           // wert = null;
         }
 
-        // wurde der Wert geändert?
+        // wurde der Wert geï¿½ndert?
         String sessionWert = (String) session.getAttribute(property);
         switch (basiseinstellung.getTyp()) {
           case RelURL :
           case String :
           case Textarea :
-            // steht im Schlüssel der Property "dir" wird, falls benötigt, ein
-            // / angehängt
+            // steht im Schlï¿½ssel der Property "dir" wird, falls benï¿½tigt, ein
+            // / angehï¿½ngt
             if (property.toLowerCase().indexOf("dir") != -1) { //$NON-NLS-1$
               if (wert != null) {
                 if (!wert.endsWith("/")) { //$NON-NLS-1$
@@ -214,6 +239,11 @@ public class RepositoryPropertyHandler {
             break;
           case Date :
             try {
+              if (StringUtils.isEmpty(wert)) {
+                wert = null;
+              }
+              System.out
+                  .println("RepositoryPropertyHandler.handlePropEingabeAllg() date = " + wert);
               if (wert == null || Pattern.matches(DATE_REGEX, wert)) {
                 if (wert != null && !wert.isEmpty()) {
                   synchronized (DATE_FORMAT) {

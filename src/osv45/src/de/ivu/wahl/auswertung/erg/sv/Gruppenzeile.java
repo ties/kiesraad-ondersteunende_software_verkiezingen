@@ -2,7 +2,7 @@
  * Gruppenzeile
  * 
  * Created on 20.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg.sv;
 
@@ -50,7 +50,7 @@ public class Gruppenzeile implements Serializable, Comparable<Gruppenzeile> {
   }
 
   /**
-   * @return {@link GruppeModel} für die Gruppe, um dessen Ergebnis es sich handelt
+   * @return {@link GruppeModel} fï¿½r die Gruppe, um dessen Ergebnis es sich handelt
    */
   public GruppeModel getGruppe() {
     return _gruppe;

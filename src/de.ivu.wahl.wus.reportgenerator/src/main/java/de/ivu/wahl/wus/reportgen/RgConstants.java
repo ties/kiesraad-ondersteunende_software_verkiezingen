@@ -2,7 +2,7 @@
  * RgConstants
  * 
  * Created on 05.10.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -12,6 +12,7 @@ public interface RgConstants {
   public static final String FILENAME_FRAGMENT_MUNICIPALITY = "gemeente"; //$NON-NLS-1$
   public static final String FILENAME_FRAGMENT_DISTRICT = "kieskring"; //$NON-NLS-1$
   public static final String FILENAME_FRAGMENT_PROVINCE = "provincie"; //$NON-NLS-1$
+  public static final String FILENAME_FRAGMENT_WATER_BOARD = "waterschap"; //$NON-NLS-1$
   public static final String FILENAME_FRAGMENT_ISLAND_MUNICIPALITY = "openbaar lichaam"; //$NON-NLS-1$
   public static final String FILENAME_FRAGMENT_ISLAND_MUNICIPALITY_IN_FILENAME = "openbaarlichaam"; //$NON-NLS-1
 

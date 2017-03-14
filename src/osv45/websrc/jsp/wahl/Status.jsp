@@ -9,7 +9,7 @@
  * Alle Ergebniseingänge chronologisch sortiert.
  * Veränderung der Stimmergebnisse
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
@@ -27,6 +27,9 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "status"; //$NON-NLS-1$
+
    WahlInfo wahlInfo = appBean.getWahlInfo();
    GebietsBaum gebietsBaum = appBean.getGebietsBaum();   
    int gebietNr = ApplicationBeanKonstanten.GEBIETNR_INITIAL;
@@ -61,7 +64,6 @@
    String breite ="100%"; //$NON-NLS-1$
    
    boolean isReferendum = appBean.getWahlInfo().isReferendum();
-   String helpKey = "status"; //$NON-NLS-1$
    if (isReferendum) {
       helpKey = "statusRef"; //$NON-NLS-1$
    }
@@ -70,6 +72,7 @@
    %>
 <html>
 <head>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><%
       if (isEK) { %>
          <ivu:int key="Status_titel_EK"/>
@@ -103,9 +106,7 @@
 </head>
 
 <body class='hghell'>
-    <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-        <ivu:help key="<%=helpKey%>"/>
-    </div>
+    <%@include file="/jsp/fragments/help_div.jspf"%>
     <div class="hgschwarz"
         style="height: 1px; line-height: 1px; width: 100%;">
         &nbsp;

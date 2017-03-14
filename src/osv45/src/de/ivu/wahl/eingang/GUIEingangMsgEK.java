@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.eingang;
 
@@ -59,7 +59,7 @@ public class GUIEingangMsgEK implements Serializable {
     if (_voteValue != null) {
       return votes * _voteValue;
     } else {
-      if (GruppeKonstanten.GruppeAllgemein.GUELTIGE.position == gruppenposition) {
+      if (GruppeKonstanten.GruppeAllgemein.GUELTIGE.getPosition() == gruppenposition) {
         return _weightedVotesByGroup.getTotalWeightedVotes();
       } else {
         return _weightedVotesByGroup.getWeightedVotesByGroupPosition(gruppenposition);
@@ -119,7 +119,7 @@ public class GUIEingangMsgEK implements Serializable {
 
     public boolean hasWeightedValue() {
       return _delegate.getPosition() >= 0
-          || GruppeKonstanten.GruppeAllgemein.GUELTIGE.position == _delegate.getPosition();
+          || GruppeKonstanten.GruppeAllgemein.GUELTIGE.getPosition() == _delegate.getPosition();
     }
 
     public GruppendatenEK(Gruppendaten gruppendaten) {

@@ -1,7 +1,7 @@
 /*
  * IVUBeanBase
  * 
- * Created on 08.10.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * Created on 08.10.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb;
 

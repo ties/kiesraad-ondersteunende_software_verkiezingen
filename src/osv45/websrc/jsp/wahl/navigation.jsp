@@ -3,13 +3,13 @@
  * Navigation
  * Teil der Navigation zu Gebieten
  *
- * author:  mur@ivu.de  Copyright (c) 2002 IVU Traffic Technologies AG
- * author:  bae@ivu.de  Copyright (c) 2003 IVU Traffic Technologies AG
- * author:  cos@ivu.de  Copyright (c) 2005-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de, bae@ivu.de, cos@ivu.de  
+ * Copyright (c) 2002-2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: navigation.jsp,v 1.25 2010/12/09 10:40:14 jon Exp $
  *******************************************************************************
 --%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.modell.GebietInfo" %>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
@@ -145,9 +145,9 @@
     // Administration
     int level = ClientHelper.getLevel(request, ApplicationBeanKonstanten.LEVEL_ADMIN);
     newLocation =  ClientHelper.getSuffixLevel(request, ApplicationBeanKonstanten.LEVEL_ADMIN)+
-                  "&" + ApplicationBeanKonstanten.WORKIS + gui.getAdminWorkDefault();
+                  "&" + ClientHelper.workIs(gui.getAdminWorkDefault());
 %>
-   <ivu:a href='<%="/osv?"+newLocation %>' clazz='<%= ApplicationBeanKonstanten.LEVEL_ADMIN != level ? "adminMessage":"hghell adminMessage"%>'>
+   <ivu:a href='<%="/osv?"+newLocation %>' clazz='<%= ApplicationBeanKonstanten.LEVEL_ADMIN != level ? "adminMessage":"hgweiss adminMessage"%>'>
      <ivu:int key="Administration"/>
    </ivu:a><%
    }
@@ -157,19 +157,19 @@
     String subInfo = " ("+gebiet.getAnzahlEingegangen()+" "+BundleHelper.getBundleString("Navigation_n_von_m")+" "+gebiet.getAnzahlGesamt()+")";
     
     int level = ClientHelper.getLevel(request, gebiet.getGebietsart());
-    int work = gui.getGebieteWorkDefault();
+    Command work = gui.getGebieteWorkDefault();
     if (systemInfo.getWahlModus() == AbstractImportEML.MODE_DB_P5
         && (impDef.getLastFileName() == null
         || impDef.getLastImport() == null
         || impDef.getLastGebietName() == null)) {
         // P5 default page result import, when no results are imported yet
-        work = ApplicationBeanKonstanten.IMPORT_ERGEBNISSE;
+        work = Command.IMPORT_ERGEBNISSE;
     }
     newLocation =  ClientHelper.getSuffixLevel(request, gebiet.getGebietsart())+
-                   "&" + ApplicationBeanKonstanten.WORKIS + work +
+                   "&" + ClientHelper.workIs(work) +
                    "&" + ApplicationBeanKonstanten.GEBIETNRIS + gebiet.getNummer();
 %>
-   <ivu:a href='<%="/osv?"+newLocation %>' clazz='<%= gebiet.getGebietsart() != level ? "adminMessage":"hghell adminMessage"%>'>
+   <ivu:a href='<%="/osv?"+newLocation %>' clazz='<%= gebiet.getGebietsart() != level ? "adminMessage":"hgweiss adminMessage"%>'>
     <%=gebiet.getName() + (gebiet.hasChildren() && !isEkP4Hsb ? subInfo : "" )%>
    </ivu:a>
   </div>
@@ -202,16 +202,16 @@
         anzahlText = !isErfassungseinheit ? "("+gebietInfo.getAnzahlEingegangen()+" "+BundleHelper.getBundleString("Navigation_n_von_m")+" "+gebietInfo.getAnzahlGesamt()+")" : null;
         naviAnker = counterTree + "_" + gebietInfo.getNodePath();
 
-        int newWork = ApplicationBeanKonstanten.WORK_INITIAL;
+        Command newWork = ApplicationBeanKonstanten.INITIAL_COMMAND;
         if (isErfassungseinheit && gebietInfo.getStatusLetzterEingang() != ErgebniseingangKonstanten.STATE_OK) {
           newWork = gui.getErfassungseinheitUnvollstaendigWork(gebietInfo.getStatusLetzterEingang());
         } else if (gebietInfo.isWahleinheit()) {
-          newWork = ApplicationBeanKonstanten.GEB_ERG;
+          newWork = Command.GEB_ERG;
         }
 
         newLocation = ClientHelper.getSuffixLevel(request, gebietInfo.getGebietsart())
             + '&' + ApplicationBeanKonstanten.GEBIETNRIS+gebietInfo.getNummer()
-            + '&' + ApplicationBeanKonstanten.WORKIS+newWork
+            + '&' + ClientHelper.workIs(newWork)
             + '&' + ApplicationBeanKonstanten.NAVI_ANKERIS + naviAnker;
         if (isEkP4Hsb) {
           nodeName = BundleHelper.getBundleString("Navigation_eingeben");

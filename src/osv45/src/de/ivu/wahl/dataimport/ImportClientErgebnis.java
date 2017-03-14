@@ -2,7 +2,7 @@
  * ImportClientDb
  * 
  * Created on 21.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -402,7 +402,7 @@ public class ImportClientErgebnis {
     if (anzUngueltige != gesamtstimmen.getGruppenstimmen(GruppeAllgemein.UNGUELTIGE.schluessel)) {
       throw new ImportException(
           Messages.bind(MessageKeys.Error_SummeDerOngeldigRegionalstimmen_0_EntsprichtNicht_1,
-              GruppeAllgemein.UNGUELTIGE.name,
+              GruppeAllgemein.UNGUELTIGE.getName(),
               anzUngueltige));
     }
     int anzLeere = adapter.getXml(totalVotes, GruppeAllgemein.LEER);
@@ -410,7 +410,7 @@ public class ImportClientErgebnis {
       throw new ImportException(
           Messages
               .bind(MessageKeys.Error_SummeDerBlancoRegionalstimmen_0_EntsprichtNichtAnzahlInDatei_1,
-                  GruppeAllgemein.LEER.name,
+                  GruppeAllgemein.LEER.getName(),
                   anzLeere));
     }
     int anzWaehler = anzGueltige + anzUngueltige + anzLeere;
@@ -418,9 +418,10 @@ public class ImportClientErgebnis {
       throw new ImportException(
           Messages.bind(MessageKeys.Error_SummeDerRegionalstimmen_0_1_EntsprichtNicht_2,
               gesamtstimmen.getGruppenstimmen(GruppeAllgemein.WAEHLER.schluessel),
-              GruppeAllgemein.WAEHLER.name,
+              GruppeAllgemein.WAEHLER.getName(),
               anzGueltige));
     }
+    // GUELTIG_ODER_LEER is not in the EML so there is no need to check it
   }
 
   @SuppressWarnings("synthetic-access")

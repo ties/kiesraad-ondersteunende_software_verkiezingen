@@ -15,10 +15,10 @@ import de.ivu.wahl.auswertung.erg.Ergebnis;
 /**
  * Ergebnisobjekt zum Transport der Sitzverteilung vom Server zum Client.
  * <p>
- * Dieses Objekt hat eine Schreib-Schnittstelle für den Server und eine Lese-Schnittstelle für den
+ * Dieses Objekt hat eine Schreib-Schnittstelle fï¿½r den Server und eine Lese-Schnittstelle fï¿½r den
  * Client.
  * 
- * @author mur@ivu.de, cos@ivu.de Copyright (c) 2004 IVU Traffic Technologies AG
+ * @author mur@ivu.de, cos@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class SitzverteilungListenkombinationErg extends Ergebnis {
   private static final long serialVersionUID = 1831519522587865476L;
@@ -39,9 +39,9 @@ public class SitzverteilungListenkombinationErg extends Ergebnis {
   }
 
   /**
-   * Liefert eine Collection von ListenkombinationInfo für die Listenkombination
+   * Liefert eine Collection von ListenkombinationInfo fï¿½r die Listenkombination
    * 
-   * @return Collection von ListenkombinationInfo für die Listenkombination
+   * @return Collection von ListenkombinationInfo fï¿½r die Listenkombination
    * @param id_listenkombination
    */
   public Set<ListenkombinationInfo> getGruppeninfoCol(String id_listenkombination) {
@@ -81,7 +81,7 @@ public class SitzverteilungListenkombinationErg extends Ergebnis {
   }
 
   /**
-   * @param listenkombinationInfo neuer Wert für listenkombinationModelCol
+   * @param listenkombinationInfo neuer Wert fï¿½r listenkombinationModelCol
    */
   public void addListenkombinationModel(ListenkombinationInfo listenkombinationInfo) {
     _listenkombinationInfoCol.add(listenkombinationInfo);

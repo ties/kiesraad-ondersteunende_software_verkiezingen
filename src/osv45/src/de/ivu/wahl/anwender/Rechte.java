@@ -6,7 +6,7 @@ import de.ivu.wahl.util.BundleHelper;
  * Konstanten f�r die Abbildung von Funktionen auf Rechte Beinhaltet auch die Zuordnung f�r die
  * Initialisierung der Rechtegruppen
  * 
- * @author klie@ivu.de Copyright (c) 2002 IVU Traffic Technologies AG
+ * @author klie@ivu.de Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface Rechte {

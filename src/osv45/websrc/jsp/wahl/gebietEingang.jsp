@@ -59,6 +59,9 @@
 <c:set var="gebietName" value="<%= ClientHelper.forHTML(((GebietInfo)map.get("gebietInfo")).getName()) %>" scope="page"/>
 
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "ergEingabe"; //$NON-NLS-1$
+
    SystemInfo systemInfo = SystemInfo.getSystemInfo();
    WahlInfo wahlInfo = appBean.getWahlInfo();
    
@@ -78,7 +81,6 @@
    int trimSizeRefAnswer = 300;
    
    boolean isReferendum = appBean.getWahlInfo().isReferendum();
-   String helpKey = "ergEingabe"; //$NON-NLS-1$
    if (isReferendum) {
        helpKey = "ergEingabeRef"; //$NON-NLS-1$
    }
@@ -112,16 +114,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <head>
       <title><ivu:int key="GebietseingabeImDialog"/></title>
-      <c:choose>
-         <c:when test="${appBean.NS4}">
-            <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002_NS4.css">
-         </c:when>
-         <c:otherwise>
-            <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
-         </c:otherwise>
-      </c:choose>
+      <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
       <style type="text/css">
 /*<![CDATA[*/
           table.hghell {
@@ -293,16 +289,13 @@
               </div>
             </div>
         </div>
-        <div id="trans">     
+        <div id="trans">
            <c:choose>
               <%-- Gebiet gesperrt für diesen Anwender --%>
               <%-- Wenn Eingabesperre entsprechende Auskunft --%>
               <%-- Input by hand is locked --%>
               <c:when test="${(!gebietInfo.guiEingabeErlaubt and systemInfo.inputmodusComplete) or wahlInfo.freigegeben or appBean.inputDisabled or isLockedByAnotherUser or isFileImportNeededAtFirst}">
-                    <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-                        <a name="oben" href="javascript:window.print()" style="text-decoration: none;" id="oben"><span class="linkdklrot"><img src="<%= request.getContextPath() %>/img/icon/drucken.gif" alt="" border="0" height="9" width="24"><ivu:int key="SeiteDrucken"/></span></a>
-                        <ivu:help key="<%=helpKey%>"/>
-                    </div>
+                    <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
                     <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
                         &nbsp;
                     </div>
@@ -385,19 +378,7 @@
               <c:otherwise>
                  <c:set var="isCollapsibleGroupErrorExists" value="false" scope="page"/>
                  <c:if test="${appBean.INPUT_MAP[gebietInfo.idGebiet] eq appBean.anwContext.keyForViewlock}">
-                        <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hgeeeeee">
-                           <tr>
-                              <td class="klein"><%= ClientHelper.getKonfigurationsString(request)%></td>
-                              <td align="right"><%-- Zum Drucken des aktuellen Frames --%>
-                                 <a href="javascript:window.print()" style="text-decoration:none">
-                                    <span class="linkdklrot">
-                                       <img src="<%= request.getContextPath() %>/img/icon/drucken.gif" width="24" height="9" alt="" border="0" /><ivu:int key="SeiteDrucken"/>
-                                    </span>
-                                 </a>
-                                 <ivu:help key="<%=helpKey%>"/>
-                              </td>
-                           </tr>
-                        </table>
+                        <%@include file="/jsp/fragments/print_and_help_row.jspf"%>
                         <table border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
                         <tr>
                            <td valign="top">
@@ -548,7 +529,7 @@
                                                           <c:set var="aktuelleGruppenNr" value="0" scope="page" />
                                                           <c:set var="aktuelleKategorie" value="" scope="page" />
                                                           <c:set var="aktuelleUnterkategorie" value="" scope="page" />
-                                                          <c:set var="positionWahlberechtigte" value="<%= GruppeAllgemein.WAHLBERECHTIGTE.position %>" scope="page" />
+                                                          <c:set var="positionWahlberechtigte" value="<%= GruppeAllgemein.WAHLBERECHTIGTE.getPosition() %>" scope="page" />
                                                           <% int groupCounter = 0; %>
                                                           <c:set var="gb" value="1"/>
                                                           
@@ -798,7 +779,7 @@
                                                                 <c:set var="kfehler" value="${gruppenergebnis.kandidatenfehlermap[kandidat.listenposition]}" scope="page"/>
                                                                 <c:set target="${map}" property="kfehler" value="${kfehler}"/>
                                                                 <c:set var="classK" value="hghell" scope="page"/>
-                                                                <c:if test="${gd > 0 || wahlInfo.referendum && position % 2 == 0}">
+                                                                <c:if test="${gd > 0 || wahlInfo.referendum && position % 2 == 1}">
                                                                     <c:set var="classK" value="hgheller" scope="page"/>
                                                                 </c:if>
                                                                  
@@ -840,7 +821,12 @@
                                                                             </c:if>
                                                                             <td class="${classK}" align="center" nowrap="nowrap">
                                                                                 <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
-                                                                                <input id="${inputId}" class="${neueingabe ? 'ergdisable':'erg'}" ${neueingabe ? 'disabled="disabled"' : ''} type="text" size="10" name="<%=ApplicationBeanKonstanten.PREFIX %>KANDIDAT_${position}_${kandidat.listenposition}" value="${kstimmen}" onkeypress="return navigateEnter('${inputId}', event)" onkeydown="return navigateCursor('${inputId}', event)" autocomplete="off" />
+                                                                                <c:if test="${!wahlInfo.referendum}">
+                                                                                    <input id="${inputId}" class="${neueingabe ? 'ergdisable':'erg'}" ${neueingabe ? 'disabled="disabled"' : ''} type="text" size="10" name="<%=ApplicationBeanKonstanten.PREFIX %>KANDIDAT_${position}_${kandidat.listenposition}" value="${kstimmen}" onkeypress="return navigateEnter('${inputId}', event)" onkeydown="return navigateCursor('${inputId}', event)" autocomplete="off" />
+                                                                                </c:if>
+                                                                                <c:if test="${wahlInfo.referendum}">
+                                                                                    <input id="id_0_<%=groupCounter%>" class="${neueingabe ? 'ergdisable':'erg'}" ${neueingabe ? 'disabled="disabled"' : ''} type="text" size="10" name="<%=ApplicationBeanKonstanten.PREFIX %>KANDIDAT_${position}_${kandidat.listenposition}" value="${kstimmen}" onkeypress="return navigateEnter('id_0_<%=groupCounter%>', event)" onkeydown="return navigateCursor('id_0_<%=groupCounter%>', event)" autocomplete="off" />
+                                                                                </c:if>
                                                                                 <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
                                                                             </td>
                                                                         </c:when>
@@ -854,7 +840,12 @@
                                                                              </c:if>
                                                                            <td bgcolor='${farbe}' align="center" nowrap="nowrap">
                                                                                 <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
-                                                                                <input id="${inputId}" class="erg" type="text" size="10" name="<%=ApplicationBeanKonstanten.PREFIX %>KANDIDAT_${position}_${kandidat.listenposition}" value="${kstimmen}" onkeypress="return navigateEnter('${inputId}', event)" onkeydown="return navigateCursor('${inputId}', event)" autocomplete="off" />
+                                                                                <c:if test="${!wahlInfo.referendum}">
+                                                                                    <input id="${inputId}" class="erg" type="text" size="10" name="<%=ApplicationBeanKonstanten.PREFIX %>KANDIDAT_${position}_${kandidat.listenposition}" value="${kstimmen}" onkeypress="return navigateEnter('${inputId}', event)" onkeydown="return navigateCursor('${inputId}', event)" autocomplete="off" />
+                                                                                </c:if>
+                                                                                <c:if test="${wahlInfo.referendum}">
+                                                                                    <input id="id_0_<%=groupCounter%>" class="erg" type="text" size="10" name="<%=ApplicationBeanKonstanten.PREFIX %>KANDIDAT_${position}_${kandidat.listenposition}" value="${kstimmen}" onkeypress="return navigateEnter('id_0_<%=groupCounter%>', event)" onkeydown="return navigateCursor('id_0_<%=groupCounter%>', event)" autocomplete="off" />
+                                                                                </c:if>
                                                                                 <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
                                                                            </td>
                                                                         </c:otherwise>
@@ -998,20 +989,10 @@
                              errorSB.append(ClientHelper.forHTML(guiEingangMsg.getFehler(), true));
                           }
                        %>
-                       <c:choose>
-                          <c:when test="${appBean.NS4}">
-                             <table bgcolor='${bgcol}' style='color:${fgcol}' border='0' width='100%'><tr><td><span class='klein'>
-                                <img src="<%= request.getContextPath() %>${icon}" width="20" height="20" alt="<%= BundleHelper.getBundleString("Warnung") %>" />
-                                <c:out value="<%= errorSB.toString() %>" escapeXml="false"/>
-                             </span></td></tr></table>
-                          </c:when>
-                          <c:otherwise>
-                             <div id='${id}'>
-                                <img src="<%= request.getContextPath() %>${icon}" width="20" height="20" alt="<%= BundleHelper.getBundleString("Warnung") %>" />
-                                <c:out value="<%= errorSB.toString() %>" escapeXml="false"/>
-                             </div>
-                          </c:otherwise>
-                       </c:choose>
+                      <div id='${id}'>
+                        <img src="<%= request.getContextPath() %>${icon}" width="20" height="20" alt="<%= BundleHelper.getBundleString("Warnung") %>" />
+                        <c:out value="<%= errorSB.toString() %>" escapeXml="false"/>
+                      </div>
                     </c:if>
                   <%-- FehlerBox Ende --%>
                   <%-- Expand system groups if one of them has an error or a warning --%>

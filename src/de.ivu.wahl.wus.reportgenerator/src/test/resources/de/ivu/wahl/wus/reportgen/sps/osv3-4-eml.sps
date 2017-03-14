@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
 		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
@@ -17,7 +17,7 @@
 			<nspair prefix="xnl" uri="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0"/>
 		</namespaces>
 		<schemasources>
-			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\Eml-kiesraad\EML-v5.0-os\230-extended.xsd" workingxmlfile="D:\projekte\Eml-kiesraad\Examples-2.7\Totaallijsten_TK2006.osv3-4.emlpp.xml"/>
+			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\Eml-kiesraad\EML-v5.0-os\230-extended.xsd" workingxmlfile="D:\export\P2-3\EK2015\Totaallijsten_EK2015.osv3-4.emlpp.xml"/>
 		</schemasources>
 	</schemasources>
 	<modules>
@@ -31,14 +31,21 @@
 		</mainparts>
 		<globalparts/>
 		<designfragments>
-			<designfragment match="AffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="AssignmentWithinCombinedLists" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="AssignmentWithinListGroups" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="BlancVotesInElectoralDistrict" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="CandidateCityInTable2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="CandidateId" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="CandidateInTable" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="CandidateInTable2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="CheckingCombinedListsWithFictitiousDistribution" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DHondtFractionPart1" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DHondtFractionPart2" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DHondtHeader" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DHondtWinners" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DistrictNumber" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DistrictNumberBottom" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="DistrictNumberTop" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="FictitiousDistribution" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="Kiesdeler" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="ListOrCombinedList" spsfile="reused-parts-P22.sps" isactive="0"/>
@@ -49,27 +56,26 @@
 			<designfragment match="OverviewAssignmentWithinCombinedLists" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewAssignmentWithinListGroups" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateListsEK" spsfile="reused-parts-P22.sps" isactive="1"/>
-			<designfragment match="OverviewCandidateListsEP" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="OverviewCandidateListsEP" spsfile="reused-parts-P22.sps" isactive="1"/>
 			<designfragment match="OverviewCandidateListsTK" spsfile="reused-parts-P22.sps" isactive="1"/>
-			<designfragment match="OverviewCandidateResult-EK-1-2" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResult-EK-1-4" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResult-EK-1-5" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResult-EK-6-12" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResult1-1-4" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResult1-1-7" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResult1-8-20" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResultElected" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResultNewListOrder" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="OverviewCandidateResultP22-1-14" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="OverviewCandidateResultP22-1-14-Base" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="OverviewCandidateResultP22-1-15" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResultP22-2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCandidateResultP22-2-H" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResultU16-IJ" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewCandidateResultU16-IJ-Base" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewCheckedLists" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewDHondtAssignment" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewDHondtAssignmentSpecial" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewDHondtTable2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewDHondtTable3" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewDHondtTable4" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="OverviewDHondtTable6" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="OverviewDHondtTableOneSeat" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewElectedCandidate" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewElectoralDistricts" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewFirstAssigment" spsfile="reused-parts-P22.sps" isactive="0"/>
@@ -81,7 +87,6 @@
 			<designfragment match="OverviewVotes2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewVotes3" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewVotes4" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="OverviewVotesEK" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="OverviewVotesP22-2" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="PartyHeader2Lines" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="PartyHeader2or4Lines" spsfile="reused-parts-P22.sps" isactive="0"/>
@@ -90,68 +95,65 @@
 			<designfragment match="PartyHeader5Lines" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="PartyHeaderEvenOdd" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="PostTitle" spsfile="reused-parts-P22.sps" isactive="0"/>
-			<designfragment match="ResidualSeatsAssignment" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="TotalVotes" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="TotalVotes2" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="TotalVotesInElectoralDistrict" spsfile="reused-parts-P22.sps" isactive="0"/>
 			<designfragment match="Vote" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="VotesInElectoralDistrict" spsfile="reused-parts-P22.sps" isactive="0"/>
+			<designfragment match="Address" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="AffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CandidatesOnListTable" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterDistrictsOptions" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterDistrictsTitle" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterElection" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterPartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterStemming" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="City" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CombinedListI17" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CombinedListListName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CombinedListListNumber" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CombinedListNames" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="CombinedListNumbers" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="DateOfBirth" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="FirstNameH1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="LastNameH1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="NameBCEF" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ObjectionsByVoters1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ObjectionsByVoters1b" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ObjectionsByVoters2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PostalCodeCity" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="QualifyingAddressCity" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Salutation" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="SignatureBlock" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="SignatureBlock-3" spsfile="reused-parts-simple.sps" isactive="0"/>
 		</designfragments>
 		<pagelayouts/>
 		<xpath-functions/>
 	</flags>
 	<scripts>
-		<script language="javascript">
- function doInitialize() {
- markLoaded();
- return false;
- }
- function doIntref(inVerwijzingRef, inLabelRef) {
- var myWin = window;
- var myLabel = &apos;label-&apos; + inLabelRef;
- myWin.location.replace(&apos;#&apos; + myLabel);
- }
- // </script>
+		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
 		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
-		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-text.xslt"/>
+		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-P22-text.xslt"/>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\osv3-4-text.xslt"/>
 	</importedxslt>
-	<globalstyles>
-		<rules selector="*">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-family="Arial" font-size="small"/>
-		</rules>
-		<rules selector="td">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="small"/>
-		</rules>
-		<rules selector="div">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="small" margin="0" padding="0"/>
-		</rules>
-		<rules selector="h4">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="medium" font-weight="bold"/>
-		</rules>
-		<rules selector="p">
-			<media>
-				<media value="all"/>
-			</media>
-			<rule font-size="small"/>
-		</rules>
-	</globalstyles>
+	<globalstyles/>
 	<mainparts>
 		<children>
 			<globaltemplate subtype="main" match="/">
@@ -176,26 +178,25 @@
 							<text transparency="50"/>
 						</watermark>
 					</documentsection>
-					<template subtype="source" match="XML">
+					<paragraph>
 						<children>
-							<template subtype="element" match="eml:EML">
+							<template subtype="source" match="XML">
 								<children>
-									<paragraph paragraphtag="center">
-										<styles font-size="medium" font-weight="bold"/>
+									<template subtype="element" match="eml:EML">
 										<children>
 											<condition>
 												<children>
 													<conditionbranch xpath="$lang=0">
 														<children>
 															<text fixtext="CENTRAAL STEMBUREAU (">
-																<styles font-size="medium" font-weight="bold"/>
+																<properties class="title"/>
 															</text>
 														</children>
 													</conditionbranch>
 													<conditionbranch>
 														<children>
 															<autocalc xpath="$o3-4_010_CentraalStembureau">
-																<styles font-size="medium" font-weight="bold"/>
+																<properties class="title"/>
 															</autocalc>
 														</children>
 													</conditionbranch>
@@ -210,7 +211,7 @@
 																	<template subtype="element" match="eml:AuthorityIdentifier">
 																		<children>
 																			<content subtype="regular">
-																				<styles font-size="medium" font-weight="bold"/>
+																				<properties class="title"/>
 																			</content>
 																		</children>
 																		<variables/>
@@ -247,34 +248,30 @@
 											<text fixtext=")">
 												<styles font-size="medium" font-weight="bold"/>
 											</text>
-										</children>
-									</paragraph>
-									<paragraph>
-										<children>
+											<newline/>
+											<newline/>
+											<condition>
+												<children>
+													<conditionbranch xpath="$lang=0">
+														<children>
+															<text fixtext="Overzicht van de ingeleverde kandidatenlijsten">
+																<properties class="pretitle"/>
+															</text>
+														</children>
+													</conditionbranch>
+													<conditionbranch>
+														<children>
+															<autocalc xpath="$o3-4_020_Overzicht">
+																<properties class="pretitle"/>
+															</autocalc>
+														</children>
+													</conditionbranch>
+												</children>
+											</condition>
+											<newline/>
+											<newline/>
 											<template subtype="element" match="eml:CandidateList">
 												<children>
-													<paragraph paragraphtag="p">
-														<styles font-size="medium" font-weight="bold"/>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="Overzicht van de ingeleverde kandidatenlijsten"/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$o3-4_020_Overzicht"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-															<calltemplate subtype="named" match="LineBreakTable">
-																<parameters/>
-															</calltemplate>
-														</children>
-													</paragraph>
 													<condition>
 														<children>
 															<conditionbranch xpath="$lang=0">
@@ -305,14 +302,14 @@
 														<children>
 															<condition>
 																<children>
-																	<conditionbranch xpath="//eml:ElectionCategory[ text() = &apos;TK&apos; ]">
+																	<conditionbranch xpath="//eml:ElectionCategory = &quot;TK&quot;">
 																		<children>
 																			<calltemplate subtype="named" match="OverviewCandidateListsTK">
 																				<parameters/>
 																			</calltemplate>
 																		</children>
 																	</conditionbranch>
-																	<conditionbranch xpath="//eml:ElectionCategory[ text() = &apos;PS&apos; ]">
+																	<conditionbranch xpath="//eml:ElectionCategory = &quot;PS&quot;">
 																		<children>
 																			<calltemplate subtype="named" match="OverviewCandidateListsPS2">
 																				<parameters/>
@@ -328,34 +325,112 @@
 																	</conditionbranch>
 																</children>
 															</condition>
-														</children>
-														<variables/>
-													</template>
-													<newline/>
-													<newline/>
-													<condition>
-														<children>
-															<conditionbranch xpath="//kr:ElectionSubcategory[text() = &apos;EK&apos;]">
+															<newline/>
+															<condition>
 																<children>
-																	<calltemplate subtype="named" match="ProvincesTable">
-																		<parameters/>
-																	</calltemplate>
+																	<conditionbranch xpath="count(rg:ElectoralDistrictsOverview/rg:ElectoralDistrictName) + count(rg:OverviewOfListsAndDistricts) &gt; 32 or count(//kr:ElectionSubcategory[text() = &apos;EK&apos;]) &gt; 0">
+																		<children>
+																			<newline break="page"/>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch>
+																		<children>
+																			<newline/>
+																			<newline/>
+																		</children>
+																	</conditionbranch>
 																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<condition>
-														<children>
-															<conditionbranch xpath="//kr:ElectionSubcategory[text() = &apos;EK&apos;]">
+															</condition>
+															<calltemplate subtype="named" match="LineBreakPdf">
+																<parameters/>
+															</calltemplate>
+															<condition>
 																<children>
-																	<newline/>
+																	<conditionbranch xpath="//kr:ElectionSubcategory[text() != &apos;EK&apos;]">
+																		<children>
+																			<newline/>
+																			<text fixtext="Kieskringen en gemeente of openbaar lichaam waar hoofdstembureau is gevestigd:"/>
+																			<newline/>
+																			<newline/>
+																			<tgrid>
+																				<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
+																				<styles border-bottom="1px solid #000" border-top="1px solid #000"/>
+																				<children>
+																					<tgridbody-cols>
+																						<children>
+																							<tgridcol/>
+																							<tgridcol/>
+																						</children>
+																					</tgridbody-cols>
+																					<tgridbody-rows>
+																						<children>
+																							<template subtype="element" match="rg:ElectoralDistrictsOverview">
+																								<children>
+																									<template subtype="element" match="rg:ElectoralDistrictName">
+																										<children>
+																											<tgridrow>
+																												<children>
+																													<tgridcell>
+																														<styles vertical-align="top" width="30pt"/>
+																														<children>
+																															<condition>
+																																<children>
+																																	<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
+																																		<children>
+																																			<paragraph>
+																																				<children>
+																																					<autocalc xpath="@id"/>
+																																					<text fixtext="."/>
+																																				</children>
+																																			</paragraph>
+																																		</children>
+																																	</conditionbranch>
+																																	<conditionbranch>
+																																		<children>
+																																			<autocalc xpath="@id"/>
+																																			<text fixtext="."/>
+																																		</children>
+																																	</conditionbranch>
+																																</children>
+																															</condition>
+																														</children>
+																													</tgridcell>
+																													<tgridcell>
+																														<styles vertical-align="top"/>
+																														<children>
+																															<content subtype="regular">
+																																<format basic-type="xsd" datatype="string"/>
+																															</content>
+																														</children>
+																													</tgridcell>
+																												</children>
+																											</tgridrow>
+																										</children>
+																										<variables/>
+																									</template>
+																								</children>
+																								<variables/>
+																							</template>
+																						</children>
+																					</tgridbody-rows>
+																				</children>
+																				<wizard-data-repeat>
+																					<children/>
+																				</wizard-data-repeat>
+																				<wizard-data-rows>
+																					<children/>
+																				</wizard-data-rows>
+																				<wizard-data-columns>
+																					<children/>
+																				</wizard-data-columns>
+																			</tgrid>
+																			<newline/>
+																			<newline break="page"/>
+																			<newline/>
+																		</children>
+																	</conditionbranch>
 																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<newline break="page"/>
-													<template subtype="element" match="rg:RG230c">
-														<children>
+															</condition>
 															<template subtype="element" match="rg:OverviewOfListsAndDistricts">
 																<children>
 																	<condition>
@@ -565,6 +640,15 @@
 																								</children>
 																							</tgridbody-rows>
 																						</children>
+																						<wizard-data-repeat>
+																							<children/>
+																						</wizard-data-repeat>
+																						<wizard-data-rows>
+																							<children/>
+																						</wizard-data-rows>
+																						<wizard-data-columns>
+																							<children/>
+																						</wizard-data-columns>
 																					</tgrid>
 																					<newline/>
 																				</children>
@@ -581,13 +665,13 @@
 												<variables/>
 											</template>
 										</children>
-									</paragraph>
+										<variables/>
+									</template>
 								</children>
 								<variables/>
 							</template>
 						</children>
-						<variables/>
-					</template>
+					</paragraph>
 				</children>
 			</globaltemplate>
 		</children>

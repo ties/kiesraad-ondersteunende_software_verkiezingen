@@ -2,7 +2,7 @@
  * ResizableDialog
  * 
  * Created on Jan 15, 2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.utils.ui.dialog;
 

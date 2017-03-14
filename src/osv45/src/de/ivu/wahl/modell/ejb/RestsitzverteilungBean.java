@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * RestsitzverteilungBean
  *
- * @author jon@ivu.de  (c) 2009 IVU Traffic Technologies AG
+ * @author jon@ivu.de  (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import java.sql.SQLException;

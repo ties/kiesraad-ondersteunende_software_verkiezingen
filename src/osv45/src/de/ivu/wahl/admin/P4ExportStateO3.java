@@ -1,7 +1,7 @@
 /*
  * P4ExportStateO3
  * 
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 

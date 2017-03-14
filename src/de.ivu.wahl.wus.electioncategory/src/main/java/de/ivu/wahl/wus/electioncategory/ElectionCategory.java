@@ -2,7 +2,7 @@
  * ElectionCategory
  * 
  * Created on 03.04.2009
- * Copyright (c) 2009-2013 IVU Traffic Technologies AG
+ * Copyright (c) 2009-2013 Kiesraad
  */
 package de.ivu.wahl.wus.electioncategory;
 
@@ -54,11 +54,14 @@ public enum ElectionCategory {
   BC(0x41),
 
   /** Gebiedscommissie - Rotterdam */
-  GC(0x42);
+  GC(0x42),
+
+  /** Waterschapsverkiezing */
+  AB(0x43);
 
   private int wahlart;
 
-  private ElectionCategory(final int wahlart) {
+  private ElectionCategory(int wahlart) {
     this.wahlart = wahlart;
   }
 
@@ -78,8 +81,8 @@ public enum ElectionCategory {
   /**
    * @return the enum value for the given emlRepresentation. If no enum is found, return NONE.
    */
-  public static ElectionCategory fromValue(final String emlRepresentation) {
-    for (final ElectionCategory c : ElectionCategory.values()) {
+  public static ElectionCategory fromValue(String emlRepresentation) {
+    for (ElectionCategory c : ElectionCategory.values()) {
       if (c.getEmlRepresentation().equals(emlRepresentation)) {
         return c;
       }
@@ -97,8 +100,8 @@ public enum ElectionCategory {
   /**
    * @return the enum value for the given wahlart. If no enum is found, return NONE.
    */
-  public static ElectionCategory fromWahlart(final int wahlart) {
-    for (final ElectionCategory each : ElectionCategory.values()) {
+  public static ElectionCategory fromWahlart(int wahlart) {
+    for (ElectionCategory each : ElectionCategory.values()) {
       if (each.getWahlart() == wahlart) {
         return each;
       }
@@ -122,6 +125,11 @@ public enum ElectionCategory {
         result.add(ElectionSubcategory.PS1);
         result.add(ElectionSubcategory.PS2);
         break;
+      case AB :
+        result.add(ElectionSubcategory.AB1);
+        result.add(ElectionSubcategory.AB2);
+        break;
+      default :
       case GR :
         result.add(ElectionSubcategory.GR1);
         result.add(ElectionSubcategory.GR2);
@@ -147,8 +155,7 @@ public enum ElectionCategory {
       case GC :
         result.add(ElectionSubcategory.GC);
         break;
-      default :
-        // nothing to add
+    // nothing to add
     }
     return result;
   }
@@ -160,7 +167,7 @@ public enum ElectionCategory {
   }
 
   public boolean isElectionDomainIdNeeded() {
-    return isMunicipalityElection() || LR.equals(this) || IR.equals(this);
+    return isMunicipalityElection() || LR.equals(this) || IR.equals(this) || AB.equals(this);
   }
 
   public boolean isReferendum() {
@@ -178,6 +185,14 @@ public enum ElectionCategory {
     return Arrays.asList(GR, ER, BC, GC).contains(this);
   }
 
+  /**
+   * @return true, if for this election there is a postal electoral office (which is always in
+   *         's-Gravenhage)
+   */
+  public boolean hasPostalVotes() {
+    return Arrays.asList(TK, EP, NR).contains(this);
+  }
+
   public boolean isEP() {
     return this.equals(EP);
   }
@@ -187,6 +202,7 @@ public enum ElectionCategory {
   }
 
   public boolean isIntendedSettlementAgreementsRequired() {
-    return isMunicipalityElection() && !this.equals(GC) || this.equals(PS);
+    return isMunicipalityElection() && !this.equals(GC) || this.equals(PS) || this.equals(AB);
   }
+
 }

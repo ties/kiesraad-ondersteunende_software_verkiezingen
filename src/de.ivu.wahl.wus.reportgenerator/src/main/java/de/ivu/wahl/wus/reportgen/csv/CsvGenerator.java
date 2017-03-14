@@ -1,6 +1,6 @@
 /*
  * Created on 31.08.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen.csv;
 

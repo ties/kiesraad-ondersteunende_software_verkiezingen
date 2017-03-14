@@ -7,10 +7,10 @@ import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- * NavigationErgebnis.java NavigationErgebnis-Objekt stellt alle Gebiets-Informationen für den
- * Navigationsbaum zur Verfügung.
+ * NavigationErgebnis.java NavigationErgebnis-Objekt stellt alle Gebiets-Informationen fï¿½r den
+ * Navigationsbaum zur Verfï¿½gung.
  * 
- * @author bae@ivu.de 16.11.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * @author bae@ivu.de 16.11.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class NavigationErgebnis extends Ergebnis {
@@ -24,7 +24,7 @@ public class NavigationErgebnis extends Ergebnis {
   }
 
   /**
-   * Weiter Wahlart hinzufügen
+   * Weiter Wahlart hinzufï¿½gen
    * 
    * @param level
    */
@@ -42,9 +42,9 @@ public class NavigationErgebnis extends Ergebnis {
   }
 
   /**
-   * Iterator über die Wahlarten
+   * Iterator ï¿½ber die Wahlarten
    * 
-   * @return Iterator über die Wahlarten
+   * @return Iterator ï¿½ber die Wahlarten
    */
   public Iterator<DefaultMutableTreeNode> getLevelIterator() {
     return _levels.iterator();

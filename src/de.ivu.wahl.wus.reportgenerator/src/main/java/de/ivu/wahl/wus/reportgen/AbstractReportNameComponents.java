@@ -2,7 +2,7 @@
  * AbstractReportNameComponents
  * 
  * Created on 27.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -14,8 +14,8 @@ public abstract class AbstractReportNameComponents
     implements
       ReportNameComponents,
       ReportNameComponentsSetter {
+
   private String electionIdentifier;
-  private String electionDomain;
   private String electoralDistrict;
   private ElectionCategory _electionCategory;
 
@@ -27,12 +27,8 @@ public abstract class AbstractReportNameComponents
     this.electionIdentifier = electionIdentifier;
   }
 
-  public String getElectionDomain() {
-    return electionDomain;
-  }
-
   public void setElectionDomain(String electionDomain) {
-    this.electionDomain = electionDomain;
+    // Not needed by my subclasses
   }
 
   public String getElectoralDistrict() {
@@ -68,20 +64,8 @@ public abstract class AbstractReportNameComponents
     _electionCategory = electionCategory;
   }
 
-  /**
-   * Adds the election domain to the list, if this is a relevant part of the report name
-   */
-  protected void addElectionDomain(List<String> list) {
-    if (getElectionCategory().isElectionDomainNeeded() && getElectionDomain() != null) {
-      list.add(getElectionDomain());
-    }
-  }
-
   protected void addElectionIdentifier(List<String> list) {
     String ei = getElectionIdentifier();
-    if (ei != null && ei.length() > 6) {
-      ei = ei.substring(0, 6);
-    }
     list.add(ei);
   }
 

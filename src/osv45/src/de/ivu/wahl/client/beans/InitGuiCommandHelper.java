@@ -1,6 +1,6 @@
 /*
  * Created on 05.04.2011
- * Copyright (c) 2011 IVU Traffic Technologies AG
+ * Copyright (c) 2011 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -44,12 +44,25 @@ class InitGuiCommandHelper {
     this.level = level;
   }
 
-  public GUICommand addCommand(int id, String nameKey, String titleKey, String jsp) {
+  public GUICommand addCommand(Command command, String nameKey, String titleKey, String jsp) {
     String name = parent.getBundleString(nameKey);
+    jspLevelWorkName.put(level + "_" + command.getId(), name); //$NON-NLS-1$
     String title = parent.getBundleString(titleKey);
-    jspLevelWorkName.put(level + "_" + id, name); //$NON-NLS-1$
-    GUICommand cmd = parent.createCommand(name, id, rights, gebietsabhaengig, jsp, title, guiClass);
+    GUICommand cmd = parent.createCommand(name,
+        command,
+        rights,
+        gebietsabhaengig,
+        jsp,
+        title,
+        guiClass);
     commandList.add(cmd);
     return cmd;
   }
+
+  public void addJspPage(Command command, String nameKey, String jsp) {
+    String name = parent.getBundleString(nameKey);
+    jspLevelWorkName.put(level + "_" + command.getId(), name); //$NON-NLS-1$
+    parent.putToJspMap(command, jsp);
+  }
+
 }

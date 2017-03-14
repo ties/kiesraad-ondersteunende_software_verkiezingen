@@ -31,6 +31,7 @@
 		<globalparts/>
 		<designfragments>
 			<designfragment match="Address" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="AffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CandidatesOnListTable" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterDistrictsOptions" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -62,6 +63,7 @@
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="KieskringParty" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -72,7 +74,6 @@
 			<designfragment match="ObjectionsByVoters2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>
-			<designfragment match="PartyName2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -100,7 +101,7 @@
  // </script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -336,6 +337,7 @@
 																											<tgridrow>
 																												<children>
 																													<tgridcell>
+																														<styles white-space="pre-wrap"/>
 																														<children>
 																															<autocalc xpath="substring( &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;,  position()+1, 1)">
 																																<styles font-style="italic"/>
@@ -343,6 +345,7 @@
 																														</children>
 																													</tgridcell>
 																													<tgridcell>
+																														<styles white-space="pre-wrap"/>
 																														<children>
 																															<template subtype="element" match="rg:Party">
 																																<children>

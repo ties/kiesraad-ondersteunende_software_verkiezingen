@@ -2,7 +2,7 @@
  * PropertyHandling
  * 
  * Created on 13.10.2003
- * Copyright (c) 2003 IVU Traffic Technologies AG
+ * Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -19,7 +19,7 @@ public interface PropertyHandling {
    * Lesen einer bezeichneten Property
    * 
    * @return property-Wert als String
-   * @param key Schlüssel/Propertyname
+   * @param key Schlï¿½ssel/Propertyname
    * @throws EJBException genereller Fehler
    */
   String getProperty(String key) throws EJBException;
@@ -27,7 +27,7 @@ public interface PropertyHandling {
   /**
    * Setzen einer Property in der Datenbank
    * 
-   * @param key Schlüsselstring
+   * @param key Schlï¿½sselstring
    * @param value Wert (String)
    * @throws EJBException genereller Fehler
    */
@@ -135,10 +135,10 @@ public interface PropertyHandling {
   void setBooleanProperty(String key, boolean wert);
 
   /**
-   * Setzen aller Properties in der Datenbank, die mit dem angegebenen Schlüsselstring anfangen, auf
+   * Setzen aller Properties in der Datenbank, die mit dem angegebenen Schlï¿½sselstring anfangen, auf
    * denselben Wert.
    * 
-   * @param prefix Prefix des Schlüsselstrings
+   * @param prefix Prefix des Schlï¿½sselstrings
    * @param value Wert (String)
    */
   void setProperties(String prefix, String value);

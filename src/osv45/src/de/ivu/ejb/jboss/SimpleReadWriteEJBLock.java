@@ -2,7 +2,7 @@
  * SimpleReadWriteEJBLock
  * 
  * Created on 13.10.2004
- * Copyright (c) 2004 IVU Traffic Technologies AG
+ * Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb.jboss;
 
@@ -82,7 +82,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
     }
 
     /**
-     * Gibt thread zurück.
+     * Gibt thread zurï¿½ck.
      * 
      * @return thread.
      */
@@ -91,7 +91,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
     }
 
     /**
-     * Gibt transaction zurück.
+     * Gibt transaction zurï¿½ck.
      * 
      * @return transaction.
      */
@@ -100,7 +100,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
     }
 
     /**
-     * Gibt stackTraceElements zurück.
+     * Gibt stackTraceElements zurï¿½ck.
      * 
      * @return stackTraceElements.
      */
@@ -279,9 +279,9 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
 
   protected void registerReadLock(Transaction aTx) {
     try {
-      // zuerst prüfen, ob die Transaktion noch in Ordnung ist:
-      // wenn nicht, Zugriff erlauben, die Operation wird weiter schietern, sonst wäre kein
-      // Verlassen des Locks möglich
+      // zuerst prï¿½fen, ob die Transaktion noch in Ordnung ist:
+      // wenn nicht, Zugriff erlauben, die Operation wird weiter schietern, sonst wï¿½re kein
+      // Verlassen des Locks mï¿½glich
       if (aTx.getStatus() == STATUS_ACTIVE) {
         try {
           ReadLockReliever reliever = getReliever();
@@ -357,7 +357,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
   }
 
   /**
-   * Prüfe die haltende Transaktion; manchmal ist sie schon beendet, aber nicht ausgetragen
+   * Prï¿½fe die haltende Transaktion; manchmal ist sie schon beendet, aber nicht ausgetragen
    */
   protected boolean checkBogusWriter(Transaction aTx) {
     if (_writer != null) {
@@ -630,7 +630,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
       int minLen = min(stackTrace.length, previousStackTraceElements.length);
       int offset1 = stackTrace.length - minLen;
       int offset2 = previousStackTraceElements.length - minLen;
-      int firstDifference = -1; // ungültig, vor dem Anfang
+      int firstDifference = -1; // ungï¿½ltig, vor dem Anfang
 
       for (int i = minLen - 1; i >= 0; i--) {
         if (!stackTrace[i + offset1].toString().equals(previousStackTraceElements[i + offset2]

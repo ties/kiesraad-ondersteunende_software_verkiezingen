@@ -2,7 +2,7 @@
  * GsdaParameters
  * 
  * Created on 03.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.gsda;
 
@@ -25,50 +25,64 @@ public class GsdaParameters {
   private final boolean b5_oneSeatByLargestAverage;
   private final boolean b6_withAbsoluteMajorityRegulation;
   private final boolean b7_assignmentInListGroup;
-  private final boolean b8_reassignSeatsLostByExhaustedList;
 
   public static GsdaParameters forFictitiousDistribution() {
-    return new GsdaParameters(true, false, _ZERO, false, false, true, false, true);
+    return new GsdaParameters(true, false, _ZERO, false, false, true, false);
   }
 
   public static GsdaParameters forFictitiousDistributionEpTk() {
-    return new GsdaParameters(true, true, _ZERO, false, false, true, false, true);
+    return new GsdaParameters(true, true, _ZERO, false, false, true, false);
   }
 
+  /**
+   * For GR1, ER, AB1, GC
+   */
   public static GsdaParameters forFictitiousDistributionGR1() {
-    return new GsdaParameters(true, false, _75PERCENT, true, true, true, false, true);
+    return new GsdaParameters(true, false, _75PERCENT, true, true, true, false);
   }
 
   public static GsdaParameters forFictitiousDistributionBC() {
-    return new GsdaParameters(true, false, _50PERCENT, true, true, true, false, true);
+    return new GsdaParameters(true, false, _50PERCENT, true, true, true, false);
   }
 
   public static GsdaParameters forP42DistributionEpTk() {
-    return new GsdaParameters(false, true, _ZERO, false, false, true, false, true);
+    return new GsdaParameters(false, true, _ZERO, false, false, true, false);
   }
 
   public static GsdaParameters forP42DistributionEK() {
-    return new GsdaParameters(false, false, _ZERO, false, false, false, false, true);
+    return new GsdaParameters(false, false, _ZERO, false, false, false, false);
   }
 
-  public static GsdaParameters forP42DistributionPsGr2() {
-    return new GsdaParameters(false, false, _ZERO, false, false, true, false, true);
+  /**
+   * For PS1, PS2, AB2, GR2
+   */
+  public static GsdaParameters forP42DistributionPsAb2Gr2() {
+    return new GsdaParameters(false, false, _ZERO, false, false, true, false);
   }
 
+  /**
+   * For GR1, ER, AB1, GC
+   */
   public static GsdaParameters forP42DistributionGr1() {
-    return new GsdaParameters(false, false, _75PERCENT, true, true, true, false, true);
+    return new GsdaParameters(false, false, _75PERCENT, true, true, true, false);
   }
 
   public static GsdaParameters forP42DistributionBC() {
-    return new GsdaParameters(false, false, _50PERCENT, true, true, true, false, true);
+    return new GsdaParameters(false, false, _50PERCENT, true, true, true, false);
   }
 
+  /**
+   * For all elections but EK, TK, PS2
+   */
   public static GsdaParameters forP2P3Distribution() {
-    return new GsdaParameters(false, false, _ZERO, true, false, false, false, true);
+    return new GsdaParameters(false, false, _ZERO, true, false, false, false);
   }
 
+  /**
+   * For EK, TK, PS2
+   */
   public static GsdaParameters forP2DistributionTkPs2() {
-    return new GsdaParameters(false, false, _ZERO, true, false, false, true, true);
+    return new GsdaParameters(false, false, _ZERO, true, false, false, true);
   }
 
   private GsdaParameters(boolean b1_fictitious,
@@ -77,8 +91,7 @@ public class GsdaParameters {
       boolean b4_includeLargestRemainder,
       boolean b5_oneSeatByLargestAverage,
       boolean b6_withAbsoluteMajorityRegulation,
-      boolean b7_assignmentInListGroup,
-      boolean b8_reassignSeatsLostByExhaustedList) {
+      boolean b7_assignmentInListGroup) {
     this.b1_fictitious = b1_fictitious;
     this.b2_minimumForResidualSeat = b2_minimumForResidualSeat;
     this.b3_minimumForLargestRemainder = b3_minimumForLargestRemainder;
@@ -86,7 +99,6 @@ public class GsdaParameters {
     this.b5_oneSeatByLargestAverage = b5_oneSeatByLargestAverage;
     this.b6_withAbsoluteMajorityRegulation = b6_withAbsoluteMajorityRegulation;
     this.b7_assignmentInListGroup = b7_assignmentInListGroup;
-    this.b8_reassignSeatsLostByExhaustedList = b8_reassignSeatsLostByExhaustedList;
   }
 
   public boolean isB1_fictitious() {
@@ -115,9 +127,5 @@ public class GsdaParameters {
 
   public boolean isB7_assignmentInListGroup() {
     return b7_assignmentInListGroup;
-  }
-
-  public boolean isB8_reassignSeatsLostByExhaustedList() {
-    return b8_reassignSeatsLostByExhaustedList;
   }
 }

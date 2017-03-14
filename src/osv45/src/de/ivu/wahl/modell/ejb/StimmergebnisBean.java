@@ -1,7 +1,7 @@
 /*
  * StimmergebnisBean
  * 
- * Copyright (c) 2002-4 IVU Traffic Technologies AG
+ * Copyright (c) 2002-4 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb;
 
@@ -74,12 +74,12 @@ public class StimmergebnisBean extends BasicStimmergebnisBean {
   /**
    * All voting results by import action and region
    * 
-   * @param id_Ergebniseingang Ergebniseingang als Referenz für einen bestimmten Zustand, zu dem die
+   * @param id_Ergebniseingang Ergebniseingang als Referenz fï¿½r einen bestimmten Zustand, zu dem die
    *          Stimmen geholt werden sollen
    * @param id_Gebiet das Gebiet zu dem die Stimmen geholt werden sollen
-   * @return Primärschlüssel der Stimmergebnisse für ein aktuelles oder historisches Resultat für
+   * @return Primï¿½rschlï¿½ssel der Stimmergebnisse fï¿½r ein aktuelles oder historisches Resultat fï¿½r
    *         ein Gebiet
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche (bedeutet NICHT "nicht
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche (bedeutet NICHT "nicht
    *           gefunden").
    */
   public Collection<String> ejbFindAllByGebietAndErgebniseingang(String id_Gebiet,
@@ -240,14 +240,14 @@ public class StimmergebnisBean extends BasicStimmergebnisBean {
   }
 
   /**
-   * Führt die übergebene Query aus, prüft auf ein Einzelergebnis oder, im Fehlerfall, kovertiert
+   * Fï¿½hrt die ï¿½bergebene Query aus, prï¿½ft auf ein Einzelergebnis oder, im Fehlerfall, kovertiert
    * die Exception
    * 
-   * @param query die auszuführende Query
+   * @param query die auszufï¿½hrende Query
    * @param params Parameter der Query
-   * @return Einzelergebnis der Query (ein Primärschlüssel)
+   * @return Einzelergebnis der Query (ein Primï¿½rschlï¿½ssel)
    * @throws ObjectNotFoundException Entity nicht gefunden
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    */
   private String findSingle(String query, Object[] params)
       throws ObjectNotFoundException, FinderException {
@@ -259,7 +259,7 @@ public class StimmergebnisBean extends BasicStimmergebnisBean {
     }
   }
 
-  // experimentelle Optimierung für den Löschvorgang
+  // experimentelle Optimierung fï¿½r den Lï¿½schvorgang
   {
     _usesLazyLoading = true;
   }

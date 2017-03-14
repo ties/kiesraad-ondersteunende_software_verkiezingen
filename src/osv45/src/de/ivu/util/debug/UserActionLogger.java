@@ -2,7 +2,7 @@
  * UserActionLogger
  * 
  * Created on 05.04.2011
- * Copyright (c) 2011 IVU Traffic Technologies AG
+ * Copyright (c) 2011 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.util.debug;
 

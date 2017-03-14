@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2002-11 IVU Traffic Technologies AG
+ * Copyright (c) 2002-11 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
 import static de.ivu.wahl.dataimport.XMLTags.ATTR_EML_ID;
+import static de.ivu.wahl.dataimport.XMLTags.ATTR_PUBLICATION_LANGUAGE;
 import static de.ivu.wahl.dataimport.XMLTags.ATTR_SHORTCODE;
 import static de.ivu.wahl.dataimport.XMLTags.KR_CREATED_BY_AUTHORITY;
 import static de.ivu.wahl.dataimport.XMLTags.NS_EML;
@@ -56,9 +57,11 @@ import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.AuthorityLevel;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GruppeKonstanten;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
 import de.ivu.wahl.modell.PersonendatenKonstanten;
+import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.Gruppe;
@@ -391,11 +394,6 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     if (levelName == null) {
       // no level needed, see OSV-440
       levelName = region.getName();
-      // no prefix and postcode suffix, see OSV-1062
-      // if (region.getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
-      //        levelName = GebietModel.GEBIETSART_KLARTEXT[region.getGebietsart()] + " " //$NON-NLS-1$
-      // + appendZipcode(levelName, region.getZipcode());
-      // }
     }
     return levelName;
   }
@@ -458,13 +456,14 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
    * resp. or "geen" otherwise
    * 
    * @param region
-   * @param eml510InElectionWithMultipleDistricts
+   * @param eml510InElectionWithMultipleDistrictsOrAB
    * @return
    */
-  Element createContestIdentifier(Gebiet region, boolean eml510InElectionWithMultipleDistricts) {
-    switch (region.getGebietsart()) {
-      case GebietModel.GEBIETSART_BUND :
-      case GebietModel.GEBIETSART_LAND :
+  Element createContestIdentifier(Gebiet region, boolean eml510InElectionWithMultipleDistrictsOrAB) {
+    switch (Gebietsart.byId(region.getGebietsart())) {
+      case BUND :
+      case LAND :
+      case ALGEMEEN_BESTUUR :
         if (region.getGebietCol().size() == 1) {
           // only one Kieskring, use its name and number
           Gebiet kieskring = region.getGebietCol().iterator().next();
@@ -475,13 +474,13 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
         } else {
           return createContestIdentifier(XMLTags.ATTR_VAL_CONTEST_ID_ALLE, null);
         }
-      case GebietModel.GEBIETSART_WAHLKREIS :
+      case WAHLKREIS :
         return createContestIdentifier(region);
-      case GebietModel.GEBIETSART_GEMEINDE :
-      case GebietModel.GEBIETSART_INSELGEMEINDE :
-      case GebietModel.GEBIETSART_STIMMBEZIRK :
-        // Only for EML 510a and EML 510b at TK, EP or PS2 elections
-        if (eml510InElectionWithMultipleDistricts) {
+      case GEMEINDE :
+      case INSELGEMEINDE :
+      case STIMMBEZIRK :
+        // Only for EML 510a and EML 510b at TK, EP or PS2 or AB elections or NR referendum
+        if (eml510InElectionWithMultipleDistrictsOrAB) {
           Gebiet kieskring = getKieskringFrom(region);
           if (kieskring != null) {
             return createContestIdentifier(kieskring);
@@ -605,7 +604,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     name.appendChild(createPersonNameElement(daten));
     candidate.appendChild(name);
     if (daten.getGeschlecht() != -1 && lk.getListe().isGeschlechtSichtbar()) {
-      String geschlecht = PersonendatenKonstanten.Geschlecht.getNameEML(daten.getGeschlecht());
+      String geschlecht = PersonendatenKonstanten.Geschlecht.getExportEML(daten.getGeschlecht());
       candidate.appendChild(XMLHelper
           .createElementWithValue(XMLTags.EML_GENDER, NS_EML, geschlecht));
     }
@@ -716,8 +715,8 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     if (region.getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
       name = appendZipcode(name, region.getZipcode());
     }
-    identifier.appendChild(GebietModel.GEBIETSART_KLARTEXT[region.getGebietsart()] + " " //$NON-NLS-1$
-        + name);
+    identifier.appendChild(Gebietsart.getGebietsartKlartext(region) + " " + name); //$NON-NLS-1$
+
     return identifier;
   }
 
@@ -781,7 +780,10 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
       Collection<Liste> lists = getListeHome().findAllByGebiet(id_Gebiet);
       // Append voting results for each list in a separate node
       for (Liste list : lists) {
-        Element affiliationResults = XMLHelper.createElement(RG_AFFILIATION_VOTES, NS_RG);
+        Element affiliationResults = XMLHelper.createElementWithAttribute(RG_AFFILIATION_VOTES,
+            NS_RG,
+            ATTR_PUBLICATION_LANGUAGE,
+            PublicationLanguage.toValidAbbreviation(list.getPublicationLanguage()));
         if (isReferendum) {
           affiliationResults.appendChild(createListIdentifierElementReferendum(list.getGruppe()));
           affiliationResults.appendChild(createValidVotesForListe(list,
@@ -810,7 +812,10 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     try {
       Collection<Liste> lists = getListeHome().findAllByGebiet(id_Gebiet);
       for (Liste list : lists) {
-        Element affiliationResults = XMLHelper.createElement(RG_AFFILIATION_VOTES, NS_RG);
+        Element affiliationResults = XMLHelper.createElementWithAttribute(RG_AFFILIATION_VOTES,
+            NS_RG,
+            ATTR_PUBLICATION_LANGUAGE,
+            PublicationLanguage.toValidAbbreviation(list.getPublicationLanguage()));
         affiliationResults.appendChild(createListIdentifierElement(list));
         appendEmptyCandidateResultsRG510(affiliationResults, list, emlType);
         parent.appendChild(affiliationResults);
@@ -826,7 +831,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
    * of the <code>parentRegion</code>. Also creates the elements for the general groups. All vote
    * results needed are in <code>resultSummary</code> already.
    */
-  void appendAffiliationVotes(ResultSummary resultSummary,
+  void appendAffiliationVotesAndGeneralGroups(ResultSummary resultSummary,
       Element rg510,
       Gebiet parentRegion,
       List<Gebiet> regions,
@@ -852,7 +857,10 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
       }
 
       if (party.getGruppenPosition() > 0) {
-        Element affiliationResults = XMLHelper.createElement(RG_AFFILIATION_VOTES, NS_RG);
+        Element affiliationResults = XMLHelper.createElementWithAttribute(RG_AFFILIATION_VOTES,
+            NS_RG,
+            ATTR_PUBLICATION_LANGUAGE,
+            PublicationLanguage.toValidAbbreviation(party.getPublicationLanguage()));
         Gruppe gruppe = getGruppeHome().findByPrimaryKey(party.getGruppenID());
         Element validVotesElement = XMLHelper.createElementWithValue(XMLTags.EML_VALID_VOTES,
             NS_RG,
@@ -895,17 +903,17 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
       }
     }
 
-    appendVotesForGeneralGroups(parentRegion, parent, position2Votes);
+    appendVotesForRGGeneralGroups(parentRegion, parent, position2Votes);
   }
 
-  private void appendVotesForGeneralGroups(Gebiet region,
+  private void appendVotesForRGGeneralGroups(Gebiet region,
       Element parent,
       Map<Integer, Integer> position2Votes) {
     GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
     List<GruppeAllgemein> gruppenAllgemein = GruppeKonstanten.GruppeAllgemein
-        .filterGruppenAllgemeinVisibleInRegion(region, adapter.getGruppenAllgemein());
+        .filterGruppenAllgemeinVisibleInRegionOrGueltige(region, adapter.getGruppenAllgemein());
     for (GruppeAllgemein gruppeAllgemein : gruppenAllgemein) {
-      Integer value = position2Votes.get(gruppeAllgemein.position);
+      Integer value = position2Votes.get(gruppeAllgemein.getPosition());
       if (value != null) {
         adapter.putRgXml(parent, gruppeAllgemein, value);
       }
@@ -992,7 +1000,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
   @Override
   public String createVotesCsvExport(ResultSummary resultSummary, Document eml510)
       throws EJBException, ImportException {
-    return new CsvVotesExportHelper().createCsvExport(resultSummary, eml510);
+    return new CsvVotesExportHelper().createCsvExport(resultSummary, eml510, getPropertyHandling());
   }
 
   @Override

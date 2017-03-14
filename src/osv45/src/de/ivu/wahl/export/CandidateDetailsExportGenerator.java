@@ -1,6 +1,6 @@
 /*
  * Created on 24.11.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -222,7 +222,8 @@ public class CandidateDetailsExportGenerator {
 
   private String getGeschlecht(Listenkandidatur lk, Personendaten personendaten) {
     if (personendaten.getGeschlecht() != -1 && lk.getListe().isGeschlechtSichtbar()) {
-      return PersonendatenKonstanten.Geschlecht.getName(personendaten.getGeschlecht());
+      return PersonendatenKonstanten.Geschlecht.getName(personendaten.getGeschlecht(), lk
+          .getListe().getPublicationLanguage());
     } else {
       return EMPTY_STRING;
     }

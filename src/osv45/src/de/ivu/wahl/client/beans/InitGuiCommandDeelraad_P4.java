@@ -2,7 +2,7 @@
  * InitGuiCommandDeelraad_P4
  * 
  * Created on Oct 29, 2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 

@@ -5,7 +5,7 @@
  * ist eine Liste mit den Parteienkurz- bzw Langnamen
  * und kann als Legende der Parteikurznamen betrachtet werden
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: parteienListe.jsp,v 1.11 2011/03/31 12:36:04 tdu Exp $
  *******************************************************************************
  --%>
@@ -26,7 +26,7 @@
 <body class="hghell">
 <%-- Zum Drucken des aktuellen Frames --%>
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hgeeeeee">
-   <tr>
+   <tr class="print-hidden">
       <td align="right">
          <a href="javascript:window.print()" style="text-decoration:none">
             <span class="linkdklrot">

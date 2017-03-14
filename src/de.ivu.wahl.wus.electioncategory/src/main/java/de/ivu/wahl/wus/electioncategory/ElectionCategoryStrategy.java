@@ -2,7 +2,7 @@
  * ElectionCategoryStrategy
  * 
  * Created on 01.02.2010
- * Copyright (c) 2010-2013 IVU Traffic Technologies AG
+ * Copyright (c) 2010-2013 Kiesraad
  */
 package de.ivu.wahl.wus.electioncategory;
 
@@ -39,6 +39,8 @@ public abstract class ElectionCategoryStrategy<T, C> {
         return processBC(context);
       case GC :
         return processGC(context);
+      case AB :
+        return processAB(context);
 
       default :
         throw new IllegalArgumentException();
@@ -68,5 +70,7 @@ public abstract class ElectionCategoryStrategy<T, C> {
   protected abstract T processBC(C context);
 
   protected abstract T processGC(C context);
+
+  protected abstract T processAB(C context);
 
 }

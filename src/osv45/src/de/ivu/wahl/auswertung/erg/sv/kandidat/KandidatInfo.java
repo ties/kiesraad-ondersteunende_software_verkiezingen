@@ -8,13 +8,14 @@ package de.ivu.wahl.auswertung.erg.sv.kandidat;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Category;
+import org.apache.commons.lang.StringUtils;
 
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.modell.GruppeModel;
 import de.ivu.wahl.modell.ListeModel;
 import de.ivu.wahl.modell.ListenkandidaturErgebnisModel;
+import de.ivu.wahl.modell.PersonendatenKonstanten;
+import de.ivu.wahl.modell.PersonendatenKonstanten.Geschlecht;
 import de.ivu.wahl.modell.PersonendatenModel;
 
 /**
@@ -26,11 +27,6 @@ public class KandidatInfo implements Serializable {
   public final static int KEIN_SATZ = -1;
 
   private static final long serialVersionUID = 3752443305297710657L;
-  private static final Category LOGGER = Log4J.configure(KandidatInfo.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(KandidatInfo.class, Log4J.extractVersion("$Revision$"))); //$NON-NLS-1$
-  }
 
   private final PersonendatenModel _personendatenModel;
 
@@ -41,6 +37,7 @@ public class KandidatInfo implements Serializable {
   private final int _stimmenAnzahl;
 
   private final boolean _isGeschlechtSichtbar;
+  private final String _publicationLanguage;
   private final int _satz;
   private final int _urspruenglicherListenplatz;
 
@@ -67,6 +64,7 @@ public class KandidatInfo implements Serializable {
     _gruppeModel = gruppeModel;
     _stimmenAnzahl = stimmen;
     _isGeschlechtSichtbar = listeModel.isGeschlechtSichtbar();
+    _publicationLanguage = listeModel.getPublicationLanguage();
     _satz = listeModel.getSatz() > 0 ? listeModel.getSatz() : KEIN_SATZ;
     _urspruenglicherListenplatz = urspruenglicherListenplatz;
   }
@@ -87,12 +85,24 @@ public class KandidatInfo implements Serializable {
     return _gruppeModel.getNameKurz();
   }
 
-  public int getGeschlecht() {
-    return _personendatenModel.getGeschlecht();
+  /**
+   * @return suffix to the candidate name describing his/her gender, like " (m)" or " (v)" or " (f)"
+   *         or an empty String.
+   */
+  public String displayGeschlecht() {
+    Geschlecht geschlecht = PersonendatenKonstanten.Geschlecht.forDisplay(getGeschlecht(),
+        _publicationLanguage);
+    if (geschlecht != null && _isGeschlechtSichtbar) {
+      return " (" + geschlecht.name + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+    } else {
+      return StringUtils.EMPTY;
+    }
   }
 
-  public boolean isGeschlechtSichtbar() {
-    return _isGeschlechtSichtbar;
+  private int getGeschlecht() {
+    return _personendatenModel != null
+        ? _personendatenModel.getGeschlecht()
+        : Geschlecht.KEINE_ANGABE.id;
   }
 
   public String getID_Listenkandidatur() {
@@ -114,7 +124,7 @@ public class KandidatInfo implements Serializable {
   }
 
   /**
-   * @return Name des Kandidaten, formatiert für die GUI
+   * @return Name des Kandidaten, formatiert fï¿½r die GUI
    */
   public String getNameAnzeige() {
     if (_personendatenModel == null) {
@@ -132,11 +142,12 @@ public class KandidatInfo implements Serializable {
   }
 
   public String getKontaktPlz() {
-    return _personendatenModel == null ? "" : _personendatenModel.getKontakt_PLZ(); //$NON-NLS-1$
+    return _personendatenModel == null ? StringUtils.EMPTY : _personendatenModel.getKontakt_PLZ();
   }
 
   public String getKontaktStrasse() {
-    return _personendatenModel == null ? "" : _personendatenModel.getKontakt_Strasse(); //$NON-NLS-1$
+    return _personendatenModel == null ? StringUtils.EMPTY : _personendatenModel
+        .getKontakt_Strasse();
   }
 
   public String getKontaktWohnort() {
@@ -147,15 +158,15 @@ public class KandidatInfo implements Serializable {
 
   public String getKontaktLand() {
     return _personendatenModel != null && _personendatenModel.getKontakt_Land() != null ? "(" //$NON-NLS-1$
-        + _personendatenModel.getKontakt_Land() + ")" : ""; //$NON-NLS-1$ //$NON-NLS-2$
+        + _personendatenModel.getKontakt_Land() + ")" : StringUtils.EMPTY; //$NON-NLS-1$ 
   }
 
   public String getTitel() {
-    return _personendatenModel == null ? "" : _personendatenModel.getTitel(); //$NON-NLS-1$
+    return _personendatenModel == null ? StringUtils.EMPTY : _personendatenModel.getTitel();
   }
 
   public String getVorname() {
-    return _personendatenModel == null ? "" : _personendatenModel.getVorname(); //$NON-NLS-1$
+    return _personendatenModel == null ? StringUtils.EMPTY : _personendatenModel.getVorname();
   }
 
   public String getWohnort() {
@@ -166,7 +177,7 @@ public class KandidatInfo implements Serializable {
 
   public String getLand() {
     return _personendatenModel != null && _personendatenModel.getLand() != null ? "(" //$NON-NLS-1$
-        + _personendatenModel.getLand() + ")" : ""; //$NON-NLS-1$ //$NON-NLS-2$
+        + _personendatenModel.getLand() + ")" : StringUtils.EMPTY; //$NON-NLS-1$ 
   }
 
   public int getGebietsnummer() {
@@ -209,7 +220,7 @@ public class KandidatInfo implements Serializable {
   }
 
   /**
-   * Gibt bevorzugtGewaehlt zurück.
+   * Gibt bevorzugtGewaehlt zurï¿½ck.
    * 
    * @return bevorzugtGewaehlt.
    */
@@ -236,9 +247,9 @@ public class KandidatInfo implements Serializable {
 
   public String getSatzOrRegionNumber4Display() {
     if (_satz == KEIN_SATZ) {
-      return "Kieskring " + _gebietModel.getNummer();
+      return "Kieskring " + _gebietModel.getNummer(); //$NON-NLS-1$
     } else {
-      return "Stel " + _satz;
+      return "Stel " + _satz; //$NON-NLS-1$
     }
   }
 

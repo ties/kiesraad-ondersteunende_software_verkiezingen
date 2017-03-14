@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
 		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
@@ -34,7 +34,9 @@
 			<designfragment match="CandidatesOnListTable" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterDistrictsOptions" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterDistrictsTitle" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterElection" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterPartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterStemming" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Checkbox" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="City" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -58,7 +60,12 @@
 			<designfragment match="FootnoteKieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FootnoteSign" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderGeneral" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Initials" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="KieskringParty" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -72,7 +79,6 @@
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
-			<designfragment match="PartyName2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -89,7 +95,7 @@
 		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -145,28 +151,46 @@
 																			</text>
 																			<newline/>
 																			<newline/>
-																			<text fixtext="Proces-verbaal van het hoofdstembureau voor de verkiezing van ">
+																			<text fixtext="Proces-verbaal van het hoofdstembureau voor ">
 																				<properties class="title"/>
 																			</text>
 																			<condition>
 																				<children>
-																					<conditionbranch xpath=". = &quot;TK&quot;">
+																					<conditionbranch xpath=". != &quot;NR&quot;">
 																						<children>
-																							<text fixtext="de Tweede Kamer">
+																							<text fixtext="de verkiezing van ">
 																								<properties class="title"/>
 																							</text>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=". = &quot;EP&quot;">
-																						<children>
-																							<text fixtext="het Europees Parlement">
-																								<properties class="title"/>
-																							</text>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath=". = &quot;TK&quot;">
+																										<children>
+																											<text fixtext="de Tweede Kamer">
+																												<properties class="title"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch xpath=". = &quot;EP&quot;">
+																										<children>
+																											<text fixtext="het Europees Parlement">
+																												<properties class="title"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch xpath=". = &quot;PS&quot;">
+																										<children>
+																											<text fixtext="provinciale staten van een provincie met meer dan één kieskring">
+																												<properties class="title"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
 																						</children>
 																					</conditionbranch>
 																					<conditionbranch>
 																						<children>
-																							<text fixtext="provinciale staten van een provincie met meer dan één kieskring">
+																							<text fixtext="het referendum">
 																								<properties class="title"/>
 																							</text>
 																						</children>
@@ -175,22 +199,36 @@
 																			</condition>
 																			<newline/>
 																			<newline/>
-																			<text fixtext="Met dit formulier stelt het hoofdstembureau de uitkomst vast voor een kieskring van de verkiezing voor "/>
+																			<text fixtext="Met dit formulier stelt het hoofdstembureau de uitkomst vast voor een kieskring "/>
 																			<condition>
 																				<children>
-																					<conditionbranch xpath=". = &quot;TK&quot;">
+																					<conditionbranch xpath=". != &quot;NR&quot;">
 																						<children>
-																							<text fixtext="de Tweede Kamer"/>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=". = &quot;EP&quot;">
-																						<children>
-																							<text fixtext="het Europees Parlement"/>
+																							<text fixtext="van de verkiezing voor "/>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath=". = &quot;TK&quot;">
+																										<children>
+																											<text fixtext="de Tweede Kamer"/>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch xpath=". = &quot;EP&quot;">
+																										<children>
+																											<text fixtext="het Europees Parlement"/>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<text fixtext="provinciale staten van een provincie met meer dan één kieskring"/>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
 																						</children>
 																					</conditionbranch>
 																					<conditionbranch>
 																						<children>
-																							<text fixtext="provinciale staten van een provincie met meer dan één kieskring"/>
+																							<text fixtext="voor het referendum"/>
 																						</children>
 																					</conditionbranch>
 																				</children>
@@ -211,12 +249,15 @@
 																<parameters/>
 															</calltemplate>
 															<newline/>
-															<calltemplate subtype="named" match="ChapterElection">
-																<parameters/>
+															<calltemplate subtype="named" match="ChapterStemming">
+																<parameters>
+																	<parameter name="isElection" value="$isElection"/>
+																	<parameter name="province"/>
+																</parameters>
 															</calltemplate>
 															<newline/>
 															<newline/>
-															<text fixtext="Datum verkiezing "/>
+															<text fixtext="Datum stemming "/>
 															<template subtype="element" match="eml:ElectionIdentifier">
 																<children>
 																	<template subtype="element" match="kr:ElectionDate">
@@ -349,6 +390,15 @@
 																						</children>
 																					</tgridbody-rows>
 																				</children>
+																				<wizard-data-repeat>
+																					<children/>
+																				</wizard-data-repeat>
+																				<wizard-data-rows>
+																					<children/>
+																				</wizard-data-rows>
+																				<wizard-data-columns>
+																					<children/>
+																				</wizard-data-columns>
 																			</tgrid>
 																		</children>
 																	</conditionbranch>
@@ -430,6 +480,15 @@
 																		</children>
 																	</tgridbody-rows>
 																</children>
+																<wizard-data-repeat>
+																	<children/>
+																</wizard-data-repeat>
+																<wizard-data-rows>
+																	<children/>
+																</wizard-data-rows>
+																<wizard-data-columns>
+																	<children/>
+																</wizard-data-columns>
 															</tgrid>
 															<newline/>
 															<template subtype="element" match="rg:PresenceVotes">
@@ -441,96 +500,353 @@
 																		<parameters/>
 																	</calltemplate>
 																	<newline/>
-																	<text fixtext="3. Aantal stemmen per lijst en kandidaat">
-																		<properties class="heading"/>
-																	</text>
-																	<newline/>
-																	<newline/>
-																	<newline break="page"/>
-																	<calltemplate subtype="named" match="AffiliationVotes">
-																		<parameters/>
-																	</calltemplate>
-																	<calltemplate subtype="named" match="Line">
-																		<parameters/>
-																	</calltemplate>
-																	<calltemplate subtype="named" match="LineBreakPdf">
-																		<parameters/>
-																	</calltemplate>
-																	<calltemplate subtype="named" match="Space">
-																		<parameters/>
-																	</calltemplate>
-																	<newline/>
-																	<text fixtext="4. Aantal blanco en ongeldige stemmen">
-																		<properties class="heading"/>
-																	</text>
-																	<newline/>
-																	<text fixtext=" "/>
-																	<tgrid>
-																		<properties width="52%"/>
+																	<condition>
 																		<children>
-																			<tgridbody-cols>
+																			<conditionbranch xpath="$isElection = 1">
 																				<children>
-																					<tgridcol>
-																						<styles width="180pt"/>
-																					</tgridcol>
-																					<tgridcol>
-																						<styles width="40pt"/>
-																					</tgridcol>
-																				</children>
-																			</tgridbody-cols>
-																			<tgridbody-rows>
-																				<children>
-																					<tgridrow>
+																					<text fixtext="3. Aantal stemmen">
+																						<properties class="heading"/>
+																					</text>
+																					<newline/>
+																					<newline/>
+																					<text fixtext="Aantal stemmen per lijst en kandidaat:">
+																						<styles line-height="13.5pt" text-decoration="underline"/>
+																					</text>
+																					<newline break="page"/>
+																					<calltemplate subtype="named" match="AffiliationVotes">
+																						<parameters/>
+																					</calltemplate>
+																					<calltemplate subtype="named" match="Line">
+																						<parameters/>
+																					</calltemplate>
+																					<calltemplate subtype="named" match="LineBreakPdf">
+																						<parameters/>
+																					</calltemplate>
+																					<newline/>
+																					<text fixtext="Aantal blanco en ongeldige stemmen:">
+																						<styles line-height="13.5pt" text-decoration="underline"/>
+																					</text>
+																					<newline/>
+																					<tgrid>
+																						<properties width="52%"/>
 																						<children>
-																							<tgridcell>
-																								<styles font-size="small"/>
+																							<tgridbody-cols>
 																								<children>
-																									<text fixtext="Het aantal blanco stemmen bedraagt"/>
+																									<tgridcol>
+																										<styles width="180pt"/>
+																									</tgridcol>
+																									<tgridcol>
+																										<styles width="40pt"/>
+																									</tgridcol>
 																								</children>
-																							</tgridcell>
-																							<tgridcell>
-																								<styles text-align="right"/>
+																							</tgridbody-cols>
+																							<tgridbody-rows>
 																								<children>
-																									<template subtype="element" match="rg:BlancVotes">
+																									<tgridrow>
 																										<children>
-																											<content subtype="regular">
-																												<format basic-type="xsd" datatype="nonNegativeInteger"/>
-																											</content>
+																											<tgridcell>
+																												<styles font-size="small"/>
+																												<children>
+																													<text fixtext="- aantal blanco stemmen"/>
+																												</children>
+																											</tgridcell>
+																											<tgridcell>
+																												<styles text-align="right"/>
+																												<children>
+																													<template subtype="element" match="rg:BlancVotes">
+																														<children>
+																															<content subtype="regular">
+																																<format basic-type="xsd" datatype="nonNegativeInteger"/>
+																															</content>
+																														</children>
+																														<variables/>
+																													</template>
+																												</children>
+																											</tgridcell>
+																										</children>
+																									</tgridrow>
+																									<tgridrow>
+																										<children>
+																											<tgridcell>
+																												<styles font-size="small"/>
+																												<children>
+																													<text fixtext="- aantal ongeldige stemmen"/>
+																												</children>
+																											</tgridcell>
+																											<tgridcell>
+																												<styles text-align="right"/>
+																												<children>
+																													<template subtype="element" match="rg:InvalidVotes">
+																														<children>
+																															<content subtype="regular">
+																																<format basic-type="xsd" datatype="nonNegativeInteger"/>
+																															</content>
+																														</children>
+																														<variables/>
+																													</template>
+																												</children>
+																											</tgridcell>
+																										</children>
+																									</tgridrow>
+																								</children>
+																							</tgridbody-rows>
+																						</children>
+																						<wizard-data-repeat>
+																							<children/>
+																						</wizard-data-repeat>
+																						<wizard-data-rows>
+																							<children/>
+																						</wizard-data-rows>
+																						<wizard-data-columns>
+																							<children/>
+																						</wizard-data-columns>
+																					</tgrid>
+																					<newline/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<text fixtext="3. Aantal kiesgerechtigden en stemmen">
+																						<properties class="heading"/>
+																					</text>
+																					<newline/>
+																					<newline/>
+																					<text fixtext="Aantal kiesgerechtigden:">
+																						<styles line-height="13.5pt" text-decoration="underline"/>
+																					</text>
+																					<newline/>
+																					<newline/>
+																					<text fixtext="Het aantal kiesgerechtigden bedraagt "/>
+																					<template subtype="element" match="rg:Cast">
+																						<children>
+																							<content subtype="regular">
+																								<styles font-weight="bold"/>
+																								<format basic-type="xsd" datatype="nonNegativeInteger"/>
+																							</content>
+																						</children>
+																						<variables/>
+																					</template>
+																					<newline/>
+																					<newline/>
+																					<newline/>
+																					<text fixtext="Aantal stemmen:">
+																						<styles line-height="13.5pt" text-decoration="underline"/>
+																					</text>
+																					<newline/>
+																					<tgrid>
+																						<properties width="52%"/>
+																						<children>
+																							<tgridbody-cols>
+																								<children>
+																									<tgridcol>
+																										<styles width="300pt"/>
+																									</tgridcol>
+																									<tgridcol>
+																										<styles width="40pt"/>
+																									</tgridcol>
+																									<tgridcol>
+																										<styles width="15pt"/>
+																									</tgridcol>
+																								</children>
+																							</tgridbody-cols>
+																							<tgridbody-rows>
+																								<children>
+																									<template subtype="element" match="rg:AffiliationVotes">
+																										<children>
+																											<tgridrow>
+																												<children>
+																													<tgridcell>
+																														<children>
+																															<text fixtext="- "/>
+																															<condition>
+																																<children>
+																																	<conditionbranch xpath="eml:AffiliationIdentifier/eml:RegisteredName=&quot;Voor&quot; or eml:AffiliationIdentifier/eml:RegisteredName=&quot;voor&quot;">
+																																		<children>
+																																			<text fixtext="aantal stemmen voor de wet / het verdrag"/>
+																																		</children>
+																																	</conditionbranch>
+																																	<conditionbranch xpath="eml:AffiliationIdentifier/eml:RegisteredName=&quot;Tegen&quot; or eml:AffiliationIdentifier/eml:RegisteredName=&quot;tegen&quot;">
+																																		<children>
+																																			<text fixtext="aantal stemmen tegen de wet / het verdrag"/>
+																																		</children>
+																																	</conditionbranch>
+																																	<conditionbranch>
+																																		<children>
+																																			<text fixtext="aantal stemmen voor het antwoord &quot;"/>
+																																			<template subtype="element" match="eml:AffiliationIdentifier">
+																																				<children>
+																																					<template subtype="element" match="eml:RegisteredName">
+																																						<children>
+																																							<content subtype="regular"/>
+																																						</children>
+																																						<variables/>
+																																					</template>
+																																				</children>
+																																				<variables/>
+																																			</template>
+																																			<text fixtext="&quot;"/>
+																																		</children>
+																																	</conditionbranch>
+																																</children>
+																															</condition>
+																														</children>
+																													</tgridcell>
+																													<tgridcell>
+																														<styles text-align="right"/>
+																														<children>
+																															<template subtype="element" match="rg:ValidVotes">
+																																<children>
+																																	<content subtype="regular">
+																																		<format basic-type="xsd" datatype="nonNegativeInteger"/>
+																																	</content>
+																																</children>
+																																<variables/>
+																															</template>
+																														</children>
+																													</tgridcell>
+																													<tgridcell/>
+																												</children>
+																											</tgridrow>
 																										</children>
 																										<variables/>
 																									</template>
-																								</children>
-																							</tgridcell>
-																						</children>
-																					</tgridrow>
-																					<tgridrow>
-																						<children>
-																							<tgridcell>
-																								<styles font-size="small"/>
-																								<children>
-																									<text fixtext="Het aantal ongeldige stemmen bedraagt"/>
-																								</children>
-																							</tgridcell>
-																							<tgridcell>
-																								<styles text-align="right"/>
-																								<children>
-																									<template subtype="element" match="rg:InvalidVotes">
+																									<tgridrow>
 																										<children>
-																											<content subtype="regular">
-																												<format basic-type="xsd" datatype="nonNegativeInteger"/>
-																											</content>
+																											<tgridcell>
+																												<styles font-size="small"/>
+																												<children>
+																													<text fixtext="- aantal blanco stemmen"/>
+																												</children>
+																											</tgridcell>
+																											<tgridcell>
+																												<styles text-align="right"/>
+																												<children>
+																													<template subtype="element" match="rg:BlancVotes">
+																														<children>
+																															<content subtype="regular">
+																																<format basic-type="xsd" datatype="nonNegativeInteger"/>
+																															</content>
+																														</children>
+																														<variables/>
+																													</template>
+																												</children>
+																											</tgridcell>
+																											<tgridcell/>
 																										</children>
-																										<variables/>
-																									</template>
+																									</tgridrow>
+																									<tgridrow>
+																										<children>
+																											<tgridcell>
+																												<styles font-size="small"/>
+																												<children>
+																													<text fixtext="- aantal ongeldige stemmen"/>
+																												</children>
+																											</tgridcell>
+																											<tgridcell>
+																												<styles text-align="right"/>
+																												<children>
+																													<template subtype="element" match="rg:InvalidVotes">
+																														<children>
+																															<content subtype="regular">
+																																<format basic-type="xsd" datatype="nonNegativeInteger"/>
+																															</content>
+																														</children>
+																														<variables/>
+																													</template>
+																												</children>
+																											</tgridcell>
+																											<tgridcell/>
+																										</children>
+																									</tgridrow>
+																									<tgridrow>
+																										<children>
+																											<tgridcell/>
+																											<tgridcell>
+																												<styles border-bottom-color="black" border-bottom-style="solid" border-bottom-width="1px"/>
+																											</tgridcell>
+																											<tgridcell>
+																												<children>
+																													<text fixtext="+"/>
+																												</children>
+																											</tgridcell>
+																										</children>
+																									</tgridrow>
+																									<tgridrow>
+																										<children>
+																											<tgridcell>
+																												<children>
+																													<text fixtext="Hoeveel stembiljetten zijn er geteld?"/>
+																												</children>
+																											</tgridcell>
+																											<tgridcell>
+																												<styles text-align="right"/>
+																												<children>
+																													<template subtype="source" match="XML">
+																														<children>
+																															<template subtype="element" match="eml:EML">
+																																<children>
+																																	<template subtype="element" match="eml:Count">
+																																		<children>
+																																			<template subtype="element" match="eml:Election">
+																																				<children>
+																																					<template subtype="element" match="eml:Contests">
+																																						<children>
+																																							<template subtype="element" match="eml:Contest">
+																																								<children>
+																																									<template subtype="element" match="eml:TotalVotes">
+																																										<children>
+																																											<autocalc xpath="number(eml:TotalCounted) + number(eml:RejectedVotes[@ReasonCode=&quot;ongeldig&quot;]) + number(eml:RejectedVotes[@ReasonCode=&quot;blanco&quot;])"/>
+																																										</children>
+																																										<variables/>
+																																									</template>
+																																								</children>
+																																								<variables/>
+																																							</template>
+																																						</children>
+																																						<variables/>
+																																					</template>
+																																				</children>
+																																				<variables/>
+																																			</template>
+																																		</children>
+																																		<variables/>
+																																	</template>
+																																</children>
+																																<variables/>
+																															</template>
+																														</children>
+																														<variables/>
+																													</template>
+																												</children>
+																											</tgridcell>
+																											<tgridcell/>
+																										</children>
+																									</tgridrow>
 																								</children>
-																							</tgridcell>
+																							</tgridbody-rows>
 																						</children>
-																					</tgridrow>
+																						<wizard-data-repeat>
+																							<children/>
+																						</wizard-data-repeat>
+																						<wizard-data-rows>
+																							<children/>
+																						</wizard-data-rows>
+																						<wizard-data-columns>
+																							<children/>
+																						</wizard-data-columns>
+																					</tgrid>
+																					<newline/>
 																				</children>
-																			</tgridbody-rows>
+																			</conditionbranch>
 																		</children>
-																	</tgrid>
-																	<newline/>
+																	</condition>
+																	<calltemplate subtype="named" match="Line">
+																		<parameters/>
+																	</calltemplate>
+																	<calltemplate subtype="named" match="LineBreakPdf">
+																		<parameters/>
+																	</calltemplate>
+																	<newline break="page"/>
 																	<calltemplate subtype="named" match="Line">
 																		<parameters/>
 																	</calltemplate>
@@ -538,7 +854,7 @@
 																		<parameters/>
 																	</calltemplate>
 																	<newline/>
-																	<text fixtext="5. Verschil tussen het aantal toegelaten kiezers en het aantal getelde stemmen">
+																	<text fixtext="4. Verschil tussen het aantal toegelaten kiezers en het aantal getelde stemmen">
 																		<properties class="heading"/>
 																	</text>
 																	<newline/>
@@ -546,13 +862,13 @@
 																	<paragraph>
 																		<styles line-height="24pt"/>
 																		<children>
-																			<text fixtext="In de processen-verbaal is vastgesteld in hoeverre er:">
+																			<text fixtext="In de processen-verbaal van de stembureaus is vastgesteld in hoeverre er:">
 																				<styles font-style="italic"/>
 																			</text>
 																		</children>
 																	</paragraph>
 																	<paragraph>
-																		<styles line-height="13.5pt"/>
+																		<styles line-height="24pt"/>
 																		<children>
 																			<text fixtext="-	meer stembiljetten zijn geteld, dan dat er kiezers zijn toegelaten;">
 																				<styles font-style="italic"/>
@@ -562,7 +878,7 @@
 																	<paragraph>
 																		<styles line-height="13.5pt"/>
 																		<children>
-																			<text fixtext="-	minder stembiljetten zijn geteld, dan dat er kiezers zijn toegelaten;">
+																			<text fixtext="-	minder stembiljetten zijn geteld, dan dat er kiezers zijn toegelaten.">
 																				<styles font-style="italic"/>
 																			</text>
 																		</children>
@@ -584,7 +900,7 @@
 																	<paragraph>
 																		<styles line-height="13.5pt"/>
 																		<children>
-																			<text fixtext="Welke verschillen zijn in de processen-verbaal vastgesteld, tussen het aantal toegelaten kiezers en getelde stembiljetten?">
+																			<text fixtext="Welke verschillen zijn in de processen-verbaal vastgesteld tussen het aantal toegelaten kiezers en getelde stembiljetten?">
 																				<styles line-height="13.5pt" text-decoration="underline"/>
 																			</text>
 																		</children>
@@ -679,7 +995,7 @@
 																								<properties align="left"/>
 																								<styles padding-left="0" vertical-align="top"/>
 																								<children>
-																									<text fixtext="Mogelijke reden van het verschil">
+																									<text fixtext="Mogelijke reden voor het verschil">
 																										<styles font-weight="bold"/>
 																									</text>
 																								</children>
@@ -899,6 +1215,15 @@
 																				</children>
 																			</tgridbody-rows>
 																		</children>
+																		<wizard-data-repeat>
+																			<children/>
+																		</wizard-data-repeat>
+																		<wizard-data-rows>
+																			<children/>
+																		</wizard-data-rows>
+																		<wizard-data-columns>
+																			<children/>
+																		</wizard-data-columns>
 																	</tgrid>
 																	<newline/>
 																	<calltemplate subtype="named" match="Line">
@@ -908,13 +1233,13 @@
 																		<parameters/>
 																	</calltemplate>
 																	<newline/>
-																	<text fixtext="6. Aantal kiezers dat bij volmacht mocht stemmen">
+																	<text fixtext="5. Aantal kiezers dat bij volmacht mocht stemmen">
 																		<properties class="heading"/>
 																	</text>
 																	<newline/>
 																	<paragraph paragraphtag="p">
 																		<children>
-																			<text fixtext="Het aantal kiezers dat mocht stemmen met een geldig volmachtbewijs (schriftelijk of via ingevulde achterkant van de stempas), bedraagt "/>
+																			<text fixtext="Het aantal kiezers dat mocht stemmen met een geldig volmachtbewijs (schriftelijk of via ingevulde achterkant van de stempas of kiezerspas), bedraagt "/>
 																			<template subtype="element" match="rg:ProxyVoters">
 																				<children>
 																					<content subtype="regular">
@@ -932,8 +1257,15 @@
 																	<calltemplate subtype="named" match="LineBreakPdf">
 																		<parameters/>
 																	</calltemplate>
+																	<newline break="page"/>
+																	<calltemplate subtype="named" match="Line">
+																		<parameters/>
+																	</calltemplate>
+																	<calltemplate subtype="named" match="LineBreakPdf">
+																		<parameters/>
+																	</calltemplate>
 																	<newline/>
-																	<text fixtext="7. Bezwaren van aanwezige kiezers">
+																	<text fixtext="6. Bezwaren van aanwezige kiezers">
 																		<properties class="heading"/>
 																	</text>
 																	<newline/>
@@ -997,6 +1329,15 @@
 																				</children>
 																			</tgridbody-rows>
 																		</children>
+																		<wizard-data-repeat>
+																			<children/>
+																		</wizard-data-repeat>
+																		<wizard-data-rows>
+																			<children/>
+																		</wizard-data-rows>
+																		<wizard-data-columns>
+																			<children/>
+																		</wizard-data-columns>
 																	</tgrid>
 																	<newline/>
 																	<calltemplate subtype="named" match="Line">
@@ -1006,7 +1347,7 @@
 																		<parameters/>
 																	</calltemplate>
 																	<newline/>
-																	<text fixtext="8. Ondertekening">
+																	<text fixtext="7. Ondertekening">
 																		<properties class="heading"/>
 																	</text>
 																	<calltemplate subtype="named" match="LineBreakPdf">
@@ -1053,7 +1394,7 @@
 																									<newline/>
 																									<newline/>
 																									<newline/>
-																									<text fixtext="Handtekening voorzitter "/>
+																									<text fixtext="Naam en handtekening voorzitter "/>
 																									<newline/>
 																								</children>
 																							</tgridcell>
@@ -1078,7 +1419,7 @@
 																									<newline/>
 																									<newline/>
 																									<newline/>
-																									<text fixtext="Handtekening leden"/>
+																									<text fixtext="Naam en handtekening leden"/>
 																								</children>
 																							</tgridcell>
 																							<tgridcell>
@@ -1118,9 +1459,34 @@
 																							</tgridcell>
 																						</children>
 																					</tgridrow>
+																					<tgridrow>
+																						<children>
+																							<tgridcell/>
+																							<tgridcell>
+																								<children>
+																									<newline/>
+																									<newline/>
+																									<newline/>
+																									<newline/>
+																									<text fixtext="_________________________________________________________">
+																										<properties class="underline"/>
+																									</text>
+																								</children>
+																							</tgridcell>
+																						</children>
+																					</tgridrow>
 																				</children>
 																			</tgridbody-rows>
 																		</children>
+																		<wizard-data-repeat>
+																			<children/>
+																		</wizard-data-repeat>
+																		<wizard-data-rows>
+																			<children/>
+																		</wizard-data-rows>
+																		<wizard-data-columns>
+																			<children/>
+																		</wizard-data-columns>
 																	</tgrid>
 																	<calltemplate subtype="named" match="Line">
 																		<parameters/>
@@ -1134,7 +1500,8 @@
 													</template>
 												</children>
 												<variables>
-													<variable name="includesPostalVotes" value="count (//eml:ElectionCategory[text() = &quot;TK&quot; or text() = &quot;EP&quot;]) &gt; 0 and count(eml:Election/eml:Contests/eml:Contest/eml:ContestIdentifier[@Id = 12]) &gt; 0" valuetype="xs:boolean"/>
+													<variable name="includesPostalVotes" value="count (//eml:ElectionCategory[text() = &quot;TK&quot; or text() = &quot;EP&quot; or text() = &quot;NR&quot;]) &gt; 0 and count(eml:Election/eml:Contests/eml:Contest/eml:ContestIdentifier[@Id = 12]) &gt; 0" valuetype="xs:boolean"/>
+													<variable name="isElection" value="count(//eml:ElectionCategory[.!=&quot;NR&quot; and .!=&quot;PR&quot; and .!= &quot;LR&quot;])" valuetype="xs:int"/>
 												</variables>
 											</template>
 										</children>

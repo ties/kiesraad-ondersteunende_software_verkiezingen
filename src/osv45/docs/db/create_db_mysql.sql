@@ -141,7 +141,8 @@ CREATE TABLE Liste (
        Typ                  VARCHAR(30),
        Satz                 INTEGER,     
        Name                 VARCHAR(80),       
-       GeschlechtSichtbar   SMALLINT       
+       GeschlechtSichtbar   SMALLINT,
+       PublicationLanguage  VARCHAR(5)       
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE Listenkandidatur (

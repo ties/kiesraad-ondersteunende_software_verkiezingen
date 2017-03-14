@@ -2,17 +2,14 @@
  * InitGuiCommandTweedeKamerBund
  * 
  * Created on Oct 29, 2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
-
-import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 
 import java.util.Collection;
 import java.util.Map;
 
 import de.ivu.wahl.WahlInfo;
-import de.ivu.wahl.client.util.GUICommand;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.ejb.Gebiet;
 
@@ -48,18 +45,11 @@ public class InitGuiCommandProv_P5 extends InitGuiCommand_P5 implements Applicat
   }
 
   @Override
-  protected void createCommandGebietErgebnisKandidat(Map<String, String> jspLevelWorkName,
-      GUICommandList[] befehleInitial) {
-    String name = getBundleString("Gebiet_Ergebnis_Kandidat"); //$NON-NLS-1$
-    GUICommand cmd = createCommand(name,
-        GEB_ERG_KAN_ZUS,
-        null,
-        false,
-        "gebietErgebnisKandidatZusammenfassung.jsp", //$NON-NLS-1$
-        getBundleString("Gebiet_Ergebnis_Kandidat_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
-    jspLevelWorkName.put(topLevel + "_" + GEB_ERG_KAN_ZUS, name); //$NON-NLS-1$
-    befehleInitial[topLevel].add(cmd);
+  protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
+    helper.setRights(null);
+    helper
+        .addCommand(Command.GEB_ERG_KAN_ZUS,
+            "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidatZusammenfassung.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
 }

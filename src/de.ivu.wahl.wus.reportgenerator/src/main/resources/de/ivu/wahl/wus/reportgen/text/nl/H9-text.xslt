@@ -4,12 +4,12 @@
     <xsl:param name="H9_020_title" select="'Instemmingsverklaring'"/>
     <xsl:param name="H9_030_MetDitFormulier" select="'Met dit formulier stemt u ermee in dat u op onderstaande kandidatenlijst staat, en u stemt in met uw positie op die lijst.'"/>
     <xsl:param name="H9_040_LetOp" select="'Let op!'"/>
-    <xsl:param name="H9_050_BenUNog" select="'Ben u nog geen lid van het vertegenwoordigend orgaan? Voeg dan een kopie van een geldig identiteitsbewijs bij.'"/>
+    <xsl:param name="H9_050_BenUNog" select="'Bent u nog geen lid van het vertegenwoordigend orgaan? Voeg dan een kopie van een geldig identiteitsbewijs bij.'"/>
     <xsl:param name="H9_055_MijnInstemming" select="'Mijn instemming geldt:'"/>
     <xsl:param name="H9_060_PolitiekeGroepering" select="'Politieke groepering'"/>
     <xsl:param name="H9_060_PolitiekeGroepering_BC" select="'(Politieke) groepering'"/>
-    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst" select="'De politieke groepering waarvan de kandidatenlijst is: '"/>
-    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst_BC" select="'De (politieke) groepering waarvan de kandidatenlijst is: '"/>
+    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst" select="'De aanduiding van de politieke groepering waarvan de kandidatenlijst is: '"/>
+    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst_BC" select="'De aanduiding van de (politieke) groepering waarvan de kandidatenlijst is: '"/>
     <xsl:param name="H9_080_KandidatenOpDeLijst" select="'Kandidaten op de lijst'"/>
     <xsl:param name="H9_090_GemachtigdeBenoeming" select="'Gemachtigde voor het aannemen van uw benoeming'"/>
     <xsl:param name="H9_100_alleenInvullen" select="'(alleen invullen als u buiten het Europese deel van Nederland woont, of bij gebruik van een moederlijst)'"/>

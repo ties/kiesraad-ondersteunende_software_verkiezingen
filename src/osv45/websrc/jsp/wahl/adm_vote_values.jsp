@@ -23,7 +23,7 @@
  *******************************************************************************
  * List of all provinces with the correspondig vote values
  *
- * author:  jon@ivu.de  Copyright (c) 2010 IVU Traffic Technologies AG
+ * author:  jon@ivu.de  Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
@@ -31,7 +31,8 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <% 
- 
+ String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+ String helpKey = "admVoteValues"; //$NON-NLS-1$
  
  Collection<Gebiet> provincesListe = appBean.getProvinces();
  
@@ -81,10 +82,7 @@
     <jsp:attribute name="marginwidth">0</jsp:attribute>
     <jsp:attribute name="marginheight">0</jsp:attribute>
     <jsp:body>   
-        <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-            <a name="oben" href="javascript:window.print()" style="text-decoration: none;" id="oben"><span class="linkdklrot"><img src="<%= request.getContextPath() %>/img/icon/drucken.gif" alt="" border="0" height="9" width="24"><ivu:int key="SeiteDrucken"/></span></a>
-            <ivu:help key="admVoteValues"/>
-        </div>
+        <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>

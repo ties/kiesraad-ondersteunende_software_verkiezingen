@@ -2,7 +2,7 @@
  * GeneralSeatDistributor
  * 
  * Created on 03.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.gsda;
 
@@ -300,8 +300,7 @@ public class GeneralSeatDistributor<T extends GeneralList, P extends GeneralList
    *         candidates.
    */
   private boolean isAnyListExhausted() {
-    return _parameters.isB8_reassignSeatsLostByExhaustedList()
-        && _assignmentTracer.isAnyListExhausted(_listsTakingPart);
+    return _assignmentTracer.isAnyListExhausted(_listsTakingPart);
   }
 
   // ************************************************

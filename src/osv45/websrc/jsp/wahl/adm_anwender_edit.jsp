@@ -6,6 +6,7 @@
 <%@ page import="de.ivu.wahl.anwender.Rechte" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.modell.AnwenderModel" %>
 <%@ page import="de.ivu.wahl.modell.GebietInfo" %>
@@ -24,7 +25,7 @@
  * Anwender anlegen / editieren
  * Anlegen / editieren eines neuen / vorhandenen Anwenders
  *
- * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
@@ -38,6 +39,7 @@
    response.setDateHeader ("Expires", 0); //$NON-NLS-1$ //prevents caching at the proxy server 
    Logger log = Logger.getLogger(this.getClass());
    
+   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    AnwContext anwContext = appBean.getAnwContext();
    String prefix = ApplicationBeanKonstanten.PREFIX;
    String breite = "100%"; //$NON-NLS-1$
@@ -45,12 +47,12 @@
    AnwenderModel model = null;
    boolean newAnw = false;
    int work = ClientHelper.getWork(request, -1);
-   int nextStep = ApplicationBeanKonstanten.ANWENDER_ANLEGEN;
+   Command nextStep = Command.ANWENDER_ANLEGEN;
    // initialisiert mit den Defaultwert für Bund
    int gebietschluessel = -99;
    String id_anw_param = "ANW_"+ prefix +"id_anwender"; //$NON-NLS-1$ //$NON-NLS-2$
    if (work != -1) {
-      if (work == ApplicationBeanKonstanten.ANWENDER_VERAENDERN_2_EDIT) {
+      if (Command.ANWENDER_VERAENDERN_2_EDIT.hasId(work)) {
         String id_anw = request.getParameter(id_anw_param);
         anwender = admBean.getAnwenderBean(id_anw);
          model = anwender.getDetails();
@@ -59,7 +61,7 @@
          if (gebiet != null) {
             gebietschluessel = gebiet.getNummer();
          }
-         nextStep = ApplicationBeanKonstanten.ANWENDER_VERAENDERN_1_AUSWAHLEN;
+         nextStep = Command.ANWENDER_VERAENDERN_1_AUSWAHLEN;
       } else {
          newAnw = true;
       }
@@ -67,7 +69,7 @@
    List<String> ignoreList = new ArrayList<String>();
    ignoreList.add(ApplicationBeanKonstanten.WORK);
    ignoreList.add(id_anw_param);
-   String urlSave = "/osv?cmd=adm_saveAnwender&work="+ nextStep+ '&' + ClientHelper.getAllParameters(request, ignoreList, true); //$NON-NLS-1$
+   String urlSave = "/osv?cmd=adm_saveAnwender&" + ClientHelper.workIs(nextStep) + '&' + ClientHelper.getAllParameters(request, ignoreList, true); //$NON-NLS-1$
    AnwenderHandling anwHandling = appBean.getAnwenderHandling();
    Collection<RechtegruppeModel> rgs =  anwHandling.getAllRechtegruppen();
    String errorMsg = null;
@@ -134,12 +136,7 @@
    <body class="hghell" onload="sc()">
       
       <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-         <tr class="hgeeeeee" align="right">
-            <td><ivu:help key="<%=helpKey%>"/></td>
-         </tr>
-         <tr class="hgeeeeee">
-            <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-         </tr>
+         <%@include file="/jsp/fragments/help_row.jspf"%>
          <tr>
             <td valign="top">
                <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">

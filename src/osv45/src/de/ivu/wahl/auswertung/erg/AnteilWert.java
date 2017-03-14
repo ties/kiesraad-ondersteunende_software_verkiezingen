@@ -1,7 +1,7 @@
 /*
  * AnteilWert
  * 
- * Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg;
 
@@ -12,7 +12,7 @@ import org.apache.log4j.Category;
 import de.ivu.util.debug.Log4J;
 
 /**
- * Erweitert Wert um eine Bezugsgröße für aktuell und Vergleich
+ * Erweitert Wert um eine Bezugsgrï¿½ï¿½e fï¿½r aktuell und Vergleich
  * 
  * @author klie@ivu.de - IVU Traffic Technologies AG
  */

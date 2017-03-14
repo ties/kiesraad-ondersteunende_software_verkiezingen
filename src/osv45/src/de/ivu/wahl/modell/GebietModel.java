@@ -3,7 +3,6 @@ package de.ivu.wahl.modell;
 import java.util.Comparator;
 import java.util.Map;
 
-import de.ivu.wahl.util.BundleHelper;
 import de.ivu.wahl.util.ConstantMap;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
@@ -20,97 +19,69 @@ public interface GebietModel extends BasicGebietModel {
   // AuthorityLevels
 
   /**
-   * Konstante für die Programmebene Zentrales Stimmbüro
+   * Konstante fÃ¼r die Programmebene Zentrales Stimmbï¿½ro
    */
   int EBENE_CSB = 0; // AuthorityLevel.EBENE_CSB.getId();
   /**
-   * Konstante für die Programmebene Hauptstimmbüro
+   * Konstante fÃ¼r die Programmebene Hauptstimmbï¿½ro
    */
   int EBENE_HSB = 1; // AuthorityLevel.EBENE_HSB.getId();
   /**
-   * Konstante für die Programmebene Gemeinde
+   * Konstante fÃ¼r die Programmebene Gemeinde
    */
   int EBENE_PSB = 2; // AuthorityLevel.EBENE_PSB.getId();
   /**
-   * Konstante für die Programmebene polling station
+   * Konstante fÃ¼r die Programmebene polling station
    */
   int EBENE_SB = 3; // AuthorityLevel.EBENE_SB.getId();
 
   // Region types
 
   /**
-   * Konstante für die Gebietart für das Bundesgebiet
+   * Konstante fÃ¼r die Gebietart fÃ¼r das Bundesgebiet
    */
-  int GEBIETSART_BUND = 0;
+  int GEBIETSART_BUND = Gebietsart.BUND.getId(); // 0
 
   /**
-   * Konstante für die Gebietart für die Bundesländer
+   * Konstante fÃ¼r die Gebietart fÃ¼r die BundeslÃ¤nder
    */
-  int GEBIETSART_LAND = 1;
+  int GEBIETSART_LAND = Gebietsart.LAND.getId(); // 1
 
   /**
-   * Konstante für die Gebietart für die Bundestagswahlkreise, Landtagswahlkreise, politische Kreise
-   * und kreisfreie Städte (je nach Wahlart)
+   * Konstante fÃ¼r die Gebietart fÃ¼r die Wasserschaften
    */
-  int GEBIETSART_WAHLKREIS = 2;
+  int GEBIETSART_ALGEMEEN_BESTUUR = Gebietsart.ALGEMEEN_BESTUUR.getId(); // 2;
 
   /**
-   * Konstante für die Gebietart für die Gemeinden
+   * Konstante fÃ¼r die Gebietart fÃ¼r die Bundestagswahlkreise, Landtagswahlkreise, politische Kreise
+   * und kreisfreie StÃ¤dte (je nach Wahlart)
    */
-  int GEBIETSART_GEMEINDE = 3;
+  int GEBIETSART_WAHLKREIS = Gebietsart.WAHLKREIS.getId(); // 3;
 
   /**
-   * Konstante für die Gebietart für die speziellen Gemeinden auf den BES islands
+   * Konstante fÃ¼r die Gebietart fÃ¼r die Gemeinden
    */
-  int GEBIETSART_INSELGEMEINDE = 4;
+  int GEBIETSART_GEMEINDE = Gebietsart.GEMEINDE.getId(); // 4;
 
   /**
-   * Konstante für die Gebietart für die Ortsteile
+   * Konstante fÃ¼r die Gebietart fÃ¼r die speziellen Gemeinden auf den BES islands
    */
-  int GEBIETSART_ORTSTEIL = 5;
+  int GEBIETSART_INSELGEMEINDE = Gebietsart.INSELGEMEINDE.getId(); // 5;
 
   /**
-   * Konstante für die Gebietart für die Stimmbezirke
+   * Konstante fÃ¼r die Gebietart fÃ¼r die Ortsteile
    */
-  int GEBIETSART_STIMMBEZIRK = 6;
+  int GEBIETSART_ORTSTEIL = Gebietsart.ORTSTEIL.getId(); // 6;
 
   /**
-   * Konstante für die Anzahl der unterschiedlichen Gebietsarten
+   * Konstante fÃ¼r die Gebietart fÃ¼r die Stimmbezirke
    */
-  int ANZAHL_GEBIETSARTEN = 7;
+  int GEBIETSART_STIMMBEZIRK = Gebietsart.STIMMBEZIRK.getId(); // 7;
 
   /**
-   * Konstante für die Klartextbezeichnungen der Gebietsarten
+   * Konstante fÃ¼r die Anzahl der unterschiedlichen Gebietsarten
    */
-  String[] GEBIETSART_KLARTEXT = {BundleHelper.getBundleString("GebietModel.Klartext_Bund"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Klartext_Bundesland"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Klartext_Wahlkreis"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Klartext_Gemeinde"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Klartext_Inselgemeinde"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Klartext_Ortsteil"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Klartext_Stimmbezirk")}; //$NON-NLS-1$
-
-  /**
-   * Konstante für die Klartextbezeichnungen Präfixe der Gebietsarten
-   */
-  String[] GEBIETSART_PREFIX = {BundleHelper.getBundleString("GebietModel.Prefix_Bund"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Land"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.28"), //$NON-NLS-1$ 
-      BundleHelper.getBundleString("GebietModel.Prefix_Kreis"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Kreisbereich"), //$NON-NLS-1$ 
-      BundleHelper.getBundleString("GebietModel.Prefix_Gemeinde"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Gemeindebereich"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Ortsteil"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Stimmbezirk"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Wahllokal"), //$NON-NLS-1$
-      BundleHelper.getBundleString("GebietModel.Prefix_Sondergebiet")}; //$NON-NLS-1$
-
-  /**
-   * Konstante für die Klartextbezeichnungen der Gebietsarten für Export/Import
-   */
-  String[] GEBIETSART_KLARTEXT_EXPORT = {
-      BundleHelper.getBundleString("GebietModel.Klartext_Export_Bund"), BundleHelper.getBundleString("GebietModel.Klartext_Export_Land"), BundleHelper.getBundleString("GebietModel.Klartext_Export_Wahlkreis"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      BundleHelper.getBundleString("GebietModel.Klartext_Export_Gemeinde"), BundleHelper.getBundleString("GebietModel.Klartext_Export_Inselgemeinde"), BundleHelper.getBundleString("GebietModel.Klartext_Export_Ortsteil"), BundleHelper.getBundleString("GebietModel.Klartext_Export_Stimmbezirk"), BundleHelper.getBundleString("GebietModel.Klartext_Export_Wahllokal")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+  int ANZAHL_GEBIETSARTEN = Gebietsart.values().length; // 8
 
   /**
    * Zuordnung der Gebietsart der Wahleinheit zur Wahlart
@@ -127,6 +98,7 @@ public interface GebietModel extends BasicGebietModel {
       add(ElectionCategory.GC, GebietModel.GEBIETSART_ORTSTEIL);
       add(ElectionCategory.NR, GebietModel.GEBIETSART_BUND);
       add(ElectionCategory.PR, GebietModel.GEBIETSART_LAND);
+      add(ElectionCategory.AB, GebietModel.GEBIETSART_ALGEMEEN_BESTUUR);
       add(ElectionCategory.LR, GebietModel.GEBIETSART_GEMEINDE);
       add(ElectionCategory.IR, GebietModel.GEBIETSART_INSELGEMEINDE);
     }
@@ -144,13 +116,14 @@ public interface GebietModel extends BasicGebietModel {
       add(ElectionCategory.GC, GebietModel.GEBIETSART_ORTSTEIL);
       add(ElectionCategory.NR, GebietModel.GEBIETSART_BUND);
       add(ElectionCategory.PR, GebietModel.GEBIETSART_LAND);
+      add(ElectionCategory.AB, GebietModel.GEBIETSART_WAHLKREIS);
       add(ElectionCategory.LR, GebietModel.GEBIETSART_GEMEINDE);
       add(ElectionCategory.IR, GebietModel.GEBIETSART_INSELGEMEINDE);
     }
   };
 
   /**
-   * @return technische, aber menschenlesbare zusammengesetzte Bezeichnung für das Gebiet
+   * @return technische, aber menschenlesbare zusammengesetzte Bezeichnung fÃ¼r das Gebiet
    */
   String getBezeichnung();
 

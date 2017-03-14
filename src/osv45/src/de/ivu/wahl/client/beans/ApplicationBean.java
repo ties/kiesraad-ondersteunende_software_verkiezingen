@@ -11,29 +11,27 @@ import static de.ivu.wahl.Konstanten.PROP_EXT_LINK_BUTTON_1;
 import static de.ivu.wahl.Konstanten.PROP_EXT_LINK_BUTTON_2;
 import static de.ivu.wahl.Konstanten.VERSION_P4;
 import static de.ivu.wahl.Konstanten.VERSION_P5;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ADM_TESTMATERIAL;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_VERAENDERN_PASSWORT;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.BROWSER_IENS6;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.BROWSER_NS4;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.CUR_ANW_KEY;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.EXC_RECHTEZUGRIFF;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.GEBIETNRIS;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.GEB_ERG;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.LEVEL;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.LEVEL_ADMIN;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.LEVEL_NACHRICHT;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.LEVEL_UNABHAENGIG;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.LOGIN_ERROR;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.SONST_ENTSCHEIDUNGEN;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.VIEW_BASIS;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.WORKIS;
+import static de.ivu.wahl.client.beans.Command.ADM_STIMMBEZIRKE_EDIT;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_PASSWORT;
+import static de.ivu.wahl.client.beans.Command.GEBE;
+import static de.ivu.wahl.client.beans.Command.GEB_ERG;
+import static de.ivu.wahl.client.beans.Command.IMPORT_ERGEBNISSE;
 import static de.ivu.wahl.client.util.ClientHelper.dateToString;
 import static de.ivu.wahl.client.util.ClientHelper.getAllParameters;
 import static de.ivu.wahl.client.util.ClientHelper.getSuffixLevel;
 import static de.ivu.wahl.client.util.ClientHelper.rewriteURL;
 import static de.ivu.wahl.client.util.GUICommand.STATE_DONT_CARE;
 import static de.ivu.wahl.modell.GebietModel.ANZAHL_GEBIETSARTEN;
-import static de.ivu.wahl.modell.GebietModel.GEBIETSART_KLARTEXT;
 import static de.ivu.wahl.modell.WahlModel.WAHLGEBIETSARTEN;
 import static java.lang.System.currentTimeMillis;
 
@@ -103,6 +101,7 @@ import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
 import de.ivu.wahl.modell.GebietInfo;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GruppeGebietsspezifischModel;
 import de.ivu.wahl.modell.GruppeModel;
 import de.ivu.wahl.modell.WahlModel;
@@ -122,9 +121,9 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * ClientBean, welches der Anker der Applikation ist. Beinhaltet die grundlegenden Funktionen zur
  * Steuerung im Client und arbeitet dabei eng mit den JSPs und den anderen ClientBeans zusammen.
- * Enth�lt einige Durchgriffe auf SessionBeans.
+ * Enthaelt einige Durchgriffe auf SessionBeans.
  * 
- * @author mur@ivu.de Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * @author mur@ivu.de Copyright (c) 2002-14 IVU Traffic Technologies AG
  */
 public class ApplicationBean implements Executer, Serializable, HttpSessionBindingListener {
 
@@ -166,11 +165,6 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   private transient int _gebietsnummerWurzelgebiet;
 
   /**
-   * Browser mit dem zugegriffen wird
-   */
-  private int _browser = BROWSER_IENS6;
-
-  /**
    * Ein echter Internet Explorer von Microsoft
    */
   private boolean _realIE;
@@ -204,7 +198,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   private transient VotesHandling _votesHandling;
 
   /**
-   * verf�gbarer Befehlsvorrat wird in diese Listen geschrieben
+   * Verfuegbarer Befehlsvorrat wird in diese Listen geschrieben
    */
   private GUICommandList[] _befehleInitial;
 
@@ -227,18 +221,14 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     if (ua != null) {
       if (ua.indexOf("MSIE") != -1) { //$NON-NLS-1$
         LOGGER.info("Browser is IE " + ua); //$NON-NLS-1$
-        _browser = BROWSER_IENS6;
         _realIE = true;
       } else if (ua.indexOf("Mozilla/5.0") != -1) { //$NON-NLS-1$
         LOGGER.info("Browser is Mozilla-based " + ua); //$NON-NLS-1$
-        _browser = BROWSER_IENS6;
       } else if (ua.indexOf("4.") != -1) { //$NON-NLS-1$
         LOGGER.info("Browser is NS4 " + ua); //$NON-NLS-1$
-        _browser = BROWSER_NS4;
       } else {
         // Annahme: anderer "moderner" Browser
         LOGGER.info("UserAgent: " + ua); //$NON-NLS-1$
-        _browser = BROWSER_IENS6;
       }
     }
   }
@@ -388,7 +378,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Aufruf durch das Servlet-API beim zerst�ren der Session Dies ist klassischerweise bei einem
+   * Aufruf durch das Servlet-API beim zerstoeren der Session Dies ist klassischerweise bei einem
    * Timeout der Fall
    * 
    * @param event binding event
@@ -398,11 +388,14 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     try {
       // wenn ein Anwender angemeldet ist -> abmelden
       if (_anwContext != null) {
+        String keyForViewlock = _anwContext.getKeyForViewlock();
         LOGGER.info(Messages
             .getString(MessageKeys.Logger_AutomatischesAbmeldenNachTimeout_AnwenderID)
-            + _anwContext.getID_Anwender());
+            + _anwContext.getID_Anwender() + " - " + keyForViewlock); //$NON-NLS-1$
         getAnwenderHandling().logout(_anwContext);
         getEingangHandling().removeLockForUser(_anwContext);
+        LOGGER.info(Messages.bind(MessageKeys.Logger_GebieteEntsperrtNachAutomatischemAbmelden,
+            keyForViewlock));
       }
     } catch (Exception e) {
       LOGGER.error(Messages.getString(MessageKeys.Error_FehlerBeimAufloesenDerSession), e);
@@ -491,7 +484,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       // Fehler werden auch zurückgesetzt
       session.removeAttribute(LOGIN_ERROR);
       // Parameter prüfen und trimmen
-      // wahlid wird nur dann gesetzt, wenn ein Admin eine Wahlausw�hlen
+      // wahlid wird nur dann gesetzt, wenn ein Admin eine Wahl auswaehlen
       // muss
       String id_WahlAuswahl = request.getParameter("id_wahlauswahl"); //$NON-NLS-1$
       if (id_WahlAuswahl == null) {
@@ -584,16 +577,16 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
           }
         } while (connectionFailed);
         // wenn es nicht geklappt hat, heisst dies entweder, es war was
-        // falsch, oder die Zahl der Fehlversuche ist �berschritten
+        // falsch, oder die Zahl der Fehlversuche ist ueberschritten
         /*
-         * m�glicherweise die beiden Varianten durch eine gesonderte Nachfrage unterscheiden, damit
+         * moeglicherweise die beiden Varianten durch eine gesonderte Nachfrage unterscheiden, damit
          * der Anwender weiss, wo er dran ist
          */
         if (_anwContext == null && errmsg == null) {
           errmsg = BundleHelper.getBundleString("Anmeldung_fehlerhaft_Fehlversuche"); //$NON-NLS-1$
         }
       }
-      // und Abschluss -> Fehlermeldung m�glicherweise in die Session
+      // und Abschluss -> Fehlermeldung moeglicherweise in die Session
       if (errmsg != null) {
         session.setAttribute(LOGIN_ERROR, errmsg);
       } else {
@@ -626,7 +619,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
    */
   private void doLogout(AnwContext anwContext) {
     try {
-      // f�r das F�hren einer Liste der angemeldeten Benutzer
+      // fuer das Fuehren einer Liste der angemeldeten Benutzer
       getAnwenderHandling().logout(anwContext);
     } catch (Exception e) {
       LOGGER.error(e, e);
@@ -634,8 +627,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * ALLE M�GLICHEN BEFEHLE als GUICommands initialisieren und in die entsprechenden Collections
-   * eint�ten
+   * ALLE MoeGLICHEN BEFEHLE als GUICommands initialisieren und in die entsprechenden Collections
+   * eintueten
    */
   private void initBefehle() {
     if (ID_PWAHL_SUPER_ADMIN.equals(_anwContext.getID_WahlPWahl())) {
@@ -720,11 +713,20 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
             return new InitGuiCommandProv_P5(_jspMap, gebietsartErfassungseinheitMax);
         }
         break;
+      case AB :
+        switch (wahlModus) {
+          case AbstractImportEML.MODE_DB_P4 :
+            return new InitGuiCommandAB_P4(_jspMap, gebietsartErfassungseinheitMax, wahlEbene);
+          case AbstractImportEML.MODE_DB_P5 :
+            return new InitGuiCommandAB_P5(_jspMap, gebietsartErfassungseinheitMax);
+        }
+        break;
       case LR :
       case IR :
       case NR :
       case PR :
-        return new InitGuiCommandReferendum_P4(_jspMap, gebietsartErfassungseinheitMax, wahlEbene);
+        return new InitGuiCommandReferendum_P4(_jspMap, gebietsartErfassungseinheitMax, wahlEbene,
+            _electionCategory);
       default :
         break;
     }
@@ -732,8 +734,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Dient zur Initialisierung der beiden Listen: Anzahl aller Gebiete plus 3 weiter f�r Nachrichten
-   * und Admin sowie Level unabh�ngig
+   * Dient zur Initialisierung der beiden Listen: Anzahl aller Gebiete plus 3 weiter fuer
+   * Nachrichten und Admin sowie Level unabhaengig
    */
   private void initExternalLinks() {
     String extlink_1 = null;
@@ -752,18 +754,11 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     int levelCount = ANZAHL_GEBIETSARTEN + 3;
     _befehleInitial = new GUICommandList[levelCount];
     _befehle = new GUICommandList[levelCount];
-    _initGuiCommand.initBefehle(_jspLevelWorkName,
-        _befehleInitial,
-        _befehle,
-        levelCount,
-        extlink_1,
-        extlinkName_1,
-        extlink_2,
-        extlinkName_2);
+    _initGuiCommand.initBefehle(_jspLevelWorkName, _befehleInitial, _befehle, levelCount);
   }
 
   /**
-   * Liefert die aktuelle Instanz des InitGuiCommand zur�ck. Die Initialisierung erfolgt unter
+   * Liefert die aktuelle Instanz des InitGuiCommand zurueck. Die Initialisierung erfolgt unter
    * initBefehle()
    * 
    * @see #initBefehle()
@@ -786,7 +781,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       }
       if (_initGuiCommand.isGebieteVorhanden()) {
         for (int gebietsart : WAHLGEBIETSARTEN.get(_electionCategory)) {
-          _levelKlartext.put(gebietsart, GEBIETSART_KLARTEXT[gebietsart]);
+          _levelKlartext.put(gebietsart, Gebietsart.getKlartext(gebietsart));
         }
       }
     }
@@ -820,6 +815,19 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     }
   }
 
+  public String getWahlNameOrReferendum() {
+    WahlInfo wahlInfo = getWahlInfo();
+    if (wahlInfo != null) {
+      if (wahlInfo.isReferendum()) {
+        return BundleHelper.getBundleString("Referendum"); //$NON-NLS-1$
+      } else {
+        return wahlInfo.getWahlName();
+      }
+    } else {
+      return BundleHelper.getBundleString("WUA"); //$NON-NLS-1$
+    }
+  }
+
   /**
    * Filtern der Befehle mit dem Anwender. Dabei Umkopieren in _befehle zur weiteren Verwendung
    */
@@ -827,13 +835,13 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     AnwRechte anwRechte = getAnwenderHandling().getAnwRechte(_anwContext);
     if (_filteredTimestamp != anwRechte.getTimestamp()) {
       _filteredTimestamp = anwRechte.getTimestamp();
-      for (int level = 0; level < GEBIETSART_KLARTEXT.length + 2; level++) {
+      for (int level = 0; level < GebietModel.ANZAHL_GEBIETSARTEN + 2; level++) {
         GUICommandList befehle = _befehle[level];
         befehle.clear();
         for (int i = 0; i < _befehleInitial[level].size(); i++) {
           GUICommand cmd = _befehleInitial[level].get(i);
 
-          // Pr�fen der Berechtigung
+          // Pruefen der Berechtigung
           if (cmd.getRecht() == null || anwRechte.checkRight(cmd.getRecht())) {
             addGUICommand(befehle, cmd);
           }
@@ -841,7 +849,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       }
 
       for (GUICommand cmd : _befehleInitial[LEVEL_UNABHAENGIG]) {
-        // Pr�fen der Berechtigung
+        // Pruefen der Berechtigung
         if (cmd.getRecht() == null || anwRechte.checkRight(cmd.getRecht())) {
           // wenn der Command auf allen Ebenen zu sehen sein soll
           if (cmd.getAlleLevel()) {
@@ -886,12 +894,12 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Filtert die �bergebene Liste von Befehlen gem�� dem �bergebenen Gebiet
+   * Filtert die uebergebene Liste von Befehlen gemaess dem uebergebenen Gebiet
    * 
    * @param befehle Liste von GUICommands
    * @param gebietsart Gebietsart des Gebietes
-   * @param gebietsnummer Nummer des Gebietes oder -1 f�r kein Bezug zum einem Gebiet
-   * @return gem�� dem �bergebenen Gebiet gefilterte Liste der Befehle
+   * @param gebietsnummer Nummer des Gebietes oder -1 fuer kein Bezug zum einem Gebiet
+   * @return gemaess dem uebergebenen Gebiet gefilterte Liste der Befehle
    */
   private List<GUICommand> filterForGebiet(List<GUICommand> befehle,
       int gebietsart,
@@ -904,7 +912,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       List<GUICommand> befehleGefiltert = new ArrayList<GUICommand>();
       for (GUICommand cmd : befehle) {
         if (cmd.getGebietsabhaengig()) {
-          // todo �berpr�fung f�r Erfassungseinheit , wahlgebiet, ...
+          // todo Ueberpruefung fuer Erfassungseinheit , wahlgebiet, ...
           if (ar.checkRightForGebiet(cmd.getRecht(), gebietsart, gebietsnummer)) {
             pruefeGebietstypen(gebietsart, gebietsnummer, befehleGefiltert, cmd);
           }
@@ -917,13 +925,13 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Pr�ft anhand der Eigenschaften des Gebiets, ob der Befehl aufgenommen werden darf und nimmt ihn
-   * ggf. in die Liste mit auf
+   * Prueft anhand der Eigenschaften des Gebiets, ob der Befehl aufgenommen werden darf und nimmt
+   * ihn ggf. in die Liste mit auf
    * 
    * @param gebietsart Gebietsart
    * @param gebietsnummer Gebietsnummer
    * @param befehleGefiltert Liste der aufgenommenen Befehle
-   * @param cmd der zu pr�fende Befehl
+   * @param cmd der zu pruefende Befehl
    */
   private void pruefeGebietstypen(int gebietsart,
       int gebietsnummer,
@@ -950,7 +958,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Filtert die �bergebene Liste gem�� Zustand; Gleichzeitig: Spezialregel f�r Konflikte!
+   * Filtert die uebergebene Liste gemaess Zustand; Gleichzeitig: Spezialregel fuer Konflikte!
    */
   private List<GUICommand> filterForState(List<GUICommand> befehle) {
     boolean vollstaendig;
@@ -958,7 +966,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     try {
       StateHandling stateHandling = getStateHandling();
       vollstaendig = stateHandling.isWahlVollstaendig(_anwContext);
-      // Constraint genutzt, da� eine freigegebene Wahl IMMER geschlossen sein mu� (gesichert
+      // Constraint genutzt, dass eine freigegebene Wahl IMMER geschlossen sein muss (gesichert
       // anderswo)
       freigegeben = vollstaendig && stateHandling.isFreigegeben(_anwContext, 0);
     } catch (Exception e) {
@@ -982,12 +990,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
           || (vollstaendig && cmd.getRechtUndGeschlossen() != null && anwRechte.checkRight(cmd
               .getRechtUndGeschlossen()))) {
         // wenn es nicht der Konflikt-Befehl ist
-        int viewNr = cmd.getViewNr();
-        if (viewNr != SONST_ENTSCHEIDUNGEN && viewNr != ADM_TESTMATERIAL) {
-          l.add(cmd);
-        } else if (viewNr == ADM_TESTMATERIAL && isStatusTest()) {
-          l.add(cmd);
-        }
+        l.add(cmd);
       }
     }
     return l;
@@ -1017,7 +1020,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * @return List von GUICommands f�r den angegebenen Level
+   * @return List von GUICommands fuer den angegebenen Level
    * @param level Level (Konstanten im ApplicationBeanKonstanten)
    * @param gebNr Gebiet auf das Bezug genommen wird
    */
@@ -1133,6 +1136,23 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
+   * @return backgroundColor for the upper menu region
+   */
+  public String getBackgroundColor() {
+    String digit = "0123456789ABCDEF"; //$NON-NLS-1$
+    int red = _propertyHandling.getIntProperty(Konstanten.PROP_BACKGROUND_COLOR_RED,
+        Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    red = Math.max(0, Math.min(255, red));
+    int green = _propertyHandling.getIntProperty(Konstanten.PROP_BACKGROUND_COLOR_GREEN,
+        Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    green = Math.max(0, Math.min(255, green));
+    int blue = _propertyHandling.getIntProperty(Konstanten.PROP_BACKGROUND_COLOR_BLUE,
+        Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    blue = Math.max(0, Math.min(255, blue));
+    return "#" + digit.charAt(red / 16) + digit.charAt(red % 16) + digit.charAt(green / 16) + digit.charAt(green % 16) + digit.charAt(blue / 16) + digit.charAt(blue % 16); //$NON-NLS-1$
+  }
+
+  /**
    * @param view
    * @return jspName als String oder null
    */
@@ -1154,10 +1174,6 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       ret = _jspLevelWorkName.get(LEVEL_UNABHAENGIG + "_" + work); //$NON-NLS-1$
     }
     return ret;
-  }
-
-  public boolean isNS4() {
-    return _browser == BROWSER_NS4;
   }
 
   public boolean isIE() {
@@ -1238,9 +1254,9 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Gibt die Zeit der letzten Modell�nderung zur�ck (zur Synchronisation von Client und Server)
+   * Gibt die Zeit der letzten Modellaenderung zurueck (zur Synchronisation von Client und Server)
    * 
-   * @return Zeitstempel der letzten Modell�nderung in Millisekunden
+   * @return Zeitstempel der letzten Modellaenderung in Millisekunden
    */
   public long getZeitstempelLetzteAenderung() {
     try {
@@ -1248,7 +1264,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
         return getStateHandling().getZeitstempelLetzteAenderung(_anwContext);
       } else {
         return currentTimeMillis();
-        // noch kein Anwender, Optimierung nicht m�glich
+        // noch kein Anwender, Optimierung nicht moeglich
       }
     } catch (Exception e) {
       LOGGER.error(e, e);
@@ -1329,12 +1345,12 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Funktion f�llt eine alphabetisch sortierte Kandidatenliste mit den gew�hlten Kandidaten eines
+   * Funktion fuellt eine alphabetisch sortierte Kandidatenliste mit den gewaehlten Kandidaten eines
    * Gebietes
    * 
    * @param id_ergebniseingang die ID des Ergebniseinganges, zu dem die Sitzverteilung bestimmt
    *          wurde
-   * @param id_gebiet die Id des �bergeordneten Gebietes
+   * @param id_gebiet die Id des uebergeordneten Gebietes
    * @return Anzahl der gefundenen Kandidaten
    * @throws EJBException
    */
@@ -1347,9 +1363,9 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Funktion f�llt eine Kandidatenliste mit den gew�hlten Kandidaten eines Gebietes
+   * Funktion fuellt eine Kandidatenliste mit den gewaehlten Kandidaten eines Gebietes
    * 
-   * @param id_gebiet die Id des �bergeordneten Gebietes
+   * @param id_gebiet die Id des uebergeordneten Gebietes
    * @return Anzahl der gefundenen Kandidaten
    * @throws EJBException
    */
@@ -1365,12 +1381,12 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
   }
 
   /**
-   * Funktion f�llt eine nach Gruppe sortierte Kandidatenliste mit den gew�hlten Kandidaten eines
+   * Funktion fuellt eine nach Gruppe sortierte Kandidatenliste mit den gewaehlten Kandidaten eines
    * Gebietes
    * 
    * @param id_ergebniseingang die ID des Ergebniseinganges, zu dem die Sitzverteilung bestimmt
    *          wurde
-   * @param id_gebiet die Id des �bergeordneten Gebietes
+   * @param id_gebiet die Id des uebergeordneten Gebietes
    * @return Anzahl der gefundenen Kandidaten
    * @throws EJBException
    */
@@ -1419,8 +1435,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     String allParameters = getAllParameters(request);
 
     if (isBeforeInitialPasswordChange() || _anwContext.isChangePasswordForced()) {
-      url = "/osv/wahl/adm_anwender_change_pw_First?" + getSuffixLevel(VIEW_BASIS, LEVEL_ADMIN) + "&" + WORKIS //$NON-NLS-1$//$NON-NLS-2$
-          + ANWENDER_VERAENDERN_PASSWORT;
+      url = "/osv/wahl/adm_anwender_change_pw_First?" + getSuffixLevel(VIEW_BASIS, LEVEL_ADMIN) + andWorkIs(ANWENDER_VERAENDERN_PASSWORT); //$NON-NLS-1$
     } else if (_anwContext.getID_WahlPWahl() == null) {
       fragezeichen = allParameters.length() == 0;
       if (allParameters.length() > 0) {
@@ -1440,17 +1455,17 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
           gebietsnummer = getGebietsartWahl();
           gebietsart = getGebietsnummerWahl();
         }
-        int work = GEB_ERG;
+        de.ivu.wahl.client.beans.Command work = GEB_ERG;
         if (SystemInfo.getSystemInfo().getWahlModus() == AbstractImportEML.MODE_DB_P5
             && !getEingangshistorie(_gebietsartWurzelgebiet, _gebietsnummerWurzelgebiet)
                 .hasResults()) {
-          work = ApplicationBeanKonstanten.IMPORT_ERGEBNISSE;
+          work = IMPORT_ERGEBNISSE;
         }
-        url = was + getSuffixLevel(VIEW_BASIS, gebietsart) + "&" + GEBIETNRIS + gebietsnummer + "&" //$NON-NLS-1$ //$NON-NLS-2$
-            + WORKIS + work;
+        url = was + getSuffixLevel(VIEW_BASIS, gebietsart)
+            + "&" + GEBIETNRIS + gebietsnummer + andWorkIs(work); //$NON-NLS-1$;
       } else if (_initGuiCommand.isAdminVorhanden()) {
-        url = was + getSuffixLevel(VIEW_BASIS, LEVEL_ADMIN) + "&" + WORKIS //$NON-NLS-1$
-            + _initGuiCommand.getAdminWorkDefault();
+        url = was + getSuffixLevel(VIEW_BASIS, LEVEL_ADMIN)
+            + andWorkIs(_initGuiCommand.getAdminWorkDefault());
       } else {
         url = was + getSuffixLevel(VIEW_BASIS, LEVEL_UNABHAENGIG);
       }
@@ -1461,12 +1476,16 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     return rewriteURL(url + advanced, request, response, false, withoutContextpath);
   }
 
+  private String andWorkIs(de.ivu.wahl.client.beans.Command command) {
+    return "&" + WORKIS + command.getId(); //$NON-NLS-1$
+  }
+
   /**
    * @return the URL of the password change page
    */
   public String getPasswordChangeURL(HttpServletRequest request, HttpServletResponse response) {
-    String url = "/osv/wahl/adm_anwender_change_pw_First?" + getSuffixLevel(VIEW_BASIS, LEVEL_ADMIN) + "&" + WORKIS //$NON-NLS-1$//$NON-NLS-2$
-        + ApplicationBeanKonstanten.ANWENDER_VERAENDERN_PASSWORT;
+    String url = "/osv/wahl/adm_anwender_change_pw_First?" + getSuffixLevel(VIEW_BASIS, LEVEL_ADMIN) //$NON-NLS-1$ 
+        + andWorkIs(ANWENDER_VERAENDERN_PASSWORT);
     return rewriteURL(url, request, response, false, false);
   }
 
@@ -1546,7 +1565,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     // Unlocking ...
     if (headerString != null && headerString.contains("work")) { //$NON-NLS-1$
       int refererWork = ClientHelper.getIntParamValueFromHeader(headerString, "work"); //$NON-NLS-1$
-      if (ApplicationBeanKonstanten.ADM_STIMMBEZIRKE_EDIT == refererWork) {
+      if (ADM_STIMMBEZIRKE_EDIT.hasId(refererWork)) {
         // unlock all regions
         getEingangHandling().removeLockForUser(_anwContext);
       } else if (headerString.contains("level") //$NON-NLS-1$
@@ -1563,13 +1582,12 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     // lock region-input for other User
     GebietModel gebietModelToLock = null;
     boolean isAllRegionsLocked = false;
-    if (ApplicationBeanKonstanten.GEBE == work
-        || ApplicationBeanKonstanten.IMPORT_ERGEBNISSE == work) {
+    if (GEBE.hasId(work) || IMPORT_ERGEBNISSE.hasId(work)) {
       // lock single region -> deferred
       int level = ClientHelper.getLevel(request);
       int gebietNr = ClientHelper.getGebietNr(request);
       gebietModelToLock = getGebietModel(level, gebietNr);
-    } else if (ApplicationBeanKonstanten.ADM_STIMMBEZIRKE_EDIT == work) {
+    } else if (ADM_STIMMBEZIRKE_EDIT.hasId(work)) {
       // lock all regions
       try {
         isAllRegionsLocked = true;

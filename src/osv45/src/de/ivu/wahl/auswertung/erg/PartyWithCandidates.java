@@ -1,6 +1,6 @@
 /*
  * Created on 06.11.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg;
 
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.service.VoteValues;
 
@@ -31,6 +32,7 @@ public class PartyWithCandidates implements Comparable<PartyWithCandidates> {
   private int _summe = 0;
   private int _summeGewichtet = 0;
   private final VoteValues _voteValues; // may be null
+  private String _publicationLanguage = PublicationLanguage.NL.getAbbreviation();
 
   private final Map<String, CandidateVotesPerRegion> _kandidatenstimmenDerGebiete = new HashMap<String, CandidateVotesPerRegion>();
   private List<CandidateVotesPerRegion> _kandidatenstimmenDerGebieteSorted;
@@ -58,6 +60,14 @@ public class PartyWithCandidates implements Comparable<PartyWithCandidates> {
 
   public int getGruppenPosition() {
     return _gruppenPosition;
+  }
+
+  public String getPublicationLanguage() {
+    return _publicationLanguage;
+  }
+
+  public void setPublicationLanguage(String publicationLanguage) {
+    _publicationLanguage = publicationLanguage;
   }
 
   public Collection<CandidateVotesPerRegion> getCandidateVotesPerRegion() {
@@ -165,4 +175,5 @@ public class PartyWithCandidates implements Comparable<PartyWithCandidates> {
       _kandidatenstimmenDerGebieteSorted = null;
     }
   }
+
 }

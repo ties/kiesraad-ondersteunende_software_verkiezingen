@@ -5,9 +5,9 @@ import java.util.Collection;
 import javax.ejb.FinderException;
 
 /**
- * LocalHome Interface für die Entität Listenkandidatur als BMP Entity Bean.
+ * LocalHome Interface fï¿½r die Entitï¿½t Listenkandidatur als BMP Entity Bean.
  * 
- * @author cos@ivu.de (c) 2003 IVU Traffic Technologies AG
+ * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public interface ListenkandidaturHome extends BasicListenkandidaturHome {
 

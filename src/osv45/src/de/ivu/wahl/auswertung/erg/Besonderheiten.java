@@ -2,7 +2,7 @@
  * Besonderheiten
  * 
  * Created on 25.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg;
 
@@ -29,7 +29,7 @@ public class Besonderheiten {
   }
 
   /**
-   * Gibt konflikte zurück.
+   * Gibt konflikte zurï¿½ck.
    * 
    * @return konflikte.
    */
@@ -46,16 +46,16 @@ public class Besonderheiten {
   }
 
   /**
-   * Setzt den neuen Wert für konflikte auf konflikte.
+   * Setzt den neuen Wert fï¿½r konflikte auf konflikte.
    * 
-   * @param konflikte neuer Wert für konflikte
+   * @param konflikte neuer Wert fï¿½r konflikte
    */
   public void setKonflikte(List<KonfliktAnzeige> konflikte) {
     _konflikte = konflikte;
   }
 
   /**
-   * Gibt deceasedCandidates zurück.
+   * Gibt deceasedCandidates zurï¿½ck.
    * 
    * @return deceasedCandidates.
    */
@@ -64,9 +64,9 @@ public class Besonderheiten {
   }
 
   /**
-   * Setzt den neuen Wert für deceasedCandidates auf deceasedCandidates.
+   * Setzt den neuen Wert fï¿½r deceasedCandidates auf deceasedCandidates.
    * 
-   * @param deceasedCandidates neuer Wert für deceasedCandidates
+   * @param deceasedCandidates neuer Wert fï¿½r deceasedCandidates
    */
   public void addDeceasedCandidate(String deceasedCandidate) {
     _deceasedCandidates.add(deceasedCandidate);
@@ -92,7 +92,7 @@ public class Besonderheiten {
     }
 
     /**
-     * Gibt art zurück.
+     * Gibt art zurï¿½ck.
      * 
      * @return art.
      */
@@ -101,7 +101,7 @@ public class Besonderheiten {
     }
 
     /**
-     * Gibt alternativen zurück.
+     * Gibt alternativen zurï¿½ck.
      * 
      * @return alternativen.
      */
@@ -110,7 +110,7 @@ public class Besonderheiten {
     }
 
     /**
-     * Gibt losgewinner zurück.
+     * Gibt losgewinner zurï¿½ck.
      * 
      * @return losgewinner.
      */

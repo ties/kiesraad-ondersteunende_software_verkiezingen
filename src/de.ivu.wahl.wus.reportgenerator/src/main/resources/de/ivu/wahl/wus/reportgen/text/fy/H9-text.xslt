@@ -8,8 +8,8 @@
     <xsl:param name="H9_055_MijnInstemming" select="'Mijn instemming geldt:'"/>
     <xsl:param name="H9_060_PolitiekeGroepering" select="'Politike groepearring'"/>
     <xsl:param name="H9_060_PolitiekeGroepering_BC" select="'Politike groepearring'"/>
-    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst" select="'De politike groepearring dêr’t de kandidatelist fan is: '"/>
-    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst_BC" select="'De politike groepearring dêr’t de kandidatelist fan is: '"/>
+    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst" select="'De oantsjutting fan de politike groepearring dêr’t de kandidatelist fan is: '"/>
+    <xsl:param name="H9_070_PolitiekeGroeperingKandidatenlijst_BC" select="'De aanduiding van de politike groepearring dêr’t de kandidatelist fan is: '"/>
     <xsl:param name="H9_080_KandidatenOpDeLijst" select="'Kandidaten op de list'"/>
     <xsl:param name="H9_090_GemachtigdeBenoeming" select="'Lêsthawwer foar it oannimmen fan jo beneaming'"/>
     <xsl:param name="H9_100_alleenInvullen" select="'(allinnich ynfolje as jo bûten it Europeeske diel fan Nederlân wenje of by gebrûkmeitsjen fan in memmelist)'"/>

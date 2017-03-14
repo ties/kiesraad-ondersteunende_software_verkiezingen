@@ -2,7 +2,7 @@
  * XMLHelper
  * 
  * Created on 23.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -24,7 +24,7 @@ import de.ivu.wahl.dataimport.XMLTags;
  * Helper class for creating xml result documents
  * 
  * @author ugo@ivu.de, IVU Traffic Technologies AG
- * @version $Id$
+
  */
 public abstract class XMLHelper {
 

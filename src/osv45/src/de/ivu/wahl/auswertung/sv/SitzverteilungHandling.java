@@ -7,7 +7,7 @@ import de.ivu.wahl.auswertung.erg.Besonderheiten;
 /**
  * Session Bean which calculates the seat distribution
  * 
- * @author cos@ivu.de Copyright (c) 2004 IVU Traffic Technologies AG
+ * @author cos@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface SitzverteilungHandling {

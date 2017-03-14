@@ -4,7 +4,7 @@
  * Abmelden
  * Seite, die vor dem tatsächlichen Logout angezeigt wird
  *
- * author:  klie@ivu.de cos@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  klie@ivu.de cos@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
@@ -12,6 +12,7 @@
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%
+String backgroundColor = appBean.getBackgroundColor();
 String breite = "100%";
 %>
 <html>
@@ -23,7 +24,7 @@ String breite = "100%";
  <body class="hghell">
   <table width="<%=breite%>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <tr class="hgeeeeee">
-    <td height="14"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
+    <td height="14" style="background-color: <%=backgroundColor%>;"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
    </tr>
    <tr class="hgeeeeee">
     <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>

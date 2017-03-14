@@ -2,7 +2,7 @@
  * ReportTemplateEnum
  * 
  * Created on 17.11.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -41,16 +41,13 @@ public enum ReportTemplateEnum {
 
   OSV2_1("osv 2-1", "Verzuimbrief"),
 
-  OSV2_5("osv 2-5", "Overzicht kandidaatgegevens"),
+  OSV2_5("osv 2-5", "Overzicht kandidaatgegevens"), // CSV
 
   OSV2_6("osv 2-6", "Ontvangstbevestiging"),
 
-  // Program 3
   I4_O("I 4", "PV geldigheid kandidatenlijsten en lijstnummering-onvolledig"),
 
   I4("I 4", "PV geldigheid kandidatenlijsten en lijstnummering"),
-
-  OSV3_1("osv 3-1", "Publicatie lijstnummering"),
 
   OSV3_2("osv 3-2", "Publicatie kandidatenlijsten"),
 
@@ -58,7 +55,7 @@ public enum ReportTemplateEnum {
 
   OSV3_4("osv 3-4", "Overzicht kandidatenlijsten"),
 
-  OSV3_5("osv 3-5", "Overzicht kandidaatgegevens"),
+  OSV3_5("osv 3-5", "Overzicht kandidaatgegevens"), // CSV
 
   OSV3_6("osv 3-6", "Hashcode Totaallijsten"),
 
@@ -90,6 +87,10 @@ public enum ReportTemplateEnum {
   OSV4_4("osv 4-4", "Bijlage PV hsb uitkomst stemming"),
 
   OSV4_5("osv 4-5", "Controlelijst"),
+
+  Wrr83("Wrr 83", "PV csb vaststelling uitslag referendum"),
+
+  OSV4_6("osv 4-6", "Bijlage PV csb uitslag referendum"),
 
   // Program 5
   P22_1("P 22-1", "PV csb vaststelling uitslag"),

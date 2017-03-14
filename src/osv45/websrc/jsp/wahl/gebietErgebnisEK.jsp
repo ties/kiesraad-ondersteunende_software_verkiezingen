@@ -46,12 +46,14 @@
  * Enthält die Prüfung, ob eine Wahleinheit zum Ausbleiben oder zur Nachwahl markiert ist.
  * Hat der Anwender nicht das entsprechende Recht, erhält er den entsprechenden Hinweis
  *
- * author:  mur@ivu.de bae@ivu.de cos@ivu.de Copyright (c) 2004-10 IVU Traffic Technologies AG
+ * author:  mur@ivu.de bae@ivu.de cos@ivu.de Copyright (c) 2004-10 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "gebietErg"; //$NON-NLS-1$
    
    WahlInfo wahlInfo = appBean.getWahlInfo();
    Logger log = Logger.getLogger("jsp.gebietErgebnisEK");
@@ -103,19 +105,7 @@
       </style>
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="hgeeeeee">
-<table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hgeeeeee">
-   <tr>
-      <td class="klein"><%= ClientHelper.getKonfigurationsString(request)%></td>
-      <td align="right"><%-- Zum Drucken des aktuellen Frames --%>
-         <a href="javascript:window.print()" style="text-decoration:none">
-            <span class="linkdklrot">
-               <img src="<%= request.getContextPath() %>/img/icon/drucken.gif" width="24" height="9" alt="" border="0" /><ivu:int key="SeiteDrucken"/>
-            </span>
-         </a>
-         <ivu:help key="gebietErg"/>
-      </td>
-   </tr>
-</table>
+<%@include file="/jsp/fragments/print_and_help_row.jspf"%>
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <tr>
       <td colspan="3" class="hgschwarz"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>

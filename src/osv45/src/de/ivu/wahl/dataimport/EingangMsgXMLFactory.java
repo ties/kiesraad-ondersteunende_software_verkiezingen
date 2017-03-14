@@ -1,7 +1,7 @@
 /*
  * EingangMsgXMLFactory
  * 
- * Copyright (c) 2002-4 IVU Traffic Technologies AG
+ * Copyright (c) 2002-4 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -19,6 +19,7 @@ import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.Wahl;
@@ -117,8 +118,7 @@ public abstract class EingangMsgXMLFactory {
 
       // extract authority name
       String authorityName = XMLImportHelper.getText((Element) authority.get(0));
-      String pollingStationPrefix = GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_STIMMBEZIRK]
-          + " "; //$NON-NLS-1$
+      String pollingStationPrefix = Gebietsart.STIMMBEZIRK.getKlartext() + " "; //$NON-NLS-1$
       if (authorityName.startsWith(pollingStationPrefix)) {
         authorityName = authorityName.substring(pollingStationPrefix.length());
       }
@@ -145,11 +145,11 @@ public abstract class EingangMsgXMLFactory {
             .getWahl()), level);
         int gebietsNr = Integer.parseInt(gebietsIdStr);
         if (region.getGebietsart() != gebietsart || region.getNummer() != gebietsNr) {
-          String regionFile = GebietModel.GEBIETSART_KLARTEXT[gebietsart] + " " + gebietsNr; //$NON-NLS-1$
-          String regionExpected = GebietModel.GEBIETSART_KLARTEXT[region.getGebietsart()] + " " //$NON-NLS-1$
+          String regionFile = Gebietsart.getKlartext(gebietsart) + " " + gebietsNr; //$NON-NLS-1$
+          String regionExpected = Gebietsart.getGebietsartKlartext(region) + " " //$NON-NLS-1$
               + region.getNummer();
-          throw new ImportException(ImportException.TYPE_CONTENT, Messages
-              .bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
+          throw new ImportException(ImportException.TYPE_CONTENT,
+              Messages.bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
                   url.getFile(),
                   regionFile,
                   regionExpected));
@@ -174,8 +174,8 @@ public abstract class EingangMsgXMLFactory {
                 XMLTags.ATTR_EML_ID,
                 true);
             if (contestId != gebietsNr) {
-              throw new ImportException(ImportException.TYPE_CONTENT, Messages
-                  .bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
+              throw new ImportException(ImportException.TYPE_CONTENT,
+                  Messages.bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
                       url.getFile(),
                       contestId,
                       gebietsNr));
@@ -183,8 +183,8 @@ public abstract class EingangMsgXMLFactory {
             // check name
             String contestName = contestIdentifier.getValue();
             if (!region.getName().trim().equals(contestName.trim())) {
-              throw new ImportException(ImportException.TYPE_CONTENT, Messages
-                  .bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
+              throw new ImportException(ImportException.TYPE_CONTENT,
+                  Messages.bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
                       url.getFile(),
                       contestName,
                       region.getName()));

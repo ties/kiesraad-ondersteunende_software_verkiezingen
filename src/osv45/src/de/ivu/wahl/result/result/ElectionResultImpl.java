@@ -2,7 +2,7 @@
  * ElectionResultImpl
  * 
  * Created on 04.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.result.result;
 
@@ -15,6 +15,7 @@ import org.apache.log4j.Category;
 import de.ivu.ejb.EJBUtil;
 import de.ivu.ejb.bmp.Model;
 import de.ivu.util.debug.Log4J;
+import de.ivu.wahl.modell.BesonderheitConstants;
 import de.ivu.wahl.modell.BesonderheitModel;
 import de.ivu.wahl.modell.DHondtQuotientModel;
 import de.ivu.wahl.modell.FiktiveSitzverteilungModel;
@@ -261,6 +262,9 @@ public class ElectionResultImpl implements ElectionResult {
     bes.setID_Ergebniseingang(_id_Ergebniseingang);
     bes.setNummer(anomaly.getNumber());
     bes.setText(anomaly.getText());
+    bes.setBesonderheitart(anomaly.isShallBePublishedInModelP22()
+        ? BesonderheitConstants.ART_SHALL_BE_PUBLISHED_IN_P22
+        : BesonderheitConstants.ART_SHALL_NOT_BE_PUBLISHED_IN_P22);
 
     _models.add(bes);
   }

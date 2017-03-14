@@ -2,7 +2,7 @@
  * EML510Helper
  * 
  * Created on 05.02.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -42,6 +42,7 @@ import de.ivu.wahl.modell.ejb.Listenkandidatur;
 import de.ivu.wahl.modell.ejb.Stimmergebnis;
 import de.ivu.wahl.modell.ejb.Wahl;
 import de.ivu.wahl.modell.etc.GeneralVotingResults;
+import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
 import de.ivu.wahl.wus.reportgen.EMLMessageType;
 
@@ -66,16 +67,20 @@ public class EML510Helper {
       EMLMessageType emlType) throws FinderException {
     ElectionSubcategory electionSubcategory = WahlInfo.getWahlInfo().getElectionSubcategory();
 
+    final Wahl wahl = region.getWahl();
     Element contests = XMLHelper.createElement(XMLTags.EML_CONTESTS, NS_EML);
     Element contest = XMLHelper.createElement(XMLTags.EML_CONTEST, NS_EML);
+    boolean eml510InElectionWithMultipleDistrictsOrAB = electionSubcategory
+        .isElectionWithMultipleDistricts()
+        || isWaterschapElection(wahl)
+        || ElectionSubcategory.NR.equals(electionSubcategory);
     Element contestIdentifier = bean.createContestIdentifier(region,
-        electionSubcategory.isElectionWithMultipleDistricts());
+        eml510InElectionWithMultipleDistrictsOrAB);
     contest.appendChild(contestIdentifier);
 
     // for root region find total results first, than subregion votes
     boolean isTotalResult = region.getUebergeordnetesGebiet() == null;
     int targetLevel = SystemInfo.getSystemInfo().getWahlEbene() + 1;
-    final Wahl wahl = region.getWahl();
 
     // Create <TotalVotes> and determine the regions for which a <ReportingUnitVotes> shall be
     // created
@@ -97,6 +102,10 @@ public class EML510Helper {
     }
     contests.appendChild(contest);
     return contests;
+  }
+
+  private boolean isWaterschapElection(Wahl wahl) {
+    return ElectionCategory.AB.equals(ElectionCategory.fromWahlart(wahl.getWahlart()));
   }
 
   private void createReportingUnitVotes(boolean create510d4PSB,
@@ -230,7 +239,7 @@ public class EML510Helper {
         GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
         Iterable<GruppeAllgemein> gruppenAllgemein = adapter.getGruppenAllgemein();
         for (GruppeAllgemein gruppeAllgemein : gruppenAllgemein) {
-          adapter.putXml(totalVotes, gruppeAllgemein, 0);
+          adapter.putEmlXml(totalVotes, gruppeAllgemein, 0);
         }
       } else {
         gruppen = bean.getGruppeHome().findAllByGruppenart(GruppeKonstanten.GRUPPENART_PARTEI);
@@ -264,7 +273,7 @@ public class EML510Helper {
         Iterable<GruppeAllgemein> gruppenAllgemein = adapter.getGruppenAllgemein();
         for (GruppeAllgemein gruppeAllgemein : gruppenAllgemein) {
           int value = gesamtstimmen.getGruppenstimmen(gruppeAllgemein.schluessel);
-          adapter.putXml(totalVotes, gruppeAllgemein, value);
+          adapter.putEmlXml(totalVotes, gruppeAllgemein, value);
         }
       }
     } catch (FinderException e) {
@@ -422,14 +431,14 @@ public class EML510Helper {
 
     if (emptyResults) {
       for (GruppeAllgemein gruppeAllgemein : gruppenAllgemein) {
-        adapter.putXml(result, gruppeAllgemein, 0);
+        adapter.putEmlXml(result, gruppeAllgemein, 0);
       }
     } else {
       GeneralVotingResults generalVotingResults = bean.getVotesHandling()
           .getGeneralVotingResults(id_Ergebniseingang, region.getID_Gebiet());
       for (GruppeAllgemein gruppeAllgemein : gruppenAllgemein) {
         int value = generalVotingResults.getVotes(gruppeAllgemein);
-        adapter.putXml(result, gruppeAllgemein, value);
+        adapter.putEmlXml(result, gruppeAllgemein, value);
       }
     }
   }

@@ -6,7 +6,7 @@
  * ArbeitsJSP. Die konkreten Namen der JSPs sind mit den Befehlen kodiert,
  * so dass sie beim ApplicationBean nachgefragt werden können.
  *
- * author:  mur@ivu.de  Copyright (c) 2002 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: arbeit.jsp,v 1.6 2010/11/19 09:45:17 jon Exp $
  *******************************************************************************
  --%>

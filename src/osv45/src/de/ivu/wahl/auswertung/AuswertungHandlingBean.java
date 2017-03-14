@@ -1,7 +1,7 @@
 /*
  * AuswertungHandlingBean
  *
- * Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung;
 
@@ -26,8 +26,8 @@ import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.WahlStatelessSessionBeanBase;
 import de.ivu.wahl.admin.StateHandling;
 import de.ivu.wahl.auswertung.erg.EingangsHistorieErgebnis;
-import de.ivu.wahl.auswertung.erg.Status;
 import de.ivu.wahl.auswertung.erg.EingangsHistorieErgebnis.EingangsContainer;
+import de.ivu.wahl.auswertung.erg.Status;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.ErgebniseingangModel;
@@ -66,6 +66,7 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
    * (non-Javadoc)
    * @see de.ivu.wahl.auswertung.AuswertungHandling#getStatus(de.ivu.wahl.AnwContext)
    */
+  @Override
   public Status getStatus(AnwContext anwContext) throws EJBException {
     WahlInfo info = getWahlInfo(anwContext);
     if (info != null) {
@@ -85,6 +86,7 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
    * (non-Javadoc)
    * @see de.ivu.wahl.auswertung.AuswertungHandling#getParteienForWahl(de.ivu.wahl.AnwContext)
    */
+  @Override
   public List<GruppeModel> getParteienForWahl(AnwContext anwContext) {
     WahlInfo wahlInfo = getWahlInfo(anwContext);
     wahlInfo.getWahl().readLock();
@@ -108,6 +110,7 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
    * getUntergeordneteAusstehendeWahleinheitenFuerUebergeordnetenGebiet(de.ivu.wahl.AnwContext,
    * java.lang.String)
    */
+  @Override
   public List<GebietModel> getUntergeordneteAusstehendeWahleinheitenFuerUebergeordnetenGebiet(final AnwContext anwContext,
       final String id_UebergeordnetesGebiet) throws EJBException {
 
@@ -124,10 +127,11 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
     }
   }
 
+  @Override
   public EingangsHistorieErgebnis getEingangshistorie(final String id_Gebiet) {
 
-    EingangsHistorieErgebnis eingangsHistorieErgebnis = new EingangsHistorieErgebnis(Messages
-        .getString(MessageKeys.AlleErgebniseingaengeChronologischSortiert));
+    EingangsHistorieErgebnis eingangsHistorieErgebnis = new EingangsHistorieErgebnis(
+        Messages.getString(MessageKeys.AlleErgebniseingaengeChronologischSortiert));
     ErgebniseingangHome ergebniseingangHome = ErgebniseingangHome.HomeFinder.findHome(this);
     Collection<Ergebniseingang> ergEingaengeByGebiet;
     try {
@@ -146,6 +150,7 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
     return eingangsHistorieErgebnis;
   }
 
+  @Override
   public List<EingangsContainer> getEingangsStatus() {
     List<EingangsContainer> eingangsHistorieErgebnisList = new ArrayList<EingangsContainer>();
     WahlInfo wahlInfo = WahlInfo.getWahlInfo();
@@ -161,9 +166,9 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
             && gebiet.getID_LetzterEingang().equals(gebiet.getLetzterGueltigerEingang()
                 .getID_Ergebniseingang())) {
           try {
-            gebietsstatus = getGebietsstatusHome().findByErgebniseingangAndGebiet(gebiet
-                .getID_LetzterEingang(),
-                gebiet.getID_Gebiet());
+            gebietsstatus = getGebietsstatusHome()
+                .findByErgebniseingangAndGebiet(gebiet.getID_LetzterEingang(),
+                    gebiet.getID_Gebiet());
           } catch (FinderException e) {
             e.printStackTrace();
           }
@@ -178,6 +183,7 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
     return null;
   }
 
+  @Override
   public Collection<Personendaten> getPersonenAlphabetisch(AnwContext anwContext)
       throws EJBException {
     WahlInfo wahlInfo = getWahlInfo(anwContext);
@@ -187,11 +193,12 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
     } catch (EJBException e) {
       throw new EJBException(e);
     } catch (FinderException e) {
-      throw new EJBException(Messages
-          .getString(MessageKeys.Error_ExceptionBeimErmittelnDerPersonendaten), e);
+      throw new EJBException(
+          Messages.getString(MessageKeys.Error_ExceptionBeimErmittelnDerPersonendaten), e);
     }
   }
 
+  @Override
   public String getKonfigurationString(AnwContext anwContext) throws EJBException, FinderException {
     String result = ""; //$NON-NLS-1$
     return result;
@@ -202,6 +209,7 @@ public class AuswertungHandlingBean extends WahlStatelessSessionBeanBase
    * 
    * @see de.ivu.wahl.auswertung.AuswertungHandling#getAllGruppen(java.lang.String)
    */
+  @Override
   public List<GruppeGebietsspezifischModel> getAllGruppen(final String id_Gebiet)
       throws EJBException, FinderException {
 

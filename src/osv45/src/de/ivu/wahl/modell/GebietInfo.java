@@ -14,9 +14,9 @@ import de.ivu.wahl.modell.ejb.Gebietsstatus;
 import de.ivu.wahl.modell.ejb.Wahl;
 
 /**
- * Zusammenfassung mit Gebietsinformationen für die Clientseite.
+ * Zusammenfassung mit Gebietsinformationen fï¿½r die Clientseite.
  * 
- * @author mur@ivu.de Copyright (c) 2004 IVU Traffic Technologies AG
+ * @author mur@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class GebietInfo extends Ergebnis {
@@ -167,7 +167,7 @@ public class GebietInfo extends Ergebnis {
    * @return Gebietsart
    */
   public String getGebietsartKlartext() {
-    return GebietModel.GEBIETSART_KLARTEXT[_gebietModel.getGebietsart()];
+    return Gebietsart.getGebietsartKlartext(_gebietModel);
   }
 
   /**
@@ -317,8 +317,8 @@ public class GebietInfo extends Ergebnis {
   }
 
   /**
-   * Setzt die Anzahl der eingegangenen Auswertungseinheiten (nicht für Sondergebiete, um
-   * Doppelzählungen zu vermeiden!)
+   * Setzt die Anzahl der eingegangenen Auswertungseinheiten (nicht fï¿½r Sondergebiete, um
+   * Doppelzï¿½hlungen zu vermeiden!)
    * 
    * @param anzahlEingegangen Anzahl der eingegangenen Auswertungseinheiten
    */
@@ -359,14 +359,14 @@ public class GebietInfo extends Ergebnis {
   }
 
   /**
-   * @return Knoten im Gebietsbaum, an dem dieses Gebiet hängt
+   * @return Knoten im Gebietsbaum, an dem dieses Gebiet hï¿½ngt
    */
   public DefaultMutableTreeNode getNode() {
     return _node;
   }
 
   /**
-   * @param node Knoten im Gebietsbaum, an dem dieses Gebiet hängt
+   * @param node Knoten im Gebietsbaum, an dem dieses Gebiet hï¿½ngt
    */
   public void setNode(DefaultMutableTreeNode node) {
     _node = node;
@@ -395,7 +395,7 @@ public class GebietInfo extends Ergebnis {
    */
   public String getCompleteDisplay(String separator) {
     if (WahlInfo.getWahlInfo().isEK() && getGebietsart() == GebietModel.GEBIETSART_STIMMBEZIRK) {
-      return GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_LAND] + " " + getName(); //$NON-NLS-1$
+      return Gebietsart.LAND.getKlartext() + " " + getName(); //$NON-NLS-1$
     } else if (getGebietsart() == GebietModel.GEBIETSART_GEMEINDE) {
       return getGebietsartKlartext() + " " + getNumber4Display() + separator + getName(); //$NON-NLS-1$
     } else {

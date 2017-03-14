@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0
 Export-Package: de.ivu.wahl.wus.electioncategory
 Require-Bundle: org.eclipse.core.runtime,
  com.springsource.org.apache.log4j,
- org.junit4;bundle-version="4.3.1",
  com.ibm.icu;bundle-version="3.8.1"
 Bundle-ClassPath: .
 Bundle-ActivationPolicy: lazy

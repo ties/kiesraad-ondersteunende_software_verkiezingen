@@ -10,7 +10,7 @@
  * ACHTUNG: Die Möglichkeit, die Freigabe zurückzunehmen ist ein spezielles Recht und eine
  * extra Rechtegruppe gebunden. Für den Wahlabend, sollten wirklich nur wenige diese Möglichkeit haben!
  *
- * author:  klie@ivu.de  Copyright (c) 2002 IVU Traffic Technologies AG
+ * author:  klie@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_freigabe.jsp,v 1.19 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -35,6 +35,7 @@
  </head>
  <body class='hghell'><%
  
+  String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
   String prefix = ApplicationBeanKonstanten.PREFIX;
   String formurl = ClientHelper.generateURL(request, null, "adm_freigabe", -1, true);
   SystemInfo systemInfo = SystemInfo.getSystemInfo();
@@ -56,12 +57,7 @@
   String breite = "100%";%>
 
   <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="<%=helpKey%>"/></td>
-   </tr>
-   <tr class="hgeeeeee">
-    <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
     <td valign="top">
      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">

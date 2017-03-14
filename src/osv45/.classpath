@@ -47,14 +47,12 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/osv45/libsrc/xom-1.1.zip!/XOM/apidocs"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="jboss/server/osv/lib/jnpserver.jar" sourcepath="libsrc/jboss-4.2.3.GA-src.zip"/>
 	<classpathentry kind="lib" path="jboss/server/osv/lib/ejb3-persistence.jar" sourcepath="libsrc/jboss-4.2.3.GA-src.zip"/>
 	<classpathentry kind="lib" path="jboss/server/osv/deploy/ejb3.deployer/jboss-ejb3.jar" sourcepath="libsrc/jboss-4.2.3.GA-src.zip"/>
 	<classpathentry kind="lib" path="jboss/server/osv/lib/jbossjta.jar" sourcepath="libsrc/Arjuna.zip"/>
 	<classpathentry kind="lib" path="jboss/server/osv/deploy/ejb3.deployer/jboss-annotations-ejb3.jar" sourcepath="libsrc/jboss-4.2.3.GA-src.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.ivu.wahl.wus.reportgenerator"/>
 	<classpathentry kind="lib" path="lib/poi-3.1-FINAL-20080629.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/osv_alg"/>

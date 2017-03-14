@@ -122,6 +122,10 @@
         <delete dir="${jboss.deploy.dir}/osvP4_CSB.ear" includeemptydirs="true" />
         <delete dir="${jboss.deploy.dir}/osvP4_HSB.ear" includeemptydirs="true" />
         <delete dir="${jboss.deploy.dir}/osvP4_PSB.ear" includeemptydirs="true" />
+        <delete dir="${jboss.deploy.dir}/osvP4_PSB_2.ear" includeemptydirs="true" />
+        <delete dir="${jboss.deploy.dir}/osvP4_PSB_3.ear" includeemptydirs="true" />
+        <delete dir="${jboss.deploy.dir}/osvP4_PSB_4.ear" includeemptydirs="true" />
+        <delete dir="${jboss.deploy.dir}/osvP4_PSB_5.ear" includeemptydirs="true" />
     </target>
 
 
@@ -298,7 +302,7 @@
             </zipfileset>
             <fileset dir="${src.dir}/add.jar3" />
             <zipfileset dir="${class.dir}">
-                <include name="**/mbean/**/${program}_*.class" />
+                <include name="**/mbean/**/${program}__*.class" />
             </zipfileset>
         </jar>
     </target>
@@ -384,10 +388,70 @@
     </target>
 
 
+    <!-- ###################################################################### -->
+    <!-- # Target erzeugt die Applikation P4_PSB_2 (EAR)                      # -->
+    <!-- ###################################################################### -->
+    <target name="earP4_PSB_2" description="P4_PSB_2" depends="splash, compile, earP4_PSB_2_intern" />
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: earP4_PSB_2_intern                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="earP4_PSB_2_intern">
+        <antcall target="earDeploy_intern">
+            <param name="program" value="P4_PSB_2" />
+        </antcall>
+    </target>
+
+
+    <!-- ###################################################################### -->
+    <!-- # Target erzeugt die Applikation P4_PSB_3 (EAR)                      # -->
+    <!-- ###################################################################### -->
+    <target name="earP4_PSB_3" description="P4_PSB_3" depends="splash, compile, earP4_PSB_3_intern" />
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: earP4_PSB_3_intern                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="earP4_PSB_3_intern">
+        <antcall target="earDeploy_intern">
+            <param name="program" value="P4_PSB_3" />
+        </antcall>
+    </target>
+
+
+    <!-- ###################################################################### -->
+    <!-- # Target erzeugt die Applikation P4_PSB_4 (EAR)                      # -->
+    <!-- ###################################################################### -->
+    <target name="earP4_PSB_4" description="P4_PSB_4" depends="splash, compile, earP4_PSB_4_intern" />
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: earP4_PSB_4_intern                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="earP4_PSB_4_intern">
+        <antcall target="earDeploy_intern">
+            <param name="program" value="P4_PSB_4" />
+        </antcall>
+    </target>
+
+
+    <!-- ###################################################################### -->
+    <!-- # Target erzeugt die Applikation P4_PSB_5 (EAR)                      # -->
+    <!-- ###################################################################### -->
+    <target name="earP4_PSB_5" description="P4_PSB_5" depends="splash, compile, earP4_PSB_5_intern" />
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: earP4_PSB_5_intern                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="earP4_PSB_5_intern">
+        <antcall target="earDeploy_intern">
+            <param name="program" value="P4_PSB_5" />
+        </antcall>
+    </target>
+
+
     <!-- ================================= 
           target: ear_build_all              
          ================================= -->
-    <target name="ear_build_all" depends="splash, compile, earP4_CSB_intern, earP4_HSB_intern, earP4_PSB_intern, earP5_intern" description="Building all programs at once" />
+    <target name="ear_build_all" depends="splash, compile, earP4_CSB_intern, earP4_HSB_intern, earP4_PSB_intern, earP4_PSB_2_intern, earP4_PSB_3_intern, earP4_PSB_4_intern, earP4_PSB_5_intern, earP5_intern" description="Building all programs at once" />
 
 
     <!-- #################################################################### -->
@@ -596,6 +660,18 @@
         <antcall target="drop_db_core">
             <param name="program" value="P4_PSB" />
         </antcall>
+        <antcall target="drop_db_core">
+            <param name="program" value="P4_PSB_2" />
+        </antcall>
+        <antcall target="drop_db_core">
+            <param name="program" value="P4_PSB_3" />
+        </antcall>
+        <antcall target="drop_db_core">
+            <param name="program" value="P4_PSB_4" />
+        </antcall>
+        <antcall target="drop_db_core">
+            <param name="program" value="P4_PSB_5" />
+        </antcall>
         <antcall target="derby_test_start" />
     </target>
 
@@ -634,6 +710,42 @@
     <target name="drop_dbP4_PSB" description="Datenbank löschen P4_PSB">
         <antcall target="drop_db">
             <param name="program" value="P4_PSB" />
+        </antcall>
+    </target>
+
+    <!-- ###################################################################### -->
+    <!-- # Datenbank löschen P4_PSB_2                                         # -->
+    <!-- ###################################################################### -->
+    <target name="drop_dbP4_PSB_2" description="Datenbank löschen P4_PSB_2">
+        <antcall target="drop_db">
+            <param name="program" value="P4_PSB_2" />
+        </antcall>
+    </target>
+
+    <!-- ###################################################################### -->
+    <!-- # Datenbank löschen P4_PSB_3                                         # -->
+    <!-- ###################################################################### -->
+    <target name="drop_dbP4_PSB_3" description="Datenbank löschen P4_PSB_3">
+        <antcall target="drop_db">
+            <param name="program" value="P4_PSB_3" />
+        </antcall>
+    </target>
+
+    <!-- ###################################################################### -->
+    <!-- # Datenbank löschen P4_PSB_4                                         # -->
+    <!-- ###################################################################### -->
+    <target name="drop_dbP4_PSB_4" description="Datenbank löschen P4_PSB_4">
+        <antcall target="drop_db">
+            <param name="program" value="P4_PSB_4" />
+        </antcall>
+    </target>
+
+    <!-- ###################################################################### -->
+    <!-- # Datenbank löschen P4_PSB_5                                         # -->
+    <!-- ###################################################################### -->
+    <target name="drop_dbP4_PSB_5" description="Datenbank löschen P4_PSB_5">
+        <antcall target="drop_db">
+            <param name="program" value="P4_PSB_5" />
         </antcall>
     </target>
 
@@ -862,6 +974,26 @@
         <zip destfile="${build.dir}/osvP4_PSB.ear.zip">
             <fileset dir="${build.dir}">
                 <include name="osvP4_PSB.ear/**/" />
+            </fileset>
+        </zip>
+        <zip destfile="${build.dir}/osvP4_PSB_2.ear.zip">
+            <fileset dir="${build.dir}">
+                <include name="osvP4_PSB_2.ear/**/" />
+            </fileset>
+        </zip>
+        <zip destfile="${build.dir}/osvP4_PSB_3.ear.zip">
+            <fileset dir="${build.dir}">
+                <include name="osvP4_PSB_3.ear/**/" />
+            </fileset>
+        </zip>
+        <zip destfile="${build.dir}/osvP4_PSB_4.ear.zip">
+            <fileset dir="${build.dir}">
+                <include name="osvP4_PSB_4.ear/**/" />
+            </fileset>
+        </zip>
+        <zip destfile="${build.dir}/osvP4_PSB_5.ear.zip">
+            <fileset dir="${build.dir}">
+                <include name="osvP4_PSB_5.ear/**/" />
             </fileset>
         </zip>
         <zip destfile="${build.dir}/osvP5.ear.zip">

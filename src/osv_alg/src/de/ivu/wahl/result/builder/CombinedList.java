@@ -2,7 +2,7 @@
  * CombinedList
  * 
  * Created on 10.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.builder;
 

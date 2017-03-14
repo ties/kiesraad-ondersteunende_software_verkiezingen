@@ -1,7 +1,7 @@
 /*
  * Liste
  * 
- * Copyright (c) 2002-4 IVU Traffic Technologies AG
+ * Copyright (c) 2002-4 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb;
 

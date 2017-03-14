@@ -2,7 +2,7 @@
  * InitGuiCommandTweedeKamerBund
  * 
  * Created on Oct 29, 2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -10,11 +10,12 @@ import static de.ivu.wahl.anwender.Rechte.R_ADM_ANGEMELDETE;
 import static de.ivu.wahl.anwender.Rechte.R_ADM_ANW_AENDERN;
 import static de.ivu.wahl.anwender.Rechte.R_ADM_ANW_ANLEGEN;
 import static de.ivu.wahl.anwender.Rechte.R_ADM_EMPTY_EML_EXPORT;
+import static de.ivu.wahl.anwender.Rechte.R_ADM_N10_1_EXPORT;
 import static de.ivu.wahl.anwender.Rechte.R_ADM_PROPS;
 import static de.ivu.wahl.anwender.Rechte.R_ADM_STIMMBEZIRKE_EDIT;
-import static de.ivu.wahl.anwender.Rechte.R_EXPORT;
-import static de.ivu.wahl.anwender.Rechte.R_FREIGABE;
+import static de.ivu.wahl.anwender.Rechte.R_EINGABE;
 import static de.ivu.wahl.anwender.Rechte.R_IMPORT;
+import static de.ivu.wahl.anwender.Rechte.R_UPLOAD;
 import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_GEMEINDE;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_STIMMBEZIRK;
@@ -24,7 +25,9 @@ import java.util.Map;
 
 import de.ivu.wahl.anwender.Rechte;
 import de.ivu.wahl.client.util.GUICommand;
+import de.ivu.wahl.modell.ErgebniseingangKonstanten;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
  * @author mur@ivu.de, IVU Traffic Technologies AG
@@ -34,6 +37,7 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
       ApplicationBeanKonstanten {
 
   private final int _ebene;
+  private final ElectionCategory _electionCategory;
 
   private static final int[][] WAHL_ART_LEVEL_CSB = {{GEBIETSART_WAHLKREIS}};
   private static final int[][] WAHL_ART_LEVEL_HSB = {{GEBIETSART_GEMEINDE}};
@@ -48,12 +52,15 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
    * @param ebene
    * @param gebietsartErfassungseinheitMax Gebietsart der hierarchisch <b>niedrigsten</b>
    *          Erfassungseinheit im Gebietsbaum
+   * @param electionCategory
    */
   public InitGuiCommandReferendum_P4(Map<Integer, String> jspMap,
       int gebietsartErfassungseinheitMax,
-      int ebene) {
+      int ebene,
+      ElectionCategory electionCategory) {
     super(jspMap, gebietsartErfassungseinheitMax);
     _ebene = ebene;
+    _electionCategory = electionCategory;
   }
 
   @Override
@@ -95,21 +102,12 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
   protected void initBefehle(Map<String, String> jspLevelWorkName,
       GUICommandList[] befehleInitial,
       GUICommandList[] befehle,
-      int levelcount,
-      String link_1,
-      String linkButtonName_1,
-      String link_2,
-      String linkButtonName_2) {
+      int levelcount) {
     for (int level = 0; level < levelcount; level++) {
       befehleInitial[level] = new GUICommandArrayList();
       befehle[level] = new GUICommandArrayList();
     }
-    initLevelUnabhaengig(jspLevelWorkName,
-        befehleInitial,
-        link_1,
-        linkButtonName_1,
-        link_2,
-        linkButtonName_2);
+    initLevelUnabhaengig(jspLevelWorkName, befehleInitial);
     initLevelAdmin(jspLevelWorkName, befehleInitial);
   }
 
@@ -120,99 +118,70 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
    * @param befehleInitial
    */
   private void initLevelAdmin(Map<String, String> jspLevelWorkName, GUICommandList[] befehleInitial) {
-    String name;
-    String title;
 
-    name = getBundleString("Passwort_veraendern"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ANWENDER_VERAENDERN_PASSWORT, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ANWENDER_VERAENDERN_PASSWORT,
-        null,
-        false,
-        "adm_anwender_change_pw.jsp", //$NON-NLS-1$
-        getBundleString("Passwort_veraendern_titel"), //$NON-NLS-1$
-        GUI_CLASS_1));
+    InitGuiCommandHelper helper = new InitGuiCommandHelper(this, jspLevelWorkName,
+        befehleInitial[LEVEL_ADMIN], LEVEL_ADMIN);
+    helper.setGuiClass(GUI_CLASS_1);
 
-    name = getBundleString("Angemeldete_Anwender_anzeigen"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ADM_ANW_LISTE, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ADM_ANW_LISTE,
-        R_ADM_ANGEMELDETE,
-        false,
-        "adm_angemeldeteAnwender.jsp", //$NON-NLS-1$
-        getBundleString("Angemeldete_Anwender_anzeigen_titel"), //$NON-NLS-1$
-        GUI_CLASS_1));
+    helper.setRights(null);
+    helper.addCommand(Command.ANWENDER_VERAENDERN_PASSWORT,
+        "Passwort_veraendern", "Passwort_veraendern_titel", "adm_anwender_change_pw.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
-    name = getBundleString("Anwender_anlegen"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ANWENDER_ANLEGEN, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ANWENDER_ANLEGEN,
-        R_ADM_ANW_ANLEGEN,
-        false,
-        "adm_anwender_edit.jsp", //$NON-NLS-1$
-        getBundleString("Anwender_anlegen_titel"), //$NON-NLS-1$
-        GUI_CLASS_1));
+    helper.setRights(R_ADM_ANGEMELDETE);
+    helper
+        .addCommand(Command.ADM_ANW_LISTE,
+            "Angemeldete_Anwender_anzeigen", "Angemeldete_Anwender_anzeigen_titel", "adm_angemeldeteAnwender.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
-    name = getBundleString("Anwender_veraendern"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ANWENDER_VERAENDERN_1_AUSWAHLEN, name); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ANWENDER_VERAENDERN_2_EDIT, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ANWENDER_VERAENDERN_1_AUSWAHLEN,
-        R_ADM_ANW_AENDERN,
-        false,
-        "adm_anwender_select.jsp", //$NON-NLS-1$
-        getBundleString("Anwender_veraendern_titel"), //$NON-NLS-1$
-        GUI_CLASS_1));
+    helper.setRights(R_ADM_ANW_ANLEGEN);
+    helper.addCommand(Command.ANWENDER_ANLEGEN,
+        "Anwender_anlegen", "Anwender_anlegen_titel", "adm_anwender_edit.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+    helper.setRights(R_ADM_ANW_AENDERN);
+    helper.addCommand(Command.ANWENDER_VERAENDERN_1_AUSWAHLEN,
+        "Anwender_veraendern", "Anwender_veraendern_titel", "adm_anwender_select.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+
     // die zweite Seite in die HashMap
-    _jspMap.put(ANWENDER_VERAENDERN_2_EDIT, "adm_anwender_edit.jsp"); //$NON-NLS-1$
+    helper.addJspPage(Command.ANWENDER_VERAENDERN_2_EDIT,
+        "Anwender_veraendern", "adm_anwender_edit.jsp"); //$NON-NLS-1$//$NON-NLS-2$
 
-    name = getBundleString("Anwender_loeschen"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ANWENDER_LOESCHEN, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ANWENDER_LOESCHEN,
-        R_ADM_ANW_ANLEGEN,
-        false,
-        "adm_anwender_select.jsp", //$NON-NLS-1$
-        getBundleString("Anwender_loeschen_titel"), //$NON-NLS-1$
-        GUI_CLASS_1));
+    helper.setRights(R_ADM_ANW_ANLEGEN);
+    helper.addCommand(Command.ANWENDER_LOESCHEN,
+        "Anwender_loeschen", "Anwender_loeschen_titel", "adm_anwender_select.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
     if (GebietModel.EBENE_PSB == _ebene) {
-      name = getBundleString("Stimmbezirke_bearbeiten"); //$NON-NLS-1$
-      jspLevelWorkName.put(LEVEL_ADMIN + "_" + ADM_STIMMBEZIRKE_EDIT, name); //$NON-NLS-1$
-      befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-          ADM_STIMMBEZIRKE_EDIT,
-          R_ADM_STIMMBEZIRKE_EDIT,
-          false,
-          "adm_stimmbezirke.jsp", //$NON-NLS-1$
-          getBundleString("Stimmbezirke_bearbeiten_titel"), //$NON-NLS-1$
-          GUI_CLASS_1));
+      helper.setRights(R_ADM_STIMMBEZIRKE_EDIT);
+      helper.addCommand(Command.ADM_STIMMBEZIRKE_EDIT,
+          "Stimmbezirke_bearbeiten", "Stimmbezirke_bearbeiten_titel", "adm_stimmbezirke.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    name = getBundleString("Grundeinstellungen_aendern"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ADM_PROPS, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ADM_PROPS,
-        R_ADM_PROPS,
-        false,
-        "adm_props.jsp", //$NON-NLS-1$
-        getBundleString("Grundeinstellungen_aendern_titel"), //$NON-NLS-1$
-        GUI_CLASS_1));
+    helper.setRights(R_ADM_PROPS);
+    helper.addCommand(Command.ADM_PROPS,
+        "Grundeinstellungen_aendern", "Grundeinstellungen_aendern_titel", "adm_props.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
+    final String titleKey;
+    final String nameKey;
     if (GebietModel.EBENE_CSB == _ebene) {
-      name = getBundleString("Export_P4_EmptyTotaaltelling"); //$NON-NLS-1$
-      title = getBundleString("Export_P4_titel_EmptyTotaaltelling"); //$NON-NLS-1$
+      nameKey = "Export_P4_EmptyTotaaltelling"; //$NON-NLS-1$
+      titleKey = "Export_P4_titel_EmptyTotaaltelling"; //$NON-NLS-1$
     } else {
-      name = getBundleString("Export_P4_EmptyTelling"); //$NON-NLS-1$
-      title = getBundleString("Export_P4_titel_EmptyTelling"); //$NON-NLS-1$
+      nameKey = "Export_P4_EmptyTelling"; //$NON-NLS-1$
+      titleKey = "Export_P4_titel_EmptyTelling"; //$NON-NLS-1$
     }
-    jspLevelWorkName.put(LEVEL_ADMIN + "_" + ADM_EMPTY_EML_EXPORT, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_ADMIN].add(createCommand(name,
-        ADM_EMPTY_EML_EXPORT,
-        R_ADM_EMPTY_EML_EXPORT,
-        false,
-        "adm_empty_export.jsp", //$NON-NLS-1$
-        title,
-        GUI_CLASS_1));
+    helper.setRights(R_ADM_EMPTY_EML_EXPORT);
+    helper.addCommand(Command.ADM_EMPTY_EML_EXPORT, nameKey, titleKey, "adm_empty_export.jsp"); //$NON-NLS-1$
+
+    if (GebietModel.EBENE_PSB == _ebene) {
+      helper.setRights(R_ADM_N10_1_EXPORT);
+      helper.addCommand(Command.ADM_N10_1_EXPORT,
+          "Export_P4_N10_1", "Export_P4_titel_N10_1", "adm_n10_1_export.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+    }
+
+    helper.setRights(R_UPLOAD);
+    helper.addCommand(Command.UPLOAD_RGTEXT,
+        "Upload_rgtext", "Upload_rgtext_titel", "rgtextUpload.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+
+    helper.setRights(R_UPLOAD);
+    helper
+        .addCommand(Command.RESET_RGTEXT, "Reset_rgtext", "Reset_rgtext_titel", "rgtextReset.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**
@@ -222,138 +191,140 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
    * @param befehleInitial
    */
   private void initLevelUnabhaengig(Map<String, String> jspLevelWorkName,
-      GUICommandList[] befehleInitial,
-      @SuppressWarnings("unused") String link_1,
-      @SuppressWarnings("unused") String linkButtonName_1,
-      @SuppressWarnings("unused") String link_2,
-      @SuppressWarnings("unused") String linkButtonName_2) {
+      GUICommandList[] befehleInitial) {
+
+    InitGuiCommandHelper helper = new InitGuiCommandHelper(this, jspLevelWorkName,
+        befehleInitial[LEVEL_UNABHAENGIG], LEVEL_UNABHAENGIG);
 
     GUICommand cmd;
-    String name;
     /*
      * Gebietseingabe auf allen Gebieten
      */
-    name = getBundleString("Referendum_Eingabe"); //$NON-NLS-1$
-    cmd = createCommand(name, GEBE, Rechte.R_EINGABE, false, "gebietEingang.jsp", //$NON-NLS-1$
-        getBundleString("Referendum_Eingabe_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    helper.setRights(R_EINGABE);
+    cmd = helper.addCommand(Command.GEBE,
+        "Referendum_Eingabe", "Referendum_Eingabe_titel", "gebietEingang.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurErfassungseinheit(true);
     cmd.setPosition(0);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + GEBE, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Ergebnisimport_P4"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + IMPORT_ERGEBNISSE, name); //$NON-NLS-1$
-    cmd = createCommand(name, IMPORT_ERGEBNISSE, R_IMPORT, false, "ergebnisImport.jsp", //$NON-NLS-1$
-        getBundleString("Ergebnisimport_titel_P4"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    helper.setRights(R_IMPORT);
+    cmd = helper.addCommand(Command.IMPORT_ERGEBNISSE,
+        "Ergebnisimport_P4", "Ergebnisimport_titel_P4", "ergebnisImport.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurErfassungseinheit(true);
     cmd.setPosition(1);
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
     /*
      * Gebietsergebnis auf allen Gebieten
      */
-    name = getBundleString("Referendum_Ergebnis"); //$NON-NLS-1$
-    cmd = createCommand(name, GEB_ERG, null, false, "gebietErgebnisKandidat.jsp", //$NON-NLS-1$
-        getBundleString("Referendum_Ergebnis_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    helper.setRights(null);
+    cmd = helper.addCommand(Command.GEB_ERG,
+        "Referendum_Ergebnis", "Referendum_Ergebnis_titel", "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurGebiete(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + GEB_ERG, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Gebiet_Status"); //$NON-NLS-1$
-    cmd = createCommand(name, STATUS_GEB, Rechte.R_GEB_STATUS, false, "Status_Gebiet.jsp", //$NON-NLS-1$
-        getBundleString("Gebiet_Status_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    helper.setRights(Rechte.R_GEB_STATUS);
+    cmd = helper.addCommand(Command.STATUS_GEB,
+        "Gebiet_Status", "Gebiet_Status_titel", "Status_Gebiet.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurErfassungseinheit(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + STATUS_GEB, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Status"); //$NON-NLS-1$
-    final String tooltip = tooltipStatusCommand();
-    cmd = createCommand(name, STATUS, Rechte.R_EINGABE, false, "Status.jsp", //$NON-NLS-1$
-        tooltip,
-        GUI_CLASS_1);
+    helper.setRights(Rechte.R_EINGABE);
+    cmd = helper.addCommand(Command.STATUS, "Status", tooltipStatusCommandKey(), "Status.jsp"); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setNurWurzelgebiet(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + STATUS, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Freigabesteuerung_Referendum"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + ADM_FREIGABE, name); //$NON-NLS-1$
-    cmd = createCommand(name, ADM_FREIGABE, R_FREIGABE, false, "adm_freigabe.jsp", //$NON-NLS-1$
-        getBundleString("Freigabesteuerung_Referendum_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    helper.setRights(Rechte.R_FREIGABE);
+    cmd = helper.addCommand(Command.ADM_FREIGABE,
+        "Freigabesteuerung_Referendum", "Freigabesteuerung_Referendum_titel", "adm_freigabe.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurWurzelgebiet(true);
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Export_P4_Referendum"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + REF_EXP, name); //$NON-NLS-1$
-    cmd = createCommand(name, REF_EXP, R_EXPORT, false, "P4_Export_Referendum.jsp", //$NON-NLS-1$
-        getBundleString("Export_P4_titel_Referendum"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    helper.setRights(Rechte.R_EXPORT);
+
+    if (ElectionCategory.NR.equals(_electionCategory)) {
+      // Export N11 only for area Gemeente --> only PSB
+      if (GebietModel.EBENE_PSB == _ebene) {
+        cmd = helper.addCommand(Command.N11,
+            "Export_P4_N11", "Export_P4_titel_N11", "P4_Export_N11.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        cmd.setNurWurzelgebiet(true);
+      }
+      // Export O3 only, when 510c will be exported--> only HSB
+      if (GebietModel.EBENE_HSB == _ebene) {
+        cmd = helper.addCommand(Command.O3,
+            "Export_P4_O3", "Export_P4_titel_O3", "P4_Export_O3.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        cmd.setNurWurzelgebiet(true);
+
+        cmd = helper.addCommand(Command.OSV4_4,
+            "Export_P4_Appendix_O3", "Export_P4_titel_Appendix_O3", "P4_Export_OSV4_4.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        cmd.setNurWurzelgebiet(true);
+      }
+      if (GebietModel.EBENE_CSB == _ebene) {
+        cmd = helper.addCommand(Command.WRR83,
+            "Export_P4_Wrr83", "Export_P4_titel_Wrr83", "P4_Export_Wrr83.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        cmd.setNurWurzelgebiet(true);
+      }
+    } else {
+      cmd = helper.addCommand(Command.REF_EXP,
+          "Export_P4_Referendum", "Export_P4_titel_Referendum", "P4_Export_Referendum.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      cmd.setNurWurzelgebiet(true);
+    }
+
+    cmd = helper.addCommand(Command.EXPORT_VERZEICHNIS,
+        "ExportVerzeichnis", "Export_Verzeichnis_titel", "dateiExportVerzeichnis.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurWurzelgebiet(true);
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    // Export N11 only for area Gemeente --> only PSB
-    name = getBundleString("ExportVerzeichnis"); //$NON-NLS-1$
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + EXPORT_VERZEICHNIS, name); //$NON-NLS-1$
-    cmd = createCommand(name, EXPORT_VERZEICHNIS, R_EXPORT, false, "dateiExportVerzeichnis.jsp", //$NON-NLS-1$
-        getBundleString("Export_Verzeichnis_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+    // Export CSV
+    cmd = helper.addCommand(Command.VOTES_CSV,
+        "Export_P4_CSV", "Export_P4_titel_CSV", "P4_Export_CSV.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurWurzelgebiet(true);
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Referendum"); //$NON-NLS-1$
-    // logoutcmd kommt in alle Arrays hinten dran
-    cmd = createCommand(name, REFERENDUM, null, false, "referendum.jsp", //$NON-NLS-1$
-        getBundleString("Referendum"), //$NON-NLS-1$
-        GUICommand.GUI_CLASS_6);
+    helper.setGuiClass(GUICommand.GUI_CLASS_6);
+    helper.setRights(null);
+
+    cmd = helper.addCommand(Command.REFERENDUM, "Referendum", "Referendum", "referendum.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurGebiete(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + REFERENDUM, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Hilfe"); //$NON-NLS-1$
-    // logoutcmd kommt in alle Arrays hinten dran
-    cmd = createCommand(name, HELP, null, false, "", //$NON-NLS-1$
-        getBundleString("Hilfe_titel"), //$NON-NLS-1$
-        GUICommand.GUI_CLASS_6);
+    cmd = helper.addCommand(Command.HELP, "Hilfe", "Hilfe_titel", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setAlleLevel(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + HELP, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("Abmelden"); //$NON-NLS-1$
     // logoutcmd kommt in alle Arrays hinten dran
-    cmd = createCommand(name, SONST_LOGOUT, null, false, "logout.jsp", //$NON-NLS-1$
-        getBundleString("Abmelden_titel"), //$NON-NLS-1$
-        GUICommand.GUI_CLASS_6);
+    cmd = helper.addCommand(Command.SONST_LOGOUT, "Abmelden", "Abmelden_titel", "logout.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setAlleLevel(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + SONST_LOGOUT, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
 
-    name = getBundleString("ElectionDetails"); //$NON-NLS-1$
     // wahldetails cmd kommt in alle Arrays hinten dran
-    cmd = createCommand(name, SONST_ELECTIONDETAILS, null, false, "electiondetails.jsp", //$NON-NLS-1$
-        getBundleString("ElectionDetails_titel"), //$NON-NLS-1$
-        GUICommand.GUI_CLASS_6);
+    cmd = helper.addCommand(Command.SONST_ELECTIONDETAILS,
+        "ElectionDetails", "ElectionDetails_titel", "electiondetails.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setAlleLevel(true);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + SONST_ELECTIONDETAILS, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
   }
 
-  private String tooltipStatusCommand() {
+  private String tooltipStatusCommandKey() {
     if (_ebene == GebietModel.EBENE_CSB) {
-      return getBundleString("Status_titel_CSB"); //$NON-NLS-1$
+      return "Status_titel_CSB"; //$NON-NLS-1$
     } else if (_ebene == GebietModel.EBENE_HSB) {
-      return getBundleString("Status_titel_HSB"); //$NON-NLS-1$
+      return "Status_titel_HSB"; //$NON-NLS-1$
     } else {
-      return getBundleString("Status_titel"); //$NON-NLS-1$
+      return "Status_titel"; //$NON-NLS-1$
     }
   }
 
   @Override
-  public int getGebieteWorkDefault() {
-    return GEB_ERG;
+  public Command getGebieteWorkDefault() {
+    return Command.GEB_ERG;
+  }
+
+  @Override
+  public Command getErfassungseinheitUnvollstaendigWork(int ergebniseingangStatus) {
+    switch (_ebene) {
+      case GebietModel.EBENE_PSB :
+        return Command.GEBE;
+
+      case GebietModel.EBENE_HSB :
+      case GebietModel.EBENE_CSB :
+        if (ergebniseingangStatus == ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK
+            || ergebniseingangStatus == ErgebniseingangKonstanten.STATE_WARNING
+            || ergebniseingangStatus == ErgebniseingangKonstanten.STATE_ERROR) {
+          return Command.GEBE;
+        }
+        return Command.IMPORT_ERGEBNISSE;
+
+      default :
+        return Command.GEB_ERG;
+    }
   }
 
 }

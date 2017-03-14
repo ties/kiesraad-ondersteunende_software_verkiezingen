@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="17" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="(date missing)"/>
 		<parameter name="hashCode" default="SHA1"/>
@@ -17,7 +17,7 @@
 			<nspair prefix="xnl" uri="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0"/>
 		</namespaces>
 		<schemasources>
-			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\eml-kiesraad\EML-v5.0-os\210-extended.xsd" workingxmlfile="E:\temp\Kiesraad\JIRA\OSV-1346\Kandidaten_PS2014_Groningen_Groningen_Ros_Basten.eml.xml"/>
+			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\eml-kiesraad\EML-v5.0-os\210-extended.xsd" workingxmlfile="D:\projekte\Eml-kiesraad\Examples-2.7\EML 210 PS2011 Venlo Hermans-rg.xml"/>
 		</schemasources>
 	</schemasources>
 	<modules>
@@ -37,6 +37,7 @@
 			<designfragment match="ChapterDistrictsTitle" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterElection" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterPartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterStemming" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Checkbox" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedListI17" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -50,6 +51,7 @@
 			<designfragment match="ElectionFraction" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FootnoteKieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FootnoteSign" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -57,6 +59,8 @@
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="KieskringParty" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="LineBreak" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -68,6 +72,7 @@
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCodeCity" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="QualifyingAddressCity" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -251,6 +256,7 @@
 																							<calltemplate subtype="named" match="NameBCEF">
 																								<parameters>
 																									<parameter name="isBold" value="1"/>
+																									<parameter name="prefixToUppercase" value="1"/>
 																								</parameters>
 																							</calltemplate>
 																						</children>
@@ -353,6 +359,8 @@
 																																					<calltemplate subtype="named" match="LastNameH1">
 																																						<parameters>
 																																							<parameter name="isBold" value="1"/>
+																																							<parameter name="fontSize"/>
+																																							<parameter name="prefixToUppercase" value="1"/>
 																																						</parameters>
 																																					</calltemplate>
 																																					<text fixtext=", ">

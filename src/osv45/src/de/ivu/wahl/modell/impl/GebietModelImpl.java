@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * GebietModelImpl
  * 
- * @author cos@ivu.de (c) 2003 IVU Traffic Technologies AG
+ * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import org.apache.log4j.Category;
@@ -11,6 +11,7 @@ import org.apache.log4j.Category;
 import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.export.Roman;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 
 public class GebietModelImpl extends BasicGebietModelImpl {
   private static final long serialVersionUID = -4920402909228361654L;
@@ -20,7 +21,7 @@ public class GebietModelImpl extends BasicGebietModelImpl {
   }
 
   /**
-   * @return technische, aber menschenlesbare zusammengesetzte Bezeichnung für das Gebiet
+   * @return technische, aber menschenlesbare zusammengesetzte Bezeichnung fï¿½r das Gebiet
    */
   public String getBezeichnung() {
     return (_id_UebergeordnetesGebiet == null ? "" : getGebietsartKlartext() + " " + _nummer + ": ") + _name; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -30,7 +31,7 @@ public class GebietModelImpl extends BasicGebietModelImpl {
    * @return Gebietsart als Klartext aus der internen Tabelle
    */
   public String getGebietsartKlartext() {
-    return GEBIETSART_KLARTEXT[_gebietsart];
+    return Gebietsart.getGebietsartKlartext(this);
   }
 
   public GebietModelImpl() {
@@ -54,9 +55,9 @@ public class GebietModelImpl extends BasicGebietModelImpl {
   /**
    * Should complete the numberFormat methods
    * 
-   * @param num rechtsbündig zu formatierende Ausgabe
-   * @param length Gesamtlänge der Ausgabe
-   * @return rechtsbündig formatierte Ausgabe mit führenden Leerzeichen
+   * @param num rechtsbï¿½ndig zu formatierende Ausgabe
+   * @param length Gesamtlï¿½nge der Ausgabe
+   * @return rechtsbï¿½ndig formatierte Ausgabe mit fï¿½hrenden Leerzeichen
    */
   public static String formatNumber(int num, int length) {
     String numberStr = String.valueOf(num);

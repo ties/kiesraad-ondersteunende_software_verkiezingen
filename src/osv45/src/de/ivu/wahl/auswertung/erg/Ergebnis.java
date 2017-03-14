@@ -9,7 +9,7 @@ import de.ivu.util.debug.Log4J;
 /**
  * Ergebnis.java BasisErgebnis Objekt Von diesem leiten sich alle anderen ErgebnisObjekte ab
  * 
- * @author mur 14.10.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * @author mur 14.10.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class Ergebnis implements Serializable {
@@ -22,7 +22,7 @@ public class Ergebnis implements Serializable {
   }
 
   /**
-   * Ergebnisbezeichnung Klartext (kann eine längere Zeile sein)
+   * Ergebnisbezeichnung Klartext (kann eine lï¿½ngere Zeile sein)
    */
   protected String _ergBezeichnung;
 
@@ -43,7 +43,7 @@ public class Ergebnis implements Serializable {
   }
 
   /**
-   * @return Ergebnisbezeichnung Klartext (kann eine längere Zeile sein)
+   * @return Ergebnisbezeichnung Klartext (kann eine lï¿½ngere Zeile sein)
    * @param defaultValue wenn _ergBezeichnung == null
    */
   public String getErgBezeichnung(String defaultValue) {
@@ -51,7 +51,7 @@ public class Ergebnis implements Serializable {
   }
 
   /**
-   * @return Ergebnisbezeichnung Klartext (kann eine längere Zeile sein)
+   * @return Ergebnisbezeichnung Klartext (kann eine lï¿½ngere Zeile sein)
    */
   public String getErgBezeichnung() {
     return _ergBezeichnung;

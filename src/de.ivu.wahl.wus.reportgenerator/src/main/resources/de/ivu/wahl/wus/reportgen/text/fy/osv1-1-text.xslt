@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:param name="osv1-1_010_1_title" select="'Ferklearring kandidaat fan foarnimmen ta fêstiging '"/>
     <xsl:param name="osv1-1_020_provincie" select="'yn de provinsje'"/>
+    <xsl:param name="osv1-1_021_in_het" select="'yn it '"/>
     <xsl:param name="osv1-1_025_openbaarLichaam" select="'in het openbaar lichaam'"/>
     <xsl:param name="osv1-1_026_stadsdeel" select="'in het stadsdeel'"/>
     <xsl:param name="osv1-1_030_gemeente" select="'yn de gemeente'"/>

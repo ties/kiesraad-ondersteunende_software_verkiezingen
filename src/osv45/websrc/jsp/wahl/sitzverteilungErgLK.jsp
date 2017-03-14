@@ -3,7 +3,7 @@
  * Sitzverteilung
  * Sitzverteilung nach dem Niemeyer-Verfahren.
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: sitzverteilungErgLK.jsp,v 1.24 2011/04/07 07:46:00 tdu Exp $
  *******************************************************************************
  --%>
@@ -22,6 +22,7 @@
 <%@ page import="de.ivu.wahl.auswertung.sv.SitzverteilungStatus"%>
 <%@ page import="de.ivu.wahl.modell.ejb.Wahl"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.modell.ejb.SitzberechnungErgebnis"%>
 <%@ page import="de.ivu.wahl.modell.ejb.Alternative"%>
 <%@ page import="de.ivu.wahl.modell.AlternativeModel"%>
@@ -35,7 +36,11 @@
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
-<% WahlInfo wahlInfo = appBean.getWahlInfo();
+<% 
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "sitzvertErgLK"; //$NON-NLS-1$
+
+WahlInfo wahlInfo = appBean.getWahlInfo();
     String id_ergebniseingang = wahlInfo.getWahl().getWurzelgebiet().getID_LetzterEingang();
    String breite = "100%";
    GebietsBaum gebietsBaum = appBean.getGebietsBaum();
@@ -60,9 +65,7 @@
  </head>
 
  <body class="hghell">
-    <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-        <a name="oben" href="javascript:window.print()" style="text-decoration: none;" id="oben"><span class="linkdklrot"><img src="<%= request.getContextPath() %>/img/icon/drucken.gif" alt="" border="0" height="9" width="24"><ivu:int key="SeiteDrucken"/></span></a><ivu:help key="sitzvertErgLK"/>
-    </div>
+    <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
     <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
         &nbsp;
     </div>
@@ -123,7 +126,7 @@
                                                                         </td>
                                                                         <td>
                                                                             <%
-                                                                            String url = "/osv?" + ApplicationBeanKonstanten.WORK +"=" + ApplicationBeanKonstanten.AUSW_SITZVERTEILUNG_GEBIET+"&"+ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                                                            String url = "/osv?" + ClientHelper.workIs(Command.AUSW_SITZVERTEILUNG_GEBIET) +"&"+ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                                                             %>
                                                                             <ivu:form action="<%= url %>">
                                                                                 <ivu:int key="wechseln_zu_sitzverteilungsansicht"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" id="box2" value="<%= ClientHelper.getBundleString("wechseln_zu_sitzverteilungsansicht_button") %>">

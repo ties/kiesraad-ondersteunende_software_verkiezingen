@@ -6,7 +6,11 @@
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="rgtextBean" scope="session" class="de.ivu.wahl.client.beans.ReportGeneratorTextBean" />
+<jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "admRgtextUpload"; //$NON-NLS-1$
+
 String breite = "100%";
 String errorMsg = null;
 String confirmationMsg = null;
@@ -28,12 +32,7 @@ if (rgtextBean._adminConfirmationMsg != null && !rgtextBean._adminConfirmationMs
 </head>
 <body class="hghell">
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="admRgtextUpload"/></td>
-   </tr>
-   <tr class="hgeeeeee">
-      <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">

@@ -21,10 +21,10 @@ import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.util.EMLFilenameCheck;
 
 /**
- * Geschaffen für das Anstoßen des Importes aus der GUI-Oberfläche vom Wahlabwicklungssystem und zum
+ * Geschaffen fï¿½r das Anstoï¿½en des Importes aus der GUI-Oberflï¿½che vom Wahlabwicklungssystem und zum
  * Upload von Ergebnissen der Erfassungseinheiten
  * 
- * @author mur@ivu.de cos@ivu.de - Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * @author mur@ivu.de cos@ivu.de - Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class UploadBean extends BasicUploadBean {
   private static final long serialVersionUID = 1684684774094348017L;
@@ -34,7 +34,7 @@ public class UploadBean extends BasicUploadBean {
   protected final Properties prop = new Properties();
 
   /**
-   * anwenderMsg wird von der Webseite benutzt um eine Satusmeldung für den Anwender anzuzeigen
+   * anwenderMsg wird von der Webseite benutzt um eine Satusmeldung fï¿½r den Anwender anzuzeigen
    */
   public String _adminMsg;
   public String _adminConfirmationMsg = null;

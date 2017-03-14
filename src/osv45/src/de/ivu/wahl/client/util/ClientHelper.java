@@ -43,13 +43,14 @@ import de.ivu.util.session.Step;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.client.beans.ApplicationBean;
 import de.ivu.wahl.client.beans.ApplicationBeanKonstanten;
+import de.ivu.wahl.client.beans.Command;
 import de.ivu.wahl.dataimport.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.util.BundleHelper;
 
 /**
- * Statische Hilfsklassen für Client servlets und pages
+ * Statische Hilfsklassen fÃ¼r Client servlets und pages
  * 
  * @author klie@ivu.de, mur@ivu.de
  */
@@ -71,18 +72,18 @@ public class ClientHelper {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");//$NON-NLS-1$
   protected static final SimpleDateFormat STFM = new SimpleDateFormat("HH:mm:ss"); //$NON-NLS-1$
   protected static final SimpleDateFormat SDTFM = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss"); //$NON-NLS-1$
-  public static final DecimalFormat DF = new DecimalFormat("###,###");
+  public static final DecimalFormat DF = new DecimalFormat("###,###"); //$NON-NLS-1$
 
   public static char getAnfBuchstabeOhneUmlaut(char in) {
     char ret = in;
     char inu = Character.toUpperCase(in);
-    if (inu == 'Ä') {
+    if (inu == '\u00C4') { // Ã„
       return 'A';
     }
-    if (inu == 'Ü') {
+    if (inu == '\u00DC') { // Ãœ
       return 'U';
     }
-    if (inu == 'Ö') {
+    if (inu == '\u00D6') { // Ã–
       return 'O';
     }
     return ret;
@@ -93,8 +94,8 @@ public class ClientHelper {
   /**
    * Eine Methode mit einem seltsamen Namen
    * 
-   * @param key Schlüssel für den String-Eintrag in der Übersetzungstabelle
-   * @return Übersetzung in der Sprache/Version der Locale der Anwendung
+   * @param key SchlÃ¼ssel fÃ¼r den String-Eintrag in der Ãœbersetzungstabelle
+   * @return Ãœbersetzung in der Sprache/Version der Locale der Anwendung
    * @deprecated Use {@link BundleHelper#getBundleString(String)} instead
    */
   @Deprecated
@@ -103,7 +104,7 @@ public class ClientHelper {
   }
 
   /**
-   * versucht den übergebenen Wert zu parsen
+   * versucht den Ã¼bergebenen Wert zu parsen
    * 
    * @param val zu parsender String
    * @return String als int
@@ -114,7 +115,7 @@ public class ClientHelper {
   }
 
   /**
-   * Versucht den übergebenen Wert zu parsen und liefrt im Fehlerfall den default zurück
+   * Versucht den Ã¼bergebenen Wert zu parsen und liefrt im Fehlerfall den default zurÃ¼ck
    * 
    * @param val zu parsender String-Wert
    * @param defaultValue Vorgabewert
@@ -403,7 +404,7 @@ public class ClientHelper {
    * @param request HTTP-Request
    * @return Bezeichnung der aktuellenKonfiguration in Bezug auf
    *         Nachwahl/Erststimmengleichheit/Restanteilsgleichheit ACHTUNG: Etwas unsauber aber wegen
-   *         der Multiplizität der Ausgabe gerechtfertigt: Hintergrundfarbe wird in dieser Methode
+   *         der MultiplizitÃ¤t der Ausgabe gerechtfertigt: Hintergrundfarbe wird in dieser Methode
    *         festgelegt
    */
   public static String getKonfigurationsString(HttpServletRequest request) {
@@ -417,74 +418,13 @@ public class ClientHelper {
    * @param request HTTP-Request
    * @return Bezeichnung der aktuellenKonfiguration in Bezug auf
    *         Nachwahl/Erststimmengleichheit/Restanteilsgleichheit ACHTUNG: Etwas unsauber aber wegen
-   *         der Multiplizität der Ausgabe gerechtfertigt: Hintergrundfarbe wird in dieser Methode
+   *         der MultiplizitÃ¤t der Ausgabe gerechtfertigt: Hintergrundfarbe wird in dieser Methode
    *         festgelegt
    */
   public static String getKonfigurationsStringDrucker(HttpServletRequest request) {
     String result = getApplicationBean(request).getKonfigurationsString(request);
 
     return result;
-  }
-
-  /**
-   * Hack
-   * 
-   * @return String gefiltert von <br />
-   *         . Statt des HTML-Umbruches kann ein Umbruch (z.B. "\n\r") eingefügt werden. Außerdem
-   *         wird der Text nach einer bestimmten Zeilenlänge umgebrochen (bzw. wir an dieser Stelle
-   *         der Umbruch-String eingefügt).
-   * @param input zu ueberarbeitender String
-   * @param umbruch Umbruchzeichen, welche anstelle von <br />
-   *          eingefügt werden sollen
-   * @param zeilenlaenge Länge, die eine Zeile nicht überschrieten soll. zeilenlänge = -1, wenn kein
-   *          weiterer Zeilenumbruch eingefügt werden soll
-   */
-  @Deprecated
-  // not used as of 05-05-2011
-  public static String getStringWithoutBR(String input, String umbruch, int zeilenlaenge) {
-    String output = EMPTY_STRING;
-    int indexStart = 0;
-    int indexBR = input.indexOf(Konstanten.BR);
-    // wenn kein HTML <BR> drin, dann auf Länge schneiden
-    if (indexBR == -1) {
-      return breakString(output, umbruch, zeilenlaenge);
-    }
-    // Solange ein <br /> gefunden wird
-    while (indexBR != -1) {
-      // String vor dem BR
-      String subString = input.substring(indexStart, indexBR);
-      output = output + breakString(subString, umbruch, zeilenlaenge) + umbruch;
-      indexStart = indexBR + Konstanten.BR.length();
-      indexBR = input.indexOf(Konstanten.BR, indexStart);
-      // String nach BR
-      if (indexBR == -1) {
-        output = output
-            + breakString(input.substring(indexStart, input.length()), umbruch, zeilenlaenge);
-      }
-    }
-
-    return output;
-  }
-
-  private static String breakString(String input, String umbruch, int zeilenlaenge) {
-    int zeilenindex = 0;
-    String zeile = EMPTY_STRING;
-    int inputLength = input.length();
-    // wenn String vor BR länger als zeilenlänge
-    if (zeilenlaenge > 0 && inputLength > zeilenlaenge) {
-      // String vor BR wird auf zeilenlänge geschnitten
-      // und umgebrochen
-      while (zeilenindex < inputLength) {
-        zeile = zeile
-            + input.substring(zeilenindex, (zeilenindex + zeilenlaenge > inputLength
-                ? inputLength
-                : zeilenindex + zeilenlaenge)) + umbruch;
-        zeilenindex = zeilenindex + zeilenlaenge;
-      }
-      return zeile;
-    }
-    return input;
-
   }
 
   /**
@@ -506,7 +446,7 @@ public class ClientHelper {
   }
 
   /**
-   * liefert einen boolean-Wert "1" = true / "0" = false Im fehlerfall liefert es den übergebenen
+   * liefert einen boolean-Wert "1" = true / "0" = false Im fehlerfall liefert es den Ã¼bergebenen
    * Defaultwert
    * 
    * @param view
@@ -558,7 +498,7 @@ public class ClientHelper {
    * Liefert den String mit allen Parametern und Werten des requestrt
    * 
    * @param request HttpServletRequest
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getAllParameters(HttpServletRequest request) {
     return getAllParameters(request, true);
@@ -568,35 +508,35 @@ public class ClientHelper {
    * Liefert den String mit allen Parametern und Werten des requests
    * 
    * @param request HttpServletRequest
-   * @param cleanPrefix bollean, ob Prefix in URL gelöscht werden soll
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @param cleanPrefix bollean, ob Prefix in URL gelÃ¶scht werden soll
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getAllParameters(HttpServletRequest request, boolean cleanPrefix) {
     return getAllParameters(null, null, request, cleanPrefix);
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
    * @param request HttpServletRequest
-   * @param ignoreParameter Parameter dessen Wert nicht zurückgeliefert werden soll
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @param ignoreParameter Parameter dessen Wert nicht zurÃ¼ckgeliefert werden soll
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getAllParameters(HttpServletRequest request, String ignoreParameter) {
     return getAllParameters(request, ignoreParameter, true);
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
    * @param request HttpServletRequest
-   * @param ignoreParameter Parameter dessen Wert nicht zurückgeliefert werden soll
-   * @param cleanPrefix bollean, ob Prefix in URL gelöscht werden soll
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @param ignoreParameter Parameter dessen Wert nicht zurÃ¼ckgeliefert werden soll
+   * @param cleanPrefix bollean, ob Prefix in URL gelÃ¶scht werden soll
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getAllParameters(HttpServletRequest request,
       String ignoreParameter,
@@ -608,14 +548,14 @@ public class ClientHelper {
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
    * @param request HttpServletRequest
-   * @param ignoreParameters Parameter deren Wert nicht zurückgeliefert werden soll
-   * @param cleanPrefix bollean, ob Prefix in URL gelöscht werden soll
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @param ignoreParameters Parameter deren Wert nicht zurÃ¼ckgeliefert werden soll
+   * @param cleanPrefix bollean, ob Prefix in URL gelÃ¶scht werden soll
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getAllParameters(HttpServletRequest request,
       List<String> ignoreParameters,
@@ -625,13 +565,13 @@ public class ClientHelper {
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
    * @param request HttpServletRequest
-   * @param ignoreParameterPrefix Präfix für Parameter deren Wert nicht zurückgeliefert werden soll
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @param ignoreParameterPrefix PrÃ¤fix fÃ¼r Parameter deren Wert nicht zurÃ¼ckgeliefert werden soll
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getParametersDoNotStartWith(HttpServletRequest request,
       String ignoreParameterPrefix) {
@@ -640,14 +580,14 @@ public class ClientHelper {
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
    * @param request HttpServletRequest
-   * @param ignoreParameterPrefix Präfix für Parameter deren Wert nicht zurückgeliefert werden soll
-   * @param clearPrefix bollean, ob Prefix in URL gelöscht werden soll
-   * @return ein String, welcher an eine URL gehängt werden kann.
+   * @param ignoreParameterPrefix PrÃ¤fix fÃ¼r Parameter deren Wert nicht zurÃ¼ckgeliefert werden soll
+   * @param clearPrefix bollean, ob Prefix in URL gelÃ¶scht werden soll
+   * @return ein String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getParametersDoNotStartWith(HttpServletRequest request,
       String ignoreParameterPrefix,
@@ -657,11 +597,11 @@ public class ClientHelper {
   }
 
   /**
-   * Schnelle Lösung zum zusätzlichen Entfernen des Work-Parameters
+   * Schnelle LÃ¶sung zum zusÃ¤tzlichen Entfernen des Work-Parameters
    * 
    * @param request HTTP-Request
-   * @param ignoreParameterPrefix Präfix für Parameter deren Wert nicht zurückgeliefert werden soll
-   * @return ein String, welcher an eine URL gehängt werden kann.
+   * @param ignoreParameterPrefix PrÃ¤fix fÃ¼r Parameter deren Wert nicht zurÃ¼ckgeliefert werden soll
+   * @return ein String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   public static String getParametersDoNotStartWithAndWithoutWork(HttpServletRequest request,
       String ignoreParameterPrefix) {
@@ -672,15 +612,15 @@ public class ClientHelper {
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
-   * @param ignoreParameter Parameter dessen Wert nicht zurückgeliefert werden soll
-   * @param ignoreParameterPrefix Präfix für Parameter deren Wert nicht zurückgeliefert werden soll
+   * @param ignoreParameter Parameter dessen Wert nicht zurÃ¼ckgeliefert werden soll
+   * @param ignoreParameterPrefix PrÃ¤fix fÃ¼r Parameter deren Wert nicht zurÃ¼ckgeliefert werden soll
    * @param request HttpServletRequest
-   * @param cleanPrefix bollean, ob Prefix in URL gelöscht werden soll
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @param cleanPrefix bollean, ob Prefix in URL gelÃ¶scht werden soll
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   private static String getAllParameters(List<String> ignoreParameters,
       String ignoreParameterPrefix,
@@ -716,8 +656,8 @@ public class ClientHelper {
   }
 
   /**
-   * Commands werden nur beim ersten Aufruf benötigt. HMAC's müssen immer entfern werden, da sie neu
-   * berechnet werden StepId muß immer neu hinzugefügt werden Über den Parameter cleanPrefix wird
+   * Commands werden nur beim ersten Aufruf benÃ¶tigt. HMAC's mÃ¼ssen immer entfern werden, da sie neu
+   * berechnet werden StepId muss immer neu hinzugefÃ¼gt werden Ã¼ber den Parameter cleanPrefix wird
    * entschieden, ob die Prefixparameter entfernt werden
    */
 
@@ -741,12 +681,12 @@ public class ClientHelper {
   public final static String STEP = "STEP"; //$NON-NLS-1$
 
   /**
-   * key für das Attribut im request, welches den gerade aktuellen Step hält. Alle Aktionen finden
+   * key fÃ¼r das Attribut im request, welches den gerade aktuellen Step hÃ¤lt. Alle Aktionen finden
    * auf diesem Step statt!
    */
   public final static String CURRENT_STEP = "CURRENT_STEP"; //$NON-NLS-1$
 
-  /** key für das Attribut in der session, welches den gerade aktuellen MAC Schlüssel hält. */
+  /** key fÃ¼r das Attribut in der session, welches den gerade aktuellen MAC SchlÃ¼ssel hÃ¤lt. */
   public final static String MAC_KEY = "de.ivu.wahl.MAC_KEY"; //$NON-NLS-1$
 
   protected final static SecureRandom random = new SecureRandom();
@@ -763,7 +703,7 @@ public class ClientHelper {
   }
 
   /**
-   * Ermittelt den SessionState für die Anwendung
+   * Ermittelt den SessionState fÃ¼r die Anwendung
    * 
    * @param request HTTP request
    * @return The sessionState value
@@ -823,7 +763,7 @@ public class ClientHelper {
   }
 
   /**
-   * entfernt alle älteren Steps, so daß ein Back immer auf der Fehlerseite endet
+   * entfernt alle Ã¤lteren Steps, so dass ein Back immer auf der Fehlerseite endet
    * 
    * @param request HTTP request
    */
@@ -873,7 +813,7 @@ public class ClientHelper {
    * Methode zur Ausgabe besonderer Datumsformate
    * 
    * @param date Datum
-   * @param format gewünschtes Format
+   * @param format gewÃ¼nschtes Format
    * @return formattiertes Datum
    */
   public static String dateToString(Date date, String format) {
@@ -884,7 +824,7 @@ public class ClientHelper {
    * Methode zur Ausgabe besonderer Datumsformate
    * 
    * @param time Zeitstempel in Millisekunden
-   * @param format gewünschtes Format
+   * @param format gewÃ¼nschtes Format
    * @return formattiertes Datum
    */
   public static String dateToString(long time, String format) {
@@ -900,7 +840,7 @@ public class ClientHelper {
   }
 
   /**
-   * URL umschreiben und mit Prüf-Hash versehen
+   * URL umschreiben und mit PrÃ¼f-Hash versehen
    * 
    * @param pUrl Original-URL als String
    * @param request HTTP-Request
@@ -914,7 +854,7 @@ public class ClientHelper {
   }
 
   /**
-   * URL umschreiben und mit Prüf-Hash versehen
+   * URL umschreiben und mit PrÃ¼f-Hash versehen
    * 
    * @param pUrl Original-URL als String
    * @param request HTTP-Request
@@ -930,7 +870,7 @@ public class ClientHelper {
   }
 
   /**
-   * URL umschreiben und mit Prüf-Hash versehen
+   * URL umschreiben und mit PrÃ¼f-Hash versehen
    * 
    * @param pUrl Original-URL als String
    * @param request HTTP-Request
@@ -1268,16 +1208,16 @@ public class ClientHelper {
   }
 
   /**
-   * Liefert den String mit allen Parametern und Werten des request, außer dem Parameter der
-   * ignoriert werden soll. Wird für den ignoreParameter null übergeben, werden alle Parameter und
+   * Liefert den String mit allen Parametern und Werten des request, auÃŸer dem Parameter der
+   * ignoriert werden soll. Wird fÃ¼r den ignoreParameter null Ã¼bergeben, werden alle Parameter und
    * Werte geliefert
    * 
    * @param request HttpServletRequest
-   * @param work wenn != -1 wird dieser Wert für work eingesetzt ( Wenn -2 wird der Parameter work
-   *          nicht mit eingesetzt (für die Navigation z.B.) DAMIT KOMMEN ABER NICHT ALLE SEITEN
+   * @param work wenn != -1 wird dieser Wert fÃ¼r work eingesetzt ( Wenn -2 wird der Parameter work
+   *          nicht mit eingesetzt (fÃ¼r die Navigation z.B.) DAMIT KOMMEN ABER NICHT ALLE SEITEN
    *          KLAR DAHER NICHT VERWENDEN
    * @param clean wenn true werden auch alle arbeitsparemeter entfernt
-   * @return einen String, welcher an eine URL gehängt werden kann.
+   * @return einen String, welcher an eine URL gehÃ¤ngt werden kann.
    */
   private static String getParametersSpezial(HttpServletRequest request, int work, boolean clean) {
     StringBuilder all = new StringBuilder();
@@ -1303,7 +1243,7 @@ public class ClientHelper {
         first = false;
       }
     }
-    // jetzt könnte es sein, dass es keinen work Parameter gab. Der muss dann noch angehängt werden
+    // jetzt kÃ¶nnte es sein, dass es keinen work Parameter gab. Der muss dann noch angehÃ¤ngt werden
     if (work != -1 && !workDone) {
       all.append(AMP_CH);
       all.append(ApplicationBeanKonstanten.WORKIS);
@@ -1313,12 +1253,12 @@ public class ClientHelper {
   }
 
   /**
-   * Methode zum optimieren der Druckanzeige. Wenn ein String die geforderte Länge überschreitet,
-   * wird er bis auf die Länge abgeschnitten.
+   * Methode zum optimieren der Druckanzeige. Wenn ein String die geforderte LÃ¤nge Ã¼berschreitet,
+   * wird er bis auf die LÃ¤nge abgeschnitten.
    * 
-   * @param str der zu überprüfende String
-   * @param laenge die Länge, auf welche der String gefüllt oder gestutzt wird
-   * @return der notfalls gekürzte String
+   * @param str der zu Ã¼berprÃ¼fende String
+   * @param laenge die LÃ¤nge, auf welche der String gefÃ¼llt oder gestutzt wird
+   * @return der notfalls gekÃ¼rzte String
    * @author apa@ivu.de
    */
   public static String cutStr(String str, int laenge) {
@@ -1359,7 +1299,7 @@ public class ClientHelper {
    * Helpmethod to create a String to fill a certain length
    * 
    * @param laenge Anzahl der aneinander zu kettenden Leerzeichen
-   * @return String mit der vorgegebenen Länge Leerzeichen gefüllt
+   * @return String mit der vorgegebenen LÃ¤nge Leerzeichen gefÃ¼llt
    */
   public static String fillStringWithSpace(int laenge) {
     return fillStringWithFillstring(laenge, SINGLE_SPACE);
@@ -1376,9 +1316,9 @@ public class ClientHelper {
   /**
    * Should complete the numberFormat methods
    * 
-   * @param num rechtsbündig zu formatierende Ausgabe
-   * @param laenge Gesamtlänge der Ausgabe
-   * @return rechtsbündig formatierte Ausgabe mit führenden Leerzeichen
+   * @param num rechtsbÃ¼ndig zu formatierende Ausgabe
+   * @param laenge GesamtLÃ¤nge der Ausgabe
+   * @return rechtsbÃ¼ndig formatierte Ausgabe mit fÃ¼hrenden Leerzeichen
    */
   public static String formatStr(String num, int laenge) {
     int numLength = num.length();
@@ -1392,9 +1332,9 @@ public class ClientHelper {
   /**
    * Should complete the numberFormat methods
    * 
-   * @param num linksbündig zu formatierende Ausgabe
-   * @param laenge Gesamtlänge der Ausgabe
-   * @return linksbündig formatierte Ausgabe mit nachgestellten Leerzeichen
+   * @param num linksbÃ¼ndig zu formatierende Ausgabe
+   * @param laenge GesamtLÃ¤nge der Ausgabe
+   * @return linksbÃ¼ndig formatierte Ausgabe mit nachgestellten Leerzeichen
    */
   public static String formatStrLinksbuendig(String num, int laenge) {
     int numLength = num.length();
@@ -1408,14 +1348,14 @@ public class ClientHelper {
   /**
    * Erzeugt eine URL zur Verwendung im WAS aus einer basis (optional) und einem Command (optional)
    * und einem neuen work-Parametr (optional). Es werden ansonsten alle Parameter aus dem request
-   * wieder angehängt, die nicht durch isIgnorable() ausgeschlossen werden. Wenn clean
+   * wieder angehÃ¤ngt, die nicht durch isIgnorable() ausgeschlossen werden. Wenn clean
    * <code>true</code> ist, werden noch Parametr mit dem Prefix ApplicationBeanKonstanten.Prefix
    * rausgeworfen
    * 
    * @param request HttpRequest
-   * @param basisURL mögliche BasisURL null für default
-   * @param cmd command null für keinen
-   * @param work -1 für keine festlegung (Übernahme) ansonsten wird der eingesetzt
+   * @param basisURL mÃ¶gliche BasisURL null fÃ¼r default
+   * @param cmd command null fÃ¼r keinen
+   * @param work -1 fÃ¼r keine festlegung (Ãœbernahme) ansonsten wird der eingesetzt
    * @param clean wenn true, werden parameter mit dem Prefix auch rausgeworfen
    * @return URL zur Verwendung im WAS anhand des Requests
    */
@@ -1435,8 +1375,8 @@ public class ClientHelper {
 
     result += allParameters;
     if (cmd != null) {
-      // unwahrscheinlich aber möglich: es gibt keinen einzigen Parameter
-      // es soll aber ein cmd angehängt werden
+      // unwahrscheinlich aber mÃ¶glich: es gibt keinen einzigen Parameter
+      // es soll aber ein cmd angehÃ¤ngt werden
       if (allParameters.length() != 0) {
         result += AMP;
       } else {
@@ -1448,7 +1388,7 @@ public class ClientHelper {
     return result;
   }
 
-  // Voreinstellung für das Entfernen von Parametern mit PREFIX
+  // Voreinstellung fÃ¼r das Entfernen von Parametern mit PREFIX
   private final static boolean CLEANDEFAULT = false;
 
   public static String generateURL(HttpServletRequest request, String basisURL, String cmd, int work) {
@@ -1551,7 +1491,7 @@ public class ClientHelper {
   static final String ESCAPE = "\\-"; //$NON-NLS-1$
 
   /**
-   * Methode zum Separieren von Bezeichnern in ursprüngliche Teilstrings
+   * Methode zum Separieren von Bezeichnern in ursprÃ¼ngliche Teilstrings
    * 
    * @param pInput Eingabestring mit Delimiter
    * @return Array der Teilstrings
@@ -1794,4 +1734,7 @@ public class ClientHelper {
     session.setMaxInactiveInterval((int) (interval / 1000 + defaultSessionTimeout));
   }
 
+  public static String workIs(Command command) {
+    return ApplicationBeanKonstanten.WORKIS + command.getId();
+  }
 }

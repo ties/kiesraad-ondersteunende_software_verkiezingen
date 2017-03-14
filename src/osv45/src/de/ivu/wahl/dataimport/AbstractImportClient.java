@@ -24,8 +24,6 @@ import static de.ivu.wahl.dataimport.XMLTags.NS_XAL;
 import static de.ivu.wahl.dataimport.XMLTags.NS_XNL;
 import static de.ivu.wahl.dataimport.XMLTags.WAHL_ART;
 import static de.ivu.wahl.dataimport.XMLTags.WAHL_IDENTIFIER;
-import static de.ivu.wahl.modell.GebietModel.GEBIETSART_KLARTEXT;
-import static de.ivu.wahl.modell.GebietModel.GEBIETSART_KLARTEXT_EXPORT;
 import static de.ivu.wahl.modell.WahlModel.WAHLGEBIETSARTEN;
 import static de.ivu.wahl.modell.exception.ImportException.TYPE_CONTENT;
 import static de.ivu.wahl.util.XMLImportHelper.getAttribute;
@@ -58,6 +56,7 @@ import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GruppeComposite;
 import de.ivu.wahl.modell.GruppeComposite.Liste;
 import de.ivu.wahl.modell.GruppeComposite.Listenkandidat;
@@ -69,6 +68,7 @@ import de.ivu.wahl.modell.ListenkandidaturModel;
 import de.ivu.wahl.modell.ListenkombinationModel;
 import de.ivu.wahl.modell.PersonendatenKonstanten;
 import de.ivu.wahl.modell.PersonendatenModel;
+import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.RepositoryModel;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.exception.ImportException;
@@ -346,14 +346,14 @@ public abstract class AbstractImportClient {
   void createGebiete(Element gebiete, String namespace, URL wahldefinitionURL)
       throws ImportException {
     try {
-      // Wenn bislang keine Gebietsart f�r die Auswertungseinheit gesetzt ist, nimm' die kleinste
-      // verf�gbare
+      // Wenn bislang keine Gebietsart für die Auswertungseinheit gesetzt ist, nimm' die kleinste
+      // verfügbare
       if (_gebietsartAwE < 0) {
         _gebietsartAwE = _gebietsarten[_gebietsarten.length - 1];
         _wahlModel.setGebietsartAuswertungseinheit(_gebietsartAwE);
         LOGGER.debug(Messages
             .bind(MessageKeys.Result_Tracelog_GebietsartAuswertungseinheitAuf_0_Gesetzt,
-                GEBIETSART_KLARTEXT[_gebietsartAwE]));
+                Gebietsart.getKlartext(_gebietsartAwE)));
       }
 
       // Existing regions
@@ -472,9 +472,10 @@ public abstract class AbstractImportClient {
       }
 
       // For P4_PSB in EP elections ...
+      ElectionCategory electionCategory = getElectionCategory(_wahlModel);
       if (_importMetadata.getLevel() == GebietModel.EBENE_PSB
-          && getElectionCategory(_wahlModel).isEP()) {
-        searchForParentRegion(idElterngebiet, artElterngebiet, nodes);
+          && (electionCategory.isEP() || ElectionCategory.NR.equals(electionCategory))) {
+        searchForParentRegion(idElterngebiet, artElterngebiet, nodes, electionCategory);
       }
 
       // If no regions add root region
@@ -489,8 +490,10 @@ public abstract class AbstractImportClient {
     }
   }
 
-  private void searchForParentRegion(String idElterngebiet, String artElterngebiet, Elements nodes)
-      throws ImportException {
+  private void searchForParentRegion(String idElterngebiet,
+      String artElterngebiet,
+      Elements nodes,
+      ElectionCategory electionCategory) throws ImportException {
     for (int gebietsIdx = 0; gebietsIdx < nodes.size(); ++gebietsIdx) {
       Element gebietKnoten = nodes.get(gebietsIdx);
       String gebietsartStr = getAttribute(gebietKnoten, ATTR_ED_REGION_CATEGORY);
@@ -501,7 +504,11 @@ public abstract class AbstractImportClient {
         Element regionNameElement = gebietKnoten
             .getFirstChildElement(ED_REGION_NAME, XMLTags.NS_KR);
         if (regionNameElement != null) {
-          setParentRegionName(regionNameElement.getValue());
+          if (electionCategory.isEK()) {
+            setParentRegionName(regionNameElement.getValue());
+          } else if (ElectionCategory.NR.equals(electionCategory)) {
+            setElectioalDistrictNameAndNumber(regionNameElement.getValue(), idElterngebiet);
+          }
         }
         return;
       }
@@ -632,6 +639,9 @@ public abstract class AbstractImportClient {
       boolean isGeschlechtSichtbar = XMLImportHelper.getAttributeBoolValue(listenMetadaten,
           XMLTags.ATTR_GESCHLECHT_SICHTBAR,
           false);
+      String publicationLanguage = XMLImportHelper.getAttribute(listenMetadaten,
+          XMLTags.ATTR_PUBLICATION_LANGUAGE);
+      publicationLanguage = PublicationLanguage.toValidAbbreviation(publicationLanguage);
       String id_Liste = null;
       String listenTyp = getText(listeKnoten, XMLTags.EML_TYP, XMLTags.NS_EML);
       // Check for identical list
@@ -649,13 +659,19 @@ public abstract class AbstractImportClient {
               gruppe.getID_Gruppe(),
               listenTyp,
               isGeschlechtSichtbar,
+              publicationLanguage,
               name);
           _identicalLists.put(identicalListKey, id_Liste);
         } else {
           hasMasterlist = true;
         }
       } else {
-        id_Liste = createListe(null, gruppe.getID_Gruppe(), listenTyp, isGeschlechtSichtbar, name);
+        id_Liste = createListe(null,
+            gruppe.getID_Gruppe(),
+            listenTyp,
+            isGeschlechtSichtbar,
+            publicationLanguage,
+            name);
       }
       // Create region specific group data
       Set<String> idsGruppeGebietsspezifisch = new HashSet<String>();
@@ -745,6 +761,9 @@ public abstract class AbstractImportClient {
   protected abstract void createReferendumListen() throws ImportException;
 
   protected abstract void setParentRegionName(String electoralDistrictName) throws ImportException;
+
+  protected abstract void setElectioalDistrictNameAndNumber(String value, String idElterngebiet)
+      throws ImportException;
 
   static final Pattern REGION_NR_PATTERN_230 = Pattern.compile("(\\d+)|(I|II|III)"); //$NON-NLS-1$
 
@@ -841,6 +860,7 @@ public abstract class AbstractImportClient {
       String id_Gruppe,
       String listenTyp,
       boolean isGeschlechtSichtbar,
+      String publicationLanguage,
       String name) throws ImportException {
     String id_Liste = getUniqueKey();
     ListeModel liste = new ListeModelImpl(id_Liste);
@@ -848,6 +868,7 @@ public abstract class AbstractImportClient {
     liste.setID_Gruppe(id_Gruppe);
     liste.setTyp(listenTyp);
     liste.setGeschlechtSichtbar(isGeschlechtSichtbar);
+    liste.setPublicationLanguage(publicationLanguage);
     liste.setName(name);
     if (identicalListIdent != null) {
       try {
@@ -947,12 +968,13 @@ public abstract class AbstractImportClient {
    * @param isReferendum
    */
   void createGruppenAllgemein(boolean isReferendum) {
+    boolean isEK = ElectionCategory.fromWahlart(_wahlModel.getWahlart()).isEK();
     for (GruppeKonstanten.GruppeAllgemein gruppeAllg : GruppeKonstanten.GruppeAllgemein.values()) {
       String id_Gruppe = getUniqueKey();
       GruppeModel gruppe = new GruppeModelImpl(id_Gruppe);
       gruppe.setGruppenart(GruppeKonstanten.GRUPPENART_ALLGEMEIN);
       gruppe.setID_Wahl(_wahlModel.getID_Wahl());
-      gruppe.setNameLang(gruppeAllg.getName(isReferendum));
+      gruppe.setNameLang(gruppeAllg.getName(isReferendum, isEK));
       gruppe.setNameKurz(gruppeAllg.kurzname);
       gruppe.setSchluessel(gruppeAllg.schluessel);
       _gruppeKeyMap.put(String.valueOf(gruppeAllg.schluessel), id_Gruppe);
@@ -1027,6 +1049,7 @@ public abstract class AbstractImportClient {
    * @throws ImportException
    */
   void createAllgemeineGruppeGebietsspezifisch() throws ImportException {
+    boolean isEK = isEK();
     try {
       for (GebietModel gebiet : _gebietKeyMap.values()) {
         for (GruppeKonstanten.GruppeAllgemein gruppeAllg : GruppeKonstanten.GruppeAllgemein
@@ -1034,7 +1057,7 @@ public abstract class AbstractImportClient {
           createGruppeGebietsspezifisch(_gruppeKeyMap.get(String.valueOf(gruppeAllg.schluessel)),
               gebiet,
               null,
-              gruppeAllg.position);
+              gruppeAllg.getPosition(isEK));
         }
       }
     } catch (Exception e) {
@@ -1042,6 +1065,10 @@ public abstract class AbstractImportClient {
       throw new ImportException(
           Messages.bind(MessageKeys.Error_FehlerBeimAnlegenDerAllgemeinenGruppen), e);
     }
+  }
+
+  boolean isEK() {
+    return (_wahlModel != null) && ElectionCategory.fromWahlart(_wahlModel.getWahlart()).isEK();
   }
 
   /**
@@ -1347,27 +1374,12 @@ public abstract class AbstractImportClient {
   }
 
   protected static int getGebietsart(String gebietStr) throws ImportException {
-    return getIndexInArray(gebietStr,
-        GEBIETSART_KLARTEXT_EXPORT,
-        Messages.bind(MessageKeys.Error_UnbekanntesGebiet));
-  }
-
-  /**
-   * @param string
-   * @param array
-   * @param url
-   * @param errorLabel
-   * @throws ImportException
-   */
-  static int getIndexInArray(String string, String[] array, String errorLabel)
-      throws ImportException {
-
-    for (int i = 0; i < array.length; i++) {
-      if (array[i].equals(string)) {
-        return i;
+    for (Gebietsart gebietsart : Gebietsart.values()) {
+      if (gebietsart.getKlartextExport().equals(gebietStr)) {
+        return gebietsart.getId();
       }
     }
-    throw new ImportException(errorLabel + ": " + string); //$NON-NLS-1$
+    throw new ImportException(Messages.bind(MessageKeys.Error_UnbekanntesGebiet) + ": " + gebietStr); //$NON-NLS-1$
   }
 
   /**
@@ -1410,7 +1422,6 @@ public abstract class AbstractImportClient {
    * Container for adding and holding total votes
    * 
    * @author ugo@ivu.de, IVU Traffic Technologies AG
-   * @version $Id$
    */
   class TotalVotes {
     // <id_Listenkandidatur, votes>

@@ -2,7 +2,7 @@
  * DBInitServiceImpl
  * 
  * Created on 27.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.mbean.dbinit;
 
@@ -33,7 +33,7 @@ public abstract class AbstractDBInitServiceImpl implements DBInitService {
   public void start() throws Exception {
     try {
       DataSource ds = (DataSource) EJBUtil.getInitialContext()
-          .lookup("java:/jdbc/wahlDB-" + EJBUtil.getProgramSpecificAffix()); //$NON-NLS-1$
+          .lookup("java:/jdbc/wahlDB-" + EJBUtil.getInstallationSpecificAffix()); //$NON-NLS-1$
       Connection connection = ds.getConnection();
       try {
         Statement statement = connection.createStatement();

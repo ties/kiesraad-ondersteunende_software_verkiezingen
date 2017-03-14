@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
 		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
@@ -17,7 +17,7 @@
 			<nspair prefix="xnl" uri="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0"/>
 		</namespaces>
 		<schemasources>
-			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\Eml-kiesraad\EML-v5.0-os\510-extended.xsd" workingxmlfile="D:\projekte\Eml-kiesraad\Examples\EML 510b GR 2002 Nuth-rg.xml"/>
+			<xsdschemasource name="XML" main="1" schemafile="D:\projekte\Eml-kiesraad\EML-v5.0-os\510-extended.xsd" workingxmlfile="D:\projekte\EML-kiesraad\Examples-2.10\EML 510c EP 2004 Zwolle-rg.xml"/>
 		</schemasources>
 	</schemasources>
 	<modules>
@@ -38,6 +38,7 @@
 			<designfragment match="ChapterDistrictsTitle" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterElection" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ChapterPartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ChapterStemming" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Checkbox" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="City" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -73,6 +74,10 @@
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderGeneral" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderP1" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="GenerateDate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Initials" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -92,7 +97,6 @@
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyName" spsfile="reused-parts-simple.sps" isactive="0"/>
-			<designfragment match="PartyName2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -111,7 +115,7 @@
 		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -154,7 +158,7 @@
 																<children>
 																	<conditionbranch xpath="$lang=0">
 																		<children>
-																			<text fixtext="Bijlage bij proces verbaal O 3, uitkomst voor"/>
+																			<text fixtext="Bijlage proces verbaal O 3: bezwaren"/>
 																		</children>
 																	</conditionbranch>
 																	<conditionbranch>
@@ -164,123 +168,53 @@
 																	</conditionbranch>
 																</children>
 															</condition>
-															<condition>
+															<template subtype="element" match="eml:Contests">
 																<children>
-																	<conditionbranch xpath="./eml:ElectionIdentifier/kr:ElectionSubcategory[text()=&quot;TK&quot; or text()=&quot;EK&quot; or text()=&quot;PS2&quot; or text()=&quot;EP&quot;]">
+																	<template subtype="element" match="eml:Contest">
 																		<children>
-																			<template subtype="element" match="eml:Contests">
+																			<template subtype="element" match="eml:ContestIdentifier">
 																				<children>
-																					<template subtype="element" match="eml:Contest">
+																					<template subtype="attribute" match="Id">
 																						<children>
-																							<template subtype="element" match="eml:ContestIdentifier">
+																							<condition>
 																								<children>
-																									<template subtype="attribute" match="Id">
+																									<conditionbranch xpath="$lang=0">
 																										<children>
-																											<condition>
-																												<children>
-																													<conditionbranch xpath="$lang=0">
-																														<children>
-																															<text fixtext=" de kieskring "/>
-																														</children>
-																													</conditionbranch>
-																													<conditionbranch>
-																														<children>
-																															<autocalc xpath="$o4-4_015_inKieskring"/>
-																														</children>
-																													</conditionbranch>
-																												</children>
-																											</condition>
-																											<content subtype="regular">
-																												<styles font-weight="bold"/>
-																												<format basic-type="xsd" datatype="NMTOKEN"/>
-																											</content>
+																											<text fixtext=" (kieskring "/>
 																										</children>
-																										<variables/>
-																									</template>
-																									<text fixtext=" (">
-																										<styles font-weight="bold"/>
-																									</text>
-																									<template subtype="element" match="eml:ContestName">
+																									</conditionbranch>
+																									<conditionbranch>
 																										<children>
-																											<content subtype="regular">
-																												<styles font-weight="bold"/>
-																												<format basic-type="xsd" datatype="token"/>
-																											</content>
+																											<autocalc xpath="$o4-4_015_inKieskring"/>
 																										</children>
-																										<variables/>
-																									</template>
-																									<text fixtext=")">
-																										<styles font-weight="bold"/>
-																									</text>
+																									</conditionbranch>
 																								</children>
-																								<variables/>
-																							</template>
+																							</condition>
+																							<content subtype="regular">
+																								<styles font-weight="bold"/>
+																								<format basic-type="xsd" datatype="NMTOKEN"/>
+																							</content>
 																						</children>
 																						<variables/>
 																					</template>
+																					<text fixtext=", ">
+																						<styles font-weight="bold"/>
+																					</text>
+																					<template subtype="element" match="eml:ContestName">
+																						<children>
+																							<content subtype="regular">
+																								<styles font-weight="bold"/>
+																								<format basic-type="xsd" datatype="token"/>
+																							</content>
+																						</children>
+																						<variables/>
+																					</template>
+																					<text fixtext=")">
+																						<styles font-weight="bold"/>
+																					</text>
 																				</children>
 																				<variables/>
 																			</template>
-																			<text fixtext=" "/>
-																			<condition>
-																				<children>
-																					<conditionbranch xpath="$lang=0">
-																						<children>
-																							<text fixtext="van"/>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch>
-																						<children>
-																							<autocalc xpath="$o4-4_016_van"/>
-																						</children>
-																					</conditionbranch>
-																				</children>
-																			</condition>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext=" de verkiezing voor "/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$o4-4_017_deVerkiezingVoor"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-															<calltemplate subtype="named" match="ElectionNameShort">
-																<parameters/>
-															</calltemplate>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext=" op "/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$o4-4_018_op"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-															<template subtype="element" match="eml:ElectionIdentifier">
-																<children>
-																	<template subtype="element" match="kr:ElectionDate">
-																		<children>
-																			<calltemplate subtype="named" match="Date">
-																				<parameters>
-																					<parameter name="isBold" value="1"/>
-																					<parameter name="fontSize"/>
-																				</parameters>
-																			</calltemplate>
 																		</children>
 																		<variables/>
 																	</template>
@@ -484,6 +418,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 				</children>
 			</globaltemplate>

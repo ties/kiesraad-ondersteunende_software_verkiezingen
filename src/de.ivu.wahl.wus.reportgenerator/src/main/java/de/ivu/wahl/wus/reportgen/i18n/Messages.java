@@ -2,7 +2,7 @@
  * Messages
  * 
  * Created on 04.05.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen.i18n;
 

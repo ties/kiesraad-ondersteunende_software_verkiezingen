@@ -2,7 +2,7 @@
  * WahlStatelessSessionBeanBase
  * 
  * Created on 27.10.2003
- * Copyright (c) 2003-8 IVU Traffic Technologies AG
+ * Copyright (c) 2003-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl;
 
@@ -45,7 +45,7 @@ import de.ivu.wahl.modell.ejb.service.VotesHandling;
 import de.ivu.wahl.modell.ejb.service.VotesHandlingBean;
 
 /**
- * Basisklasse für ein Stateless Session Enterprise Java Bean mit wahlspezifischen Methoden
+ * Basisklasse fï¿½r ein Stateless Session Enterprise Java Bean mit wahlspezifischen Methoden
  * 
  * @author cos@ivu.de, IVU Traffic Technologies AG
  */

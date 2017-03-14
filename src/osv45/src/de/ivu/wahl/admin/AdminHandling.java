@@ -1,7 +1,7 @@
 /*
  * AdminHandling
  * 
- * Created on 17.10.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * Created on 17.10.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -14,10 +14,10 @@ import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.modell.RechtegruppeModel;
 
 /**
- * SessionBean für Administrationsunterstützung
+ * SessionBean fï¿½r Administrationsunterstï¿½tzung
  * <P>
- * Enthält auch Methoden für das Handling von Schwellwerten, die aus der Applikation verwendet
- * werden. Zusätzlich finden sich weitere nützlichen Methoden, die kein "natürliches" Plätzchen
+ * Enthï¿½lt auch Methoden fï¿½r das Handling von Schwellwerten, die aus der Applikation verwendet
+ * werden. Zusï¿½tzlich finden sich weitere nï¿½tzlichen Methoden, die kein "natï¿½rliches" Plï¿½tzchen
  * gefunden haben
  * 
  * @author cos@ivu.de, IVU Traffic Technologies AG
@@ -25,21 +25,21 @@ import de.ivu.wahl.modell.RechtegruppeModel;
 public interface AdminHandling {
 
   /**
-   * Prüfen, ob bereits ein Ergebnis für eine Erfassungseinheit vorliegt (Ergebniseingang) Wird
-   * verwendet, um das Zurücksetzen einer Erfassungseinheit zu verhindern, die gar keinen
+   * Prï¿½fen, ob bereits ein Ergebnis fï¿½r eine Erfassungseinheit vorliegt (Ergebniseingang) Wird
+   * verwendet, um das Zurï¿½cksetzen einer Erfassungseinheit zu verhindern, die gar keinen
    * Ergebniseingang hat.
    * 
    * @param c Anwenderkontext
-   * @param gebietsart Konstante für die Gebietsart
+   * @param gebietsart Konstante fï¿½r die Gebietsart
    * @param nummer Gebietsnummer (innerhalb der Gebietsart)
-   * @return <code>true</code>, wenn es für die angegebene Erfassungseinheit ein Ergebnis gibt.
+   * @return <code>true</code>, wenn es fï¿½r die angegebene Erfassungseinheit ein Ergebnis gibt.
    * @throws EJBException genereller Fehler
    */
   boolean existsErgebniseingang(AnwContext c, int gebietsart, int nummer) throws EJBException;
 
   /**
-   * Implementierung ist suboptimal und langsam Aber: wird ausschließlich vor einer Freigabe
-   * geprüft, daher nicht weiter tragisch
+   * Implementierung ist suboptimal und langsam Aber: wird ausschlieï¿½lich vor einer Freigabe
+   * geprï¿½ft, daher nicht weiter tragisch
    * 
    * @param c Anwenderkontext
    * @return <code>true</code>, wenn es irgendwelche Erfassungseinheiten auf der aktuellen Wahl
@@ -76,7 +76,7 @@ public interface AdminHandling {
    * @param context Anwenderkontext
    * @param gebietart Gebietsart des untergeordneten Gebiets
    * @param gebietNr Gebietsnummer des untergeordneten Gebiets
-   * @return unmittelbar zum Gebiet mit der angegebenen Nummer und Art übergeordnetes Gebiet als
+   * @return unmittelbar zum Gebiet mit der angegebenen Nummer und Art ï¿½bergeordnetes Gebiet als
    *         Wertobjekt
    * @throws EJBException genereller Fehler
    */
@@ -84,7 +84,7 @@ public interface AdminHandling {
       throws EJBException;
 
   /**
-   * Property besorgen, gedoppelt für Interfacnig mit dem Client: möglicherweise Korrekturen oder
+   * Property besorgen, gedoppelt fï¿½r Interfacnig mit dem Client: mï¿½glicherweise Korrekturen oder
    * Speicherung an verschiedene Orten!
    * 
    * @param name Name der Property
@@ -107,9 +107,9 @@ public interface AdminHandling {
   Collection<GebietModel> getWahleinheiten(AnwContext c) throws EJBException;
 
   /**
-   * Init der Schwellwerte und anderer Ausgangswerte der Anwendung für eine Wahl
+   * Init der Schwellwerte und anderer Ausgangswerte der Anwendung fï¿½r eine Wahl
    * 
-   * @param id_Wahl Primärschlüssel der Wahl, für die die Ausgangswerte gesetzt werden sollen
+   * @param id_Wahl Primï¿½rschlï¿½ssel der Wahl, fï¿½r die die Ausgangswerte gesetzt werden sollen
    * @throws EJBException genereller Fehler
    */
   void initAdministrationValues(String id_Wahl) throws EJBException;
@@ -118,9 +118,9 @@ public interface AdminHandling {
    * @param c Anwenderkontext
    * @param gebietsart Gebietsart des gesuchten Gebiets
    * @param nummer Gebietsnummer des gesuchten Gebiets
-   * @return <code>true</code>, wenn ein Anwender die angegebene Erfassungseinheit zurücksetzen
+   * @return <code>true</code>, wenn ein Anwender die angegebene Erfassungseinheit zurï¿½cksetzen
    *         darf. Dies ist der Fall, wenn exakt ein einziger Ergebniseingang vorliegt und das
-   *         übergeordnete Gebiet noch nicht vollständig ist.
+   *         ï¿½bergeordnete Gebiet noch nicht vollstï¿½ndig ist.
    * @throws EJBException genereller Fehler
    */
   boolean isZuruecksetzenErlaubtAnwender(AnwContext c, int gebietsart, int nummer)
@@ -145,10 +145,10 @@ public interface AdminHandling {
   void setProperty(AnwContext c, String name, String val) throws EJBException;
 
   /**
-   * Schreiben in das ApplicationLog für Clientkomponenten
+   * Schreiben in das ApplicationLog fï¿½r Clientkomponenten
    * 
    * @param c Anwenderkontext
-   * @param message Nachricht für das Log
+   * @param message Nachricht fï¿½r das Log
    * @throws EJBException genereller Fehler
    */
   void writeAppLog(AnwContext c, String message) throws EJBException;

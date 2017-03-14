@@ -2,7 +2,7 @@
  * P2List
  * 
  * Created on 02.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.determination;
 
@@ -31,5 +31,11 @@ public interface P2List extends Comparable<P2List>, GeneralList, DrawingLotsAlte
   public List<Candidate> getCandidates();
 
   public int getElectoralDistrictNumber();
+
+  /**
+   * @return a String displaying the electoral district numbers like "2" or "3 en 4" or
+   *         "2, 4, 6 en 8"
+   */
+  public String getElectoralDistrictNumbers();
 
 }

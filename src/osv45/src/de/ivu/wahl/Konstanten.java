@@ -1,7 +1,7 @@
 /*
  * Konstanten
  * 
- * Copyright (c) 2002-11 IVU Traffic Technologies AG
+ * Copyright (c) 2002-11 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl;
 
@@ -15,18 +15,18 @@ import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.util.BundleHelper;
 
 /**
- * Konstanten, die �berall im System Verwendung finden
+ * Konstanten, die ueberall im System Verwendung finden
  * 
  * @author klie@ivu.de cos@ivu.de IVU Traffic Technologies AG
  */
 
 public interface Konstanten {
   /** Version des Wahlabwicklungssystems */
-  String VERSION_P4 = "2.13.1"; //$NON-NLS-1$
-  String VERSION_P5 = "2.13.1"; //$NON-NLS-1$
+  String VERSION_P4 = "2.17.2"; //$NON-NLS-1$
+  String VERSION_P5 = "2.17.2"; //$NON-NLS-1$
 
   /** Datum aus dem CVS (beim Einchecken vergeben) */
-  String CVS_DATUM = "$Date: 2014-08-29 11:34:44 +0200 (Fr, 29. Aug 2014) $"; //$NON-NLS-1$
+  String CVS_DATUM = "$Date: 2016-01-15 08:34:32 +0100 (Fr, 15. Jan 2016) $"; //$NON-NLS-1$
 
   /** Aus CVS_DATUM automatisch gebildetes Datum in normaler Schreibweise */
   String DATUM = CVS_DATUM.substring(15, 17) + '.' + CVS_DATUM.substring(12, 14) + '.'
@@ -34,6 +34,9 @@ public interface Konstanten {
 
   /** Java Text-Encoding-Kennung */
   String ENCODING = "UTF-8"; //$NON-NLS-1$
+
+  /** Value for all three RGB components */
+  int DEFAULT_BACKGROUND_COLOR_GREY = 238;
 
   /**
    * Wenn diese Konstante <code>true</code> gesetzt ist, wird beim Import von Wahlkreisergebnissen
@@ -50,33 +53,32 @@ public interface Konstanten {
   /** Konstante zur Bezeichnung des ApplicationLogs */
   String APPLOG = "applog"; //$NON-NLS-1$
 
-  /** Prim�rschl�ssel des Systemanwenders */
+  /** Primaerschluessel des Systemanwenders */
   String SYSTEM_ANWENDERID = "SystemAnwenderID"; //$NON-NLS-1$
 
   /** Anwendername des Systemanwenders */
   String SYSTEM_ANWENDER = "SystemAnwender"; //$NON-NLS-1$
 
-  // Repository-Eintr�ge
+  // Repository-Eintraege
 
-  /** Wird bei �nderung von Rechten eines Anwenders gesetzt */
+  /** Wird bei Aenderung von Rechten eines Anwenders gesetzt */
   String RECHTE_LAST_CHANGE = "rechte_aenderung"; //$NON-NLS-1$
 
   /**
-   * Pr�fix des Propertynamen f�r die Speicherung der Entscheidung �ber die zu ver�ffentlichende
-   * Variante des Wahlausgangs; Propertyname bekommt den Prim�rschl�ssel der betroffenen Wahl als
+   * Praefix des Propertynamen fuer die Speicherung der Entscheidung ueber die zu veroeffentlichende
+   * Variante des Wahlausgangs; Propertyname bekommt den Primaerschluessel der betroffenen Wahl als
    * Suffix
    */
   String PROP_ENTSCHEIDUNG_PREFIX = "Entscheidung."; //$NON-NLS-1$
 
   /**
-   * Property f�r das Basisverzeichnis, in das die Formulare und EML-Dateien Exportiert werden
+   * Property fuer das Basisverzeichnis, in das die Formulare und EML-Dateien Exportiert werden
    * erstellt wird
    */
   String PROP_LISTING_STYLESHEET_FILE = "listingStylesheet.file"; //$NON-NLS-1$
 
   /**
-   * Property f�r das Basisverzeichnis, in das die Formulare und EML-Dateien Exportiert werden
-   * erstellt wird
+   * Property fuer das Basisverzeichnis, in das die Formulare und EML-Dateien exportiert werden
    */
   String PROP_EXPORT_FORMULAR_DIR = "export.formularDir"; //$NON-NLS-1$
 
@@ -89,33 +91,33 @@ public interface Konstanten {
   String PROP_REPENABLE = "repenable"; //$NON-NLS-1$
 
   /**
-   * Wenn <code>true</code>, werden Eingaben (ausser Replikationsnachrichten nat�rlich!)
-   * unterdr�ckt, und es erfolgt die Anzeige, dass es sich um ein Replikat handelt.
+   * Wenn <code>true</code>, werden Eingaben (ausser Replikationsnachrichten natuerlich!)
+   * unterdrueckt, und es erfolgt die Anzeige, dass es sich um ein Replikat handelt.
    */
   String PROP_INPUTDISABLE = "inputdisable"; //$NON-NLS-1$
 
-  /** Property f�r das Upload-Verzeichnis */
+  /** Property fuer das Upload-Verzeichnis */
   String PROP_UPLOADDIR = "uploaddir"; //$NON-NLS-1$
 
-  /** Property f�r die erwartete Nummer der Replikationsnachricht */
+  /** Property fuer die erwartete Nummer der Replikationsnachricht */
   String PROP_REPNR = "repnr"; //$NON-NLS-1$
 
-  /** Property f�r die n�chste zu schreibende Nummer bei Replikationsnachricht */
+  /** Property fuer die naechste zu schreibende Nummer bei Replikationsnachricht */
   String PROP_REPNRIN = "repnrin"; //$NON-NLS-1$
 
   /** Property for last choice of export format */
   String PROP_LAST_EXPORT_FORMAT = "LAST_EXPORT_FORMAT"; //$NON-NLS-1$
 
   // Verlinkung einer externen URL 1
-  /** Name der Property, welche die URL 1 enth�lt */
+  /** Name der Property, welche die URL 1 enthaelt */
   String PROP_EXT_LINK_1 = "externlink_1"; //$NON-NLS-1$
-  /** Name der Property, welche den Namen f�r Button 1 enth�lt */
+  /** Name der Property, welche den Namen fuer Button 1 enthaelt */
   String PROP_EXT_LINK_BUTTON_1 = "externlinkbutton_1"; //$NON-NLS-1$
 
   // Verlinkung einer externen URL 2
-  /** Name der Property, welche die URL 2 enth�lt */
+  /** Name der Property, welche die URL 2 enthaelt */
   String PROP_EXT_LINK_2 = "externlink_2"; //$NON-NLS-1$
-  /** Name der Property, welche den Namen f�r Button 2 enth�lt */
+  /** Name der Property, welche den Namen fuer Button 2 enthaelt */
   String PROP_EXT_LINK_BUTTON_2 = "externlinkbutton_2"; //$NON-NLS-1$
 
   String PREFILL_DB = "prefillDB"; //$NON-NLS-1$
@@ -127,8 +129,20 @@ public interface Konstanten {
   /** election mode **/
   public static final String PROP_ELECTION_MODE = "Wahlmodus"; //$NON-NLS-1$
 
+  /** installation suffix **/
+  public static final String PROP_INSTALLATION_SUFFIX = "InstallationSuffix"; //$NON-NLS-1$
+
   /** input of candidate votes required **/
   public static final String PROP_IS_INPUT_MODE_COMPLETE = "InputmodusComplete"; //$NON-NLS-1$
+
+  /** The red part of the background color **/
+  public static final String PROP_BACKGROUND_COLOR_RED = "BackgroundColorRed"; //$NON-NLS-1$
+
+  /** The red part of the background color **/
+  public static final String PROP_BACKGROUND_COLOR_GREEN = "BackgroundColorGreen"; //$NON-NLS-1$
+
+  /** The red part of the background color **/
+  public static final String PROP_BACKGROUND_COLOR_BLUE = "BackgroundColorBlue"; //$NON-NLS-1$
 
   /** double input required **/
   public static final String PROP_DOUBLE_INPUT = "DOUBLE_INPUT"; //$NON-NLS-1$
@@ -168,8 +182,24 @@ public interface Konstanten {
       inputModeSetting.setRegexErrorMsgKey(MessageKeys.Error_IllegalInputModus_0);
       // Only for PSB
       if (psb && !referendum) {
+        // Regular expression for the numbers 0 to 255
+        String regex = "([1-9]?\\d|1\\d\\d|2[0-4]\\d)|25[0-5]"; //$NON-NLS-1$
+
         addBool(Konstanten.PROP_IS_INPUT_MODE_COMPLETE, "Input_Modus_info", //$NON-NLS-1$ 
             "Input_Modus_info2"); //$NON-NLS-1$
+        Basiseinstellung field = addInteger(Konstanten.PROP_BACKGROUND_COLOR_RED,
+            "BackgroundColorRed_info", //$NON-NLS-1$ 
+            "BackgroundColorRed_info2"); //$NON-NLS-1$
+        field.setRegex(regex);
+        field.setRegexErrorMsgKey(MessageKeys.Error_IllegalColorValue);
+        field = addInteger(Konstanten.PROP_BACKGROUND_COLOR_GREEN, "BackgroundColorGreen_info", //$NON-NLS-1$ 
+            "BackgroundColorGreen_info2"); //$NON-NLS-1$
+        field.setRegex(regex);
+        field.setRegexErrorMsgKey(MessageKeys.Error_IllegalColorValue);
+        field = addInteger(Konstanten.PROP_BACKGROUND_COLOR_BLUE, "BackgroundColorBlue_info", //$NON-NLS-1$ 
+            "BackgroundColorBlue_info2"); //$NON-NLS-1$
+        field.setRegex(regex);
+        field.setRegexErrorMsgKey(MessageKeys.Error_IllegalColorValue);
       }
     }
   };
@@ -236,6 +266,7 @@ public interface Konstanten {
   BasiseinstellungList PROP_BENACHRICHTIGUNG_GEWAEHLTE_BASIS = new BasiseinstellungList() {
     private static final long serialVersionUID = -7774900510662017516L;
     {
+      addDate(XMLTags.RG_DATE_OF_MEETING_O1P20, "Export_Gew_Ben_Date_CSB_meeting"); //$NON-NLS-1$
       addDate(XMLTags.RG_DATE_LETTER, "Export_Gew_Ben_Date_Letter").optional(); //$NON-NLS-1$
       addString(XMLTags.RG_PLACE_LETTER, "Export_Gew_Ben_Place_Letter").optional(); //$NON-NLS-1$
       addDate(XMLTags.RG_FEEDBACK_DATE, "Export_Gew_Ben_Rueckmeldung_bis_zum"); //$NON-NLS-1$
@@ -277,11 +308,8 @@ public interface Konstanten {
   BasiseinstellungList PROP_OSV4_5_D1_BASIS = new BasiseinstellungList() {
     private static final long serialVersionUID = -7774900510662017516L;
     {
+      addDate(XMLTags.RG_DATE_OF_MEETING, "Export_P4_T11_D1_Datum"); //$NON-NLS-1$
       addTime(XMLTags.RG_TIME_OF_MEETING, "Export_P4_T11_D1_Time"); //$NON-NLS-1$
-      addString(XMLTags.RG_CHAIRMAN_OF_COMMITTEE, "Export_P4_T11_D1_Chairman"); //$NON-NLS-1$
-      addString(XMLTags.RG_MEMBER_OF_COMMITTEE_1, "Export_P4_T11_D1_Member_1"); //$NON-NLS-1$
-      addString(XMLTags.RG_MEMBER_OF_COMMITTEE_2, "Export_P4_T11_D1_Member_2"); //$NON-NLS-1$
-      addString(XMLTags.RG_MEMBER_OF_COMMITTEE_3, "Export_P4_T11_D1_Member_3"); //$NON-NLS-1$
     }
   };
   BasiseinstellungMultiMap PROP_OSV4_5_D1 = new BasiseinstellungMultiMap(
@@ -290,6 +318,7 @@ public interface Konstanten {
   BasiseinstellungList PROP_T11_D1_BASIS = new BasiseinstellungList() {
     private static final long serialVersionUID = -7774900510662017517L;
     {
+      addDate(XMLTags.RG_DATE_OF_MEETING, "Export_P4_T11_D1_Datum"); //$NON-NLS-1$
       addTime(XMLTags.RG_TIME_OF_MEETING, "Export_P4_T11_D1_Time"); //$NON-NLS-1$
       addString(XMLTags.RG_CHAIRMAN_OF_COMMITTEE, "Export_P4_T11_D1_Chairman"); //$NON-NLS-1$
       addString(XMLTags.RG_MEMBER_OF_COMMITTEE_1, "Export_P4_T11_D1_Member_1"); //$NON-NLS-1$
@@ -300,27 +329,47 @@ public interface Konstanten {
   BasiseinstellungMultiMap PROP_T11_D1 = new BasiseinstellungMultiMap(
       "Export_P4_T11", PROP_T11_D1_BASIS); //$NON-NLS-1$
 
-  // m�gliche Zust�nde der Applikation
+  BasiseinstellungList PROP_WRR83_D1_BASIS = new BasiseinstellungList() {
+    private static final long serialVersionUID = -7774900510662017516L;
+    {
+      addDate(XMLTags.RG_DATE_OF_MEETING, "Export_P4_O3_D1_Datum"); //$NON-NLS-1$
+      addTime(XMLTags.RG_TIME_OF_MEETING, "Export_P4_O3_D1_Time"); //$NON-NLS-1$
+    }
+  };
+  BasiseinstellungMultiMap PROP_WRR83_D1 = new BasiseinstellungMultiMap(
+      "Export_P4_Wrr83", PROP_WRR83_D1_BASIS); //$NON-NLS-1$
+
+  BasiseinstellungList PROP_OSV4_6_D1_BASIS = new BasiseinstellungList() {
+    private static final long serialVersionUID = -7774900510662017516L;
+    {
+      addTextarea(XMLTags.RG_OBJECTIONS, "Export_P4_Appendix_Wrr83_D1_Einspruch"); //$NON-NLS-1$
+      addTextarea(XMLTags.RG_NOTES, "Export_P4_Appendix_Wrr83_D1_Anmerkung"); //$NON-NLS-1$
+    }
+  };
+  BasiseinstellungMultiMap PROP_OSV4_6_D1 = new BasiseinstellungMultiMap(
+      "Export_P4_Appendix_Wrr83", PROP_OSV4_6_D1_BASIS); //$NON-NLS-1$
+
+  // moegliche Zustaende der Applikation
   /** Anwendung ist im Testzustand */
   int APPSTATE_TEST = 0;
 
   /** Anwendung ist im Produktionszustand */
   int APPSTATE_PRODUKTION = 1;
 
-  /** Klartextentsprechungen der m�glichen Applikationszust�nde */
+  /** Klartextentsprechungen der moeglichen Applikationszustaende */
   String[] APPSTATE_KLARTEXT = {"Test", "Produktion"}; //$NON-NLS-1$ //$NON-NLS-2$
 
   // ///////////////////////////////////////////////////////////////////////////////////////////////
   // Konstanten fuer die Datenbank-Queries
   // ///////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** Konstante f�r <code>true</code> in der Datenbank */
+  /** Konstante fuer <code>true</code> in der Datenbank */
   String DB_TRUE = "1"; //$NON-NLS-1$
 
-  /** Konstante f�r <code>false</code> in der Datenbank */
+  /** Konstante fuer <code>false</code> in der Datenbank */
   String DB_FALSE = "0"; //$NON-NLS-1$
 
-  /** HTML-Konstante f�r den Zeilenumbruch */
+  /** HTML-Konstante fuer den Zeilenumbruch */
   String BR = "<br />"; //$NON-NLS-1$
 
   /**

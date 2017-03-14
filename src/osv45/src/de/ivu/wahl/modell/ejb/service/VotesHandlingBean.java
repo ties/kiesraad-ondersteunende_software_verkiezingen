@@ -1,7 +1,7 @@
 /*
  * VotesHandlingBean
  *
- * Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb.service;
 
@@ -511,7 +511,7 @@ public class VotesHandlingBean extends WahlStatelessSessionBeanBase implements V
     for (Stimmergebnis stimmergebnis : allErfassungseinheitStimmergebnis) {
       GruppeGebietsspezifisch gebietGruppe = stimmergebnis.getGruppeGebietsspezifisch();
       int position = gebietGruppe.getPosition();
-      if (position == GruppeAllgemein.GUELTIGE.position
+      if (position == GruppeAllgemein.GUELTIGE.getPosition()
           && stimmergebnis.getListenkandidatur() == null) {
         gueltigeStimmen = stimmergebnis.getStimmen();
       }

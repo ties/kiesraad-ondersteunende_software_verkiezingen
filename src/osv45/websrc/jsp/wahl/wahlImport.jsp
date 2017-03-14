@@ -1,10 +1,12 @@
 <jsp:directive.page import="de.ivu.wahl.client.util.ClientHelper" />
 <jsp:directive.page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" />
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
+<%@ page import="de.ivu.wahl.modell.Gebietsart"%>
 <%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.IImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.ImportType"%>
 <%@ page import="de.ivu.wahl.dataimport.SecurityLevel"%>
+<%@ page import="de.ivu.wahl.client.beans.Command"%>
 <%@ page import="de.ivu.wahl.client.beans.WahlImportBean"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
@@ -18,6 +20,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="impBean" scope="session" class="de.ivu.wahl.client.beans.WahlImportBean" />
+<%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "wahlImp";
+%>
 <html>
  <head>
   <title><ivu:int key="Neue_Wahl_importieren_titel"/></title>
@@ -38,7 +44,6 @@
     SystemInfo systemInfo =  SystemInfo.getSystemInfo();
     WahlInfo wahlInfo = appBean.getWahlInfo();
 
-    String helpKey = "wahlImp";
     if (impDef != null && ImportType.EML630.equals(impDef.getImportType())) {
         helpKey = "refImp";
     }
@@ -70,9 +75,10 @@
             </div>
         </div>
         <div id="trans">
-  <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
+  <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right" style="background-color: <%=backgroundColor%>;">
     <ivu:help key="<%=helpKey%>"/>
-  </div>
+</div>
+
   <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
     &nbsp;
   </div>
@@ -307,7 +313,7 @@
             <ivu:int key="Neue_Wahl_Gebietsnummer_Label"/>:
             <select name="<%=WahlImportBean.FELD_GEBIETSNUMMER %>" style="font-size:11px; width: 300; left: 200px; position: absolute;">
                     <% for (GebietModel gebiet: impDef.getGebietsauswahl()) { %>
-                        <option value="<%=gebiet.getNummer()%>"><%= gebiet.getName() %> (<%=GebietModel.GEBIETSART_KLARTEXT[gebiet.getGebietsart()] %>)</option>
+                        <option value="<%=gebiet.getNummer()%>"><%= gebiet.getName() %> (<%=Gebietsart.getGebietsartKlartext(gebiet) %>)</option>
                 <% }%>
                 </select>
         </div>
@@ -326,7 +332,7 @@
             <%if (AbstractImportEML.MODE_DB_P4 == systemInfo.getWahlModus() && 
                 GebietModel.EBENE_PSB == systemInfo.getWahlEbene() ){
                 String newLocation =  ClientHelper.getSuffixLevel(request, ApplicationBeanKonstanten.LEVEL_ADMIN)+
-                "&" + ApplicationBeanKonstanten.WORKIS + ApplicationBeanKonstanten.ADM_STIMMBEZIRKE;
+                "&" + ApplicationBeanKonstanten.WORKIS + Command.ADM_STIMMBEZIRKE.getId();
                 %>
                     <br/><br><ivu:int key="GeheZuStimmbezirksadministrationInfo"></ivu:int><br/><br/>
                     <ivu:a id="box2a" href="<%="/osv?"+newLocation %>"><ivu:int key="GeheZuStimmbezirksadministration"></ivu:int></ivu:a>

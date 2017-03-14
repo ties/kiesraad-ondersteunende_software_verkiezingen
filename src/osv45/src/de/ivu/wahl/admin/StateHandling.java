@@ -2,7 +2,7 @@
  * StateHandling
  * 
  * Created on 12.09.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -19,16 +19,16 @@ import de.ivu.wahl.WahlInfo;
  */
 public interface StateHandling {
   /**
-   * Gibt die Zeit der letzten Modelländerung zurück (zur Synchronisation von Client und Server)
+   * Gibt die Zeit der letzten Modellï¿½nderung zurï¿½ck (zur Synchronisation von Client und Server)
    * 
    * @param c Anwenderkontext
-   * @return Zeit der letzten Modelländerung
+   * @return Zeit der letzten Modellï¿½nderung
    * @throws EJBException genereller Fehler
    */
   long getZeitstempelLetzteAenderung(AnwContext c) throws EJBException;
 
   /**
-   * Setzt den Zeitstempel der letzten Änderung der Wahl auf die aktuelle Systemzeit des Servers
+   * Setzt den Zeitstempel der letzten ï¿½nderung der Wahl auf die aktuelle Systemzeit des Servers
    * 
    * @param c Anwenderkontext
    * @throws EJBException genereller Fehler
@@ -37,7 +37,7 @@ public interface StateHandling {
 
   /**
    * @param c Anwenderkontext (bestimmt die Wahl)
-   * @param wahlergebnisart Erfragen der Freigabe für Wahlergebnisart (nicht implementiert!)
+   * @param wahlergebnisart Erfragen der Freigabe fï¿½r Wahlergebnisart (nicht implementiert!)
    * @return <code>true</code> wenn die Wahl freigegeben wurde
    * @throws EJBException genereller Fehler
    */
@@ -58,25 +58,25 @@ public interface StateHandling {
   boolean isWahlVollstaendig(AnwContext c) throws EJBException;
 
   /**
-   * Setzen der Freigabe für Wahlergebnisart
+   * Setzen der Freigabe fï¿½r Wahlergebnisart
    * <P>
-   * Dies löst gleichzeitig noch die letzten Exporte fürs Internet aus, (und außerdem werden die
+   * Dies lï¿½st gleichzeitig noch die letzten Exporte fï¿½rs Internet aus, (und auï¿½erdem werden die
    * Werte der Sitzverteilung in die Datenbank geschrieben)
    * </P>
    * 
    * @param c Anwenderkontext
    * @param freigabe <code>true</code>, wenn die Wahl freigegeben werden soll, <code>false</code>,
-   *          wenn die Freigabe zurückgenommen werden soll
+   *          wenn die Freigabe zurï¿½ckgenommen werden soll
    * @throws EJBException genereller Fehler
    */
   void setFreigabe(AnwContext c, boolean freigabe) throws EJBException;
 
   /**
-   * Setzen der Freigabe für Wahlergebnisart
+   * Setzen der Freigabe fï¿½r Wahlergebnisart
    * 
    * @param c Anwenderkontext
    * @param freigabe <code>true</code>, wenn die Wahl freigegeben werden soll, <code>false</code>,
-   *          wenn die Freigabe zurückgenommen werden soll
+   *          wenn die Freigabe zurï¿½ckgenommen werden soll
    * @return <code>true</code> wenn die Wahl freigegeben wurde
    * @throws EJBException genereller Fehler
    */
@@ -94,7 +94,7 @@ public interface StateHandling {
   /**
    * @param c Anwednerkontext
    * @return Baum aller Gebiete der durch den Anwenderkontext bestimmten Wahl in einer
-   *         GUI-freundlichen Repräsentation
+   *         GUI-freundlichen Reprï¿½sentation
    * @throws EJBException genereller Fehler
    */
   GebietsBaum getGebietsBaum(AnwContext c) throws EJBException;

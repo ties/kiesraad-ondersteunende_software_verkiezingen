@@ -1,7 +1,7 @@
 /*
  * PropertyHandlingBean
  * 
- * Copyright (c) 2002-8 IVU Traffic Technologies AG
+ * Copyright (c) 2002-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -101,7 +101,7 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
    * Lesen einer bezeichneten Property
    * 
    * @return property-Wert als String
-   * @param key Schlüssel/Propertyname
+   * @param key Schlï¿½ssel/Propertyname
    * @throws EJBException
    */
   public String getProperty(String key) throws EJBException {
@@ -111,7 +111,7 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   /**
    * Setzen einer Property in der Datenbank
    * 
-   * @param key Schlüsselstring
+   * @param key Schlï¿½sselstring
    * @param value Wert (String)
    * @throws EJBException
    */
@@ -120,10 +120,10 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * Setzen aller Properties in der Datenbank, die mit dem angegebenen Schlüsselstring anfangen, auf
+   * Setzen aller Properties in der Datenbank, die mit dem angegebenen Schlï¿½sselstring anfangen, auf
    * denselben Wert.
    * 
-   * @param prefix Prefix des Schlüsselstrings
+   * @param prefix Prefix des Schlï¿½sselstrings
    * @param value Wert (String)
    * @throws EJBException
    */
@@ -187,11 +187,11 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * Lesen einer bezeichneten Property als int-Wert mit dem anschließenden Hochzählen
+   * Lesen einer bezeichneten Property als int-Wert mit dem anschlieï¿½enden Hochzï¿½hlen
    * 
    * @param key Name der Property
    * @param defaultValue Vorbelegung
-   * @return int-Wert der Property vor dem Hochzählen
+   * @return int-Wert der Property vor dem Hochzï¿½hlen
    * @throws EJBException
    */
   public int incIntProperty(String key, int defaultValue) throws EJBException {
@@ -201,10 +201,10 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * Lesen einer bezeichneten Property als int-Wert mit dem anschließenden Herunterzählen
+   * Lesen einer bezeichneten Property als int-Wert mit dem anschlieï¿½enden Herunterzï¿½hlen
    * 
    * @param key Name der Property
-   * @return int-Wert der Property vor dem Herunterzählen
+   * @return int-Wert der Property vor dem Herunterzï¿½hlen
    * @throws EJBException
    */
   public int decIntProperty(String key) throws EJBException {
@@ -214,11 +214,11 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * Lesen einer bezeichneten Property als int-Wert mit dem anschließenden Herunterzählen
+   * Lesen einer bezeichneten Property als int-Wert mit dem anschlieï¿½enden Herunterzï¿½hlen
    * 
    * @param key Name der Property
    * @param defaultValue Vorbelegung
-   * @return int-Wert der Property vor dem Herunterzählen
+   * @return int-Wert der Property vor dem Herunterzï¿½hlen
    * @throws EJBException
    */
   public int decIntProperty(String key, int defaultValue) throws EJBException {
@@ -246,10 +246,10 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * Lesen einer bezeichneten Property als long-Wert mit dem anschließenden Hochzählen
+   * Lesen einer bezeichneten Property als long-Wert mit dem anschlieï¿½enden Hochzï¿½hlen
    * 
    * @param key Name der Property
-   * @return long-Wert der Property vor dem Hochzählen
+   * @return long-Wert der Property vor dem Hochzï¿½hlen
    * @throws EJBException
    */
   public long incLongProperty(String key) throws EJBException {
@@ -259,10 +259,10 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * Lesen einer bezeichneten Property als long-Wert mit dem anschließenden Herunterzählen
+   * Lesen einer bezeichneten Property als long-Wert mit dem anschlieï¿½enden Herunterzï¿½hlen
    * 
    * @param key Name der Property
-   * @return long-Wert der Property vor dem Herunterzählen
+   * @return long-Wert der Property vor dem Herunterzï¿½hlen
    * @throws EJBException
    */
   public long decLongProperty(String key) throws EJBException {
@@ -316,7 +316,7 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   }
 
   /**
-   * @param key Name (Schlüssel) der Property
+   * @param key Name (Schlï¿½ssel) der Property
    * @return long-Property aus der DB (temp)
    * @throws EJBException
    */
@@ -331,7 +331,7 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   /**
    * setze long-Property in der DB (temp)
    * 
-   * @param key Name (Schlüssel) der Property
+   * @param key Name (Schlï¿½ssel) der Property
    * @param val long-Wert
    * @throws EJBException
    */

@@ -14,7 +14,7 @@
     <xsl:param name="H3-1_120_datum" select="'Datum'"/>
     <xsl:param name="H3-1_130_NaamGemachtigde"    select="'Naam van de gemachtigde van de politieke groepering'"/>
     <xsl:param name="H3-1_130_NaamGemachtigde_BC" select="'Naam van de gemachtigde van de (politieke) groepering'"/>
-    <xsl:param name="H3-1_140_verenigingsnaam"    select="'Volledige verenigingsnaam van de politieke groepering'"/>
-    <xsl:param name="H3-1_140_verenigingsnaam_BC" select="'Volledige verenigingsnaam van de (politieke) groepering'"/>
+    <xsl:param name="H3-1_140_verenigingsnaam"    select="'Volledige statutaire naam van de politieke groepering'"/>
+    <xsl:param name="H3-1_140_verenigingsnaam_BC" select="'Volledige statutaire naam van de (politieke) groepering'"/>
     <xsl:param name="H3-1_150_handtekening" select="'Handtekening'"/>
 </xsl:stylesheet>

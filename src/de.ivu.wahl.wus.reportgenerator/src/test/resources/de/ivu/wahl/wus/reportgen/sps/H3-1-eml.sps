@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
-		<parameter name="generateDate" default="(date missing)"/>
-		<parameter name="hashCode" default="SHA1"/>
+		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
+		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 	</parameters>
@@ -31,6 +31,7 @@
 		<globalparts/>
 		<designfragments>
 			<designfragment match="Address" spsfile="reused-parts-simple.sps" isactive="1"/>
+			<designfragment match="AffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Checkbox" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedList2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="CombinedListI17" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -43,6 +44,7 @@
 			<designfragment match="ElectionFraction" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionFractionPart2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="ElectionNameAcceptance" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameP2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ElectionNameSimple" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -50,6 +52,9 @@
 			<designfragment match="FootnoteSign" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="HashCode" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="Initials" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -60,7 +65,6 @@
 			<designfragment match="ObjectionsByVoters2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts-simple.sps" isactive="0"/>
-			<designfragment match="PartyName2" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -73,20 +77,10 @@
 		<xpath-functions/>
 	</flags>
 	<scripts>
-		<script language="javascript">
- function doInitialize() {
- markLoaded();
- return false;
- }
- function doIntref(inVerwijzingRef, inLabelRef) {
- var myWin = window;
- var myLabel = &apos;label-&apos; + inLabelRef;
- myWin.location.replace(&apos;#&apos; + myLabel);
- }
- // </script>
+		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -500,7 +494,7 @@
 																					<calltemplate subtype="named" match="LineBreak">
 																						<parameters/>
 																					</calltemplate>
-																					<text fixtext="_________________________________________________________">
+																					<text fixtext="____________________________________________">
 																						<properties class="underline"/>
 																					</text>
 																				</children>
@@ -511,6 +505,18 @@
 																		<children>
 																			<tgridcell>
 																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="rg:RG210/rg:AuthorisedAgent[@model = &quot;H3-1&quot;]/rg:AuthorisedAgentName != &quot;&quot;"/>
+																							<conditionbranch>
+																								<children>
+																									<calltemplate subtype="named" match="LineBreak">
+																										<parameters/>
+																									</calltemplate>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
 																					<condition>
 																						<children>
 																							<conditionbranch xpath="//eml:ElectionCategory[.!=&quot;BC&quot;]">
@@ -590,7 +596,10 @@
 																							</conditionbranch>
 																							<conditionbranch>
 																								<children>
-																									<text fixtext="_________________________________________________________">
+																									<calltemplate subtype="named" match="LineBreak">
+																										<parameters/>
+																									</calltemplate>
+																									<text fixtext="____________________________________________">
 																										<properties class="underline"/>
 																									</text>
 																								</children>
@@ -607,13 +616,25 @@
 																				<children>
 																					<condition>
 																						<children>
+																							<conditionbranch xpath="rg:RG210/rg:AuthorisedAgent[@model = &quot;H3-1&quot;]/rg:AuthorisedAgentParty != &quot;&quot;"/>
+																							<conditionbranch>
+																								<children>
+																									<calltemplate subtype="named" match="LineBreak">
+																										<parameters/>
+																									</calltemplate>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																					<condition>
+																						<children>
 																							<conditionbranch xpath="//eml:ElectionCategory[.!=&quot;BC&quot;]">
 																								<children>
 																									<condition>
 																										<children>
 																											<conditionbranch xpath="$lang=0">
 																												<children>
-																													<text fixtext="Volledige verenigingsnaam van de politieke groepering"/>
+																													<text fixtext="Volledige statutaire naam van de politieke groepering"/>
 																												</children>
 																											</conditionbranch>
 																											<conditionbranch>
@@ -631,7 +652,7 @@
 																										<children>
 																											<conditionbranch xpath="$lang=0">
 																												<children>
-																													<text fixtext="Volledige verenigingsnaam van de (politieke) groepering"/>
+																													<text fixtext="Volledige statutaire naam van de (politieke) groepering"/>
 																												</children>
 																											</conditionbranch>
 																											<conditionbranch>
@@ -648,6 +669,7 @@
 																				</children>
 																			</tgridcell>
 																			<tgridcell>
+																				<styles white-space="pre-wrap"/>
 																				<children>
 																					<condition>
 																						<children>
@@ -684,7 +706,10 @@
 																							</conditionbranch>
 																							<conditionbranch>
 																								<children>
-																									<text fixtext="_________________________________________________________">
+																									<calltemplate subtype="named" match="LineBreak">
+																										<parameters/>
+																									</calltemplate>
+																									<text fixtext="____________________________________________">
 																										<properties class="underline"/>
 																									</text>
 																								</children>
@@ -724,7 +749,7 @@
 																					<calltemplate subtype="named" match="LineBreak">
 																						<parameters/>
 																					</calltemplate>
-																					<text fixtext="_________________________________________________________">
+																					<text fixtext="____________________________________________">
 																						<properties class="underline"/>
 																					</text>
 																				</children>
@@ -734,6 +759,15 @@
 																</children>
 															</tgridbody-rows>
 														</children>
+														<wizard-data-repeat>
+															<children/>
+														</wizard-data-repeat>
+														<wizard-data-rows>
+															<children/>
+														</wizard-data-rows>
+														<wizard-data-columns>
+															<children/>
+														</wizard-data-columns>
 													</tgrid>
 													<newline/>
 													<newline/>

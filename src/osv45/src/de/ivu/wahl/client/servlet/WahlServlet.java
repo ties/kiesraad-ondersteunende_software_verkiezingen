@@ -1,36 +1,37 @@
 package de.ivu.wahl.client.servlet;
 
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ADM_ANW_LISTE;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ADM_EMPTY_EML_EXPORT;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ADM_N10_1_EXPORT;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ADM_PROPS;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_ANLEGEN;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_ANZEIGEN;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_LOESCHEN;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_VERAENDERN_1_AUSWAHLEN;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_VERAENDERN_2_EDIT;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ANWENDER_VERAENDERN_PASSWORT;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.EXPORT_VERZEICHNIS;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.GEBE;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.GEW_BEN;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.IMPORT_ERGEBNISSE;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.N11;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.O3;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.OSV4_1;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.OSV4_4;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.OSV4_5;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.P22;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.PROTOCOL_APPENDIX;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.STATUS;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.STATUS_GEB;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.T11;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.U16;
+import static de.ivu.wahl.client.beans.Command.ADM_ANW_LISTE;
+import static de.ivu.wahl.client.beans.Command.ADM_EMPTY_EML_EXPORT;
+import static de.ivu.wahl.client.beans.Command.ADM_N10_1_EXPORT;
+import static de.ivu.wahl.client.beans.Command.ADM_PROPS;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_ANLEGEN;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_ANZEIGEN;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_LOESCHEN;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_1_AUSWAHLEN;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_2_EDIT;
+import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_PASSWORT;
+import static de.ivu.wahl.client.beans.Command.AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION;
+import static de.ivu.wahl.client.beans.Command.EXPORT_VERZEICHNIS;
+import static de.ivu.wahl.client.beans.Command.GEBE;
+import static de.ivu.wahl.client.beans.Command.GEW_BEN;
+import static de.ivu.wahl.client.beans.Command.IMPORT_ERGEBNISSE;
+import static de.ivu.wahl.client.beans.Command.N11;
+import static de.ivu.wahl.client.beans.Command.O3;
+import static de.ivu.wahl.client.beans.Command.OSV4_1;
+import static de.ivu.wahl.client.beans.Command.OSV4_4;
+import static de.ivu.wahl.client.beans.Command.OSV4_5;
+import static de.ivu.wahl.client.beans.Command.P22;
+import static de.ivu.wahl.client.beans.Command.PROTOCOL_APPENDIX;
+import static de.ivu.wahl.client.beans.Command.STATUS;
+import static de.ivu.wahl.client.beans.Command.STATUS_GEB;
+import static de.ivu.wahl.client.beans.Command.T11;
+import static de.ivu.wahl.client.beans.Command.U16;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -51,6 +52,7 @@ import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.client.LogoutException;
 import de.ivu.wahl.client.beans.ApplicationBean;
+import de.ivu.wahl.client.beans.Command;
 import de.ivu.wahl.client.beans.EingabeBean;
 import de.ivu.wahl.client.beans.Executer;
 import de.ivu.wahl.client.util.ClientHelper;
@@ -58,13 +60,12 @@ import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 
 /**
- * �berschrift: WAS <BR>
- * Beschreibung: Dieses Servlet ist der zentrale Anlaufpunkt f�r alle Requests des WahlSystems
+ * Ueberschrift: WAS <BR>
+ * Beschreibung: Dieses Servlet ist der zentrale Anlaufpunkt fuer alle Requests des WahlSystems
  * <p>
- * Gem�� URI wird eine JSP angesprochen, gem�� der Parameter werden die entsprechenden Handler in
- * den Beans aufgerufen (execute command)<BR>
- * Copyright: Copyright (c) 2002-9<BR>
- * Organisation: IVU Traffic Technologies AG
+ * Gemaess URI wird eine JSP angesprochen, gemaess der Parameter werden die entsprechenden Handler
+ * in den Beans aufgerufen (execute command)<BR>
+ * Copyright (c) 2002-2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  * 
  * @author cos, klie, tdu
  */
@@ -179,7 +180,7 @@ public class WahlServlet extends AbstractWahlServlet {
     String qs = request.getQueryString();
     String key = "prevQuery:" + qs; //$NON-NLS-1$
     if ("POST".equals(request.getMethod())) { //$NON-NLS-1$
-      key += "�" + request.getParameterMap().hashCode(); //$NON-NLS-1$
+      key += "§" + request.getParameterMap().hashCode(); //$NON-NLS-1$
       _log.info(Messages.getString(MessageKeys.Logger_PageKey) + key);
     }
 
@@ -208,7 +209,7 @@ public class WahlServlet extends AbstractWahlServlet {
 
   private boolean isNoCache(HttpServletRequest request) {
 
-    List<Integer> noCachedWorks = Arrays.asList(ANWENDER_ANLEGEN,
+    List<Command> noCachedWorksCommands = Arrays.asList(ANWENDER_ANLEGEN,
         ANWENDER_ANZEIGEN,
         ANWENDER_VERAENDERN_1_AUSWAHLEN,
         ANWENDER_VERAENDERN_2_EDIT,
@@ -234,6 +235,10 @@ public class WahlServlet extends AbstractWahlServlet {
         STATUS,
         EXPORT_VERZEICHNIS,
         AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION);
+    Set<Integer> noCachedWorks = new HashSet<Integer>();
+    for (Command command : noCachedWorksCommands) {
+      noCachedWorks.add(command.getId());
+    }
 
     String pathInfo = request.getPathInfo();
     int work = ClientHelper.getWork(request, 0);

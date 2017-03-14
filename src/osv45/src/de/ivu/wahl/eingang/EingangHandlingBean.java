@@ -1,11 +1,23 @@
 /*
  * EingangHandlingBean
  * 
- * Copyright (c) 2002-8 IVU Traffic Technologies AG
+ * Copyright (c) 2002-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.eingang;
 
 import static de.ivu.wahl.WahlInfo.getWahlInfo;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.ADMITTED_VOTERS;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.ELECTION_NOTICES;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.GUELTIGE;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.GUELTIG_ODER_LEER;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.LEER;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.LESS_VALID_VOTES_THAN_ADMITTED_VOTERS;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.MORE_VALID_VOTES_THAN_ADMITTED_VOTERS;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.POLLING_CARDS;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.PROXY_VOTERS;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.UNGUELTIGE;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.WAEHLER;
+import static de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE;
 import static de.ivu.wahl.modell.StimmergebnisModel.STIMMART_KEINE;
 import static de.ivu.wahl.modell.StimmergebnisModel.STIMMART_LISTENSTIMME;
 import static de.ivu.wahl.modell.exception.ImportException.TYPE_CONTENT;
@@ -42,6 +54,7 @@ import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GebietsstatusModel;
 import de.ivu.wahl.modell.GruppeKonstanten;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
@@ -65,6 +78,7 @@ import de.ivu.wahl.modell.ejb.Stimmergebnis;
 import de.ivu.wahl.modell.ejb.StimmergebnisseUntergebieteHome;
 import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.modell.impl.StimmergebnisModelImpl;
+import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
  * SessionBean mit den wesentlichen Verarbeitungsfunktionen bei der Eingabe der Erfassungseinheiten
@@ -330,6 +344,58 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
     return id_Ergebniseingang;
   }
 
+  @Override
+  public int sourceForGUIMsg(AnwContext anwContext,
+      int gebietsart,
+      int gebietsnummer,
+      boolean forDisplay) throws EJBException {
+    Gebiet gebiet = getGebiet(anwContext, gebietsart, gebietsnummer);
+    WahlInfo wahlInfo = getWahlInfo(anwContext);
+    return sourceForFillEingangMsg(gebiet, forDisplay, false, wahlInfo.getAktuelleWahlergebnisart());
+  }
+
+  /**
+   * This method returns the source attribute or what #fillEingangMsg() would result in.
+   * 
+   * @return ErgebniseingangKonstanten.SOURCE_GUI_1 or ErgebniseingangKonstanten.SOURCE_GUI_2
+   */
+  int sourceForFillEingangMsg(final Gebiet gebiet,
+      final boolean forDisplay,
+      final boolean lastInputWithLastStatus,
+      final int wahlergebnisart) throws EJBException {
+    Ergebniseingang letzterGueltigerEingang = gebiet.getLetzterGueltigerEingang(wahlergebnisart);
+    Ergebniseingang letzterEingang = gebiet.getLastInput(wahlergebnisart);
+    // find last valid input
+    if (forDisplay && !lastInputWithLastStatus) {
+      if (letzterGueltigerEingang != null) {
+        // return last correct input, if it exists
+        // source first input to open first input next time
+        return ErgebniseingangKonstanten.SOURCE_GUI_1;
+      }
+    } else {
+      if (letzterEingang != null) {
+        int status = letzterEingang.getStatus();
+        // return the new GuiMsg for second input, if no one exists
+        if (ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK == status && !lastInputWithLastStatus) {
+          return ErgebniseingangKonstanten.SOURCE_GUI_2;
+        }
+
+        final int source;
+        // if previuos result is valid initialize first input
+        if (ErgebniseingangKonstanten.STATE_OK == status && !lastInputWithLastStatus) {
+          source = ErgebniseingangKonstanten.SOURCE_GUI_1;
+        } else {
+          source = letzterEingang.getHerkunft();
+        }
+        // return the last input with status of last result
+        return source;
+      }
+    }
+
+    // no result exists, return new GuiMsg for first input
+    return ErgebniseingangKonstanten.SOURCE_GUI_1;
+  }
+
   /**
    * Filling a GUIEingangMsg object with metadata and data of a previous result. Used to initialize
    * input GUI or to show the result
@@ -419,6 +485,73 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
   }
 
   /**
+   * Helper class to calculate the percentage value on screen
+   */
+  private static class PercentageValueCalculator {
+    private final boolean isReferendum = WahlInfo.getWahlInfo().isReferendum();
+    private final Map<GruppeAllgemein, Double> map = new HashMap<GruppeAllgemein, Double>();
+    private final GruppeAllgemein[] relevantSpecialGroups = {GUELTIGE, GUELTIG_ODER_LEER, WAEHLER,
+        WAHLBERECHTIGTE};
+
+    PercentageValueCalculator() {
+      for (GruppeAllgemein group : relevantSpecialGroups) {
+        map.put(group, 0d);
+      }
+    }
+
+    /**
+     * If votingResult contains the value of a relevant special group, memorize it.
+     */
+    void extractFrom(Stimmergebnis votingResult) {
+      int positionOfGroup = votingResult.getGruppeGebietsspezifisch().getPosition();
+      for (GruppeAllgemein specialGroup : relevantSpecialGroups) {
+        if (positionOfGroup == specialGroup.getPosition()) {
+          map.put(specialGroup, Double.valueOf(votingResult.getStimmen()));
+        }
+      }
+    }
+
+    public void setStimmenprozent(int positionOfGroup, int votes, Gruppendaten gruppendatenObj) {
+      GruppeAllgemein vergleichsGruppe = getRelevantSpecialGroup(positionOfGroup);
+      if (vergleichsGruppe != null) {
+        double vergleichsStimmen = map.get(vergleichsGruppe);
+        if (vergleichsStimmen > 0) {
+          gruppendatenObj.setStimmenprozent(votes * 100.0 / vergleichsStimmen);
+        }
+      }
+    }
+
+    /**
+     * @return the special group in comparision to which the percentage value shall be calculated
+     */
+    private GruppeAllgemein getRelevantSpecialGroup(int positionOfGroup) {
+      if (positionOfGroup == WAEHLER.getPosition()) {
+        return WAHLBERECHTIGTE;
+      } else if (positionOfGroup == UNGUELTIGE.getPosition()) {
+        return WAEHLER;
+      } else if (positionOfGroup == GUELTIG_ODER_LEER.getPosition()) {
+        return WAEHLER;
+      } else if (positionOfGroup == GUELTIGE.getPosition() || positionOfGroup == LEER.getPosition()) {
+        if (isReferendum) {
+          return GUELTIG_ODER_LEER;
+        } else {
+          return WAEHLER;
+        }
+      } else if (positionOfGroup > 0) {
+        // "normal" groups
+        if (isReferendum) {
+          return GUELTIG_ODER_LEER;
+        } else {
+          return GUELTIGE;
+        }
+      } else {
+        // The remaining special groups
+        return null;
+      }
+    }
+  }
+
+  /**
    * Filling a data object with voting results from a specified import action
    * 
    * @param msg data object for previous voting result
@@ -433,46 +566,25 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
     try {
       Collection<Stimmergebnis> votingResultCol = getStimmergebnisHome()
           .findAllByGebietAndErgebniseingang(id_Gebiet, ID_Ergebniseingang);
-      // total of valid votes
-      double validVotes = 0;
-      double totalVotes = 0;
-      double entitledVoters = 0;
+
+      PercentageValueCalculator stimmenprozentSetzer = new PercentageValueCalculator();
+      // First iteration: Extract values of special groups that are relevant for the calculation of
+      // percentage values
       for (Stimmergebnis stimmergebnis : votingResultCol) {
-        GruppeGebietsspezifisch gebietGruppe = stimmergebnis.getGruppeGebietsspezifisch();
-        if (gebietGruppe.getPosition() == GruppeAllgemein.GUELTIGE.position) {
-          validVotes = stimmergebnis.getStimmen();
-        }
-        if (gebietGruppe.getPosition() == GruppeAllgemein.WAEHLER.position) {
-          totalVotes = stimmergebnis.getStimmen();
-        }
-        if (gebietGruppe.getPosition() == GruppeAllgemein.WAHLBERECHTIGTE.position) {
-          entitledVoters = stimmergebnis.getStimmen();
-        }
+        stimmenprozentSetzer.extractFrom(stimmergebnis);
       }
+      // Fill msg, also calculation of percentage values
       for (Stimmergebnis votingResult : votingResultCol) {
         GruppeGebietsspezifisch gebietGruppe = votingResult.getGruppeGebietsspezifisch();
         Listenkandidatur lk = votingResult.getListenkandidatur();
-        final int positionGruppe = gebietGruppe.getPosition();
+        int positionGruppe = gebietGruppe.getPosition();
         Gruppendaten gruppendatenObj = msg.getGruppendatenObj(positionGruppe);
         int votes = votingResult.getStimmen();
         if (lk == null) {
           msg.setGruppenstimmen(positionGruppe, votes);
-          if (validVotes > 0 && positionGruppe > 0) {
-            gruppendatenObj.setStimmenprozent(votes * 100.0 / validVotes);
-          }
-          if (totalVotes > 0 && positionGruppe < 0) {
-            if (positionGruppe == GruppeAllgemein.GUELTIGE.position
-                || positionGruppe == GruppeAllgemein.UNGUELTIGE.position
-                || positionGruppe == GruppeAllgemein.LEER.position) {
-              gruppendatenObj.setStimmenprozent(votes * 100.0 / totalVotes);
-            } else if (positionGruppe == GruppeAllgemein.WAEHLER.position && entitledVoters > 0) {
-              gruppendatenObj.setStimmenprozent(votes * 100.0 / entitledVoters);
-            } else {
-              gruppendatenObj.setStimmenprozent(-1);
-            }
-          }
+          stimmenprozentSetzer.setStimmenprozent(positionGruppe, votes, gruppendatenObj);
         } else {
-          final int positionKandidat = lk.getListenplatz();
+          int positionKandidat = lk.getListenplatz();
           if (gruppendatenObj.getKandidat(positionKandidat) != null) {
             msg.setStimmen(positionGruppe, positionKandidat, votes);
           }
@@ -567,8 +679,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
     }
     // Set default value for number of persons entitled to vote, but not for second input
     if (region.getWahlberechtigte() > 0) {
-      msg.setGruppenstimmen(GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position,
-          region.getWahlberechtigte());
+      msg.setGruppenstimmen(WAHLBERECHTIGTE.getPosition(), region.getWahlberechtigte());
     }
     msg.setSource(source);
   }
@@ -645,20 +756,28 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
    * Calculate and set numer of GUELTIGE votes if it is invisible (necessary for OSV-1462)
    */
   private void calculateAndSetGueltigeIfInvisible(EingangMsg msg, Gebiet gebiet) {
-    if (!GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.GUELTIGE, gebiet)) {
-      int sumListVotes = 0;
-      for (GruppeGebietsspezifisch gruppeGebietsspezifisch : gebiet.getGruppeGebietsspezifischCol()) {
-        int position = gruppeGebietsspezifisch.getPosition();
-        if (position <= 0) {
-          continue;
-        }
+    if (!GruppeKonstanten.GruppeAllgemein.isVisible(GUELTIGE, gebiet)) {
+      int votes = calculateValidVotes(msg, gebiet, false);
+      msg.setGruppenstimmen(GUELTIGE.getPosition(), votes);
+    }
+    if (!GruppeKonstanten.GruppeAllgemein.isVisible(GUELTIG_ODER_LEER, gebiet)) {
+      int votes = calculateValidVotes(msg, gebiet, true);
+      msg.setGruppenstimmen(GUELTIG_ODER_LEER.getPosition(), votes);
+    }
+  }
+
+  private int calculateValidVotes(EingangMsg msg, Gebiet gebiet, boolean includeBlankVotes) {
+    int sumListVotes = 0;
+    for (GruppeGebietsspezifisch gruppeGebietsspezifisch : gebiet.getGruppeGebietsspezifischCol()) {
+      int position = gruppeGebietsspezifisch.getPosition();
+      if (position > 0 || includeBlankVotes && LEER.hasPosition(position)) {
         int listVotes = msg.getGruppenstimmen(position);
         if (listVotes >= 0) {
           sumListVotes += listVotes;
         }
       }
-      msg.setGruppenstimmen(GruppeKonstanten.GruppeAllgemein.GUELTIGE.position, sumListVotes);
     }
+    return sumListVotes;
   }
 
   private void checkSummeError(EingangMsg msg,
@@ -716,30 +835,23 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
 
   private EingangMsg checkForWarnings(EingangMsg msg, Gebiet gebiet, boolean onlyCheckSums)
       throws EJBException {
-    int wahlberechtigte = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position);
-    int waehler = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.WAEHLER.position);
-    int ungueltige = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.UNGUELTIGE.position);
-    int gueltige = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.GUELTIGE.position);
-    int leere = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.LEER.position);
+    int wahlberechtigte = msg.getGruppenstimmen(WAHLBERECHTIGTE.getPosition());
+    int waehler = msg.getGruppenstimmen(WAEHLER.getPosition());
+    int ungueltige = msg.getGruppenstimmen(UNGUELTIGE.getPosition());
+    int gueltige = msg.getGruppenstimmen(GUELTIGE.getPosition());
+    int leere = msg.getGruppenstimmen(LEER.getPosition());
 
-    int admittedVoters = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.ADMITTED_VOTERS.position);
-    int electionNotices = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.ELECTION_NOTICES.position);
-    int proxyVoters = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.PROXY_VOTERS.position);
-    int pollingCards = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.POLLING_CARDS.position);
+    int admittedVoters = msg.getGruppenstimmen(ADMITTED_VOTERS.getPosition());
+    int electionNotices = msg.getGruppenstimmen(ELECTION_NOTICES.getPosition());
+    int proxyVoters = msg.getGruppenstimmen(PROXY_VOTERS.getPosition());
+    int pollingCards = msg.getGruppenstimmen(POLLING_CARDS.getPosition());
 
-    int moreValidVotes = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.MORE_VALID_VOTES_THAN_ADMITTED_VOTERS.position);
-    int lessValidVotes = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.LESS_VALID_VOTES_THAN_ADMITTED_VOTERS.position);
+    int moreValidVotes = msg.getGruppenstimmen(MORE_VALID_VOTES_THAN_ADMITTED_VOTERS.getPosition());
+    int lessValidVotes = msg.getGruppenstimmen(LESS_VALID_VOTES_THAN_ADMITTED_VOTERS.getPosition());
 
     double upperLimit;
     double quote;
-    if (!onlyCheckSums
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.WAEHLER, gebiet)) {
+    if (!onlyCheckSums && GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
       if (wahlberechtigte > 0) {
 
         /*
@@ -772,47 +884,90 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
               .bind(MessageKeys.Error_DerAnteilDerLeerenStimmenIstZuHochSchwellwert_0, upperLimit));
         }
       } else {
-        if (GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.WAEHLER, gebiet)) {
+        /*
+         * Number of votes > 0
+         */
+        if (GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
           msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
           msg.addFehler(Messages.getString(MessageKeys.Error_DieAnzahlDerWaehlerMussPositivSein));
         }
       }
+      /*
+       * votes cast > voters
+       */
       if (waehler > wahlberechtigte) {
         msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
         msg.addFehler(Messages
             .bind(MessageKeys.Warning_AnzahlDerWaehlerIstGroesserAlsAnzahlWahlberechtigte));
       }
     }
-    if (GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.UNGUELTIGE, gebiet)
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.GUELTIGE, gebiet)
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.LEER, gebiet)
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.WAEHLER, gebiet)) {
+    /*
+     * invalid + valid + empty votes != total votes cast
+     */
+    if (GruppeKonstanten.GruppeAllgemein.isVisible(UNGUELTIGE, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(GUELTIGE, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(LEER, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
       checkSummeWarning(msg,
           Messages.getString(MessageKeys.Msg_ausGueltigenUngueltigenUndLeerenStimmen),
-          GruppeKonstanten.GruppeAllgemein.WAEHLER.kurzname,
+          WAEHLER.kurzname,
           ungueltige + gueltige + leere,
           waehler,
-          GruppeKonstanten.GruppeAllgemein.WAEHLER.position);
+          WAEHLER.getPosition());
     }
-    if (GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.ELECTION_NOTICES, gebiet)
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.PROXY_VOTERS, gebiet)
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.POLLING_CARDS, gebiet)
-        && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.ADMITTED_VOTERS, gebiet)
+    /*
+     * For referendum: sum of votes for answers + empty + invalid votes != total votes cast
+     */
+    if (WahlInfo.getWahlInfo().isReferendum()
+        && GruppeKonstanten.GruppeAllgemein.isVisible(UNGUELTIGE, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(LEER, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
+      int validVotesOnAnswers = calculateValidVotes(msg, gebiet, false);
+      checkSummeWarning(msg,
+          Messages.getString(MessageKeys.Msg_ausDenReferendumOptionenUngueltigenUndLeerenStimmen),
+          WAEHLER.kurzname,
+          validVotesOnAnswers + ungueltige + leere,
+          waehler,
+          WAEHLER.getPosition());
+    }
+    /*
+     * election notices + proxy voters + polling cards != admitted voters
+     */
+    if (GruppeKonstanten.GruppeAllgemein.isVisible(ELECTION_NOTICES, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(PROXY_VOTERS, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(POLLING_CARDS, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(ADMITTED_VOTERS, gebiet)
         && !isRegionWithPostalVotesInPSB(gebiet)) {
       checkSummeWarning(msg,
           Messages.getString(MessageKeys.Msg_ausElectionNoticesUndProxyVotersUndPollingCards),
-          GruppeKonstanten.GruppeAllgemein.ADMITTED_VOTERS.kurzname,
+          ADMITTED_VOTERS.kurzname,
           electionNotices + proxyVoters + pollingCards,
           admittedVoters,
-          GruppeKonstanten.GruppeAllgemein.ADMITTED_VOTERS.position);
+          ADMITTED_VOTERS.getPosition());
+    }
+    /*
+     * Same check as before for EK, but without polling cards: election notices + proxy voters !=
+     * admitted voters
+     */
+    if (GruppeKonstanten.GruppeAllgemein.isVisible(ELECTION_NOTICES, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(PROXY_VOTERS, gebiet)
+        && !GruppeKonstanten.GruppeAllgemein.isVisible(POLLING_CARDS, gebiet)
+        && GruppeKonstanten.GruppeAllgemein.isVisible(ADMITTED_VOTERS, gebiet)
+        && !isRegionWithPostalVotesInPSB(gebiet)) {
+      checkSummeWarning(msg,
+          Messages.getString(MessageKeys.Msg_ausElectionNoticesUndProxyVoters),
+          ADMITTED_VOTERS.kurzname,
+          electionNotices + proxyVoters,
+          admittedVoters,
+          ADMITTED_VOTERS.getPosition());
     }
     if (!onlyCheckSums) {
-      if (GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.WAEHLER, gebiet)
-          && GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.ADMITTED_VOTERS, gebiet)
-          && GruppeKonstanten.GruppeAllgemein
-              .isVisible(GruppeAllgemein.MORE_VALID_VOTES_THAN_ADMITTED_VOTERS, gebiet)
-          && GruppeKonstanten.GruppeAllgemein
-              .isVisible(GruppeAllgemein.LESS_VALID_VOTES_THAN_ADMITTED_VOTERS, gebiet)) {
+      if (GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)
+          && GruppeKonstanten.GruppeAllgemein.isVisible(ADMITTED_VOTERS, gebiet)
+          && GruppeKonstanten.GruppeAllgemein.isVisible(MORE_VALID_VOTES_THAN_ADMITTED_VOTERS,
+              gebiet)
+          && GruppeKonstanten.GruppeAllgemein.isVisible(LESS_VALID_VOTES_THAN_ADMITTED_VOTERS,
+              gebiet)) {
         SystemInfo systemInfo = SystemInfo.getSystemInfo();
         String moreValidVotesErrorMsg = null;
         if (systemInfo.getWahlEbene() == GebietModel.EBENE_PSB) {
@@ -834,7 +989,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
           LOGGER.warn(moreValidVotesErrorMsg);
           msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
           msg.addFehler(moreValidVotesErrorMsg);
-          msg.addGruppefehler(GruppeKonstanten.GruppeAllgemein.MORE_VALID_VOTES_THAN_ADMITTED_VOTERS.position,
+          msg.addGruppefehler(MORE_VALID_VOTES_THAN_ADMITTED_VOTERS.getPosition(),
               moreValidVotesErrorMsg);
         }
         String lessValidVotesErrorMsg = null;
@@ -857,8 +1012,23 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
           LOGGER.warn(lessValidVotesErrorMsg);
           msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
           msg.addFehler(lessValidVotesErrorMsg);
-          msg.addGruppefehler(GruppeKonstanten.GruppeAllgemein.LESS_VALID_VOTES_THAN_ADMITTED_VOTERS.position,
+          msg.addGruppefehler(LESS_VALID_VOTES_THAN_ADMITTED_VOTERS.getPosition(),
               lessValidVotesErrorMsg);
+        }
+      }
+      if (WahlInfo.getWahlInfo().isEK()) {
+        /*
+         * For EK election: admitted voters = votes cast
+         */
+        if (GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)
+            && GruppeKonstanten.GruppeAllgemein.isVisible(ADMITTED_VOTERS, gebiet)) {
+          if (waehler != admittedVoters) {
+            String notEqualMsg = Messages
+                .bind(MessageKeys.Error_validVotesNotEqualToAdmittedVoters, waehler, admittedVoters);
+            msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
+            msg.addFehler(notEqualMsg);
+            msg.addGruppefehler(ADMITTED_VOTERS.getPosition(), notEqualMsg);
+          }
         }
       }
       // Check if there was an identical input before
@@ -868,7 +1038,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
         for (Ergebniseingang ee : eeCol) {
           if (!ee.getErfassungseinheit().equals(gebiet)) {
             Gebiet otherRegion = ee.getErfassungseinheit();
-            String otherRegionStr = GebietModel.GEBIETSART_KLARTEXT[otherRegion.getGebietsart()]
+            String otherRegionStr = Gebietsart.getGebietsartKlartext(otherRegion)
                 + " " + otherRegion.getName(); //$NON-NLS-1$
             msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
             msg.addFehler(Messages.bind(MessageKeys.Warning_ResultIsIdenticalWithResultForRegion_0,
@@ -886,7 +1056,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
   private boolean isRegionWithPostalVotesInPSB(Gebiet gebiet) {
     if (SystemInfo.getSystemInfo().getWahlEbene() != GebietModel.EBENE_PSB) {
       return false;
-    } else if (!GruppeKonstanten.GruppeAllgemein.isTKOrEP(gebiet.getWahl())) {
+    } else if (!ElectionCategory.fromWahlart(gebiet.getWahl().getWahlart()).hasPostalVotes()) {
       return false;
     } else if (GruppeKonstanten.GruppeAllgemein.isGebietOrHasUntergebietSGravenhage(gebiet)) {
       return true;
@@ -995,20 +1165,17 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
   }
 
   private void checkSumAgainstEligibleAndMetVoters(EingangMsg msg, int sumListVotes, Gebiet gebiet) {
-    int wahlberechtigte = msg
-        .getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position);
-    int waehler = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.WAEHLER.position);
-    int ungueltige = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.UNGUELTIGE.position);
-    int leere = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.LEER.position);
-    int gueltige = msg.getGruppenstimmen(GruppeKonstanten.GruppeAllgemein.GUELTIGE.position);
+    int wahlberechtigte = msg.getGruppenstimmen(WAHLBERECHTIGTE.getPosition());
+    int waehler = msg.getGruppenstimmen(WAEHLER.getPosition());
+    int ungueltige = msg.getGruppenstimmen(UNGUELTIGE.getPosition());
+    int leere = msg.getGruppenstimmen(LEER.getPosition());
+    int gueltige = msg.getGruppenstimmen(GUELTIGE.getPosition());
 
     /*
      * Persons entitled to vote > 0
      */
     if (wahlberechtigte < 0) {
-      addNichtAusgefuelltFehler(msg,
-          GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.kurzname,
-          GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position);
+      addNichtAusgefuelltFehler(msg, WAHLBERECHTIGTE.kurzname, WAHLBERECHTIGTE.getPosition());
     }
     // can be 0
     // if (wahlberechtigte == 0) {
@@ -1017,33 +1184,25 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
     // msg.setStatus(ErgebniseingangKonstanten.STATE_ERROR);
     // }
     if (waehler < 0) {
-      addNichtAusgefuelltFehler(msg,
-          GruppeKonstanten.GruppeAllgemein.WAEHLER.kurzname,
-          GruppeKonstanten.GruppeAllgemein.WAEHLER.position);
+      addNichtAusgefuelltFehler(msg, WAEHLER.kurzname, WAEHLER.getPosition());
     }
 
     if (ungueltige < 0) {
-      addNichtAusgefuelltFehler(msg,
-          GruppeKonstanten.GruppeAllgemein.UNGUELTIGE.kurzname,
-          GruppeKonstanten.GruppeAllgemein.UNGUELTIGE.position);
+      addNichtAusgefuelltFehler(msg, UNGUELTIGE.kurzname, UNGUELTIGE.getPosition());
     }
     if (leere < 0) {
-      addNichtAusgefuelltFehler(msg,
-          GruppeKonstanten.GruppeAllgemein.LEER.kurzname,
-          GruppeKonstanten.GruppeAllgemein.LEER.position);
+      addNichtAusgefuelltFehler(msg, LEER.kurzname, LEER.getPosition());
     }
     if (gueltige < 0) {
-      addNichtAusgefuelltFehler(msg,
-          GruppeKonstanten.GruppeAllgemein.GUELTIGE.kurzname,
-          GruppeKonstanten.GruppeAllgemein.GUELTIGE.position);
+      addNichtAusgefuelltFehler(msg, GUELTIGE.kurzname, GUELTIGE.getPosition());
     }
-    if (GruppeKonstanten.GruppeAllgemein.isVisible(GruppeAllgemein.GUELTIGE, gebiet)) {
+    if (GruppeKonstanten.GruppeAllgemein.isVisible(GUELTIGE, gebiet)) {
       checkSummeError(msg,
-          GruppeKonstanten.GruppeAllgemein.GUELTIGE.kurzname,
+          GUELTIGE.kurzname,
           Messages.getString(MessageKeys.Msg_ListenStimmen),
           gueltige,
           sumListVotes,
-          GruppeKonstanten.GruppeAllgemein.GUELTIGE.position);
+          GUELTIGE.getPosition());
     }
   }
 
@@ -1367,7 +1526,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
         supRegionResult.setID_Ergebniseingang(id_Ergebniseingang);
         supRegionResult.setID_Listenkandidatur(agStimmzuordnung._id_Listenkandidatur);
         // consider default for WAHLBERECHTIGTE
-        if (agStimmzuordnung.getGruppeGebietsspezifisch().getPosition() == GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position) {
+        if (agStimmzuordnung.getGruppeGebietsspezifisch().getPosition() == WAHLBERECHTIGTE
+            .getPosition()) {
           int val = agStimmzuordnung.getGruppeGebietsspezifisch().getGebiet().getWahlberechtigte();
           if (val >= 0) {
             supRegionResult.setStimmen(val);
@@ -1379,7 +1539,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
       // PSB: number of eligible voters are edited via special administration page and should always
       // equal their value of the region
       if (SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_PSB
-          && agStimmzuordnung.getGruppeGebietsspezifisch().getPosition() == GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position) {
+          && agStimmzuordnung.getGruppeGebietsspezifisch().getPosition() == WAHLBERECHTIGTE
+              .getPosition()) {
         int val = agStimmzuordnung.getGruppeGebietsspezifisch().getGebiet().getWahlberechtigte();
         if (val >= 0) {
           supRegionResult.setStimmen(val);
@@ -1432,7 +1593,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
       Stimmzuordnung stimmzuordnung = stimmergebnisEintrag.getKey();
       int aktErgebnis = stimmergebnisEintrag.getValue().getStimmen();
       // Consider default values for eligible voters
-      if (stimmergebnisEintrag.getKey()._gruppeGebietsspezifisch.getPosition() == GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position) {
+      if (stimmergebnisEintrag.getKey()._gruppeGebietsspezifisch.getPosition() == WAHLBERECHTIGTE
+          .getPosition()) {
         int defWahlberechtigte = stimmergebnisEintrag.getKey()._gruppeGebietsspezifisch.getGebiet()
             .getWahlberechtigte();
         if (defWahlberechtigte > 0) {
@@ -1482,12 +1644,12 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
       // hold for reference
       if (stimmergebnis != null) {
         stimmergebnisse.put(new Stimmzuordnung(gruppeGebietsspezifisch, null), stimmergebnis);
-        if (gruppeGebietsspezifisch.getPosition() == GruppeAllgemein.WAEHLER.position) {
+        if (gruppeGebietsspezifisch.getPosition() == WAEHLER.getPosition()) {
           stimmergebnisWaehler = stimmergebnis;
         }
-        if (gruppeGebietsspezifisch.getPosition() == GruppeAllgemein.GUELTIGE.position
-            || gruppeGebietsspezifisch.getPosition() == GruppeAllgemein.UNGUELTIGE.position
-            || gruppeGebietsspezifisch.getPosition() == GruppeAllgemein.LEER.position) {
+        if (gruppeGebietsspezifisch.getPosition() == GUELTIGE.getPosition()
+            || gruppeGebietsspezifisch.getPosition() == UNGUELTIGE.getPosition()
+            || gruppeGebietsspezifisch.getPosition() == LEER.getPosition()) {
           anzahlWaehler += stimmergebnis.getStimmen();
         }
       }

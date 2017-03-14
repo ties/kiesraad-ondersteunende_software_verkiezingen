@@ -8,7 +8,7 @@
  * Passwort ändern
  * Ändert das Passwort des angemeldeten Benutzers
  *
- * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_anwender_change_pw.jsp,v 1.15 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -17,6 +17,9 @@
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
+
    response.setHeader("Cache-Control","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ //HTTP 1.1
    response.setHeader("Pragma","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ //HTTP 1.0
    response.setDateHeader ("Expires", 0); //$NON-NLS-1$ //prevents caching at the proxy server 
@@ -67,12 +70,7 @@
 
 <body class="hghell" onLoad="sc()">
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="admAnwenderChangePW"/></td>
-   </tr>
-   <tr class="hgeeeeee">
-      <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">

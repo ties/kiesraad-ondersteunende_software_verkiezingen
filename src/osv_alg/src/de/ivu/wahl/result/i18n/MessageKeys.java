@@ -2,7 +2,7 @@
  * MessageKeys
  * 
  * Created on 05.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.i18n;
 
@@ -77,7 +77,7 @@ public class MessageKeys {
   public static final String Result_Tracelog_DeterminingValidityCombinedList = "Result_Tracelog_DeterminingValidityCombinedList"; //$NON-NLS-1$
   public static final String Result_Tracelog_District_0_WasDeterminedFromTheFollowingList = "Result_Tracelog_District_0_WasDeterminedFromTheFollowingList"; //$NON-NLS-1$
   public static final String Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByDistrictNumber = "Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByDistrictNumber"; //$NON-NLS-1$
-  public static final String Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByNumberOfSeats = "Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByNumberOfSeats"; //$NON-NLS-1$
+  public static final String Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByNumberOfVotes = "Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByNumberOfVotes"; //$NON-NLS-1$
   public static final String Result_Tracelog_DrawingLotsAccordingToP_0_Selected_1_Alternatives_2 = "Result_Tracelog_DrawingLotsAccordingToP_0_Selected_1_Alternatives_2"; //$NON-NLS-1$;
   public static final String Result_Tracelog_ElectedCandidatesFor_0_1 = "Result_Tracelog_ElectedCandidatesFor_0_1"; //$NON-NLS-1$;
   public static final String Result_Tracelog_ElectoralQuota = "Result_Tracelog_ElectoralQuota"; //$NON-NLS-1$
@@ -132,6 +132,8 @@ public class MessageKeys {
   public static final String Result_User_LateListExhaustionFor_0_In_1_SeatPassesTo_2 = "Result_User_LateListExhaustionFor_0_In_1_SeatPassesTo_2"; //$NON-NLS-1$
   public static final String Result_User_ListExhaustionFor_0_1_SeatsLostToOtherList = "Result_User_ListExhaustionFor_0_1_SeatsLostToOtherList"; //$NON-NLS-1$
   public static final String Result_User_ListExhaustionFor_0_SeatLostToOtherList = "Result_User_ListExhaustionFor_0_SeatLostToOtherList"; //$NON-NLS-1$
+  public static final String Result_User_ListExhaustionEKFor_0_1_SeatsLostToOtherList = "Result_User_ListExhaustionEKFor_0_1_SeatsLostToOtherList"; //$NON-NLS-1$
+  public static final String Result_User_ListExhaustionEKFor_0_SeatLostToOtherList = "Result_User_ListExhaustionEKFor_0_SeatLostToOtherList"; //$NON-NLS-1$
   public static final String Result_User_List_0_HasAbsoluteMajorityOfVotesAndReceivesSeatFromList_1 = "Result_User_List_0_HasAbsoluteMajorityOfVotesAndReceivesSeatFromList_1"; //$NON-NLS-1$
 
   /**

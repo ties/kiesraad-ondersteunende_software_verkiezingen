@@ -7,7 +7,7 @@
     <description>
         Wahlapplikation für die Niederlande
     </description>
-    <display-name>Ondersteunende Software Verkiezingsproces</display-name>
+    <display-name>Ondersteunende Software Verkiezingen</display-name>
     <module>
         <ejb>osv.jar</ejb>
     </module>

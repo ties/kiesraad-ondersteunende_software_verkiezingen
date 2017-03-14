@@ -2,7 +2,7 @@
  * NumberedObject
  * 
  * Created on 12.01.2009
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.result;
 

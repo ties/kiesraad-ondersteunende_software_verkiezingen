@@ -1,8 +1,7 @@
 package de.ivu.util.session;
 
 /**
- * Copyright: Copyright (c) 2001 <BR>
- * Organisation: IVU Traffic Technologies AG <BR>
+ * Copyright (c) 2001 Statistisches Bundesamt und IVU Traffic Technologies AG
  * 
  * @author Dr. Domagoj Cosic (cos@ivu.de)
  * @created 29. Mai 2001

@@ -1,6 +1,6 @@
 /*
  * Created on 18.02.2011
- * Copyright (c) 2011 IVU Traffic Technologies AG
+ * Copyright (c) 2011 Kiesraad
  */
 package de.ivu.wahl.wus.utils.ui;
 

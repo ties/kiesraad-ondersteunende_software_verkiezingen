@@ -1,7 +1,7 @@
 /*
  * EingangHandling
  * 
- * Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -195,15 +195,21 @@ public abstract class ImportUtil {
       LOGGER.error(e, e);
       throw new ImportException(Messages.getString(MessageKeys.Error_FehlerBeimParserBauen), e);
     }
-    Document doc;
+    Document doc = null;
     try {
       doc = new Builder(reader, false).build(inputStream);
       reader.setFeature("http://apache.org/xml/features/validation/schema", true); //$NON-NLS-1$
-      doc = new Builder(reader, true).build(getStreamWithSchema(doc, schema));
+      Document validatedDoc = new Builder(reader, true).build(getStreamWithSchema(doc, schema));
       // return document root
-      return doc.getRootElement();
+      return validatedDoc.getRootElement();
     } catch (ValidityException e) {
       LOGGER.error(e, e);
+      if (doc != null && e.getMessage().contains("kr:RegisteredParty") //$NON-NLS-1$
+          && e.getMessage().contains("xml:space")) { //$NON-NLS-1$
+        // Ignore error
+        // "cvc-complex-type.3.2.2: Attribute 'xml:space' is not allowed to appear in element 'kr:RegisteredParty'"
+        return doc.getRootElement();
+      }
       throw new ImportException(e.getMessage(), e);
     } catch (ParsingException e) {
       LOGGER.error(e, e);

@@ -5,11 +5,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Exception für Fehler während des Imports von Daten. Es wird jeweils der Dateiname zur
+ * Exception fï¿½r Fehler wï¿½hrend des Imports von Daten. Es wird jeweils der Dateiname zur
  * Identifikation und evtl. ein Offset mit der Feldposition gehalten. Liegt eine andere Exception zu
  * Grunde, so kann auch diese gespeichert werden.
  * 
- * @author klie@ivu.de cos@ivu.de Copyright (c) 2004 IVU Traffic Technologies AG
+ * @author klie@ivu.de cos@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class ImportException extends Exception {
@@ -70,8 +70,8 @@ public class ImportException extends Exception {
    * @param msg menschenlesbare Fehlermeldung
    * @param offset bei Blockformaten: Offset in der Quelle, an dem der Fehler entdeckt wurde
    * @param t {@link Throwable}, welche die Unterbrechung der Verarbeitung verursacht hat
-   * @param zielGebietsnummer Nummer des Gebiets, zu dem die importierten Daten gehören
-   * @param zielGebietsart Gebietsart des Gebiets, zu dem die importierten Daten gehören
+   * @param zielGebietsnummer Nummer des Gebiets, zu dem die importierten Daten gehï¿½ren
+   * @param zielGebietsart Gebietsart des Gebiets, zu dem die importierten Daten gehï¿½ren
    */
   public ImportException(File file,
       String msg,
@@ -87,8 +87,8 @@ public class ImportException extends Exception {
    * @param msg menschenlesbare Fehlermeldung
    * @param offset bei Blockformaten: Offset in der Quelle, an dem der Fehler entdeckt wurde
    * @param t {@link Throwable}, welche die Unterbrechung der Verarbeitung verursacht hat
-   * @param zielGebietsnummer Nummer des Gebiets, zu dem die importierten Daten gehören
-   * @param zielGebietsart Gebietsart des Gebiets, zu dem die importierten Daten gehören
+   * @param zielGebietsnummer Nummer des Gebiets, zu dem die importierten Daten gehï¿½ren
+   * @param zielGebietsart Gebietsart des Gebiets, zu dem die importierten Daten gehï¿½ren
    */
   public ImportException(URL url,
       String msg,
@@ -199,28 +199,28 @@ public class ImportException extends Exception {
   }
 
   /**
-   * @param gebietsnummer Nummer des Gebiets, zu dem die importierten Daten gehören
+   * @param gebietsnummer Nummer des Gebiets, zu dem die importierten Daten gehï¿½ren
    */
   public void setZielGebietsnummer(int gebietsnummer) {
     _gebietsnummer = gebietsnummer;
   }
 
   /**
-   * @return Nummer des Gebiets, zu dem die importierten Daten gehören
+   * @return Nummer des Gebiets, zu dem die importierten Daten gehï¿½ren
    */
   public int getZielGebietsnummer() {
     return _gebietsnummer;
   }
 
   /**
-   * @param gebietsart Gebietsart des Gebiets, zu dem die importierten Daten gehören
+   * @param gebietsart Gebietsart des Gebiets, zu dem die importierten Daten gehï¿½ren
    */
   public void setZielGebietsart(int gebietsart) {
     _gebietsart = gebietsart;
   }
 
   /**
-   * @return Gebietsart des Gebiets, zu dem die importierten Daten gehören
+   * @return Gebietsart des Gebiets, zu dem die importierten Daten gehï¿½ren
    */
   public int getZielGebietsart() {
     return _gebietsart;

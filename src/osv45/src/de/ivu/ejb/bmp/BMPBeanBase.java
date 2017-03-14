@@ -1,7 +1,7 @@
 /*
  * BMPBeanBase
  * 
- * Copyright (c) 2004-7 IVU Traffic Technologies AG
+ * Copyright (c) 2004-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb.bmp;
 
@@ -553,7 +553,7 @@ public abstract class BMPBeanBase extends IVUBeanBase implements EntityBean {
 
   /**
    * Returns a String with a comma separated list of Strings in 'apostrophes' from the given String
-   * collection übergebenen String-Collection
+   * collection ï¿½bergebenen String-Collection
    * 
    * @param itb
    * @return new String with comma separated list of Strings in 'apostrophes' from the given String

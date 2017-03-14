@@ -1,7 +1,7 @@
 /*
  * SimpleMapEntry
  * 
- * Created on 05.11.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * Created on 05.11.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.util;
 
@@ -9,8 +9,8 @@ import java.util.Map;
 
 /**
  * @author cos@ivu.de, IVU Traffic Technologies AG
- * @param <K> Datentyp für Key
- * @param <V> Datentyp für Value
+ * @param <K> Datentyp fï¿½r Key
+ * @param <V> Datentyp fï¿½r Value
  */
 public class SimpleMapEntry<K, V> implements Map.Entry<K, V> {
   K _key;

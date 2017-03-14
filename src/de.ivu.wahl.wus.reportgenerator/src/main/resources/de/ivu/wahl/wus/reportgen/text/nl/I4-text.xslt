@@ -3,8 +3,8 @@
     <xsl:param name="I4_010_pretitle" select="'Model I 4'"/>
     <xsl:param name="I4_020_title" select="'Proces-verbaal over geldigheid en nummering kandidatenlijsten en lijstencombinaties'"/>
     <xsl:param name="I4_030_MetDitFormulier" select="'Met dit formulier doet het centraal stembureau verslag van de zitting waarin is besloten over:'"/>
-    <xsl:param name="I4_030_1_MetDitFormulier" select="'de geldigheid en nummering van de kandidatenlijsten'"/>
-    <xsl:param name="I4_030_2_MetDitFormulier" select="'het handhaven van de kandidaten op en de aanduidingen bovenaan de kandidatenlijsten;'"/>
+    <xsl:param name="I4_030_1_MetDitFormulier" select="'de geldigheid en nummering van de kandidatenlijsten;'"/>
+    <xsl:param name="I4_030_2_MetDitFormulier" select="'het handhaven van de kandidaten op, en de aanduidingen bovenaan, de kandidatenlijsten;'"/>
     <xsl:param name="I4_030_3_MetDitFormulier" select="'de geldigheid van lijstencombinaties '"/>
     <xsl:param name="I4_030_MetDitFormulier_nietEK" select="'(niet bij de Eerste Kamerverkiezing).'"/>
     <xsl:param name="I4_040_Zitting" select="'Zitting'"/>
@@ -57,8 +57,8 @@
     <xsl:param name="I4_500_voorletters" select="'voorletters'"/>
     <xsl:param name="I4_510_Woonplaats" select="'woonplaats'"/>
     <xsl:param name="I4_520_NummeringKandidatenlijsten" select="'Nummering van de kandidatenlijsten'"/>
-    <xsl:param name="I4_530_NummeringBijAantalZetels" select="'Nummering op grond van het aantal zetels behaald bij de laatst gehouden verkiezing'"/>
-    <xsl:param name="I4_540_EerstZijn" select="'Eerst zijn de kandidatenlijsten genummerd van de politieke groeperingen die een of meer zetels hebben behaald bij de laatst gehouden verkiezing, in de volgorde van de bij die verkiezing op de desbetreffende lijsten uitgebrachte aantallen stemmen. Voor zover nodig is rekening gehouden met samengevoegde aanduidingen. Bij een gelijk aantal stemmen is er genummerd via loting.'"/>
+    <xsl:param name="I4_530_NummeringBijAantalZetels" select="'Nummering op grond van het aantal stemmen behaald bij de laatstgehouden verkiezing'"/>
+    <xsl:param name="I4_540_EerstZijn" select="'Eerst zijn de kandidatenlijsten genummerd van de politieke groeperingen die een of meer zetels hebben behaald bij de laatstgehouden verkiezing, in de volgorde van de bij die verkiezing op de desbetreffende lijsten uitgebrachte aantallen stemmen. Voor zover nodig is rekening gehouden met samengevoegde aanduidingen. Bij een gelijk aantal stemmen is er genummerd via loting.'"/>
     <xsl:param name="I4_550_nummer" select="'nummer'"/>
     <xsl:param name="I4_560_aanduidingPolitiekeGroepering" select="'aanduiding politieke groepering'"/>
     <xsl:param name="I4_570_aantalStemmen" select="'aantal stemmen bij laatste verkiezing'"/>

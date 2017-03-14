@@ -1,7 +1,7 @@
 /*
  * SitzverteilungHandlingBean
  * 
- * Copyright (c) 2002-8 IVU Traffic Technologies AG
+ * Copyright (c) 2002-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  * Created on 06.02.2004 
  */
 package de.ivu.wahl.auswertung.sv;
@@ -39,7 +39,7 @@ import de.ivu.wahl.dataimport.ImportHandling;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.AlternativeModel;
-import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GruppeComposite;
 import de.ivu.wahl.modell.GruppeComposite.Listenkandidat;
 import de.ivu.wahl.modell.GruppeKonstanten;
@@ -683,7 +683,7 @@ public class SitzverteilungHandlingBean extends WahlStatelessSessionBeanBase
       alternativtext += BLANK + "Stel" + BLANK + list.getSatz();
     } else {
       Gebiet gebiet = list.getGruppeGebietsspezifischCol().iterator().next().getGebiet();
-      alternativtext += BLANK + GebietModel.GEBIETSART_KLARTEXT[gebiet.getGebietsart()] + BLANK
+      alternativtext += BLANK + Gebietsart.getGebietsartKlartext(gebiet) + BLANK
           + gebiet.getNumber4Display();
     }
     return alternativtext;

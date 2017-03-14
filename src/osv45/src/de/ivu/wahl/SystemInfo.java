@@ -1,7 +1,7 @@
 /*
  * SystemInfo
  * 
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl;
 
@@ -33,6 +33,7 @@ public class SystemInfo implements Serializable, Cloneable {
 
   private final transient AuthorityLevel _wahlEbene;
   private final transient int _wahlModus;
+  private final transient String _installationSuffix;
 
   static SystemInfo __systemInfo;
 
@@ -53,6 +54,7 @@ public class SystemInfo implements Serializable, Cloneable {
   public SystemInfo() {
     _wahlModus = getPropertyHandling().getIntProperty(PROP_ELECTION_MODE);
     _wahlEbene = AuthorityLevel.byId(getPropertyHandling().getIntProperty(PROP_ELECTION_LEVEL));
+    _installationSuffix = getPropertyHandling().getProperty(Konstanten.PROP_INSTALLATION_SUFFIX);
   }
 
   /**
@@ -80,6 +82,13 @@ public class SystemInfo implements Serializable, Cloneable {
     return _wahlModus;
   }
 
+  public String getInstallationSuffix() {
+    return _installationSuffix == null ? "" : _installationSuffix; //$NON-NLS-1$
+  }
+
+  /**
+   * @return Either "P4" or "P5"
+   */
   public String getModusklartext() {
     return WahlModel.WAHLMODUS_KLARTEXT.get(_wahlModus);
   }

@@ -2,7 +2,7 @@
  * AuswertungHandling
  * 
  * Created on 15.10.2003
- * Copyright (c) 2003-7 IVU Traffic Technologies AG
+ * Copyright (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 

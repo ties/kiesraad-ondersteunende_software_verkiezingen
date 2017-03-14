@@ -2,7 +2,7 @@
  * GebietHierarchie
  * 
  * Created on 06.02.2004
- * Copyright (c) 2004 IVU Traffic Technologies AG
+ * Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl;
 
@@ -23,7 +23,7 @@ import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.GebietHome;
 
 /**
- * Gibt zu jeder ID_Gebiet die Liste der Schlüssel aller Nachkommen inklusive des Gebiets selbst.
+ * Gibt zu jeder ID_Gebiet die Liste der Schlï¿½ssel aller Nachkommen inklusive des Gebiets selbst.
  * 
  * @author cos@ivu.de IVU Traffic Technologies AG
  */
@@ -32,8 +32,8 @@ public class GebietHierarchie implements Serializable {
   private static final long serialVersionUID = 7498748186004865494L;
 
   /**
-   * Kombinierter Gebietsschlüssel. Fasst zwei Identitätsangaben eines Gebiets zusammen:
-   * Wahlunabhängig über Gebietsart und Gebietsnummer und Wahlabhängig über den Primärschlüssel.
+   * Kombinierter Gebietsschlï¿½ssel. Fasst zwei Identitï¿½tsangaben eines Gebiets zusammen:
+   * Wahlunabhï¿½ngig ï¿½ber Gebietsart und Gebietsnummer und Wahlabhï¿½ngig ï¿½ber den Primï¿½rschlï¿½ssel.
    * 
    * @author cos@ivu.de, IVU Traffic Technologies AG
    */
@@ -65,7 +65,7 @@ public class GebietHierarchie implements Serializable {
     }
 
     /**
-     * @return Primärschlüssel des Gebiets
+     * @return Primï¿½rschlï¿½ssel des Gebiets
      */
     public String getID_Gebiet() {
       return _id_Gebiet;
@@ -105,7 +105,7 @@ public class GebietHierarchie implements Serializable {
   private static final Map<String, Set<GebietKey>> __linGebietshierachie = new HashMap<String, Set<GebietKey>>();
 
   /**
-   * Liefert die Aufzählung aller Gebiete des ausgewählten Teilbaums.
+   * Liefert die Aufzï¿½hlung aller Gebiete des ausgewï¿½hlten Teilbaums.
    * 
    * @param id_Gebiet Wurzelgebiet des Teilbaums
    * @return alle Gebiete des Teilbaums, inklusive der Wurzel, als {@link GebietKey}

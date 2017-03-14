@@ -2,7 +2,7 @@
  * AbstractElectionResultDeterminator
  * 
  * Created on 02.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.determination;
 

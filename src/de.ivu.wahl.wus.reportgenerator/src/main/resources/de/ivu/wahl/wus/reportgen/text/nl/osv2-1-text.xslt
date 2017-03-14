@@ -24,6 +24,7 @@
     <xsl:param name="o2-1_080_3_EK_verzuimenHerstellen" select="'op het secretariaat van de Kiesraad, Herengracht 21 te ’s-Gravenhage'"/>
     <xsl:param name="o2-1_080_4_verzuimenHerstellen" select="'ter secretarie van de gemeente waar het centraal stembureau is gevestigd'"/>
     <xsl:param name="o2-1_080_5_verzuimenHerstellen" select="'op het bestuurskantoor waar de kandidatenlijst is ingeleverd'"/>
+    <xsl:param name="o2-1_080_6_AB_verzuimenHerstellen" select="'bij het centraal stembureau van het waterschap'"/>
     <xsl:param name="o2-1_090_contactOpTeNemen" select="'Ik verzoek u van tevoren contact op te nemen (contactgegevens rechtsboven), over het tijdstip waarop degene die het verzuim/de verzuimen komt herstellen verwacht te komen.'"/>
     <xsl:param name="o2-1_100_Hoogachtend" select="'Hoogachtend,'"/>
     <xsl:param name="o2-1_110_DeKiesraad" select="'DE KIESRAAD,'"/>

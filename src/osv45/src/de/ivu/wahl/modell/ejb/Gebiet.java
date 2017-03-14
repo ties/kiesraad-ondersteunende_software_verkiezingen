@@ -1,7 +1,7 @@
 /*
  * Gebiet
  * 
- * Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb;
 
@@ -10,7 +10,7 @@ import java.util.Collection;
 import javax.ejb.EJBException;
 
 /**
- * EJB-Schnittstelle der Entity Gebiet, die zu den Metadaten der Wahl gehört. Definiert auch die
+ * EJB-Schnittstelle der Entity Gebiet, die zu den Metadaten der Wahl gehï¿½rt. Definiert auch die
  * gebietsspezifische Logik zur Verarbeitung eines Ergebniseingangs auf der jeweiligen Instanz des
  * Gebiets.
  * 
@@ -19,43 +19,43 @@ import javax.ejb.EJBException;
 public interface Gebiet extends BasicGebiet {
 
   /**
-   * Gibt Auskunft über die Vollständigkeit des Gebietes für die aktuelle Wahlergebnisart
+   * Gibt Auskunft ï¿½ber die Vollstï¿½ndigkeit des Gebietes fï¿½r die aktuelle Wahlergebnisart
    * 
-   * @return <code>true</code> wenn das Gebiet vollständig ist
+   * @return <code>true</code> wenn das Gebiet vollstï¿½ndig ist
    * @throws EJBException bei einem Problem
    */
   boolean isVollstaendig() throws EJBException;
 
   /**
-   * Gibt den aktuellen Gebietsstatus (für die aktuelle Wahlergebnisart) zurück
+   * Gibt den aktuellen Gebietsstatus (fï¿½r die aktuelle Wahlergebnisart) zurï¿½ck
    * 
-   * @return aktueller Gebietsstatus (für die aktuelle Wahlergebnisart)
+   * @return aktueller Gebietsstatus (fï¿½r die aktuelle Wahlergebnisart)
    * @throws EJBException bei einem Problem
    */
   Gebietsstatus getCurrentGebietsstatus() throws EJBException;
 
   /**
-   * Gibt den aktuellen Gebietsstatus (für die gegebene Wahlergebnisart) zurück
+   * Gibt den aktuellen Gebietsstatus (fï¿½r die gegebene Wahlergebnisart) zurï¿½ck
    * 
    * @param wahlergebnisart Wahergebnisart
-   * @return aktueller Gebietsstatus (für die gegebene Wahlergebnisart)
+   * @return aktueller Gebietsstatus (fï¿½r die gegebene Wahlergebnisart)
    * @throws EJBException bei einem Problem
    */
   Gebietsstatus getCurrentGebietsstatus(int wahlergebnisart) throws EJBException;
 
   /**
-   * Gibt den Gebietsstatus für den übergebenen Ergebniseingang zurück
+   * Gibt den Gebietsstatus fï¿½r den ï¿½bergebenen Ergebniseingang zurï¿½ck
    * 
    * @param ergebniseingang
-   * @return Gebietsstatus für den übergebenen Ergebniseingang zurück
+   * @return Gebietsstatus fï¿½r den ï¿½bergebenen Ergebniseingang zurï¿½ck
    * @throws EJBException bei einem Problem
    */
   Gebietsstatus getGebietsstatusForErgebniseingang(Ergebniseingang ergebniseingang)
       throws EJBException;
 
   /**
-   * Gibt alle direkten Kinder dieses Gebietes zurück, die insgesamt eingehen müssen, damit das
-   * Gebiet vollständig wird.
+   * Gibt alle direkten Kinder dieses Gebietes zurï¿½ck, die insgesamt eingehen mï¿½ssen, damit das
+   * Gebiet vollstï¿½ndig wird.
    * 
    * @return alle erwarteten direkten Kinder dieses Gebiets
    * @throws EJBException bei einem Problem
@@ -63,9 +63,9 @@ public interface Gebiet extends BasicGebiet {
   Collection<Gebiet> getGebietErwartetCol() throws EJBException;
 
   /**
-   * Ermittelt den letzten gültigen Eingang für dieses Gebiet für die aktuelle Wahlergebnisart
+   * Ermittelt den letzten gï¿½ltigen Eingang fï¿½r dieses Gebiet fï¿½r die aktuelle Wahlergebnisart
    * 
-   * @return Letzter gültiger Eingang für das Gebiet (bzw. eins seiner untergeordneten Gebiete),
+   * @return Letzter gï¿½ltiger Eingang fï¿½r das Gebiet (bzw. eins seiner untergeordneten Gebiete),
    *         wenn es einen gibt, oder <code>null</code> sonst
    * @throws EJBException bei einem Problem
    */
@@ -90,30 +90,30 @@ public interface Gebiet extends BasicGebiet {
   Ergebniseingang getLastInput(int wahlergebnisart) throws EJBException;
 
   /**
-   * Ermittelt den letzten gültigen Eingang für dieses Gebiet für eine bestimmte Wahlergebnisart
+   * Ermittelt den letzten gï¿½ltigen Eingang fï¿½r dieses Gebiet fï¿½r eine bestimmte Wahlergebnisart
    * 
-   * @param wahlergebnisart Wahlergebnisart, für die der letzte gültige Eingang ermittelt werden
+   * @param wahlergebnisart Wahlergebnisart, fï¿½r die der letzte gï¿½ltige Eingang ermittelt werden
    *          soll
-   * @return Letzter gültiger Eingang für das Gebiet (bzw. eins seiner untergeordneten Gebiete),
+   * @return Letzter gï¿½ltiger Eingang fï¿½r das Gebiet (bzw. eins seiner untergeordneten Gebiete),
    *         wenn es einen gibt, oder <code>null</code> sonst
    * @throws EJBException bei einem Problem
    */
   Ergebniseingang getLetzterGueltigerEingang(int wahlergebnisart) throws EJBException;
 
   /**
-   * Setzt den letzten gültigen Eingang für das Gebiet für die aktuelle Wahlergebnisart
+   * Setzt den letzten gï¿½ltigen Eingang fï¿½r das Gebiet fï¿½r die aktuelle Wahlergebnisart
    * 
-   * @param ergebniseingang Letzter gültiger Eingang für das Gebiet (bzw. eins seiner
+   * @param ergebniseingang Letzter gï¿½ltiger Eingang fï¿½r das Gebiet (bzw. eins seiner
    *          untergeordneten Gebiete), wenn es einen gibt, oder <code>null</code> sonst
    * @throws EJBException bei einem Problem
    */
   void setLetzterGueltigerEingang(Ergebniseingang ergebniseingang) throws EJBException;
 
   /**
-   * Setzt den letzten gültigen Eingang für das Gebiet für die explizit angegebene Wahlergebnisart
+   * Setzt den letzten gï¿½ltigen Eingang fï¿½r das Gebiet fï¿½r die explizit angegebene Wahlergebnisart
    * 
    * @param wahlergebnisart explizit angegebene Wahlergebnisart
-   * @param ergebniseingang letzter gültiger Eingang für das Gebiet (bzw. eins seiner
+   * @param ergebniseingang letzter gï¿½ltiger Eingang fï¿½r das Gebiet (bzw. eins seiner
    *          untergeordneten Gebiete), wenn es einen gibt, oder <code>null</code> sonst
    * @throws EJBException bei einem Problem
    */
@@ -124,7 +124,7 @@ public interface Gebiet extends BasicGebiet {
    * Gibt die Anzahl erwarteter Gebiete einer bestimmten Gebietsart, die unter diesem Gebiet liegen
    * (inklusive dieses Gebiet selbst)
    * 
-   * @param gebietsart Gebietsart der zu berücksichtigenden Gebiete
+   * @param gebietsart Gebietsart der zu berï¿½cksichtigenden Gebiete
    * @return Anzahl erwarteter Gebiete einer bestimmten Gebietsart unter und inklusive diesem Gebiet
    * @throws EJBException bei einem Problem
    */
@@ -143,9 +143,9 @@ public interface Gebiet extends BasicGebiet {
   Collection<Gebiet> getAllGebieteInHierarchieByGebietsart(int gebietsart) throws EJBException;
 
   /**
-   * Gibt die Auswertungseinheit zurück, zu der dieses Gebiet gehört
+   * Gibt die Auswertungseinheit zurï¿½ck, zu der dieses Gebiet gehï¿½rt
    * 
-   * @return die Auswertungseinheit, zu der dieses Gebiet zugehört
+   * @return die Auswertungseinheit, zu der dieses Gebiet zugehï¿½rt
    */
   Gebiet getAuswertungseinheit();
 

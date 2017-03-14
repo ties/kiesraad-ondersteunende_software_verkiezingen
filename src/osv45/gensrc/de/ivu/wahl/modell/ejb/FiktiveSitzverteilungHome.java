@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.FiktiveSitzverteilungModel;
 /**
   * LocalHome interface for the entity FiktiveSitzverteilung as BMP Entity Bean.
   *
-  * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface FiktiveSitzverteilungHome extends EJBLocalHome {

@@ -8,18 +8,21 @@
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.beans.ExportP5Commands"%>
 <%@ page import="de.ivu.wahl.export.XMLTags"%>
 <%@ page import="de.ivu.wahl.modell.GruppeModel"%>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.wus.electioncategory.ElectionCategory"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "CandidateAddressExport"; //$NON-NLS-1$
+
 String breite = "100%"; //$NON-NLS-1$
 String prefix = ApplicationBeanKonstanten.PREFIX;
 int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0); //$NON-NLS-1$
@@ -99,12 +102,7 @@ String i18nText = "Export_Cand_Address_text"; //$NON-NLS-1$
         </div>
         <div id="trans">
             <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-                <tr class="hgeeeeee" align="right">
-                    <td><ivu:help key="CandidateAddressExport"/></td>
-                </tr>
-                <tr class="hgeeeeee">
-                  <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-               </tr>
+                <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
@@ -171,8 +169,7 @@ String i18nText = "Export_Cand_Address_text"; //$NON-NLS-1$
                                             // reset export status
                                             admBean.resetExportStateKanBen();
                                             //forward to Werkmap
-                                            String urlExp = "/osv?cmd=" + ExportP5Commands.CMD_ADM_EXPORT_CANDIDATE_ADDRESS + "&" + ApplicationBeanKonstanten.WORK + "=" 
-                                                + ApplicationBeanKonstanten.EXPORT_VERZEICHNIS + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                            String urlExp = "/osv?cmd=" + ExportP5Commands.CMD_ADM_EXPORT_CANDIDATE_ADDRESS + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                             %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>

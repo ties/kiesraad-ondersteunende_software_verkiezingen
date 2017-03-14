@@ -2,7 +2,7 @@
  * MultipleElectedCandidate
  * 
  * Created on 21.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.determination;
 
@@ -82,7 +82,8 @@ public class MultipleElectedCandidate implements Comparable<MultipleElectedCandi
     for (CandidateResult candidateResult : candidateResults) {
       P2List p2List = candidateResult.getP2List();
       P3List p3List = getP3List(ecv, p2List);
-      long votes = votesCounter.getVotesPerP3List().get(p3List);
+      long votes = votesCounter.getVotesPerCandidateInP3List(p3List)
+          .get(candidateResult.getCandidate());
       if (votes > maxVotes
           || votes == maxVotes
           && candidateResult.getP2List().getElectoralDistrictNumber() < maxCandidateResult

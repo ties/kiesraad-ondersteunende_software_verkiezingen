@@ -2,7 +2,7 @@
  * GruppeKonstanten
  * 
  * Created on 05.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell;
 
@@ -11,6 +11,7 @@ import static de.ivu.wahl.modell.GruppeKonstanten.StimmabgabeArt.BALLOT_AND_LETT
 import static de.ivu.wahl.modell.GruppeKonstanten.StimmabgabeArt.LETTER;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,6 @@ import org.apache.commons.lang.StringUtils;
 
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.modell.ejb.Gebiet;
-import de.ivu.wahl.modell.ejb.Wahl;
 import de.ivu.wahl.util.BundleHelper;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
@@ -51,13 +51,13 @@ public class GruppeKonstanten {
     KEYS_OF_SPECIAL_GROUPS = Collections.unmodifiableList(tmp);
   }
 
-  static final String KEINE_KATEGORIE = ""; //$NON-NLS-1$
-  static final String KATEGORIE_3 = "VOTER_TYPE"; //$NON-NLS-1$
-  static final String KATEGORIE_4 = "WAEHLER"; //$NON-NLS-1$
-  static final String KATEGORIE_5 = "EXPLANATIONS"; //$NON-NLS-1$
+  private static final String KEINE_KATEGORIE = ""; //$NON-NLS-1$
+  private static final String KAT_VOTER_TYPE = "VOTER_TYPE"; //$NON-NLS-1$
+  private static final String KAT_WAEHLER = "WAEHLER"; //$NON-NLS-1$
+  private static final String KAT_EXPLANATIONS = "EXPLANATIONS"; //$NON-NLS-1$
 
-  static final boolean COLLAPSIBLE = true;
-  static final boolean NOT_COLLAPSIBLE = false;
+  private static final boolean COLLAPSIBLE = true;
+  private static final boolean NOT_COLLAPSIBLE = false;
 
   public static enum StimmabgabeArt {
     BALLOT, LETTER, BALLOT_AND_LETTER;
@@ -65,113 +65,151 @@ public class GruppeKonstanten {
 
   public static enum GruppeAllgemein {
     // The original general groups
-    WAHLBERECHTIGTE(100, -24, -24, KEINE_KATEGORIE, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
+    WAHLBERECHTIGTE(100, KEINE_KATEGORIE, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
 
     // Admitted voters
-    ELECTION_NOTICES(600, -23, -9, KATEGORIE_3, BALLOT, NOT_COLLAPSIBLE),
+    ELECTION_NOTICES(700, KAT_VOTER_TYPE, BALLOT, NOT_COLLAPSIBLE),
 
-    PROXY_VOTERS(700, -22, -8, KATEGORIE_3, BALLOT, NOT_COLLAPSIBLE),
+    PROXY_VOTERS(800, KAT_VOTER_TYPE, BALLOT, NOT_COLLAPSIBLE),
 
-    POLLING_CARDS(800, -21, -7, KATEGORIE_3, BALLOT, NOT_COLLAPSIBLE),
+    POLLING_CARDS(900, KAT_VOTER_TYPE, BALLOT, NOT_COLLAPSIBLE),
 
-    ADMITTED_VOTERS(900, -20, -6, KATEGORIE_3, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
+    ADMITTED_VOTERS(1000, KAT_VOTER_TYPE, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
 
     // The original general groups
-    GUELTIGE(300, -19, -20, KATEGORIE_4, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
+    /** Valid votes to political groups */
+    GUELTIGE(300, KAT_WAEHLER, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
 
-    UNGUELTIGE(500, -18, -21, KATEGORIE_4, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
+    LEER(400, KAT_WAEHLER, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
 
-    LEER(400, -17, -22, KATEGORIE_4, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
+    /** Valid votes to political groups and blank votes */
+    GUELTIG_ODER_LEER(500, KAT_WAEHLER, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
 
-    WAEHLER(200, -16, -23, KATEGORIE_4, BALLOT_AND_LETTER, NOT_COLLAPSIBLE), // eigentlich: Anzahl
-                                                                             // abgegebene Stimmen
-                                                                             // (gültige, ungültige,
-                                                                             // leere)
+    UNGUELTIGE(600, KAT_WAEHLER, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
+
+    /** eigentlich: Anzahl abgegebene Stimmen (gueltige, ungueltige, leere) */
+    WAEHLER(200, KAT_WAEHLER, KAT_VOTER_TYPE, BALLOT_AND_LETTER, NOT_COLLAPSIBLE),
 
     // Explaining the difference between admitted voters and valid votes
-    MORE_VALID_VOTES_THAN_ADMITTED_VOTERS(1000, -15, -19, KATEGORIE_5, BALLOT_AND_LETTER,
-        COLLAPSIBLE),
+    MORE_VALID_VOTES_THAN_ADMITTED_VOTERS(1100, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE),
 
-    LESS_VALID_VOTES_THAN_ADMITTED_VOTERS(1100, -14, -18, KATEGORIE_5, BALLOT_AND_LETTER,
-        COLLAPSIBLE),
+    LESS_VALID_VOTES_THAN_ADMITTED_VOTERS(1200, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE),
 
-    BALLOT_PAPER_NOT_RETURNED(1200, -13, -17, KATEGORIE_5, BALLOT, COLLAPSIBLE),
+    BALLOT_PAPER_NOT_RETURNED(1300, KAT_EXPLANATIONS, BALLOT, COLLAPSIBLE),
 
-    TOO_FEW_BALLOT_PAPER_ISSUED(1300, -12, -16, KATEGORIE_5, BALLOT, COLLAPSIBLE),
+    TOO_FEW_BALLOT_PAPER_ISSUED(1400, KAT_EXPLANATIONS, BALLOT, COLLAPSIBLE),
 
-    TOO_MANY_BALLOT_PAPER_ISSUED(1400, -11, -15, KATEGORIE_5, BALLOT, COLLAPSIBLE),
+    TOO_MANY_BALLOT_PAPER_ISSUED(1500, KAT_EXPLANATIONS, BALLOT, COLLAPSIBLE),
 
-    EMPTY_POSTAL_VOTES(1500, -10, -14, KATEGORIE_5, LETTER, COLLAPSIBLE),
+    EMPTY_POSTAL_VOTES(1600, KAT_EXPLANATIONS, LETTER, COLLAPSIBLE),
 
-    POSTAL_VOTES_WITH_MULTIPLE_BALLOT_PAPERS(1600, -9, -13, KATEGORIE_5, LETTER, COLLAPSIBLE),
+    POSTAL_VOTES_WITH_MULTIPLE_BALLOT_PAPERS(1700, KAT_EXPLANATIONS, LETTER, COLLAPSIBLE),
 
-    BALLOT_PAPERS_LOST(1700, -8, -12, KATEGORIE_5, BALLOT_AND_LETTER, COLLAPSIBLE),
+    BALLOT_PAPERS_LOST(1800, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE),
 
-    NO_EXPLANATION(1800, -7, -11, KATEGORIE_5, BALLOT_AND_LETTER, COLLAPSIBLE),
+    NO_EXPLANATION(1900, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE),
 
-    OTHER_EXPLANATIONS(1900, -6, -10, KATEGORIE_5, BALLOT_AND_LETTER, COLLAPSIBLE);
+    OTHER_EXPLANATIONS(2000, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE);
 
     private static final String S_GRAVENHAGE = "'s-Gravenhage"; //$NON-NLS-1$
 
     public int schluessel;
-    public int position;
-    public String name;
+    private final String name;
+    private final String nameEK;
     public String kurzname;
     public String hilfstext;
-    public String kategorie;
+    private String kategorie;
+    private String kategorieEK;
     public StimmabgabeArt stimmabgabeArt;
     public boolean collapsible;
 
     @SuppressWarnings("hiding")
-    GruppeAllgemein(int schluessel,
-        int positionPSB,
-        int positionHSBCSB,
+    private GruppeAllgemein(int schluessel,
         String kategorie,
         StimmabgabeArt stimmabgabeArt,
         boolean collapsible) {
+      this(schluessel, kategorie, kategorie, stimmabgabeArt, collapsible);
+    }
+
+    @SuppressWarnings("hiding")
+    private GruppeAllgemein(int schluessel,
+        String kategorie,
+        String kategorieEK,
+        StimmabgabeArt stimmabgabeArt,
+        boolean collapsible) {
       String ebenenKlartext = GruppeAllgemeinEbeneProvider.getEbenenKlartext();
-      int wahlEbene = GruppeAllgemeinEbeneProvider.getWahlEbene();
 
       this.schluessel = schluessel;
       this.name = BundleHelper
           .getBundleString("GruppeKonstanten." + ebenenKlartext + "." + this.name()); //$NON-NLS-1$ //$NON-NLS-2$
+      this.nameEK = BundleHelper
+          .getBundleString("GruppeKonstanten." + ebenenKlartext + ".EK." + this.name()); //$NON-NLS-1$ //$NON-NLS-2$
       this.kurzname = BundleHelper.getBundleString("GruppeKonstanten." + this.name() + ".kurz"); //$NON-NLS-1$ //$NON-NLS-2$
-      this.hilfstext = BundleHelper
-          .getBundleString("GruppeKonstanten." + this.name() + ".hilfstext"); //$NON-NLS-1$ //$NON-NLS-2$
-      if (wahlEbene == GebietModel.EBENE_PSB) {
-        this.position = positionPSB;
-      } else {
-        this.position = positionHSBCSB;
-      }
+
       if (StringUtils.isBlank(kategorie)) {
         this.kategorie = ""; //$NON-NLS-1$
       } else {
         this.kategorie = BundleHelper
             .getBundleString("GruppeKonstanten." + ebenenKlartext + ".KATEGORIE." + kategorie); //$NON-NLS-1$ //$NON-NLS-2$
       }
+      if (StringUtils.isBlank(kategorieEK)) {
+        this.kategorieEK = ""; //$NON-NLS-1$
+      } else {
+        this.kategorieEK = BundleHelper
+            .getBundleString("GruppeKonstanten." + ebenenKlartext + ".EK.KATEGORIE." + kategorieEK); //$NON-NLS-1$ //$NON-NLS-2$
+      }
       this.stimmabgabeArt = stimmabgabeArt;
       this.collapsible = collapsible;
     }
 
+    public int getPosition() {
+      return getPosition(WahlInfo.getWahlInfo().isEK());
+    }
+
+    public int getPosition(boolean isEK) {
+      int wahlEbene = GruppeAllgemeinEbeneProvider.getWahlEbene();
+      if (wahlEbene == GebietModel.EBENE_PSB) {
+        return GruppePositionProvider.getPositionPSB(this);
+      } else if (isEK) {
+        return GruppePositionProvider.getPositionHSBCSBEK(this);
+      } else {
+        return GruppePositionProvider.getPositionHSBCSB(this);
+      }
+    }
+
+    public boolean hasPosition(int position) {
+      return position == getPosition();
+    }
+
     public static String getHilfstext(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null) {
-        return ""; //$NON-NLS-1$
+      if (WahlInfo.getWahlInfo().isReferendum()
+          && (Arrays.asList(LEER, GUELTIGE, null).contains(gruppeAllgemein))) {
+        return BundleHelper.getBundleString("Referendumhilfstext"); //$NON-NLS-1$
       }
-      return gruppeAllgemein.hilfstext;
+      if (gruppeAllgemein == null) {
+        return StringUtils.EMPTY;
+      }
+      return BundleHelper
+          .getBundleString("GruppeKonstanten." + gruppeAllgemein.name() + ".hilfstext"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static String getKategorie(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
+        if (WahlInfo.getWahlInfo().isReferendum()) {
+          return GruppeAllgemein.UNGUELTIGE.kategorie;
+        }
         return ""; //$NON-NLS-1$
       }
-      return gruppeAllgemein.kategorie;
+      return WahlInfo.getWahlInfo().isEK()
+          ? gruppeAllgemein.kategorieEK
+          : gruppeAllgemein.kategorie;
     }
 
     public static String getUnterkategorie(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
         return ""; //$NON-NLS-1$
       }
       switch (gruppeAllgemein) {
@@ -193,7 +231,7 @@ public class GruppeKonstanten {
 
     public static boolean isRadioButtons(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
         return false;
       }
       if (gruppeAllgemein.equals(MORE_VALID_VOTES_THAN_ADMITTED_VOTERS)) {
@@ -204,7 +242,7 @@ public class GruppeKonstanten {
 
     public static boolean isCollapsible(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
         return false;
       }
       return gruppeAllgemein.collapsible
@@ -213,18 +251,20 @@ public class GruppeKonstanten {
 
     public static String getBuchstabe(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
         return null;
       }
       switch (gruppeAllgemein) {
         case WAEHLER :
-          if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB) {
+          if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB
+              || WahlInfo.getWahlInfo().isEK()) {
             return "B"; //$NON-NLS-1$
           }
           break;
 
         case ADMITTED_VOTERS :
-          if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB) {
+          if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB
+              || WahlInfo.getWahlInfo().isEK()) {
             return "A"; //$NON-NLS-1$
           }
           break;
@@ -234,7 +274,7 @@ public class GruppeKonstanten {
 
     public static boolean isSmallFontSize(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
         return false;
       }
       switch (gruppeAllgemein) {
@@ -253,11 +293,11 @@ public class GruppeKonstanten {
 
     public static boolean isSmallGapAfterwards(int position) {
       GruppeAllgemein gruppeAllgemein = findByPosition(position);
-      if (gruppeAllgemein == null || WahlInfo.getWahlInfo().isReferendum()) {
+      if (gruppeAllgemein == null) {
         return false;
       }
       switch (gruppeAllgemein) {
-        case LEER :
+        case UNGUELTIGE :
           if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB) {
             return true;
           }
@@ -272,17 +312,6 @@ public class GruppeKonstanten {
 
     public static boolean isVisible(int position, Gebiet gebiet) {
       return isVisible(findByPosition(position), gebiet);
-    }
-
-    public static List<GruppeAllgemein> filterGruppenAllgemeinVisibleInRegion(Gebiet region,
-        Iterable<GruppeAllgemein> gruppenAllgemein) {
-      List<GruppeAllgemein> result = new ArrayList<GruppeAllgemein>();
-      for (GruppeAllgemein gruppeAllgemein : gruppenAllgemein) {
-        if (isVisible(gruppeAllgemein, region)) {
-          result.add(gruppeAllgemein);
-        }
-      }
-      return result;
     }
 
     /**
@@ -305,12 +334,21 @@ public class GruppeKonstanten {
         return true;
       }
 
-      if (WahlInfo.getWahlInfo().isReferendum()) {
+      if (WahlInfo.getWahlInfo().isReferendum() && GUELTIGE.equals(gruppeAllgemein)) {
+        return false;
+      }
+      if (GUELTIG_ODER_LEER.equals(gruppeAllgemein)) {
+        return false;
+      }
+
+      if (WahlInfo.getWahlInfo().isEK()) {
         switch (gruppeAllgemein) {
+          case GUELTIGE :
+          case WAEHLER :
           case ELECTION_NOTICES :
-          case PROXY_VOTERS :
-          case POLLING_CARDS :
           case ADMITTED_VOTERS :
+            return true;
+
           case MORE_VALID_VOTES_THAN_ADMITTED_VOTERS :
           case LESS_VALID_VOTES_THAN_ADMITTED_VOTERS :
           case BALLOT_PAPER_NOT_RETURNED :
@@ -323,7 +361,6 @@ public class GruppeKonstanten {
           case OTHER_EXPLANATIONS :
             return false;
         }
-        return true;
       }
 
       // The following Groups shall be invisible in HSB and CSB:
@@ -362,7 +399,7 @@ public class GruppeKonstanten {
       // the region has a sub-region that is a postal pollig station. These only exist in TK and EP
       // elections
 
-      if (!isTKOrEP(gebiet.getWahl())) {
+      if (!ElectionCategory.fromWahlart(gebiet.getWahl().getWahlart()).hasPostalVotes()) {
         return false;
       }
 
@@ -373,11 +410,6 @@ public class GruppeKonstanten {
       }
 
       return false;
-    }
-
-    public static boolean isTKOrEP(Wahl wahl) {
-      return wahl.getWahlart() == ElectionCategory.TK.getWahlart()
-          || wahl.getWahlart() == ElectionCategory.EP.getWahlart();
     }
 
     /**
@@ -402,14 +434,21 @@ public class GruppeKonstanten {
       return isVisibleInOverview(findByPosition(position), gebiet);
     }
 
+    /**
+     * @return <code>true</code> for groups (special groups and political groups) that shall be
+     *         visible in the result overview of the region and in the CSV result export (osv4-3)
+     */
     public static boolean isVisibleInOverview(GruppeAllgemein gruppeAllgemein, Gebiet gebiet) {
-      return isVisible(gruppeAllgemein, gebiet) || GruppeAllgemein.GUELTIGE.equals(gruppeAllgemein)
+      boolean isReferendum = WahlInfo.getWahlInfo().isReferendum();
+      return isVisible(gruppeAllgemein, gebiet)
+          || (!isReferendum && GruppeAllgemein.GUELTIGE.equals(gruppeAllgemein))
+          || (isReferendum && GruppeAllgemein.GUELTIG_ODER_LEER.equals(gruppeAllgemein))
           || GruppeAllgemein.WAEHLER.equals(gruppeAllgemein);
     }
 
     private static GruppeAllgemein findByPosition(int position) {
       for (GruppeAllgemein gruppe : GruppeAllgemein.values()) {
-        if (gruppe.position == position) {
+        if (gruppe.getPosition() == position) {
           return gruppe;
         }
       }
@@ -420,18 +459,39 @@ public class GruppeKonstanten {
      * @return true, if this group has another name in referenda than in other elections
      */
     private boolean hasSpecialNameForReferendum() {
-      return this.equals(GUELTIGE);
+      return this.equals(GUELTIGE) || this.equals(GUELTIG_ODER_LEER);
     }
 
     /**
+     * @return true, if this group has another name in referenda than in other elections
+     */
+    private boolean hasSpecialNameForEK() {
+      return Arrays.asList(WAEHLER, ELECTION_NOTICES, PROXY_VOTERS, ADMITTED_VOTERS).contains(this);
+    }
+
+    /**
+     * @param isEK
      * @return my referendum-aware name
      */
-    public String getName(boolean isReferendum) {
+    public String getName(boolean isReferendum, boolean isEK) {
       if (isReferendum && hasSpecialNameForReferendum()) {
         return BundleHelper.getBundleString("GruppeKonstanten.REFERENDUM." + this.name()); //$NON-NLS-1$
+      } else {
+        return getName(isEK);
+      }
+    }
+
+    public String getName(boolean isEK) {
+      if (isEK && hasSpecialNameForEK()) {
+        return nameEK;
       } else {
         return name;
       }
     }
+
+    public String getName() {
+      return getName(WahlInfo.getWahlInfo().isReferendum(), WahlInfo.getWahlInfo().isEK());
+    }
+
   }
 }

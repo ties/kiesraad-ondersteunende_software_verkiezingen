@@ -2,7 +2,7 @@
  * ElectionResultDeterminator
  * 
  * Created on 15.12.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.result.determination;
 
@@ -158,13 +158,14 @@ public class ElectionResultDeterminator {
         || ElectionSubcategory.TK.equals(electionSubcategory)) {
       return GsdaParameters.forP42DistributionEpTk();
     } else if (ElectionSubcategory.GR1.equals(electionSubcategory)
+        || ElectionSubcategory.AB1.equals(electionSubcategory)
         || ElectionSubcategory.ER1.equals(electionSubcategory)
         || ElectionSubcategory.GC.equals(electionSubcategory)) {
       return GsdaParameters.forP42DistributionGr1();
     } else if (ElectionSubcategory.BC.equals(electionSubcategory)) {
       return GsdaParameters.forP42DistributionBC();
     } else {
-      return GsdaParameters.forP42DistributionPsGr2();
+      return GsdaParameters.forP42DistributionPsAb2Gr2();
     }
   }
 

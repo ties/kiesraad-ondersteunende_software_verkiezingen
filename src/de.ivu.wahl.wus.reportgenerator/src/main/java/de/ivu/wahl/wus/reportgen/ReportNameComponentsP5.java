@@ -1,6 +1,6 @@
 /*
  * Created on 27.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -39,14 +39,7 @@ public class ReportNameComponentsP5 extends AbstractReportNameComponents {
 
   public List<String> getNameComponents() {
     List<String> result = new ArrayList<String>();
-    // Add election identifier
     addElectionIdentifier(result);
-
-    String electionDomain = getElectionDomain();
-    if (electionDomain != null) {
-      // Add election domain
-      result.add(electionDomain);
-    }
 
     return result;
   }

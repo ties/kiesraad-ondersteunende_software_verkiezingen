@@ -27,8 +27,8 @@
 <%@ page import="de.ivu.wahl.modell.GebietInfo"%>
 <%@ page import="de.ivu.wahl.modell.GruppeGebietsspezifischGruppeComposite"%>
 <%@ page import="de.ivu.wahl.modell.GruppeKonstanten"%>
-<%@ page import="de.ivu.wahl.modell.StimmergebnisModel"%>
 <%@ page import="de.ivu.wahl.modell.PersonendatenModel"%>
+<%@ page import="de.ivu.wahl.modell.StimmergebnisModel"%>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
@@ -44,14 +44,14 @@
  * Enthält die Prüfung, ob eine Wahleinheit zum Ausbleiben oder zur Nachwahl markiert ist.
  * Hat der Anwender nicht das entsprechende Recht, erhält er den entsprechenden Hinweis
  *
- * author:  mur@ivu.de bae@ivu.de cos@ivu.de Copyright (c) 2004-10 IVU Traffic Technologies AG
+ * author:  mur@ivu.de bae@ivu.de cos@ivu.de Copyright (c) 2004-10 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
 <jsp:useBean id="repHandler" scope="session" class="de.ivu.wahl.client.beans.RepositoryPropertyHandler" />
 <%
-   
+   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    String breite ="100%"; //$NON-NLS-1$
 
    WahlInfo wahlInfo = appBean.getWahlInfo();
@@ -100,19 +100,7 @@
       </style>
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="hgeeeeee">
-<table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hgeeeeee">
-   <tr>
-      <td class="klein"><%= ClientHelper.getKonfigurationsString(request)%></td>
-      <td align="right"><%-- Zum Drucken des aktuellen Frames --%>
-         <a href="javascript:window.print()" style="text-decoration:none">
-            <span class="linkdklrot">
-               <img src="<%= request.getContextPath() %>/img/icon/drucken.gif" width="24" height="9" alt="" border="0" /><ivu:int key="SeiteDrucken"/>
-            </span>
-         </a>
-         <ivu:help key="<%=helpKey%>"/>
-      </td>
-   </tr>
-</table>
+<%@include file="/jsp/fragments/print_and_help_row.jspf"%>
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <tr>
       <td colspan="3" class="hgschwarz"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
@@ -206,14 +194,14 @@
                      <tr>
                         <td width="5"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
                         <td colspan="2" valign="top">
-                           <table border="0" width="<%= breite %>" cellspacing="2" cellpadding="4" align="center" >
+                           <table border="0" width="<%= breite %>" cellspacing="2" cellpadding="4" align="center">
                               <tr class="hgformular">
                                  <td valign="top" rowspan="2" align="center" colspan="4">
                                     <strong><ivu:int key="Subjekt"/></strong>
                                  </td>
-                                     <td valign="top" colspan="3" align="center">&nbsp;
-                                        <strong><ivu:int key="Stimmen"/></strong>
-                                     </td>
+                                 <td valign="top" colspan="3" align="center">&nbsp;
+                                    <strong><ivu:int key="Stimmen"/></strong>
+                                 </td>
                               </tr>
                               <tr class="hgformular">
                                   <td valign="top" align="center"><strong><ivu:int key="Anzahl"/></strong></td>
@@ -233,12 +221,30 @@
                                     String kategorie = gErg.getKategorie();
                                     boolean isSmallFontSize = gErg.isSmallFontSize();
                                     boolean isVisible = gErg.isVisibleInOverview();
+                                    Gruppenergebnis gruppenergebnis = msg.getGruppenergebnis(gruppenposition);
+                                    String gruppefehler = gruppenergebnis.getGruppefehler();
                                     if (gruppenposition < 0){
                                         if (isVisible && !kategorie.equals(aktuelleKategorie)){ %>
-                                            <tr class="<%= j>0 ?"hgeeeeee":"hgweiss" %>">
-                                                <td colspan="5" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>
+                                            <tr class="<%= (j > 0 && !isReferendum) ?"hgeeeeee":"hgweiss" %>">
+                                                <td colspan="7" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>
                                             </tr><%
                                             aktuelleKategorie = kategorie;
+                                        }
+                                        if (gruppefehler != null && isReferendum) { %>
+                                            <tr id="row${position}_0_error">
+                                             <td align="left" colspan="6">
+                                               <table border="0" cellspacing="0" cellpadding="0">
+                                                 <tr>
+                                                     <td>
+                                                        <img src="<%= request.getContextPath() %>/img/icon/warnung.gif" width="20" height="20" alt="<%= BundleHelper.getBundleString("Warnung")%>" align="middle">
+                                                     </td>
+                                                     <td>
+                                                        <font color="red"><%= gruppefehler %></font>
+                                                     </td>
+                                                 </tr>
+                                               </table>
+                                             </td>
+                                           </tr><%
                                         }%>
                                           <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>"<%= isVisible ? "" : " style=\"display:none\"" %>>
                                             <td colspan="4"><b><%= isSmallFontSize ? "<small>":"" %><%= gErg.getName() %><%= isSmallFontSize ? "</small>":"" %></b></td>
@@ -254,7 +260,7 @@
                                         if (!isReferendum){
                                             %>
                                             <tr class="hgweiss">
-                                                <td colspan="5" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>
+                                                <td colspan="7" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>
                                              </tr>
                                             <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>">
                                                 <td><b><%= gErg.getPosition() %></b></td>
@@ -282,7 +288,7 @@
                                              }
                                           } else { %>
                                             <tr class="hgweiss">
-                                                <td colspan="5" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>
+                                                <td colspan="7" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>
                                              </tr>
                                             <% while (kKey.hasNext()){
                                                 GUIEingangMsg.Kandidat kandidat =  kandidaten.get(kKey.next());
@@ -292,7 +298,7 @@
                                                     <td colspan="3"><b><%= kandidat.getReferendumNameCutOff() %></b></td>
                                                     <td class="einrue"><div class="einrue"><b><%=ClientHelper.getStimmanzahlString(msg.getGruppenstimmen(gruppenposition), ClientHelper.DF)%></b></div></td>
                                                     <td align="right"><b><%=ClientHelper.getStimmProzentString(gErg.getStimmenprozent(), nf )%></b></td>
-                                                    <td>&nbsp;</td>
+                                                    <td><%=gErg.getHelptext()%></td>
                                                  </tr><%
                                             }
                                         }

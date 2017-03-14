@@ -2,7 +2,7 @@
  * EMLFilenameCheck
  * 
  * Created on 20.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.util;
 
@@ -21,6 +21,10 @@ public class EMLFilenameCheck {
 
   public static boolean is110aFilename(String fileName) {
     return isEMLFilename(fileName, RgConstants.FILENAME_110A);
+  }
+
+  public static boolean is630Filename(String fileName) {
+    return isEMLFilename(fileName, RgConstants.FILENAME_630);
   }
 
   public static boolean is210Filename(String fileName) {
@@ -113,8 +117,9 @@ public class EMLFilenameCheck {
     } else if (!checkEMLEnd(fileName)) { // non EML
       return RgConstants.PATH_FRAGMENT_OTHERS;
     } else if (is510dFilename(fileName) || is520Filename(fileName) || is230aFilename(fileName)
-        || is230bFilename(fileName) || is230cFilename(fileName) || is110aFilename(fileName)) {
-      // 510d, 520, 230a, 230b, 230c, 110a (election definition)
+        || is230bFilename(fileName) || is230cFilename(fileName) || is110aFilename(fileName)
+        || is630Filename(fileName)) {
+      // 510d, 520, 230a, 230b, 230c, 110a (election definition), 630 (referendum)
       return CURRENT_FOLDER;
     } else {
       // other

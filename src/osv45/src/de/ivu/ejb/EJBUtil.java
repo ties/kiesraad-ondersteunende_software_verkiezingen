@@ -1,7 +1,7 @@
 /*
  * EJBUtil
  * 
- * Copyright (c) 2002-8 IVU Traffic Technologies AG
+ * Copyright (c) 2002-2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb;
 
@@ -28,6 +28,7 @@ import javax.naming.NamingException;
 import javax.naming.RefAddr;
 import javax.naming.Reference;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import de.ivu.util.debug.Log4J;
@@ -47,6 +48,7 @@ public class EJBUtil {
   private static final String CANNOT_FIND = "Cannot find: "; //$NON-NLS-1$
   private static volatile InitialContext __jndiContext;
   private static String __jndiPrefix;
+  private static String __installationSuffix;
   private static final Map<String, Object> __homeCache = new HashMap<String, Object>();
   private static final String EJB_PROPS_NAME = "ivuejb.properties"; //$NON-NLS-1$
 
@@ -99,23 +101,48 @@ public class EJBUtil {
    */
   public static String getProgramSpecificAffix() {
     if (__jndiPrefix == null) {
-      final String wasPropsName = "was.properties"; //$NON-NLS-1$
-      try {
-        Properties wasProps = getProps(wasPropsName);
-        int electionMode = Integer.parseInt(wasProps.getProperty(Konstanten.PROP_ELECTION_MODE));
-        int electionLevel = Integer.parseInt(wasProps.getProperty(Konstanten.PROP_ELECTION_LEVEL));
-        final String electionModeKlartext = WahlModel.WAHLMODUS_KLARTEXT.get(electionMode);
-        if (electionMode == 1) {
-          __jndiPrefix = electionModeKlartext;
-        } else {
-          __jndiPrefix = electionModeKlartext
-              + "_" + AuthorityLevel.byId(electionLevel).getShortName(); //$NON-NLS-1$
-        }
-      } catch (Exception e) {
-        throw new EJBException("Can't read '" + wasPropsName + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
-      }
+      readProperties();
     }
     return __jndiPrefix;
+  }
+
+  /**
+   * @return "P4_PSB", "P4_HSB", "P4_CSB" or "P5" + installation suffix
+   */
+  public static String getInstallationSpecificAffix() {
+    return getProgramSpecificAffix() + getInstallationSuffix();
+  }
+
+  public static String getInstallationSuffix() {
+    if (__jndiPrefix == null) {
+      readProperties();
+    }
+    return __installationSuffix;
+  }
+
+  /**
+   * Initialization of both __jndiPrefix and __installationSuffix from the was.properties file
+   */
+  private static void readProperties() {
+    final String wasPropsName = "was.properties"; //$NON-NLS-1$
+    try {
+      Properties wasProps = getProps(wasPropsName);
+      int electionMode = Integer.parseInt(wasProps.getProperty(Konstanten.PROP_ELECTION_MODE));
+      int electionLevel = Integer.parseInt(wasProps.getProperty(Konstanten.PROP_ELECTION_LEVEL));
+
+      String installationSuffix = wasProps.getProperty(Konstanten.PROP_INSTALLATION_SUFFIX);
+      __installationSuffix = installationSuffix == null ? StringUtils.EMPTY : installationSuffix;
+      String electionModeKlartext = WahlModel.WAHLMODUS_KLARTEXT.get(electionMode);
+
+      if (electionMode == 1) {
+        __jndiPrefix = electionModeKlartext;
+      } else {
+        __jndiPrefix = electionModeKlartext
+            + "_" + AuthorityLevel.byId(electionLevel).getShortName(); //$NON-NLS-1$
+      }
+    } catch (Exception e) {
+      throw new EJBException("Can't read '" + wasPropsName + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
+    }
   }
 
   @SuppressWarnings("unchecked")
@@ -155,7 +182,7 @@ public class EJBUtil {
         homeIF = __homeCache.get(ejbName);
       }
       if (homeIF == null) {
-        homeIF = getInitialContext().lookup(getProgramSpecificAffix() + "/" + ejbName); //$NON-NLS-1$
+        homeIF = getInitialContext().lookup(getInstallationSpecificAffix() + "/" + ejbName); //$NON-NLS-1$
         __homeCache.put(ejbName, homeIF);
       }
       return (T) homeIF;
@@ -220,7 +247,7 @@ public class EJBUtil {
   @SuppressWarnings("unchecked")
   public static <T extends Object> T lookupLocal(String beanName) throws EJBException {
     try {
-      final String what = "osv" + getProgramSpecificAffix() + "/" + beanName + "/local"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      final String what = "osv" + getInstallationSpecificAffix() + "/" + beanName + "/local"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       return (T) getInitialContext().lookup(what);
     } catch (NamingException e) {
       try {

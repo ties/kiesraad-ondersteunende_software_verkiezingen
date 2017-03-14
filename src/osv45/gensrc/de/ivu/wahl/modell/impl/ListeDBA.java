@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Liste.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListeDBA extends DBABase {
@@ -52,8 +52,10 @@ public class ListeDBA extends DBABase {
    public static final String NAME_QUAL = "Liste.Name"; //$NON-NLS-1$
    public static final String GESCHLECHTSICHTBAR = "GeschlechtSichtbar"; //$NON-NLS-1$
    public static final String GESCHLECHTSICHTBAR_QUAL = "Liste.GeschlechtSichtbar"; //$NON-NLS-1$
+   public static final String PUBLICATIONLANGUAGE = "PublicationLanguage"; //$NON-NLS-1$
+   public static final String PUBLICATIONLANGUAGE_QUAL = "Liste.PublicationLanguage"; //$NON-NLS-1$
 
-   private static final String[] COLUMNS = {ID_LISTE,ID_WAHL,ID_GRUPPE,TYP,SATZ,NAME,GESCHLECHTSICHTBAR};
+   private static final String[] COLUMNS = {ID_LISTE,ID_WAHL,ID_GRUPPE,TYP,SATZ,NAME,GESCHLECHTSICHTBAR,PUBLICATIONLANGUAGE};
    private static final MetaContainer META_CONTAINER = new MetaContainer(TABLENAME, COLUMNS);
 
    /**
@@ -87,6 +89,9 @@ public class ListeDBA extends DBABase {
       if ((idx = columns.get(GESCHLECHTSICHTBAR.toUpperCase())) != null) {
          m._geschlechtSichtbar = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(PUBLICATIONLANGUAGE.toUpperCase())) != null) {
+         m._publicationLanguage = r.getString(idx.intValue());
+      }
    }
 
    /**
@@ -117,6 +122,9 @@ public class ListeDBA extends DBABase {
       }
       if (columns.containsKey(GESCHLECHTSICHTBAR.toUpperCase())) {
          p.setBoolean(idx++, m._geschlechtSichtbar);
+      }
+      if (columns.containsKey(PUBLICATIONLANGUAGE.toUpperCase())) {
+         p.setString(idx++, m._publicationLanguage);
       }
       p.setString(idx++, m._id_Liste);
    }
@@ -174,6 +182,9 @@ public class ListeDBA extends DBABase {
       }
       if (columns.containsKey(GESCHLECHTSICHTBAR)) {
          values.add(toString(m.isGeschlechtSichtbar()));
+      }
+      if (columns.containsKey(PUBLICATIONLANGUAGE)) {
+         values.add(toString(m.getPublicationLanguage()));
       }
       values.add(toString(m.getID_Liste()));
       return values.toArray(new String[values.size()]);
@@ -426,5 +437,39 @@ public class ListeDBA extends DBABase {
          "select ID_Liste from " + TABLENAME + " where GeschlechtSichtbar=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{Boolean.valueOf(geschlechtSichtbar)});
+   }
+
+   /**
+     * Method retrieveIDsByPublicationLanguage returns a {@link Collection} of Liste IDs
+     *
+     * @param publicationLanguage searching condition
+
+     * @return a {@link Collection} of Liste IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByPublicationLanguage(String publicationLanguage)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Liste from " + TABLENAME + " where PublicationLanguage=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{publicationLanguage});
+   }
+
+   /**
+     * Method retrieveIDsLikePublicationLanguage returns a {@link Collection} of Liste IDs
+     *
+     * @param publicationLanguage searching condition
+
+     * @return a {@link Collection} of Liste IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsLikePublicationLanguage(String publicationLanguage)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Liste from " + TABLENAME + " where PublicationLanguage like ?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{publicationLanguage});
    }
 }

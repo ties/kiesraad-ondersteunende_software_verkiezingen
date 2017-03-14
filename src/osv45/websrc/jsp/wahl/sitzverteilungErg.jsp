@@ -2,7 +2,7 @@
  *******************************************************************************
  * Sitzverteilung
  *
- * author:  mur@ivu.de  Copyright (c) 2002-10 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-10 Statistisches Bundesamt und IVU Traffic Technologies AG
 
  *******************************************************************************
  --%>
@@ -42,7 +42,11 @@
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
-<% WahlInfo wahlInfo = appBean.getWahlInfo();
+<% 
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "sitzverErg"; //$NON-NLS-1$
+
+WahlInfo wahlInfo = appBean.getWahlInfo();
    String id_ergebniseingang = wahlInfo.getWahl().getWurzelgebiet().getID_LetzterEingang();
    String breite = "100%";
    
@@ -59,7 +63,7 @@
    boolean darfBerechnen = anwContext.checkRight(Rechte.R_SITZVERTEILUNG_BERECHNEN);
   %>
 
-<%@ page import="de.ivu.wahl.wus.electioncategory.ElectionCategory"%><html>
+<html>
  <head>
   <title><ivu:int key="Sitzverteilung_titel"/></title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
@@ -94,9 +98,7 @@
             </div>
         </div>
         <div id="trans">
-           <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-                <a name="oben" href="javascript:window.print()" style="text-decoration: none;" id="oben"><span class="linkdklrot"><img src="<%= request.getContextPath() %>/img/icon/drucken.gif" alt="" border="0" height="9" width="24"><ivu:int key="SeiteDrucken"/></span></a><ivu:help key="sitzverErg"/>
-            </div>
+            <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
             <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
                 &nbsp;
             </div>
@@ -578,7 +580,7 @@
                                             <td height="10" colspan="3"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1" /></td>
                                         </tr>
                            <% }
-                            if (ElectionCategory.EK.equals(wahlInfo.getElectionCategory())) {
+                            if (wahlInfo.isEK()) {
                                 List<Gebiet> provinces = appBean.getProvinces(); %>
                                 <tr>
                                     <td width="10"><img height="1" width="1" src="<%= request.getContextPath() %>/img/icon/blind.gif" alt="" /></td>

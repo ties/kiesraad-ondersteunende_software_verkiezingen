@@ -2,7 +2,7 @@
  * CombinedListValidator
  * 
  * Created on 18.12.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.result.determination;
 
@@ -140,6 +140,7 @@ public class CombinedListValidator {
    */
   private GsdaParameters getGsdaParameters(ElectionSubcategory electionSubcategory) {
     if (ElectionSubcategory.GR1.equals(electionSubcategory)
+        || ElectionSubcategory.AB1.equals(electionSubcategory)
         || ElectionSubcategory.ER1.equals(electionSubcategory)
         || ElectionSubcategory.GC.equals(electionSubcategory)) {
       return GsdaParameters.forFictitiousDistributionGR1();

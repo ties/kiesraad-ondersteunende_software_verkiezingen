@@ -2,7 +2,7 @@
  * EingangHandling
  * 
  * Created on 14.10.2003
- * Copyright (c) 2003-7 IVU Traffic Technologies AG
+ * Copyright (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.eingang;
 
@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.exception.ImportException;
  * Lokales Interface f�r die wesentlichen Verarbeitungsfunktionen bei der Eingabe der
  * Erfassungseinheiten und administrativer Nachrichten �ber Dialog oder per Datei.
  * 
- * @author cos@ivu.de (c) 2003-8 IVU Traffic Technologies AG
+ * @author cos@ivu.de (c) 2003-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public interface EingangHandling {
 
@@ -49,6 +49,12 @@ public interface EingangHandling {
       int regionCategory,
       int regionNumber,
       boolean forDisplay) throws EJBException;
+
+  /**
+   * This method returns the source attribute or what #getGUIMsg() would give.
+   */
+  int sourceForGUIMsg(AnwContext anwContext, int gebietsart, int gebietsnummer, boolean forDisplay)
+      throws EJBException;
 
   /**
    * Create data object with region metadata structure for display of voting results or input of

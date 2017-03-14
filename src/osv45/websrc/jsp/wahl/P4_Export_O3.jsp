@@ -7,6 +7,7 @@
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.P4ExportStateO3"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -18,7 +19,11 @@
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="expP4Bean" scope="session" class="de.ivu.wahl.client.beans.ExportP4Bean" />
+<jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "ExpO3"; //$NON-NLS-1$
+
 String breite = "100%";
 String prefix = ApplicationBeanKonstanten.PREFIX;
 int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0);
@@ -28,6 +33,7 @@ boolean legende = false;
 %>
 <html>
 <head>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><ivu:int key="Export_P4_O3"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery.autocomplete.css">
@@ -104,12 +110,7 @@ boolean legende = false;
         </div>
         <div id="trans">
             <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-               <tr class="hgeeeeee" align="right">
-                  <td><ivu:help key="ExpO3"/></td>
-               </tr>
-               <tr class="hgeeeeee">
-                  <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-               </tr>
+               <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
@@ -226,15 +227,12 @@ boolean legende = false;
                                                          int buttonIdx = 0;
                                                          String selectedKey = null;
                                                          for (String buttonName : Konstanten.PROP_O3_D1.keySet()) {
-                                                           String url = ClientHelper.generateURL(request, ClientHelper.getWork(request), true)
-                                                                            + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + buttonIdx;
-                                                    
                                                            boolean selected = buttonIdx++ == subwork;
                                                            if (selected) {
                                                             selectedKey = buttonName;
                                                            }
                                                            String styleClass =  GUICommand.GUI_CLASS_1; %> 
-                                                           <ivu:a clazz='<%=  styleClass%>' href='<%=url%>' ><%=buttonName%></ivu:a><%
+                                                           <span class='<%=  styleClass%>' ><%=buttonName%></span><%
                                                           }%>
                                                           </td>
                                                          </tr><%
@@ -411,7 +409,7 @@ boolean legende = false;
                                                     // reset export status
                                                     expP4Bean.resetExportStateO3();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_O3 + "&" + ApplicationBeanKonstanten.WORK+"="+ ApplicationBeanKonstanten.EXPORT_VERZEICHNIS+"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_O3 + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS)+"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                         %>
                                         <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                     <legend><b><ivu:int key="Export_P4_O3"/></b></legend>

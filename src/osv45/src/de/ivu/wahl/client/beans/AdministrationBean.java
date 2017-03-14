@@ -1,6 +1,6 @@
 /*
  * 
- * Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -158,7 +158,7 @@ public class AdministrationBean extends RepositoryPropertyHandler
   private static final String PARAM_ANW_USERNAME = PREFIX + "anw_anwendername"; //$NON-NLS-1$
   private static final String PARAM_ID_USER = PREFIX + "id_anwender"; //$NON-NLS-1$
   private static final String PARAM_ON = "on"; //$NON-NLS-1$
-  private static final String PARAM_ACCEPT = PREFIX + "uebernehmen"; //$NON-NLS-1$
+  public static final String PARAM_ACCEPT = PREFIX + "uebernehmen"; //$NON-NLS-1$
   private static final String PARAM_ID = PREFIX + "id"; //$NON-NLS-1$
   public static final String PARAM_SUFFIX_NR = "_nr"; //$NON-NLS-1$
   private static final String PARAM_SUFFIX_WAHLBERECHTIGTE = "_wahlberechtigte"; //$NON-NLS-1$
@@ -227,7 +227,7 @@ public class AdministrationBean extends RepositoryPropertyHandler
       handleFreigabe(request);
     } else if (CMD_ADM_PROP_EINGABE.equals(cmd)) {
       // Eingabe von Properties
-      handlePropEingabeAllg(request, Konstanten.PROP_ALLG);
+      handlePropEingabeAllg(request);
     } else if (CMD_ADM_WAHL_ZURUECK.equals(cmd)) {
       // Alle Wahl f�r die aktuelle Wahlergebnisart zur�cksetzen
       wahlZuruecksetzen(request);
@@ -502,7 +502,7 @@ public class AdministrationBean extends RepositoryPropertyHandler
                   gebietEjb,
                   false,
                   true);
-              eingangMsg.setGruppenstimmen(GruppeAllgemein.WAHLBERECHTIGTE.position,
+              eingangMsg.setGruppenstimmen(GruppeAllgemein.WAHLBERECHTIGTE.getPosition(),
                   wahlberechtigte);
               try {
                 getEingangHandling().processInputMsg(eingangMsg);
@@ -644,7 +644,8 @@ public class AdministrationBean extends RepositoryPropertyHandler
       getExportHandling().updateBackupArchive();
 
       if (!rc.getReportConfiguration().isDraft()
-          && (ExportP5Type.P22_1.equals(config) || ExportP5Type.P22_2.equals(config))) {
+          && (ExportP5Type.P22_1.equals(config) || ExportP5Type.P22_2.equals(config) || ExportP5Type.U16
+              .equals(config))) {
         getExportHandling().updateElectionResultArchive(); // OSV-1385
       }
 
@@ -1215,14 +1216,20 @@ public class AdministrationBean extends RepositoryPropertyHandler
    * @return value to use
    */
   private String replaceWithDefaultValueIfNull(String propertyName, String propertyValue) {
-    String valueToUse = propertyValue;
-    if (propertyValue == null
-        && (XMLTags.RG_PLACE_LETTER.equals(propertyName)
-            || XMLTags.RG_REJECTION_LOCATION.equals(propertyName) || XMLTags.RG_ACCEPTANCE_LOCATION
-              .equals(propertyName))) {
-      valueToUse = getCityOfWurzelgebiet();
+    if (propertyValue != null) {
+      return propertyValue;
     }
-    return valueToUse;
+    if (XMLTags.RG_PLACE_LETTER.equals(propertyName)
+        || XMLTags.RG_REJECTION_LOCATION.equals(propertyName)
+        || XMLTags.RG_ACCEPTANCE_LOCATION.equals(propertyName)) {
+      return getCityOfWurzelgebiet();
+    }
+    if (Konstanten.PROP_BACKGROUND_COLOR_RED.equals(propertyName)
+        || Konstanten.PROP_BACKGROUND_COLOR_GREEN.equals(propertyName)
+        || Konstanten.PROP_BACKGROUND_COLOR_BLUE.equals(propertyName)) {
+      return String.valueOf(Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
+    }
+    return propertyValue;
   }
 
   /**

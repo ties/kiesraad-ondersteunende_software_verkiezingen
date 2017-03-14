@@ -2,7 +2,7 @@
  * IImportEML
  * 
  * Created on 02.10.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -131,7 +131,7 @@ public interface IImportEML {
   /**
    * Setting the import state
    * 
-   * @param status neuer Wert für status
+   * @param status neuer Wert fï¿½r status
    */
   void setStatus(int status);
 

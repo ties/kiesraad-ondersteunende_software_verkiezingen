@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * GebietsstatusDBA
  *
- * @author cos@ivu.de  (c) 2003 IVU Traffic Technologies AG
+ * @author cos@ivu.de  (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import org.apache.log4j.Category;

@@ -5,7 +5,7 @@ import de.ivu.wahl.util.BundleHelper;
 /**
  * SchwellwertModel
  * 
- * @author cos@ivu.de (c) 2003 IVU Traffic Technologies AG
+ * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface SchwellwertModel extends BasicSchwellwertModel {
@@ -58,17 +58,17 @@ public interface SchwellwertModel extends BasicSchwellwertModel {
           String.valueOf(SWERT_ART_PROZENT)}};
 
   /**
-   * Liefert die Schwellwertart für den Schwellwert
+   * Liefert die Schwellwertart fï¿½r den Schwellwert
    * 
-   * @param schwellwertKey Schlüssel des Schwellwerts
+   * @param schwellwertKey Schlï¿½ssel des Schwellwerts
    * @return Schwellwertart
    */
   int getArtSchwellwert(String schwellwertKey);
 
   /**
-   * Liefert die Beschreibung für den Schwellwert
+   * Liefert die Beschreibung fï¿½r den Schwellwert
    * 
-   * @param schwellwertKey Schlüssel des Schwellwerts
+   * @param schwellwertKey Schlï¿½ssel des Schwellwerts
    * @return Beschreibung des Schwellwerts
    */
   String getKlartextSchwellwert(String schwellwertKey);

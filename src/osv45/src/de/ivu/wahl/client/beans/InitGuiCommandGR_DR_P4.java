@@ -1,9 +1,7 @@
 /*
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
-
-import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 
 import java.util.Map;
 
@@ -51,22 +49,14 @@ public abstract class InitGuiCommandGR_DR_P4 extends InitGuiCommand_P4
   }
 
   @Override
-  protected void createCommandGebietErgebnisKandidat(Map<String, String> jspLevelWorkName,
-      GUICommandList[] befehleInitial) {
-    String name = getBundleString("Gebiet_Ergebnis_Kandidat"); //$NON-NLS-1$
-    GUICommand cmd = createCommand(name, GEB_ERG_KAN, null, false, "gebietErgebnisKandidat.jsp", //$NON-NLS-1$
-        getBundleString("Gebiet_Ergebnis_Kandidat_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+  protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
+    GUICommand cmd = helper.addCommand(Command.GEB_ERG_KAN,
+        "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurGebiete(true);
-    // if the Level is CSB and the election is European Palament, Second Chamber or provincial
-    // parlament, the list of candidates are defined for a deeper Level
-    // wahlInfo.getWahlart() == WahlModel.WAHLART_EP_NL ||
+    // if the Level is CSB, the list of candidates are defined for a deeper Level
     if (_ebene == GebietModel.EBENE_CSB) {
       cmd.setNurErfassungseinheit(true);
     }
-    // cmd.setPosition(2);
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + GEB_ERG_KAN, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
   }
 
 }

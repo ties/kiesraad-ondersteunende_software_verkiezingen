@@ -2,12 +2,9 @@
  * InitGuiCommand
  * 
  * Created on 07.11.2003
- * Copyright (c) 2003-2006 IVU Traffic Technologies AG
+ * Copyright (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
-
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.ADM_ANW_LISTE;
-import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.GEB_ERG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +18,7 @@ import de.ivu.wahl.util.BundleHelper;
  * @author mur@ivu.de, IVU Traffic Technologies AG
  */
 public abstract class InitGuiCommand {
+
   interface GUICommandList extends List<GUICommand> {
     // als Alias
   }
@@ -69,34 +67,30 @@ public abstract class InitGuiCommand {
    * @param befehleInitial
    * @param befehle
    * @param levelcount
-   * @param link_1
-   * @param linkButtonName_1
-   * @param link_2
-   * @param linkButtonName_2
    */
   protected abstract void initBefehle(Map<String, String> jspLevelWorkName,
       GUICommandList[] befehleInitial,
       GUICommandList[] befehle,
-      int levelcount,
-      String link_1,
-      String linkButtonName_1,
-      String link_2,
-      String linkButtonName_2);
+      int levelcount);
 
   /**
    * Erzeugt einen GUICommand und legt einen Eintrag in der Hashtable zur Verkn�pfung von view und
    * jsp dateinamen an
    */
   protected GUICommand createCommand(String bezeichnung,
-      int work,
+      Command command,
       String recht,
       boolean gebietsabhaengig,
       String jsp,
       String tooltip,
       String guiClass) {
 
-    _jspMap.put(work, jsp);
-    return new GUICommand(bezeichnung, work, recht, gebietsabhaengig, tooltip, guiClass);
+    _jspMap.put(command.getId(), jsp);
+    return new GUICommand(bezeichnung, command.getId(), recht, gebietsabhaengig, tooltip, guiClass);
+  }
+
+  protected void putToJspMap(Command command, String jsp) {
+    _jspMap.put(command.getId(), jsp);
   }
 
   protected String getBundleString(String key) {
@@ -119,20 +113,20 @@ public abstract class InitGuiCommand {
     return true;
   }
 
-  public int getGebieteWorkDefault() {
-    return GEB_ERG;
+  public Command getGebieteWorkDefault() {
+    return Command.GEB_ERG;
   }
 
   /**
    * @return diese Seite wird geöffnet, wenn man auf ein unvollständiges Gebiet (nur
    *         Erfassungseinheit) klickt
    */
-  public int getErfassungseinheitUnvollstaendigWork(int ergebniseingangStatus) {
-    return GEB_ERG;
+  public Command getErfassungseinheitUnvollstaendigWork(int ergebniseingangStatus) {
+    return Command.GEB_ERG;
   }
 
-  public int getAdminWorkDefault() {
-    return ADM_ANW_LISTE;
+  public Command getAdminWorkDefault() {
+    return Command.ADM_ANW_LISTE;
   }
 
   /**
@@ -144,4 +138,5 @@ public abstract class InitGuiCommand {
     return "kiesraad.gif"; //$NON-NLS-1$
     //    return "logo-ivu.gif"; //$NON-NLS-1$
   }
+
 }

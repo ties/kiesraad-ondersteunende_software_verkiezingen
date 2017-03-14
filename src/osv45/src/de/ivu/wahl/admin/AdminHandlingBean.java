@@ -1,7 +1,7 @@
 /*
  * AdminHandlingBean
  * 
- * Copyright (c) 2002-8 IVU Traffic Technologies AG
+ * Copyright (c) 2002-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.admin;
 
@@ -48,10 +48,10 @@ import de.ivu.wahl.modell.ejb.Wahl;
 import de.ivu.wahl.modell.ejb.WahlHome;
 
 /**
- * SessionBean für Administrationsunterstützung
+ * SessionBean fï¿½r Administrationsunterstï¿½tzung
  * <P>
- * Enthält auch Methoden für das Handling von Schwellwerten, die aus der Applikation verwendet
- * werden. Zusätzlich finden sich weitere nützlichen Methoden, die kein "natürliches" Plätzchen
+ * Enthï¿½lt auch Methoden fï¿½r das Handling von Schwellwerten, die aus der Applikation verwendet
+ * werden. Zusï¿½tzlich finden sich weitere nï¿½tzlichen Methoden, die kein "natï¿½rliches" Plï¿½tzchen
  * gefunden haben
  * 
  * @author cos@ivu.de klie@ivu.de hil@ivu.de
@@ -173,7 +173,7 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
       WahlInfo.getWahlInfo(c).getWahl().readLock();
 
       for (Gebiet ea : getGebietHome().findAllIsErfassungseinheitByWahl(c.getID_Wahl())) {
-        // todo prüfen, ob das der letzte Eingang für die eingestellte
+        // todo prï¿½fen, ob das der letzte Eingang fï¿½r die eingestellte
         // Wahlergebnisart sein soll
         Ergebniseingang ee = ea.getLetzterEingang();
 
@@ -242,7 +242,7 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
    * @param c Anwenderkontext
    * @param gebietsart Gebietsart des gesuchten Gebiets
    * @param nummer Gebietsnummer des gesuchten Gebiets
-   * @return Erfassungseinheit zu den übergebenen Gebietskenndaten, oder <code>null</code> wenn es
+   * @return Erfassungseinheit zu den ï¿½bergebenen Gebietskenndaten, oder <code>null</code> wenn es
    *         sich um keine Erfassungseinheit handelt
    * @throws EJBException genereller Fehler
    */
@@ -264,7 +264,7 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
   public void initAdministrationValues(String id_Wahl) throws EJBException {
     try {
       if (WahlHome.HomeFinder.findHome(this).findAll().size() == 1) {
-        // Wahl unabhängige Properties, nur bei der ersten importierten Wahl
+        // Wahl unabhï¿½ngige Properties, nur bei der ersten importierten Wahl
         _propertyHandling.setBooleanProperty(PROP_REPENABLE, true);
         _propertyHandling.setBooleanProperty(PROP_INPUTDISABLE, false);
         _propertyHandling.setLongProperty(RECHTE_LAST_CHANGE, 0);
@@ -276,7 +276,7 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
       throw new EJBException(e);
     }
 
-    // Wahl abhängige Properties
+    // Wahl abhï¿½ngige Properties
     AnwContext c = new AnwContext(id_Wahl, SYSTEM_ANWENDERID, SYSTEM_ANWENDER, null, null);
 
     _schwellwertHandling.initSchwellwerte(c);
@@ -296,7 +296,7 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
 
   @Override
   public void writeAppLog(AnwContext c, String message) {
-    // keine neue Funktion, nur Sichtbarkeitsänderung
+    // keine neue Funktion, nur Sichtbarkeitsï¿½nderung
     super.writeAppLog(c, message);
   }
 

@@ -15,7 +15,7 @@ import de.ivu.ejb.bmp.Model;
   * Contains the list of properties including the IDs of the associated objects.
   * A navigation is not implemented (1:1, 1:n, m:n)
   *
-  * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface ListeModel extends Model {
@@ -139,6 +139,26 @@ public interface ListeModel extends Model {
      * @return value of the attribute geschlechtSichtbar
      */
    boolean isGeschlechtSichtbar();
+
+   /**
+     * Sets the value of publicationLanguage in the entity Liste
+     *
+     * @param publicationLanguage new value of the attribute publicationLanguage
+     */
+   void setPublicationLanguage(String publicationLanguage);
+
+   /**
+     * Gets the value of publicationLanguage in the entity Liste
+     *
+     * @return value of the attribute publicationLanguage
+     */
+   String getPublicationLanguage();
+
+   /**
+     * The maximum size of publicationLanguage
+     * The size is limited by the database.
+     */
+   public static final int PUBLICATIONLANGUAGE_LENGTH = 5;
 
    /**
      * Copies the object via Object.clone()

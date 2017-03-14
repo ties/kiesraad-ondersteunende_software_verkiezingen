@@ -8,6 +8,7 @@
 <%@ page import="de.ivu.wahl.admin.P4ExportStateEML510c"%><html>
 <%@ page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -17,13 +18,18 @@
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="expP4Bean" scope="session" class="de.ivu.wahl.client.beans.ExportP4Bean" />
+<jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "ExpEML510c"; //$NON-NLS-1$
+
 String breite = "100%";
 DialogStateHolder state = expP4Bean.getP4ExportStateEML510c();
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 %>
 
 <head>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><ivu:int key="Export_P4_EML510c"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
      <script type="text/javascript">
@@ -90,12 +96,7 @@ WahlInfo wahlInfo = WahlInfo.getWahlInfo();
         </div>
         <div id="trans">
             <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-               <tr class="hgeeeeee" align="right">
-                  <td><ivu:help key="ExpEML510c"/></td>
-               </tr>
-               <tr class="hgeeeeee">
-                  <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-               </tr>
+               <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
@@ -200,7 +201,7 @@ WahlInfo wahlInfo = WahlInfo.getWahlInfo();
                                                     // reset export status
                                                     expP4Bean.resetExportStateEML510c();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_EML510C + "&" + ApplicationBeanKonstanten.WORK + "=" + ApplicationBeanKonstanten.EXPORT_VERZEICHNIS + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_EML510C + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                         %>
                                         <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                     <legend><b><ivu:int key="Export_P4_EML510c"/></b></legend>

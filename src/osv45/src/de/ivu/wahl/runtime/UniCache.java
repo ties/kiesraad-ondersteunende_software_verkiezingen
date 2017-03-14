@@ -2,7 +2,7 @@
  * UniCache
  * 
  * Created on 17.03.2005
- * Copyright (c) 2005 IVU Traffic Technologies AG
+ * Copyright (c) 2005 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.runtime;
 
@@ -14,14 +14,14 @@ import javax.ejb.EJBLocalObject;
  */
 public interface UniCache<T> extends EJBLocalObject {
   /**
-   * Gibt das gespeicherte Objekt zurück
+   * Gibt das gespeicherte Objekt zurï¿½ck
    * 
    * @return das gespeicherte Objekt
    */
   T get();
 
   /**
-   * Gibt das gespeicherte Objekt zurück (nach Einstellung in assembly-descriptor in einer neuen
+   * Gibt das gespeicherte Objekt zurï¿½ck (nach Einstellung in assembly-descriptor in einer neuen
    * Transaktion)
    * 
    * @return das gespeicherte Objekt

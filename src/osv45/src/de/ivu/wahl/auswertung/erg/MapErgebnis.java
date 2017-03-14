@@ -2,7 +2,7 @@
  * MapErgebnis
  * 
  * Created on 11.07.2005
- * Copyright (c) 2004 IVU Traffic Technologies AG
+ * Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg;
 
@@ -40,7 +40,7 @@ public class MapErgebnis extends Ergebnis {
   }
 
   /**
-   * @param map Neuer Wert für map
+   * @param map Neuer Wert fï¿½r map
    */
   public void setMap(Map<GebietModel, String> map) {
     _map = map;

@@ -2,7 +2,7 @@
  * AnomalyFactory
  * 
  * Created on 12.10.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.result;
 
@@ -29,10 +29,12 @@ import de.ivu.wahl.result.i18n.Messages;
 public class AnomalyFactory {
   private final ElectionResult _electionResult;
   private final Map<P2List, P3List> p2ListAndP3List;
+  private final boolean isEK;
   private int _count = 0;
 
   public AnomalyFactory(ElectionResult electionResult, ElectionAndCandidatesAndVotes ecv) {
     this._electionResult = electionResult;
+    this.isEK = ecv.getElectionSubcategory().isEK();
     Map<P2List, P3List> tempP2ListAndP3List = new HashMap<P2List, P3List>();
     for (P3List p3List : ecv.getP3Lists()) {
       for (P2List p2List : p3List.getP2Lists()) {
@@ -42,9 +44,21 @@ public class AnomalyFactory {
     this.p2ListAndP3List = Util.createUnmodifiableCopy(tempP2ListAndP3List);
   }
 
+  private void addMaybeToP22(String message) {
+    add(message, false);
+  }
+
+  private void addToP22(String message) {
+    add(message, true);
+  }
+
   private void add(String message) {
+    add(message, false);
+  }
+
+  private void add(String message, boolean shallBePublishedInModelP22) {
     _count++;
-    Anomaly anomaly = new Anomaly(message, _count);
+    Anomaly anomaly = new Anomaly(message, _count, shallBePublishedInModelP22);
     _electionResult.addAnomalitiy(anomaly);
   }
 
@@ -58,7 +72,7 @@ public class AnomalyFactory {
   public void candidateElectedForMultipleP3Lists(
       List<MultipleElectedCandidate> multipleElectedCandidates) {
     for (MultipleElectedCandidate multipleElectedCandidate : multipleElectedCandidates) {
-      add(Messages.bind(MessageKeys.Result_User_MultipleElectedCandidate_0,
+      addMaybeToP22(Messages.bind(MessageKeys.Result_User_MultipleElectedCandidate_0,
           multipleElectedCandidate.getCandidate().getName()));
     }
   }
@@ -68,10 +82,11 @@ public class AnomalyFactory {
    */
   public void multipleElectedCandidateKeepsSeat(Candidate candidate, P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_MultipleElectedCandidate_0_KeepsSeatFor_1_In_2,
-        candidate.getName(),
-        p3List.getNumber(),
-        p2List.getElectoralDistrictNumber()));
+    addMaybeToP22(Messages
+        .bind(MessageKeys.Result_User_MultipleElectedCandidate_0_KeepsSeatFor_1_In_2,
+            candidate.getName(),
+            p3List.getNumber(),
+            p2List.getElectoralDistrictNumbers()));
   }
 
   /**
@@ -79,10 +94,11 @@ public class AnomalyFactory {
    */
   public void multipleElectedCandidateLoosesSeat(Candidate candidate, P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_MultipleElectedCandidate_0_LoosesSeatFor_1_In_2,
-        candidate.getName(),
-        p3List.getNumber(),
-        p2List.getElectoralDistrictNumber()));
+    addMaybeToP22(Messages
+        .bind(MessageKeys.Result_User_MultipleElectedCandidate_0_LoosesSeatFor_1_In_2,
+            candidate.getName(),
+            p3List.getNumber(),
+            p2List.getElectoralDistrictNumbers()));
   }
 
   /**
@@ -90,10 +106,11 @@ public class AnomalyFactory {
    */
   public void multipleElectedCandidateSuccessorFound(Candidate candidate, P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_Successor_0_ForMultipleElectedCandidateFor_1_In_2,
-        candidate.getName(),
-        p3List.getNumber(),
-        p2List.getElectoralDistrictNumber()));
+    addMaybeToP22(Messages
+        .bind(MessageKeys.Result_User_Successor_0_ForMultipleElectedCandidateFor_1_In_2,
+            candidate.getName(),
+            p3List.getNumber(),
+            p2List.getElectoralDistrictNumbers()));
   }
 
   /**
@@ -101,11 +118,11 @@ public class AnomalyFactory {
    */
   public void multipleElectedCandidateNoSuccessorFound(Candidate candidate, P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages
+    addMaybeToP22(Messages
         .bind(MessageKeys.Result_User_NoSuccessorFoundForMultipleElectedCandidate_0_For_1_In_2,
             candidate.getName(),
             p3List.getNumber(),
-            p2List.getElectoralDistrictNumber()));
+            p2List.getElectoralDistrictNumbers()));
   }
 
   /**
@@ -114,11 +131,11 @@ public class AnomalyFactory {
   public void candidateDoesNotReceiveSeatInPreferredDistrict(CandidateForSorting candidate,
       P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages
+    addToP22(Messages
         .bind(MessageKeys.Result_User_Candidate_0_For_1_in_2_DoesNotReceiveSeatInPreferredDistrict,
             candidate.getName(),
             p3List.getNumber(),
-            p2List.getElectoralDistrictNumber()));
+            p2List.getElectoralDistrictNumbers()));
   }
 
   /**
@@ -129,42 +146,53 @@ public class AnomalyFactory {
   public void candidateReceiveSeatInDistrictWithoutFreeSeat(CandidateForSorting candidate,
       P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_Candidate_0_ReceivesSeatByP16Sub2For_1In_2,
+    addToP22(Messages.bind(MessageKeys.Result_User_Candidate_0_ReceivesSeatByP16Sub2For_1In_2,
         candidate.getName(),
         p3List.getNumber(),
-        p2List.getElectoralDistrictNumber()));
+        p2List.getElectoralDistrictNumbers()));
   }
 
   public void rollBackSequenceExhaustedSeatWithheldFrom(P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_RollBackSequenceExhaustedFor_0_SeatWithheldIn_1,
+    addToP22(Messages.bind(MessageKeys.Result_User_RollBackSequenceExhaustedFor_0_SeatWithheldIn_1,
         p3List.getNumber(),
-        p2List.getElectoralDistrictNumber()));
+        p2List.getElectoralDistrictNumbers()));
   }
 
   public void seatWithheldFromRollBackSequence(P2List p2List) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_SeatWithheldFor_0_In_1_ByP16Sub2,
+    addToP22(Messages.bind(MessageKeys.Result_User_SeatWithheldFor_0_In_1_ByP16Sub2,
         p3List.getNumber(),
-        p2List.getElectoralDistrictNumber()));
+        p2List.getElectoralDistrictNumbers()));
   }
 
   public void lateListExhaustion(P2List p2List, P2List receiver) {
     P3List p3List = getP3List(p2List);
-    add(Messages.bind(MessageKeys.Result_User_LateListExhaustionFor_0_In_1_SeatPassesTo_2,
+    addToP22(Messages.bind(MessageKeys.Result_User_LateListExhaustionFor_0_In_1_SeatPassesTo_2,
         p3List.getNumber(),
-        p2List.getElectoralDistrictNumber(),
-        receiver.getElectoralDistrictNumber()));
+        p2List.getElectoralDistrictNumbers(),
+        receiver.getElectoralDistrictNumbers()));
   }
 
   public void listExhaustionToOtherList(GeneralList list, long numberOfLostSeats) {
-    if (numberOfLostSeats == 1) {
-      add(Messages.bind(MessageKeys.Result_User_ListExhaustionFor_0_SeatLostToOtherList,
-          list.getName()));
+    if (isEK) {
+      if (numberOfLostSeats == 1) {
+        add(Messages.bind(MessageKeys.Result_User_ListExhaustionEKFor_0_SeatLostToOtherList,
+            list.getName()));
+      } else {
+        add(Messages.bind(MessageKeys.Result_User_ListExhaustionEKFor_0_1_SeatsLostToOtherList,
+            list.getName(),
+            numberOfLostSeats));
+      }
     } else {
-      add(Messages.bind(MessageKeys.Result_User_ListExhaustionFor_0_1_SeatsLostToOtherList,
-          list.getName(),
-          numberOfLostSeats));
+      if (numberOfLostSeats == 1) {
+        add(Messages.bind(MessageKeys.Result_User_ListExhaustionFor_0_SeatLostToOtherList,
+            list.getName()));
+      } else {
+        add(Messages.bind(MessageKeys.Result_User_ListExhaustionFor_0_1_SeatsLostToOtherList,
+            list.getName(),
+            numberOfLostSeats));
+      }
     }
   }
 

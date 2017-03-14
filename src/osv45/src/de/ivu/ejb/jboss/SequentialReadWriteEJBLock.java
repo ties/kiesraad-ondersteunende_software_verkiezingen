@@ -2,7 +2,7 @@
  * SequentialReadWriteEJBLock
  * 
  * Created on 21.07.2005
- * Copyright (c) 2005 IVU Traffic Technologies AG
+ * Copyright (c) 2005 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb.jboss;
 
@@ -46,7 +46,7 @@ public class SequentialReadWriteEJBLock extends SimpleReadWriteEJBLock {
     }
 
     /**
-     * Gibt waiting zurück.
+     * Gibt waiting zurï¿½ck.
      * 
      * @return waiting.
      */
@@ -55,16 +55,16 @@ public class SequentialReadWriteEJBLock extends SimpleReadWriteEJBLock {
     }
 
     /**
-     * Setzt den neuen Wert für waiting auf waiting.
+     * Setzt den neuen Wert fï¿½r waiting auf waiting.
      * 
-     * @param waiting neuer Wert für waiting
+     * @param waiting neuer Wert fï¿½r waiting
      */
     public void setWaiting(boolean waiting) {
       _waiting = waiting;
     }
 
     /**
-     * Gibt write zurück.
+     * Gibt write zurï¿½ck.
      * 
      * @return write.
      */
@@ -95,7 +95,7 @@ public class SequentialReadWriteEJBLock extends SimpleReadWriteEJBLock {
               trace(aTx, "already a reader"); //$NON-NLS-1$
             done = true;
           } else if (_writer == null && (_writersWaiting.isEmpty() || readerBeforeNextWriter())) {
-            // Sonderfall: es können zwar wartende Schreibthreads vorhanden sein, aber dieser Thread
+            // Sonderfall: es kï¿½nnen zwar wartende Schreibthreads vorhanden sein, aber dieser Thread
             // ist mit dem Lesen an der Reihe
 
             registerReadLock(aTx);

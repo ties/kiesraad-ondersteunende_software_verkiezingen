@@ -2,7 +2,7 @@
  * ErgebnisImportHandlerMsg
  * 
  * Created on 25.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.exception.ImportException;
  * Handels import of sub region results in P4
  * 
  * @author ugo@ivu.de, IVU Traffic Technologies AG
- * @version $Id$
+
  */
 public class ErgebnisImportHandlerMsg extends AbstractErgebnisImportHandler {
 

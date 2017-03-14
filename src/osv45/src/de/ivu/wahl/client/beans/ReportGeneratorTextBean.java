@@ -37,7 +37,7 @@ import de.ivu.wahl.i18n.Messages;
  * Handles uploading and deleting of *-text.xslt files with text resources for the ReportGenerator.
  * See ImportReportGeneratorTextsHandler and ResetReportGeneratorTextsHandler
  * 
- * @author jon@ivu.de, Copyright (c) 2011 IVU Traffic Technologies AG
+ * @author jon@ivu.de, Copyright (c) 2011 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class ReportGeneratorTextBean extends BasicUploadBean {
   private static final long serialVersionUID = 1684684774094348017L;
@@ -57,7 +57,7 @@ public class ReportGeneratorTextBean extends BasicUploadBean {
   protected final Properties prop = new Properties();
 
   /**
-   * anwenderMsg wird von der Webseite benutzt um eine Satusmeldung für den Anwender anzuzeigen
+   * anwenderMsg wird von der Webseite benutzt um eine Satusmeldung fï¿½r den Anwender anzuzeigen
    */
   public String _adminMsg;
   public String _adminConfirmationMsg = null;

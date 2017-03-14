@@ -7,12 +7,12 @@ import java.util.List;
 import de.ivu.wahl.modell.GebietInfo;
 
 /**
- * UebersichtErgebnis.java Objekt mit Informationen für die Übersicht der eingegangenen sowie der
+ * UebersichtErgebnis.java Objekt mit Informationen fï¿½r die ï¿½bersicht der eingegangenen sowie der
  * ausstehenden Gebieten. Die Liste der Gebiete spiegelt z.B. bei der Bundestagswahl je nach Anfrage
- * das angeforderte Bundesland bzw. alle Bundesländer wieder, die wiederum mit den Wahlkreisen als
- * eine Liste von Gebieten befüllt sind.
+ * das angeforderte Bundesland bzw. alle Bundeslï¿½nder wieder, die wiederum mit den Wahlkreisen als
+ * eine Liste von Gebieten befï¿½llt sind.
  * 
- * @author mur 15.10.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * @author mur 15.10.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class UebersichtErgebnis extends Ergebnis {
@@ -26,14 +26,14 @@ public class UebersichtErgebnis extends Ergebnis {
   }
 
   /**
-   * @param list mit Gebiet-Objekten befüllt
+   * @param list mit Gebiet-Objekten befï¿½llt
    */
   public void setGebiete(List<GebietInfo> list) {
     _gebiete = list;
   }
 
   /**
-   * @return Gebiete-Iterator zum iterieren über eine Liste von Gebiet-Objekten
+   * @return Gebiete-Iterator zum iterieren ï¿½ber eine Liste von Gebiet-Objekten
    */
   public Iterator<GebietInfo> getGebiete() {
     return _gebiete.iterator();

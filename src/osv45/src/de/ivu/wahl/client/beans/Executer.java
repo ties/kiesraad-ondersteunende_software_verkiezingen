@@ -7,10 +7,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Interface für ein Bean, welches Commandos aus einem HTTP-Request ausführt. Die Commandos sind von
+ * Interface fï¿½r ein Bean, welches Commandos aus einem HTTP-Request ausfï¿½hrt. Die Commandos sind von
  * der Form cmd=_commando_
  * 
- * @author klie@ivu.de cos@ivu.de - Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * @author klie@ivu.de cos@ivu.de - Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface Executer {
@@ -26,7 +26,7 @@ public interface Executer {
     abstract void execute(HttpServletRequest request);
 
     /**
-     * Gibt Beschreibung zurück.
+     * Gibt Beschreibung zurï¿½ck.
      * 
      * @return Beschreibung
      */

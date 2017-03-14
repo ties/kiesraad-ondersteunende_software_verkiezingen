@@ -2,7 +2,7 @@
  * TwoKeyMap
  * 
  * Created on 03.11.2003
- * Copyright (c) 2002-4 IVU Traffic Technologies AG
+ * Copyright (c) 2002-4 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.util.collections;
 
@@ -16,9 +16,9 @@ import java.util.Set;
  * 
  * @author jon@ivu.de cos@ivu.de
  * @since 03.11.2003
- * @param < K1 > Datentyp des ersten Schlüssels
- * @param < K2 > Datentyp des zweiten Schlüssels
- * @param < V > Datentyp für den Wert
+ * @param < K1 > Datentyp des ersten Schlï¿½ssels
+ * @param < K2 > Datentyp des zweiten Schlï¿½ssels
+ * @param < V > Datentyp fï¿½r den Wert
  */
 public class TwoKeyMap<K1, K2, V> {
   private final Map<K1, Map<K2, V>> _baseMap;
@@ -161,8 +161,8 @@ public class TwoKeyMap<K1, K2, V> {
 
   /**
    * @author Joachim Nottebaum
-   * @param <K2> Datentyp für den Schlüssel
-   * @param <V> Datentyp für den Wert
+   * @param <K2> Datentyp fï¿½r den Schlï¿½ssel
+   * @param <V> Datentyp fï¿½r den Wert
    * @since 03.11.2003 Simple Interface for an Object that creates new Map for each first key
    */
   public interface Constructor<K2, V> {

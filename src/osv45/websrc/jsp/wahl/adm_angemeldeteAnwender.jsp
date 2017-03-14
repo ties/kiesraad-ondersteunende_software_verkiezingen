@@ -4,7 +4,7 @@
  * Zeigt alle angemeldeten Anwender an
  *
  * Auf der Seite ist noch einmal ein rechteCheck, da die Seite ansonsten als Admin-Default durchgehen darf
- * author:  klie@ivu.de  Copyright (c) 2002 IVU Traffic Technologies AG
+ * author:  klie@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.wahl.anwender.Anmeldung" %>
@@ -19,6 +19,9 @@
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "admAngemeldeteAnw"; //$NON-NLS-1$
+
    response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
    response.setHeader("Pragma","no-cache"); //HTTP 1.0
    response.setDateHeader ("Expires", 0); //prevents caching at the proxy server 
@@ -35,12 +38,7 @@
 
 <body class="hghell">
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="admAngemeldeteAnw"/></td>
-   </tr>
-   <tr class="hgeeeeee">
-      <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
       <% if (!appBean.checkRight(de.ivu.wahl.anwender.Rechte.R_ADM_ANGEMELDETE))  { // %>

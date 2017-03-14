@@ -2,7 +2,7 @@
  *******************************************************************************
  * Eingabe des Ergebnisses einer Erfassungseinheit
  *
- * author:  cos@ivu.de  Copyright (c) 2005-7 IVU Traffic Technologies AG
+ * author:  cos@ivu.de  Copyright (c) 2005-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: referendum.jsp,v 1.4 2010/11/19 09:45:31 jon Exp $
  *******************************************************************************
  --%>
@@ -57,7 +57,9 @@
 
 <c:set var="gebietName" value="${gebietInfo.name}" scope="page"/>
 <%
-   
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "referendum"; //$NON-NLS-1$
+
    // holen einer vorbereiteten Eingangsmessage für eine Erfassungseinheit
    GUIEingangMsg guiEingangMsg = eingabeBean.getGUIMsg(request, (GebietInfo)map.get("gebietInfo"), false); //$NON-NLS-1$
    String breite= "100%"; //$NON-NLS-1$
@@ -71,14 +73,7 @@
 <html>
    <head>
       <title><ivu:int key="GebietseingabeImDialog"/></title>
-      <c:choose>
-         <c:when test="${appBean.NS4}">
-            <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002_NS4.css">
-         </c:when>
-         <c:otherwise>
-            <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
-         </c:otherwise>
-      </c:choose>
+      <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
       <style type="text/css">
 /*<![CDATA[*/
           table.hghell {
@@ -117,19 +112,7 @@
     <jsp:body>   
     <div id="content">
         <div>
-            <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hgeeeeee">
-                <tr>
-                    <td class="klein"><%= ClientHelper.getKonfigurationsString(request)%></td>
-                    <td align="right"><%-- Zum Drucken des aktuellen Frames --%>
-                        <a href="javascript:window.print()" style="text-decoration:none">
-                            <span class="linkdklrot">
-                                <img src="<%= request.getContextPath() %>/img/icon/drucken.gif" width="24" height="9" alt="" border="0" /><ivu:int key="SeiteDrucken"/>
-                            </span>
-                        </a>
-                        <ivu:help key="referendum"/>
-                    </td>
-                </tr>
-            </table>
+            <%@include file="/jsp/fragments/print_and_help_row.jspf"%>
             <table border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
                 <tr>
                     <td valign="top">

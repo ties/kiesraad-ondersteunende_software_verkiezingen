@@ -2,7 +2,7 @@
  * UniCacheBean
  * 
  * Created on 17.03.2005
- * Copyright (c) 2005 IVU Traffic Technologies AG
+ * Copyright (c) 2005 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.runtime;
 
@@ -37,7 +37,7 @@ public class UniCacheBean<T> implements EntityBean {
   }
 
   public void ejbPassivate() throws EJBException {
-    // Zustand zurücksetzen
+    // Zustand zurï¿½cksetzen
     _object = null;
   }
 
@@ -50,17 +50,17 @@ public class UniCacheBean<T> implements EntityBean {
   }
 
   /**
-   * Gibt den übergebenen Schlüssel wieder zurück
+   * Gibt den ï¿½bergebenen Schlï¿½ssel wieder zurï¿½ck
    * 
-   * @param cachePK Schlüssel des UniCache-Objekts, welches geholt werden soll
-   * @return Schlüssel des UniCache-Objekts
+   * @param cachePK Schlï¿½ssel des UniCache-Objekts, welches geholt werden soll
+   * @return Schlï¿½ssel des UniCache-Objekts
    */
   public UniCachePK ejbFindByPrimaryKey(UniCachePK cachePK) {
     return cachePK;
   }
 
   /**
-   * Gibt das gespeicherte Objekt zurück
+   * Gibt das gespeicherte Objekt zurï¿½ck
    * 
    * @return das gespeicherte Objekt
    */
@@ -69,7 +69,7 @@ public class UniCacheBean<T> implements EntityBean {
   }
 
   /**
-   * Gibt das gespeicherte Objekt zurück (nach Einstellung in assembly-descriptor in einer neuen
+   * Gibt das gespeicherte Objekt zurï¿½ck (nach Einstellung in assembly-descriptor in einer neuen
    * Transaktion)
    * 
    * @return das gespeicherte Objekt

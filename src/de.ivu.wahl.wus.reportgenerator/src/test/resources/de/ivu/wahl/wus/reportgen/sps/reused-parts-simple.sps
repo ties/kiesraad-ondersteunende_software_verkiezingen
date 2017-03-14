@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" html-doctype="HTML4 Transitional" compatibility-view="IE7" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="18" html-doctype="HTML4 Transitional" compatibility-view="IE7" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters/>
 	<schemasources xpathdefaultns="urn:oasis:names:tc:evs:schema:eml">
 		<namespaces>
@@ -129,23 +129,60 @@
 					</condition>
 					<condition>
 						<children>
-							<conditionbranch xpath="$lang=0">
+							<conditionbranch xpath="eml:ElectionIdentifier/eml:ElectionCategory[text() != &quot;NR&quot; and text() != &quot;LR&quot; and text() != &quot;PR&quot;]">
 								<children>
-									<text fixtext="de verkiezing van de leden van "/>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext="de verkiezing van de leden van "/>
+													<calltemplate subtype="named" match="ElectionNameSimple">
+														<parameters>
+															<parameter name="isBold" value="$isBold"/>
+														</parameters>
+													</calltemplate>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ElectionName_verkiezingLeden"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
 								</children>
 							</conditionbranch>
 							<conditionbranch>
 								<children>
-									<autocalc xpath="$RP_ElectionName_verkiezingLeden"/>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext="het referendum over "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ElectionName_referendumOver"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<template subtype="element" match="eml:ElectionIdentifier">
+										<children>
+											<template subtype="element" match="eml:ElectionName">
+												<children>
+													<content subtype="regular"/>
+												</children>
+												<variables/>
+											</template>
+										</children>
+										<variables/>
+									</template>
 								</children>
 							</conditionbranch>
 						</children>
 					</condition>
-					<calltemplate subtype="named" match="ElectionNameSimple">
-						<parameters>
-							<parameter name="isBold" value="$isBold"/>
-						</parameters>
-					</calltemplate>
 					<calltemplate subtype="named" match="ElectionDomain">
 						<parameters>
 							<parameter name="isBold" value="$isBold"/>
@@ -280,6 +317,29 @@
 															</conditionbranch>
 														</children>
 													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch xpath=".=&quot;AB&quot;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="het algemeen bestuur van het "/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ElectionNameAcceptance_algemeen_bestuur"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+													<calltemplate subtype="named" match="WaterschapTypeName">
+														<parameters>
+															<parameter name="isBold" value="0"/>
+														</parameters>
+													</calltemplate>
 												</children>
 											</conditionbranch>
 											<conditionbranch xpath=".=&quot;GR&quot;">
@@ -831,6 +891,7 @@
 				<parameters>
 					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
 					<parameter name="fontSize" type="xs:token" occurrence="none-or-one" default-value="&apos;normal&apos;"/>
+					<parameter name="prefixToUppercase" type="xs:int" occurrence="none-or-one" default-value="0"/>
 				</parameters>
 				<children>
 					<condition>
@@ -855,7 +916,20 @@
 														<children>
 															<template subtype="element" match="xnl:NamePrefix">
 																<children>
-																	<content subtype="regular"/>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$prefixToUppercase = 0">
+																				<children>
+																					<content subtype="regular"/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="concat(translate(substring(., 1, 1), &apos;abcdefghijklmnopqrstuvwxyz&apos;, &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;), substring(., 2))"/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath=". != &apos;&apos;">
@@ -891,9 +965,24 @@
 														<children>
 															<template subtype="element" match="xnl:NamePrefix">
 																<children>
-																	<content subtype="regular">
-																		<styles font-weight="bold"/>
-																	</content>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$prefixToUppercase = 0">
+																				<children>
+																					<content subtype="regular">
+																						<styles font-weight="bold"/>
+																					</content>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="concat(translate(substring(., 1, 1), &apos;abcdefghijklmnopqrstuvwxyz&apos;, &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;), substring(., 2))">
+																						<styles font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath=". != &apos;&apos;">
@@ -939,9 +1028,24 @@
 														<children>
 															<template subtype="element" match="xnl:NamePrefix">
 																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller"/>
-																	</content>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$prefixToUppercase = 0">
+																				<children>
+																					<content subtype="regular">
+																						<styles font-size="smaller"/>
+																					</content>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="concat(translate(substring(., 1, 1), &apos;abcdefghijklmnopqrstuvwxyz&apos;, &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;), substring(., 2))">
+																						<styles font-size="smaller"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath=". != &apos;&apos;">
@@ -981,9 +1085,24 @@
 														<children>
 															<template subtype="element" match="xnl:NamePrefix">
 																<children>
-																	<content subtype="regular">
-																		<styles font-size="smaller" font-weight="bold"/>
-																	</content>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$prefixToUppercase = 0">
+																				<children>
+																					<content subtype="regular">
+																						<styles font-size="smaller" font-weight="bold"/>
+																					</content>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="concat(translate(substring(., 1, 1), &apos;abcdefghijklmnopqrstuvwxyz&apos;, &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;), substring(., 2))">
+																						<styles font-size="smaller" font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath=". != &apos;&apos;">
@@ -1031,9 +1150,24 @@
 														<children>
 															<template subtype="element" match="xnl:NamePrefix">
 																<children>
-																	<content subtype="regular">
-																		<styles font-size="x-small"/>
-																	</content>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$prefixToUppercase = 0">
+																				<children>
+																					<content subtype="regular">
+																						<styles font-size="x-small"/>
+																					</content>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="concat(translate(substring(., 1, 1), &apos;abcdefghijklmnopqrstuvwxyz&apos;, &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;), substring(., 2))">
+																						<styles font-size="x-small"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath=". != &apos;&apos;">
@@ -1073,9 +1207,24 @@
 														<children>
 															<template subtype="element" match="xnl:NamePrefix">
 																<children>
-																	<content subtype="regular">
-																		<styles font-size="x-small" font-weight="bold"/>
-																	</content>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$prefixToUppercase = 0">
+																				<children>
+																					<content subtype="regular">
+																						<styles font-size="x-small" font-weight="bold"/>
+																					</content>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="concat(translate(substring(., 1, 1), &apos;abcdefghijklmnopqrstuvwxyz&apos;, &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;), substring(., 2))">
+																						<styles font-size="x-small" font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																	<condition>
 																		<children>
 																			<conditionbranch xpath=". != &apos;&apos;">
@@ -1485,6 +1634,24 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)"/>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_Gender_unknown"/>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;female&quot;">
 																						<children>
 																							<condition>
@@ -1497,24 +1664,6 @@
 																									<conditionbranch>
 																										<children>
 																											<autocalc xpath="$RP_Gender_v"/>
-																										</children>
-																									</conditionbranch>
-																								</children>
-																							</condition>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=".=&quot;unknown&quot;">
-																						<children>
-																							<condition>
-																								<children>
-																									<conditionbranch xpath="$lang=0">
-																										<children>
-																											<text fixtext=" (f)"/>
-																										</children>
-																									</conditionbranch>
-																									<conditionbranch>
-																										<children>
-																											<autocalc xpath="$RP_Gender_unknown"/>
 																										</children>
 																									</conditionbranch>
 																								</children>
@@ -1568,6 +1717,28 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_Gender_unknown">
+																												<styles font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;female&quot;">
 																						<children>
 																							<condition>
@@ -1582,28 +1753,6 @@
 																									<conditionbranch>
 																										<children>
 																											<autocalc xpath="$RP_Gender_v">
-																												<styles font-weight="bold"/>
-																											</autocalc>
-																										</children>
-																									</conditionbranch>
-																								</children>
-																							</condition>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=".=&quot;unknown&quot;">
-																						<children>
-																							<condition>
-																								<children>
-																									<conditionbranch xpath="$lang=0">
-																										<children>
-																											<text fixtext=" (f)">
-																												<styles font-weight="bold"/>
-																											</text>
-																										</children>
-																									</conditionbranch>
-																									<conditionbranch>
-																										<children>
-																											<autocalc xpath="$RP_Gender_unknown">
 																												<styles font-weight="bold"/>
 																											</autocalc>
 																										</children>
@@ -1667,6 +1816,28 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="smaller"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_Gender_unknown">
+																												<styles font-size="smaller"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;female&quot;">
 																						<children>
 																							<condition>
@@ -1681,28 +1852,6 @@
 																									<conditionbranch>
 																										<children>
 																											<autocalc xpath="$RP_Gender_v">
-																												<styles font-size="smaller"/>
-																											</autocalc>
-																										</children>
-																									</conditionbranch>
-																								</children>
-																							</condition>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=".=&quot;unknown&quot;">
-																						<children>
-																							<condition>
-																								<children>
-																									<conditionbranch xpath="$lang=0">
-																										<children>
-																											<text fixtext=" (f)">
-																												<styles font-size="smaller"/>
-																											</text>
-																										</children>
-																									</conditionbranch>
-																									<conditionbranch>
-																										<children>
-																											<autocalc xpath="$RP_Gender_unknown">
 																												<styles font-size="smaller"/>
 																											</autocalc>
 																										</children>
@@ -1758,6 +1907,28 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_Gender_unknown">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;female&quot;">
 																						<children>
 																							<condition>
@@ -1772,28 +1943,6 @@
 																									<conditionbranch>
 																										<children>
 																											<autocalc xpath="$RP_Gender_v">
-																												<styles font-size="smaller" font-weight="bold"/>
-																											</autocalc>
-																										</children>
-																									</conditionbranch>
-																								</children>
-																							</condition>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=".=&quot;unknown&quot;">
-																						<children>
-																							<condition>
-																								<children>
-																									<conditionbranch xpath="$lang=0">
-																										<children>
-																											<text fixtext=" (f)">
-																												<styles font-size="smaller" font-weight="bold"/>
-																											</text>
-																										</children>
-																									</conditionbranch>
-																									<conditionbranch>
-																										<children>
-																											<autocalc xpath="$RP_Gender_unknown">
 																												<styles font-size="smaller" font-weight="bold"/>
 																											</autocalc>
 																										</children>
@@ -1857,6 +2006,28 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="x-small"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_Gender_unknown">
+																												<styles font-size="x-small"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;female&quot;">
 																						<children>
 																							<condition>
@@ -1871,28 +2042,6 @@
 																									<conditionbranch>
 																										<children>
 																											<autocalc xpath="$RP_Gender_v">
-																												<styles font-size="x-small"/>
-																											</autocalc>
-																										</children>
-																									</conditionbranch>
-																								</children>
-																							</condition>
-																						</children>
-																					</conditionbranch>
-																					<conditionbranch xpath=".=&quot;unknown&quot;">
-																						<children>
-																							<condition>
-																								<children>
-																									<conditionbranch xpath="$lang=0">
-																										<children>
-																											<text fixtext=" (f)">
-																												<styles font-size="x-small"/>
-																											</text>
-																										</children>
-																									</conditionbranch>
-																									<conditionbranch>
-																										<children>
-																											<autocalc xpath="$RP_Gender_unknown">
 																												<styles font-size="x-small"/>
 																											</autocalc>
 																										</children>
@@ -1948,6 +2097,28 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="x-small" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_Gender_unknown">
+																												<styles font-size="x-small" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;female&quot;">
 																						<children>
 																							<condition>
@@ -1970,6 +2141,560 @@
 																							</condition>
 																						</children>
 																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="GenderP1">
+				<parameters>
+					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="fontSize" type="xs:token" occurrence="none-or-one" default-value="&apos;normal&apos;"/>
+				</parameters>
+				<children>
+					<condition>
+						<children>
+							<conditionbranch xpath="0=1">
+								<children>
+									<text fixtext="Displays the gender as &quot; (m)&quot; or &quot; (v)&quot; with preceding blank (name component g), if @PublishGender = &quot;true&quot;. In Frysian, gender female or unknown is &quot;(f)&quot;."/>
+									<newline/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$fontSize = &apos;normal&apos;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="../kr:ListData/@PublishGender=&quot;true&quot;">
+																<children>
+																	<template subtype="element" match="eml:Gender">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath=".=&quot;male&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (m)"/>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_m"/>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;female&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (v)"/>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_v"/>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)"/>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_unknown"/>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="../kr:ListData/@PublishGender=&quot;true&quot;">
+																<children>
+																	<template subtype="element" match="eml:Gender">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath=".=&quot;male&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (m)">
+																												<styles font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_m">
+																												<styles font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;female&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (v)">
+																												<styles font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_v">
+																												<styles font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_unknown">
+																												<styles font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$fontSize = &apos;smaller&apos;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="../kr:ListData/@PublishGender=&quot;true&quot;">
+																<children>
+																	<template subtype="element" match="eml:Gender">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath=".=&quot;male&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (m)">
+																												<styles font-size="smaller"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_m">
+																												<styles font-size="smaller"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;female&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (v)">
+																												<styles font-size="smaller"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_v">
+																												<styles font-size="smaller"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="smaller"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_unknown">
+																												<styles font-size="smaller"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="../kr:ListData/@PublishGender=&quot;true&quot;">
+																<children>
+																	<template subtype="element" match="eml:Gender">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath=".=&quot;male&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (m)">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_m">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;female&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (v)">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_v">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_unknown">
+																												<styles font-size="smaller" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$fontSize = &apos;x-small&apos;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="../kr:ListData/@PublishGender=&quot;true&quot;">
+																<children>
+																	<template subtype="element" match="eml:Gender">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath=".=&quot;male&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (m)">
+																												<styles font-size="x-small"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_m">
+																												<styles font-size="x-small"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;female&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (v)">
+																												<styles font-size="x-small"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_v">
+																												<styles font-size="x-small"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;unknown&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (f)">
+																												<styles font-size="x-small"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_unknown">
+																												<styles font-size="x-small"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																		<variables/>
+																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="../kr:ListData/@PublishGender=&quot;true&quot;">
+																<children>
+																	<template subtype="element" match="eml:Gender">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath=".=&quot;male&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (m)">
+																												<styles font-size="x-small" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_m">
+																												<styles font-size="x-small" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch xpath=".=&quot;female&quot;">
+																						<children>
+																							<condition>
+																								<children>
+																									<conditionbranch xpath="$lang=0">
+																										<children>
+																											<text fixtext=" (v)">
+																												<styles font-size="x-small" font-weight="bold"/>
+																											</text>
+																										</children>
+																									</conditionbranch>
+																									<conditionbranch>
+																										<children>
+																											<autocalc xpath="$RP_GenderP1_v">
+																												<styles font-size="x-small" font-weight="bold"/>
+																											</autocalc>
+																										</children>
+																									</conditionbranch>
+																								</children>
+																							</condition>
+																						</children>
+																					</conditionbranch>
 																					<conditionbranch xpath=".=&quot;unknown&quot;">
 																						<children>
 																							<condition>
@@ -1983,7 +2708,7 @@
 																									</conditionbranch>
 																									<conditionbranch>
 																										<children>
-																											<autocalc xpath="$RP_Gender_unknown">
+																											<autocalc xpath="$RP_GenderP1_unknown">
 																												<styles font-size="x-small" font-weight="bold"/>
 																											</autocalc>
 																										</children>
@@ -1997,6 +2722,534 @@
 																		</children>
 																		<variables/>
 																	</template>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="GenderGeneral">
+				<parameters>
+					<parameter name="Gender" type="xs:string"/>
+					<parameter name="PublishGender" type="xs:string" occurrence="none-or-one" default-value="&quot;true&quot;"/>
+					<parameter name="PublicationLanguage" type="xs:string" occurrence="none-or-one" default-value="&quot;nl&quot;"/>
+					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="fontSize" type="xs:token" occurrence="none-or-one" default-value="&apos;normal&apos;"/>
+				</parameters>
+				<children>
+					<condition>
+						<children>
+							<conditionbranch xpath="0=1">
+								<children>
+									<text fixtext="Displays the gender as &quot; (m)&quot; or &quot; (v)&quot; or &quot; (f)&quot; with preceding blank (name component g) or not at all. Does not read from XML but from parameters."/>
+									<newline/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="0=1">
+								<children>
+									<text fixtext="*** $Gender = &quot;"/>
+									<autocalc xpath="$Gender"/>
+									<text fixtext="&quot;, $PublicationLanguage = &quot;"/>
+									<autocalc xpath="$PublicationLanguage"/>
+									<text fixtext="&quot;, $PublishGender = &quot;"/>
+									<autocalc xpath="$PublishGender"/>
+									<text fixtext="&quot;, fontSize = &quot;"/>
+									<autocalc xpath="$fontSize"/>
+									<text fixtext="&quot;, isBold = &quot;"/>
+									<autocalc xpath="$isBold"/>
+									<text fixtext="&quot; ***"/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$Gender != &quot;&quot; and $PublishGender = &quot;true&quot;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$fontSize = &apos;normal&apos;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$isBold=0">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$Gender = &quot;male&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (m)"/>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_m"/>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&apos;unknown&apos; or ($Gender=&apos;female&apos; and $PublicationLanguage = &apos;fy&apos;)">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (f)"/>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_unknown"/>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;female&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (v)"/>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_v"/>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+													<condition>
+														<children>
+															<conditionbranch xpath="$isBold=1">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$Gender=&quot;male&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (m)">
+																										<styles font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_m">
+																										<styles font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;unknown&quot; or ($Gender=&quot;female&quot; and $PublicationLanguage = &quot;fy&quot;)">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (f)">
+																										<styles font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_unknown">
+																										<styles font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;female&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (v)">
+																										<styles font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_v">
+																										<styles font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$fontSize = &apos;smaller&apos;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$isBold=0">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$Gender=&quot;male&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (m)">
+																										<styles font-size="smaller"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_m">
+																										<styles font-size="smaller"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;unknown&quot; or ($Gender=&quot;female&quot; and $PublicationLanguage = &quot;fy&quot;)">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (f)">
+																										<styles font-size="smaller"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_unknown">
+																										<styles font-size="smaller"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;female&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (v)">
+																										<styles font-size="smaller"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_v">
+																										<styles font-size="smaller"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+													<condition>
+														<children>
+															<conditionbranch xpath="$isBold=1">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$Gender=&quot;male&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (m)">
+																										<styles font-size="smaller" font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_m">
+																										<styles font-size="smaller" font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;unknown&quot; or ($Gender=&quot;female&quot; and $PublicationLanguage = &quot;fy&quot;)">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (f)">
+																										<styles font-size="smaller" font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_unknown">
+																										<styles font-size="smaller" font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;female&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (v)">
+																										<styles font-size="smaller" font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_v">
+																										<styles font-size="smaller" font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$fontSize = &apos;x-small&apos;">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$isBold=0">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$Gender=&quot;male&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (m)">
+																										<styles font-size="x-small"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_m">
+																										<styles font-size="x-small"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;unknown&quot; or ($Gender=&quot;female&quot; and $PublicationLanguage = &quot;fy&quot;)">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (f)">
+																										<styles font-size="x-small"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_unknown">
+																										<styles font-size="x-small"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;female&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (v)">
+																										<styles font-size="x-small"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_v">
+																										<styles font-size="x-small"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+													<condition>
+														<children>
+															<conditionbranch xpath="$isBold=1">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$Gender=&quot;male&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (m)">
+																										<styles font-size="x-small" font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_m">
+																										<styles font-size="x-small" font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;unknown&quot; or ($Gender=&quot;female&quot; and $PublicationLanguage = &quot;fy&quot;)">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (f)">
+																										<styles font-size="x-small" font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_unknown">
+																										<styles font-size="x-small" font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch xpath="$Gender=&quot;female&quot;">
+																				<children>
+																					<condition>
+																						<children>
+																							<conditionbranch xpath="$lang=0">
+																								<children>
+																									<text fixtext=" (v)">
+																										<styles font-size="x-small" font-weight="bold"/>
+																									</text>
+																								</children>
+																							</conditionbranch>
+																							<conditionbranch>
+																								<children>
+																									<autocalc xpath="$RP_Gender_v">
+																										<styles font-size="x-small" font-weight="bold"/>
+																									</autocalc>
+																								</children>
+																							</conditionbranch>
+																						</children>
+																					</condition>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
 																</children>
 															</conditionbranch>
 														</children>
@@ -2242,6 +3495,7 @@
 			<globaltemplate subtype="named" match="NameBCEF">
 				<parameters>
 					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="prefixToUppercase" type="xs:int" occurrence="none-or-one" default-value="0"/>
 				</parameters>
 				<children>
 					<condition>
@@ -2257,6 +3511,8 @@
 					<calltemplate subtype="named" match="LastNameH1">
 						<parameters>
 							<parameter name="isBold" value="$isBold"/>
+							<parameter name="fontSize"/>
+							<parameter name="prefixToUppercase" value="$prefixToUppercase"/>
 						</parameters>
 					</calltemplate>
 					<text fixtext=", "/>
@@ -2542,6 +3798,15 @@
 																</children>
 															</tgridbody-rows>
 														</children>
+														<wizard-data-repeat>
+															<children/>
+														</wizard-data-repeat>
+														<wizard-data-rows>
+															<children/>
+														</wizard-data-rows>
+														<wizard-data-columns>
+															<children/>
+														</wizard-data-columns>
 													</tgrid>
 												</children>
 											</conditionbranch>
@@ -4431,173 +5696,6 @@
 					</condition>
 				</children>
 			</globaltemplate>
-			<globaltemplate subtype="named" match="PartyName2">
-				<parameters/>
-				<children>
-					<condition>
-						<children>
-							<conditionbranch xpath="0=1">
-								<children>
-									<text fixtext="If no name is registered, display &quot;blanco lijst met als eerste kandidaat...&quot;"/>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-					<condition>
-						<children>
-							<conditionbranch xpath="$SV_OutputFormat = &apos;RTF&apos;">
-								<children>
-									<paragraph paragraphtag="pre-wrap">
-										<styles white-space="pre-wrap"/>
-										<children>
-											<condition>
-												<children>
-													<conditionbranch xpath="./eml:AffiliationIdentifier/eml:RegisteredName[text() != &quot;&quot;]">
-														<children>
-															<template subtype="element" match="eml:AffiliationIdentifier">
-																<children>
-																	<template subtype="element" match="eml:RegisteredName">
-																		<children>
-																			<content subtype="regular">
-																				<format basic-type="xsd" datatype="token"/>
-																			</content>
-																		</children>
-																		<variables/>
-																	</template>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</conditionbranch>
-													<conditionbranch>
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="blanco lijst met als eerste kandidaat"/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP_PartyName2_blancoLijst"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-															<text fixtext=" "/>
-															<template subtype="element" match="eml:Candidate">
-																<children>
-																	<condition>
-																		<children>
-																			<conditionbranch xpath="position() = 1">
-																				<children>
-																					<template subtype="element" match="eml:CandidateFullName">
-																						<children>
-																							<calltemplate subtype="named" match="LastNameH1">
-																								<parameters/>
-																							</calltemplate>
-																							<text fixtext=", "/>
-																							<calltemplate subtype="named" match="FirstNameH1">
-																								<parameters/>
-																							</calltemplate>
-																						</children>
-																						<variables/>
-																					</template>
-																					<calltemplate subtype="named" match="Gender">
-																						<parameters/>
-																					</calltemplate>
-																				</children>
-																			</conditionbranch>
-																		</children>
-																	</condition>
-																</children>
-																<variables/>
-															</template>
-														</children>
-													</conditionbranch>
-												</children>
-											</condition>
-										</children>
-									</paragraph>
-								</children>
-							</conditionbranch>
-							<conditionbranch xpath="$SV_OutputFormat = &apos;PDF&apos;">
-								<children>
-									<condition>
-										<children>
-											<conditionbranch xpath="./eml:AffiliationIdentifier/eml:RegisteredName[text() != &quot;&quot;]">
-												<children>
-													<template subtype="element" match="eml:AffiliationIdentifier">
-														<children>
-															<template subtype="element" match="eml:RegisteredName">
-																<children>
-																	<content subtype="regular">
-																		<format basic-type="xsd" datatype="token"/>
-																	</content>
-																</children>
-																<variables/>
-															</template>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</conditionbranch>
-											<conditionbranch>
-												<children>
-													<condition>
-														<children>
-															<conditionbranch xpath="$lang=0">
-																<children>
-																	<text fixtext="blanco lijst met als eerste kandidaat"/>
-																</children>
-															</conditionbranch>
-															<conditionbranch>
-																<children>
-																	<autocalc xpath="$RP_PartyName2_blancoLijst"/>
-																</children>
-															</conditionbranch>
-														</children>
-													</condition>
-													<text fixtext=" "/>
-													<template subtype="element" match="eml:Candidate">
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="position() = 1">
-																		<children>
-																			<template subtype="element" match="eml:CandidateFullName">
-																				<children>
-																					<calltemplate subtype="named" match="LastNameH1">
-																						<parameters/>
-																					</calltemplate>
-																					<text fixtext=", "/>
-																					<calltemplate subtype="named" match="FirstNameH1">
-																						<parameters/>
-																					</calltemplate>
-																				</children>
-																				<variables/>
-																			</template>
-																			<calltemplate subtype="named" match="Gender">
-																				<parameters/>
-																			</calltemplate>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-														<variables/>
-													</template>
-												</children>
-											</conditionbranch>
-										</children>
-									</condition>
-								</children>
-							</conditionbranch>
-						</children>
-					</condition>
-				</children>
-			</globaltemplate>
 			<globaltemplate subtype="named" match="PartyNameInOmissions">
 				<parameters/>
 				<children>
@@ -4652,7 +5750,9 @@
 																</children>
 															</condition>
 															<calltemplate subtype="named" match="FirstCandidateName">
-																<parameters/>
+																<parameters>
+																	<parameter name="prefixToUppercase" value="1"/>
+																</parameters>
 															</calltemplate>
 														</children>
 													</conditionbranch>
@@ -4709,7 +5809,9 @@
 																		</children>
 																	</condition>
 																	<calltemplate subtype="named" match="FirstCandidateName">
-																		<parameters/>
+																		<parameters>
+																			<parameter name="prefixToUppercase" value="1"/>
+																		</parameters>
 																	</calltemplate>
 																</children>
 															</conditionbranch>
@@ -5115,19 +6217,735 @@
 					</condition>
 				</children>
 			</globaltemplate>
+			<globaltemplate subtype="named" match="GenderInAffiliationVotes">
+				<parameters>
+					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="isSmaller" type="xsx:int" occurrence="none-or-one" default-value="0"/>
+				</parameters>
+				<children>
+					<condition>
+						<children>
+							<conditionbranch xpath="0=1">
+								<children>
+									<text fixtext="Displays the gender as &quot; (m)&quot; or &quot; (v)&quot; with preceding blank (name component g)."/>
+									<newline/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$isSmaller=0">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<template subtype="element" match="eml:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)"/>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m"/>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../../@PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)"/>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown"/>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)"/>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v"/>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<template subtype="element" match="eml:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)">
+																								<styles font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m">
+																								<styles font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../../@PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)">
+																								<styles font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown">
+																								<styles font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)">
+																								<styles font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v">
+																								<styles font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$isSmaller=1">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<template subtype="element" match="eml:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)">
+																								<styles font-size="smaller"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m">
+																								<styles font-size="smaller"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../../@PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)">
+																								<styles font-size="smaller"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown">
+																								<styles font-size="smaller"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)">
+																								<styles font-size="smaller"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v">
+																								<styles font-size="smaller"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<template subtype="element" match="eml:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../../@PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="GenderRG">
+				<parameters>
+					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="isSmaller" type="xsx:int" occurrence="none-or-one" default-value="0"/>
+				</parameters>
+				<children>
+					<condition>
+						<children>
+							<conditionbranch xpath="0=1">
+								<children>
+									<text fixtext="Displays the gender as &quot; (m)&quot; or &quot; (v)&quot; or &quot; (f)&quot; with preceding blank (name component g)."/>
+									<newline/>
+									<text fixtext="Based on template Gender2, but with Gender-Elements from RG namespace, not EML namspace."/>
+									<newline/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$isSmaller=0">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<template subtype="element" match="rg:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)"/>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m"/>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot; and @PublicationLanguage = &quot;nl&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)"/>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v"/>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and @PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)"/>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown"/>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<template subtype="element" match="rg:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)">
+																								<styles font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m">
+																								<styles font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot; and @PublicationLanguage = &quot;nl&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)">
+																								<styles font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v">
+																								<styles font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and @PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)">
+																								<styles font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown">
+																								<styles font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$isSmaller=1">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=0">
+												<children>
+													<template subtype="element" match="rg:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)">
+																								<styles font-size="smaller"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m">
+																								<styles font-size="smaller"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot; and @PublicationLanguage = &quot;nl&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)">
+																								<styles font-size="smaller"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v">
+																								<styles font-size="smaller"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and @PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)">
+																								<styles font-size="smaller"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown">
+																								<styles font-size="smaller"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold=1">
+												<children>
+													<template subtype="element" match="rg:Gender">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath=".=&quot;male&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (m)">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_m">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;female&quot; and @PublicationLanguage = &quot;nl&quot;">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (v)">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_v">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and @PublicationLanguage = &quot;fy&quot;)">
+																		<children>
+																			<condition>
+																				<children>
+																					<conditionbranch xpath="$lang=0">
+																						<children>
+																							<text fixtext=" (f)">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</text>
+																						</children>
+																					</conditionbranch>
+																					<conditionbranch>
+																						<children>
+																							<autocalc xpath="$RP_Gender2_unknown">
+																								<styles font-size="smaller" font-weight="bold"/>
+																							</autocalc>
+																						</children>
+																					</conditionbranch>
+																				</children>
+																			</condition>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+														<variables/>
+													</template>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+				</children>
+			</globaltemplate>
 			<globaltemplate subtype="named" match="FirstCandidateName">
-				<parameters/>
+				<parameters>
+					<parameter name="prefixToUppercase" type="xs:int" occurrence="none-or-one" default-value="0"/>
+				</parameters>
 				<children>
 					<template subtype="element" match="rg:FirstCandidateName">
 						<children>
 							<calltemplate subtype="named" match="LastNameH1">
-								<parameters/>
+								<parameters>
+									<parameter name="isBold"/>
+									<parameter name="fontSize"/>
+									<parameter name="prefixToUppercase" value="$prefixToUppercase"/>
+								</parameters>
 							</calltemplate>
 							<text fixtext=", "/>
 							<calltemplate subtype="named" match="FirstNameH1">
 								<parameters/>
 							</calltemplate>
-							<calltemplate subtype="named" match="Gender2">
+							<calltemplate subtype="named" match="GenderRG">
 								<parameters/>
 							</calltemplate>
 						</children>
@@ -5191,7 +7009,11 @@
 															<template subtype="element" match="rg:FirstCandidateName">
 																<children>
 																	<calltemplate subtype="named" match="LastNameH1">
-																		<parameters/>
+																		<parameters>
+																			<parameter name="isBold"/>
+																			<parameter name="fontSize"/>
+																			<parameter name="prefixToUppercase" value="1"/>
+																		</parameters>
 																	</calltemplate>
 																	<text fixtext=","/>
 																	<calltemplate subtype="named" match="Initials">
@@ -5254,7 +7076,11 @@
 																	<template subtype="element" match="rg:FirstCandidateName">
 																		<children>
 																			<calltemplate subtype="named" match="LastNameH1">
-																				<parameters/>
+																				<parameters>
+																					<parameter name="isBold"/>
+																					<parameter name="fontSize"/>
+																					<parameter name="prefixToUppercase" value="1"/>
+																				</parameters>
 																			</calltemplate>
 																			<text fixtext=","/>
 																			<calltemplate subtype="named" match="Initials">
@@ -5592,6 +7418,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 				</children>
 			</globaltemplate>
@@ -5731,6 +7566,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 				</children>
 			</globaltemplate>
@@ -5755,7 +7599,7 @@
 								<children>
 									<condition>
 										<children>
-											<conditionbranch xpath=".=&quot;EP&quot; or .=&quot;BC&quot;">
+											<conditionbranch xpath=".=&quot;EP&quot; or .=&quot;BC&quot; or .=&quot;AB&quot;">
 												<children>
 													<condition>
 														<children>
@@ -5851,6 +7695,30 @@
 																			</conditionbranch>
 																		</children>
 																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath=".=&quot;AB&quot;">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="algemeen bestuur van het "/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_ElectionNameSimple_algemeen_bestuur"/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																	<calltemplate subtype="named" match="WaterschapTypeName">
+																		<parameters>
+																			<parameter name="isBold" value="$isBold"/>
+																			<parameter name="font-size"/>
+																		</parameters>
+																	</calltemplate>
 																</children>
 															</conditionbranch>
 															<conditionbranch xpath=".=&quot;EP&quot;">
@@ -6019,6 +7887,34 @@
 																			</conditionbranch>
 																		</children>
 																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath=".=&quot;AB&quot;">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="algemeen bestuur van het ">
+																						<styles font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_ElectionNameSimple_algemeen_bestuur">
+																						<styles font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																	<calltemplate subtype="named" match="WaterschapTypeName">
+																		<parameters>
+																			<parameter name="isBold" value="$isBold"/>
+																			<parameter name="font-size"/>
+																		</parameters>
+																	</calltemplate>
 																</children>
 															</conditionbranch>
 															<conditionbranch xpath=".=&quot;EP&quot;">
@@ -6664,7 +8560,7 @@
 										<children>
 											<condition>
 												<children>
-													<conditionbranch xpath="./eml:ElectionCategory[text()=&quot;PS&quot; or text()=&quot;GR&quot; or text()=&quot;ER&quot;]">
+													<conditionbranch xpath="./eml:ElectionCategory[text()=&quot;PS&quot; or text()=&quot;AB&quot; or text()=&quot;GR&quot; or text()=&quot;ER&quot;]">
 														<children>
 															<template subtype="element" match="kr:ElectionDomain">
 																<children>
@@ -6717,7 +8613,7 @@
 										<children>
 											<condition>
 												<children>
-													<conditionbranch xpath="./eml:ElectionCategory[text()=&quot;PS&quot; or text()=&quot;GR&quot; or text()=&quot;ER&quot;]">
+													<conditionbranch xpath="./eml:ElectionCategory[text()=&quot;PS&quot; or text()=&quot;AB&quot; or text()=&quot;GR&quot; or text()=&quot;ER&quot;]">
 														<children>
 															<template subtype="element" match="kr:ElectionDomain">
 																<children>
@@ -6782,7 +8678,7 @@
 										<children>
 											<condition>
 												<children>
-													<conditionbranch xpath="./eml:ElectionCategory[text()=&quot;PS&quot; or text()=&quot;GR&quot; or text()=&quot;ER&quot;]">
+													<conditionbranch xpath="./eml:ElectionCategory[text()=&quot;PS&quot; or text()=&quot;AB&quot; or text()=&quot;GR&quot; or text()=&quot;ER&quot;]">
 														<children>
 															<template subtype="element" match="kr:ElectionDomain">
 																<children>
@@ -7075,6 +8971,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 					<calltemplate subtype="named" match="ObjectionsByVoters2a">
 						<parameters/>
@@ -7675,6 +9580,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 				</children>
 			</globaltemplate>
@@ -7717,6 +9631,24 @@
 															</condition>
 														</children>
 													</conditionbranch>
+													<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath="$lang=0">
+																		<children>
+																			<text fixtext="zij"/>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch>
+																		<children>
+																			<autocalc xpath="$RP_Gender3_unknown"/>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+													</conditionbranch>
 													<conditionbranch xpath=".=&quot;female&quot;">
 														<children>
 															<condition>
@@ -7729,24 +9661,6 @@
 																	<conditionbranch>
 																		<children>
 																			<autocalc xpath="$RP_Gender3_zij"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</conditionbranch>
-													<conditionbranch xpath=".=&quot;unknown&quot;">
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="zij"/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP_Gender3_unknown"/>
 																		</children>
 																	</conditionbranch>
 																</children>
@@ -7821,6 +9735,24 @@
 															</condition>
 														</children>
 													</conditionbranch>
+													<conditionbranch xpath=".=&quot;unknown&quot; or (.=&quot;female&quot; and ../../kr:ListData/@PublicationLanguage=&quot;fy&quot;)">
+														<children>
+															<condition>
+																<children>
+																	<conditionbranch xpath="$lang=0">
+																		<children>
+																			<text fixtext="zich"/>
+																		</children>
+																	</conditionbranch>
+																	<conditionbranch>
+																		<children>
+																			<autocalc xpath="$RP_Gender4_unknown"/>
+																		</children>
+																	</conditionbranch>
+																</children>
+															</condition>
+														</children>
+													</conditionbranch>
 													<conditionbranch xpath=".=&quot;female&quot;">
 														<children>
 															<condition>
@@ -7833,24 +9765,6 @@
 																	<conditionbranch>
 																		<children>
 																			<autocalc xpath="$RP_Gender4_har"/>
-																		</children>
-																	</conditionbranch>
-																</children>
-															</condition>
-														</children>
-													</conditionbranch>
-													<conditionbranch xpath=".=&quot;unknown&quot;">
-														<children>
-															<condition>
-																<children>
-																	<conditionbranch xpath="$lang=0">
-																		<children>
-																			<text fixtext="zich"/>
-																		</children>
-																	</conditionbranch>
-																	<conditionbranch>
-																		<children>
-																			<autocalc xpath="$RP_Gender4_unknown"/>
 																		</children>
 																	</conditionbranch>
 																</children>
@@ -8129,6 +10043,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 				</children>
 			</globaltemplate>
@@ -8488,6 +10411,8 @@
 			<globaltemplate subtype="named" match="ChapterElection">
 				<parameters>
 					<parameter name="isH3" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="isU16" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="province" occurrence="none-or-one" default-value="&apos;&apos;"/>
 				</parameters>
 				<children>
 					<text fixtext="1. ">
@@ -8519,14 +10444,40 @@
 								<children>
 									<condition>
 										<children>
-											<conditionbranch xpath="$lang=0">
+											<conditionbranch xpath="$isU16 = 0">
 												<children>
-													<text fixtext="Het gaat om de verkiezing van:"/>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="Het gaat om de verkiezing van:"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ChapterElection_HetGaatOmVerkiezing"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
 												</children>
 											</conditionbranch>
 											<conditionbranch>
 												<children>
-													<autocalc xpath="$RP_ChapterElection_HetGaatOmVerkiezing"/>
+													<condition>
+														<children>
+															<conditionbranch xpath="$lang=0">
+																<children>
+																	<text fixtext="Het gaat om de verkiezing van de leden van:"/>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<autocalc xpath="$RP_ChapterElection_HetGaatOmVerkiezingVanLeden"/>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
 												</children>
 											</conditionbranch>
 										</children>
@@ -8560,6 +10511,213 @@
 							<parameter name="isBold" value="1"/>
 						</parameters>
 					</calltemplate>
+					<condition>
+						<children>
+							<conditionbranch xpath="$province != &apos;&apos;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext=" voor de provincie "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ChapterElection_VoorDeProvincie"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<template subtype="parameter" match="$province">
+										<children>
+											<content subtype="regular">
+												<styles font-weight="bold"/>
+											</content>
+										</children>
+										<variables/>
+									</template>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<template subtype="element" match="eml:ElectionIdentifier">
+						<children>
+							<template subtype="element" filter=".=&apos;EK&apos;" match="eml:ElectionCategory">
+								<variables/>
+							</template>
+						</children>
+						<variables/>
+					</template>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="ChapterStemming">
+				<parameters>
+					<parameter name="isElection" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="province" occurrence="none-or-one" default-value="&apos;&apos;"/>
+				</parameters>
+				<children>
+					<text fixtext="1. ">
+						<properties class="heading"/>
+					</text>
+					<condition>
+						<children>
+							<conditionbranch xpath="$lang=0">
+								<children>
+									<text fixtext="Stemming">
+										<properties class="heading"/>
+									</text>
+								</children>
+							</conditionbranch>
+							<conditionbranch>
+								<children>
+									<autocalc xpath="$RP_ChapterStemming_Stemming">
+										<properties class="heading"/>
+									</autocalc>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<newline/>
+					<newline/>
+					<condition>
+						<children>
+							<conditionbranch xpath="$lang=0">
+								<children>
+									<text fixtext="Dit proces-verbaal heeft betrekking op:"/>
+								</children>
+							</conditionbranch>
+							<conditionbranch>
+								<children>
+									<autocalc xpath="$RP_ChapterStemming_DitProcesVerbaalHeeftBetrekkingOp"/>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<newline/>
+					<newline/>
+					<condition>
+						<children>
+							<conditionbranch xpath="$isElection = 1">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang = 0">
+												<children>
+													<text fixtext="de verkiezing van "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ChapterStemming_deVerkiezingVan"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<calltemplate subtype="named" match="ElectionNameShort">
+										<parameters>
+											<parameter name="isBold" value="1"/>
+										</parameters>
+									</calltemplate>
+								</children>
+							</conditionbranch>
+							<conditionbranch>
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext="het "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ChapterStemming_het"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext=" "/>
+													<text fixtext="referendum">
+														<styles font-weight="bold"/>
+													</text>
+													<text fixtext=" "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ChapterStemming_referendum">
+														<styles font-weight="bold"/>
+													</autocalc>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext="over "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ChapterStemming_over"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<template subtype="element" match="eml:ElectionIdentifier">
+										<children>
+											<template subtype="element" match="eml:ElectionName">
+												<children>
+													<content subtype="regular">
+														<styles font-weight="bold"/>
+													</content>
+												</children>
+												<variables/>
+											</template>
+										</children>
+										<variables/>
+									</template>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
+					<condition>
+						<children>
+							<conditionbranch xpath="$province != &apos;&apos;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$lang=0">
+												<children>
+													<text fixtext=" voor de provincie "/>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<autocalc xpath="$RP_ChapterStemming_VoorDeProvincie"/>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+									<template subtype="parameter" match="$province">
+										<children>
+											<content subtype="regular">
+												<styles font-weight="bold"/>
+											</content>
+										</children>
+										<variables/>
+									</template>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
 				</children>
 			</globaltemplate>
 			<globaltemplate subtype="named" match="ChapterDistrictsOptions">
@@ -8861,16 +11019,16 @@
 												<styles width="20pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="130pt"/>
+												<styles width="145pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="90pt"/>
+												<styles width="105pt"/>
 											</tgridcol>
 											<tgridcol conditional-processing="$showDateOfBirth = 1">
 												<styles width="76pt"/>
 											</tgridcol>
 											<tgridcol>
-												<styles width="120pt"/>
+												<styles width="110pt"/>
 											</tgridcol>
 										</children>
 									</tgridbody-cols>
@@ -9041,7 +11199,7 @@
 																		</children>
 																		<variables/>
 																	</template>
-																	<calltemplate subtype="named" match="Gender">
+																	<calltemplate subtype="named" match="GenderP1">
 																		<parameters>
 																			<parameter name="isBold"/>
 																			<parameter name="fontSize" value="&apos;x-small&apos;"/>
@@ -9207,6 +11365,15 @@
 										</children>
 									</tgridbody-rows>
 								</children>
+								<wizard-data-repeat>
+									<children/>
+								</wizard-data-repeat>
+								<wizard-data-rows>
+									<children/>
+								</wizard-data-rows>
+								<wizard-data-columns>
+									<children/>
+								</wizard-data-columns>
 							</tgrid>
 						</children>
 						<variables/>
@@ -9388,6 +11555,15 @@
 												</children>
 											</tgridbody-rows>
 										</children>
+										<wizard-data-repeat>
+											<children/>
+										</wizard-data-repeat>
+										<wizard-data-rows>
+											<children/>
+										</wizard-data-rows>
+										<wizard-data-columns>
+											<children/>
+										</wizard-data-columns>
 									</tgrid>
 									<condition>
 										<children>
@@ -9513,7 +11689,7 @@
 																										</children>
 																										<variables/>
 																									</template>
-																									<calltemplate subtype="named" match="Gender2">
+																									<calltemplate subtype="named" match="GenderInAffiliationVotes">
 																										<parameters/>
 																									</calltemplate>
 																								</children>
@@ -9588,6 +11764,15 @@
 																</children>
 															</tgridbody-rows>
 														</children>
+														<wizard-data-repeat>
+															<children/>
+														</wizard-data-repeat>
+														<wizard-data-rows>
+															<children/>
+														</wizard-data-rows>
+														<wizard-data-columns>
+															<children/>
+														</wizard-data-columns>
 													</tgrid>
 												</children>
 											</conditionbranch>
@@ -9635,6 +11820,15 @@
 																</children>
 															</tgridbody-rows>
 														</children>
+														<wizard-data-repeat>
+															<children/>
+														</wizard-data-repeat>
+														<wizard-data-rows>
+															<children/>
+														</wizard-data-rows>
+														<wizard-data-columns>
+															<children/>
+														</wizard-data-columns>
 													</tgrid>
 												</children>
 											</conditionbranch>
@@ -9650,6 +11844,403 @@
 							</template>
 						</children>
 					</paragraph>
+				</children>
+			</globaltemplate>
+			<globaltemplate subtype="named" match="WaterschapTypeName">
+				<parameters>
+					<parameter name="contestId" occurrence="none-or-one" default-value="//kr:ElectionDomain/@Id"/>
+					<parameter name="isBold" type="xs:int" occurrence="none-or-one" default-value="0"/>
+					<parameter name="font-size" type="xs:token" occurrence="none-or-one" default-value="&apos;small&apos;"/>
+				</parameters>
+				<children>
+					<condition>
+						<children>
+							<conditionbranch xpath="$font-size = &apos;medium&apos;">
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold = 0">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$contestId = 2">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="wetterskip">
+																						<styles font-size="medium"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Wetterskip">
+																						<styles font-size="medium"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 9 or $contestId = 10 or $contestId = 11">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap">
+																						<styles font-size="medium"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap">
+																						<styles font-size="medium"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 12 or $contestId = 13 or $contestId = 14">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap van">
+																						<styles font-size="medium"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap_van">
+																						<styles font-size="medium"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="waterschap">
+																						<styles font-size="medium"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Waterschap">
+																						<styles font-size="medium"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$contestId = 2">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="wetterskip">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Wetterskip">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 9 or $contestId = 10 or $contestId = 11">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 12 or $contestId = 13 or $contestId = 14">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap van">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap_van">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="waterschap">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Waterschap">
+																						<styles font-size="medium" font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+							<conditionbranch>
+								<children>
+									<condition>
+										<children>
+											<conditionbranch xpath="$isBold = 0">
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$contestId = 2">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="wetterskip"/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Wetterskip"/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 9 or $contestId = 10 or $contestId = 11">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap"/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap"/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 12 or $contestId = 13 or $contestId = 14">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap van"/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap_van"/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="waterschap"/>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Waterschap"/>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+											<conditionbranch>
+												<children>
+													<condition>
+														<children>
+															<conditionbranch xpath="$contestId = 2">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="wetterskip">
+																						<styles font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Wetterskip">
+																						<styles font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 9 or $contestId = 10 or $contestId = 11">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap">
+																						<styles font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap">
+																						<styles font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch xpath="$contestId = 12 or $contestId = 13 or $contestId = 14">
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="hoogheemraadschap van">
+																						<styles font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Hoogheemraadschap_van">
+																						<styles font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+															<conditionbranch>
+																<children>
+																	<condition>
+																		<children>
+																			<conditionbranch xpath="$lang=0">
+																				<children>
+																					<text fixtext="waterschap">
+																						<styles font-weight="bold"/>
+																					</text>
+																				</children>
+																			</conditionbranch>
+																			<conditionbranch>
+																				<children>
+																					<autocalc xpath="$RP_WaterschapTypeName_Waterschap">
+																						<styles font-weight="bold"/>
+																					</autocalc>
+																				</children>
+																			</conditionbranch>
+																		</children>
+																	</condition>
+																</children>
+															</conditionbranch>
+														</children>
+													</condition>
+												</children>
+											</conditionbranch>
+										</children>
+									</condition>
+								</children>
+							</conditionbranch>
+						</children>
+					</condition>
 				</children>
 			</globaltemplate>
 		</children>

@@ -86,8 +86,8 @@ public class GruppenInfo implements Serializable, Cloneable {
           int schluessel = gruppeModel.getSchluessel();
           int position = ggm.getPosition();
           if (ggm.isListeZugelassen()
-              || position == GruppeKonstanten.GruppeAllgemein.WAEHLER.position
-              || position == GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.position) {
+              || position == GruppeKonstanten.GruppeAllgemein.WAEHLER.getPosition()
+              || position == GruppeKonstanten.GruppeAllgemein.WAHLBERECHTIGTE.getPosition()) {
             positionen.add(position);
           }
           _gruppePositionBySchluesselGebietsnummerUndArt.put(new GGKey(schluessel, gebietsart,
@@ -96,7 +96,7 @@ public class GruppenInfo implements Serializable, Cloneable {
               gebietsnummer), schluessel);
 
           position2GG.put(position, ggm);
-          // TODO: über Kandidaten iterieren
+          // TODO: ï¿½ber Kandidaten iterieren
           _zugelasseneKandidaten.put(new GGKey(schluessel, gebietsart, gebietsnummer), kandidaten);
         }
         _gebiete.put(key, position2GG);
@@ -154,7 +154,7 @@ public class GruppenInfo implements Serializable, Cloneable {
   }
 
   /**
-   * Gibt zugelasseneKandidaten zurück.
+   * Gibt zugelasseneKandidaten zurï¿½ck.
    * 
    * @return zugelasseneKandidaten.
    */

@@ -2,7 +2,7 @@
  * BundleHelper
  * 
  * Created on 17.12.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.util;
 
@@ -21,8 +21,8 @@ public abstract class BundleHelper {
   /**
    * Convenience method for reading strings from the default resource bundle
    * 
-   * @param key Schlüssel für den String-Eintrag in der Übersetzungstabelle
-   * @return Übersetzung in der Sprache/Version der Locale der Anwendung
+   * @param key Schlï¿½ssel fï¿½r den String-Eintrag in der ï¿½bersetzungstabelle
+   * @return ï¿½bersetzung in der Sprache/Version der Locale der Anwendung
    */
   public static String getBundleString(String key) {
     if (__rb == null) {
@@ -36,7 +36,7 @@ public abstract class BundleHelper {
   }
 
   /**
-   * @return {@link Locale} für die Anwendung
+   * @return {@link Locale} fï¿½r die Anwendung
    */
   public static Locale getLocale() {
     final String language = getProperty("user.language"); //$NON-NLS-1$

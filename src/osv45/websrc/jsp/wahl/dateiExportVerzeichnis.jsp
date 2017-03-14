@@ -10,6 +10,9 @@
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="uplBean" scope="session" class="de.ivu.wahl.client.beans.UploadBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "dateiExpVerzeichnis"; //$NON-NLS-1$
+
 String breite = "100%";
 %>
 <html>
@@ -22,12 +25,7 @@ String breite = "100%";
 </head>
 <body class="hghell">
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="dateiExpVerzeichnis"/></td>
-   </tr>
-   <tr class="hgeeeeee">
-      <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
@@ -48,7 +46,7 @@ String breite = "100%";
                      <tr>
                         <td valign="top">
                              <% if (admBean.getProperty(Konstanten.PROP_EXPORT_FORMULAR_DIR) != null){ %>
-                                <iframe marginheight="0" marginwidth="0" frameborder="0" style="background-color: #CCCCCC;" align="top" src="/<%= SystemInfo.getSystemInfo().getModusklartext()+"_"+SystemInfo.getSystemInfo().getEbenenklartext()+"-" %>export-map" width="100%" height="600"/>
+                                <iframe marginheight="0" marginwidth="0" frameborder="0" style="background-color: #CCCCCC;" align="top" src="/<%= SystemInfo.getSystemInfo().getModusklartext()+"_"+SystemInfo.getSystemInfo().getEbenenklartext()+SystemInfo.getSystemInfo().getInstallationSuffix()+"-" %>export-map" width="100%" height="600"/>
                              <% } else { %>
                            <fieldset style="border: 1px solid #093C69; padding: 15px">
                            <legend><b><ivu:int key="Export_Verzeichnis_titel"/></b></legend><br />

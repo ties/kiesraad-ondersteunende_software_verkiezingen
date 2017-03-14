@@ -2,7 +2,7 @@
  * ReportNameComponentsP4
  * 
  * Created on 31.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -19,6 +19,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
  * @author jon@ivu.de, IVU Traffic Technologies AG
  */
 public class ReportNameComponentsP4 implements ReportNameComponents, ReportNameComponentsSetter {
+  private static final String UNDERSCORE = "_";
 
   public static ReportNameComponents fromEML510(Document eml510) {
     return fromEML510(eml510, true);
@@ -101,18 +102,21 @@ public class ReportNameComponentsP4 implements ReportNameComponents, ReportNameC
   public List<String> getNameComponents() {
     List<String> result = new ArrayList<String>();
 
-    // add ElectionIdentifier (6 characters)
-    String ei = getElectionIdentifier();
-    if (ei != null && ei.length() > 6) {
-      ei = ei.substring(0, 6);
-    }
-    result.add(ei);
+    if (isEML510d() && _electionCategory.isElectionDomainNeeded()) {
+      // add ElectionIdentifier part upto (excluding) the first underscore
+      String ei = getElectionIdentifier();
+      int pos = ei.indexOf(UNDERSCORE);
+      if (pos > 0) {
+        ei = ei.substring(0, pos);
+      }
+      result.add(ei);
 
-    // add text "provincie" or "gemeente" etc.
-    if (isEML510d()) {
+      // add text "provincie" or "gemeente" etc.
       if (ElectionCategory.PS.equals(_electionCategory)
           || ElectionCategory.PR.equals(_electionCategory)) {
         add(RgConstants.FILENAME_FRAGMENT_PROVINCE, result);
+      } else if (ElectionCategory.AB.equals(_electionCategory)) {
+        add(RgConstants.FILENAME_FRAGMENT_WATER_BOARD, result);
       } else if (ElectionCategory.GR.equals(_electionCategory)
           || ElectionCategory.LR.equals(_electionCategory)) {
         add(RgConstants.FILENAME_FRAGMENT_MUNICIPALITY, result);
@@ -124,11 +128,13 @@ public class ReportNameComponentsP4 implements ReportNameComponents, ReportNameC
       } else if (isGcRotterdam()) {
         add(RgConstants.FILENAME_FRAGMENT_BOROUGH_ROTTERDAM, result);
       }
-    }
 
-    // add _electionDomain
-    if (_electionCategory.isElectionDomainNeeded()) {
+      // add election domain (= rest of the election identifier)
       add(_electionDomain, result);
+
+    } else {
+      // Not EML 510d -> take the complete ElectionIdentifier
+      result.add(getElectionIdentifier());
     }
 
     // add text "gemeente" or "kieskring" etc.

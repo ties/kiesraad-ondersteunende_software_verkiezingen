@@ -1,7 +1,7 @@
 /*
  * ExportDirImpl
  * 
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.mbean.exportdir;
 
@@ -31,14 +31,7 @@ import de.ivu.wahl.admin.PropertyHandlingBean;
  */
 public class ExportDirImpl implements Runnable {
 
-  private static final Class<ExportDirImpl> MY_CLASS = ExportDirImpl.class;
-
   private static final Object[] EMPTY_OBJECT_ARRAY = new Object[]{};
-
-  static {
-    Logger.getLogger(MY_CLASS).info(Log4J.dumpVersion(MY_CLASS, Log4J
-        .extractVersion("$Revision: 1.16 $"))); //$NON-NLS-1$
-  }
 
   private final Logger _logger;
 
@@ -78,7 +71,8 @@ public class ExportDirImpl implements Runnable {
             if (exportPath.isDirectory()) {
               final SystemInfo systemInfo = SystemInfo.getSystemInfo();
               String exportDir = "/" + systemInfo.getModusklartext() + "_" //$NON-NLS-1$ //$NON-NLS-2$
-                  + systemInfo.getEbenenklartext() + "-export-map"; //$NON-NLS-1$
+                  + systemInfo.getEbenenklartext() + systemInfo.getInstallationSuffix()
+                  + "-export-map"; //$NON-NLS-1$
               Context context = (Context) _jmxInvoker.invoke("jboss.web:type=server", //$NON-NLS-1$
                   "createContext", //$NON-NLS-1$
                   new Object[]{exportDir, exportPath.getAbsolutePath()});

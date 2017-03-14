@@ -2,7 +2,7 @@
  * P2ListForRemainingSeatsDeterminator
  * 
  * Created on 07.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.determination;
 
@@ -94,7 +94,7 @@ public class P2ListForRemainingSeatsDeterminator {
       // The candidate is elected at the same time in more than one district. The district is
       // selected by the number of votes which the candidate received in that district.
       APPLOG.info(Messages
-          .bind(MessageKeys.Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByNumberOfSeats,
+          .bind(MessageKeys.Result_Tracelog_DistrictWhere_0_isElectedIsDeterminedByNumberOfVotes,
               candidate.getName()));
       if (listsWithMaxVotes.size() > 1) {
         // The candidate received the same highest the number of votes in more than one district.

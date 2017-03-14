@@ -289,7 +289,7 @@ a:link,a:active,a:visited {
     padding-left: 18px;
 }
 
-.guiBefehle a {
+.guiBefehle a, .guiBefehle span {
     padding-top: 3px;
     padding-bottom: 3px;
     padding-left: 6px;
@@ -308,7 +308,7 @@ a:link,a:active,a:visited {
 }
 
 /* Navigationsleiste in befehl.jsp */
-a.guiBefehl_1 {
+a.guiBefehl_1, span.guiBefehl_1 {
     color: white !important;
     font-weight: bold;
     background: #093C69;
@@ -521,9 +521,6 @@ a.guiBefehl_selected {
 
 /* befehl.jsp: Wahlbezeichnung*/
 #layer5 {
-    position: absolute;
-    right: 25px;
-    top: 20px;
     font-size: 10pt;
     letter-spacing: 2pt;
     font-variant: small-caps;
@@ -717,4 +714,10 @@ a.guiBefehl_selected {
 
 .eingangKategorie span {
     color: #777;
+}
+
+@media print {
+    .print-hidden {
+        display: none;
+    }
 }

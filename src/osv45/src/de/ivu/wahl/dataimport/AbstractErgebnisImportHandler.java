@@ -2,7 +2,7 @@
  * MetadatenDb
  * 
  * Created on 06.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -175,25 +175,33 @@ public abstract class AbstractErgebnisImportHandler implements ErgebnisImportHan
     boolean isWurzelgebiet = resultNode.getLocalName().equals(XMLTags.EML_TOTAL_VOTES);
 
     // Determine the number of voters by adding valid, invalid and empty votes
+    // Similarly determine the number of valid or empty votes
     GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
     int anzGueltige = adapter.getXml(resultNode, GruppeAllgemein.GUELTIGE);
     int anzUngueltige = adapter.getXml(resultNode, GruppeAllgemein.UNGUELTIGE);
     int anzLeere = adapter.getXml(resultNode, GruppeAllgemein.LEER);
     int anzWaehler = anzGueltige + anzUngueltige + anzLeere;
+    int anzGueltigOderLeer = anzGueltige + anzLeere;
     saveStimmergebnisAllgemein(gebiet,
-        GruppeAllgemein.WAEHLER.position,
+        GruppeAllgemein.WAEHLER.getPosition(),
         _id_Ergebniseingang,
         anzWaehler);
+    saveStimmergebnisAllgemein(gebiet,
+        GruppeAllgemein.GUELTIG_ODER_LEER.getPosition(),
+        _id_Ergebniseingang,
+        anzGueltigOderLeer);
     if (!isWurzelgebiet) {
       gesamtstimmen.addGruppenstimmen(GruppeAllgemein.WAEHLER.schluessel, anzWaehler);
+      gesamtstimmen.addGruppenstimmen(GruppeAllgemein.GUELTIG_ODER_LEER.schluessel,
+          anzGueltigOderLeer);
     }
 
     // Invalid and empty votes, admitted voters, proxy votes
     // Explaining the difference between admitted voters and counted votes
     Iterable<GruppeAllgemein> gruppen = adapter.getGruppenAllgemein();
     for (GruppeAllgemein gruppeAllgemein : gruppen) {
-      int value = adapter.getXmlOr0(resultNode, gruppeAllgemein);
-      saveStimmergebnisAllgemein(gebiet, gruppeAllgemein.position, _id_Ergebniseingang, value);
+      int value = adapter.getFromEmlOr0(resultNode, gruppeAllgemein);
+      saveStimmergebnisAllgemein(gebiet, gruppeAllgemein.getPosition(), _id_Ergebniseingang, value);
       if (!isWurzelgebiet) {
         gesamtstimmen.addGruppenstimmen(gruppeAllgemein.schluessel, value);
       }

@@ -1,7 +1,7 @@
 /*
  * Created on 08.01.2004
  * 
- * Copyright (c) 2004-7 IVU Traffic Technologies AG
+ * Copyright (c) 2004-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl;
 
@@ -134,7 +134,7 @@ public class GebietsBaum implements Serializable {
               minNummer = maxNummer = nummer;
               gebietsartCache = gebietsart;
               /*
-               * nach vollständigem Durchlauf der while-Schleife steht die Anzahl der Intervalle
+               * nach vollstï¿½ndigem Durchlauf der while-Schleife steht die Anzahl der Intervalle
                * fest
                */
               anzahlIntervalle++;
@@ -175,7 +175,7 @@ public class GebietsBaum implements Serializable {
   private String _javaScriptForNaviPart;
 
   /**
-   * <code>_timestampGebietNodes</code> dient zur Erkennung ob sich überhaupt etwas geändert hat
+   * <code>_timestampGebietNodes</code> dient zur Erkennung ob sich ï¿½berhaupt etwas geï¿½ndert hat
    */
   private long _timestampGebietNodes;
 
@@ -183,12 +183,12 @@ public class GebietsBaum implements Serializable {
   private int _wahlergebnisartGebietNodes;
 
   /**
-   * <code>_id_LetzterErgebniseingang</code> ist die Referenz zur inkrementellen Änderung des Baums
+   * <code>_id_LetzterErgebniseingang</code> ist die Referenz zur inkrementellen ï¿½nderung des Baums
    */
   private String _id_LetzterErgebniseingang;
 
   /**
-   * dient zum Erkennen des vollständigen Rücksetztens der Wahl
+   * dient zum Erkennen des vollstï¿½ndigen Rï¿½cksetztens der Wahl
    */
   private int _countErgebniseingang;
   private boolean _baumErzeugt;
@@ -237,7 +237,7 @@ public class GebietsBaum implements Serializable {
             _ergebniseingangHome = (ErgebniseingangHome) IVUBeanBase
                 .findLocalHomeExt("Ergebniseingang"); //$NON-NLS-1$
           }
-          // Erkennung des laufenden Zurücksetzens der Wahl oder Wechsel der WEA: Baum muss komplett
+          // Erkennung des laufenden Zurï¿½cksetzens der Wahl oder Wechsel der WEA: Baum muss komplett
           // regeneriert werden
           int countErgebniseingang = _ergebniseingangHome.countByWahlAndWahlergebnisart(_id_Wahl,
               _wahlergebnisartGebietNodes);
@@ -317,7 +317,7 @@ public class GebietsBaum implements Serializable {
   /**
    * Liefert den entsprechenden Knoten.
    * 
-   * @param id_Gebiet Primärschlüssel des Gebiets
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
    * @return Knoten, enthaelt als UserObj ein Element von {@link GebietInfo}. Eine Navigation ist
    *         von diesem Knoten aus moglich.
    */
@@ -328,7 +328,7 @@ public class GebietsBaum implements Serializable {
   /**
    * Liefert das {@link GebietInfo} zum entsprechenden Knoten.
    * 
-   * @param id_Gebiet Primärschlüssel des Gebiets
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
    * @return {@link GebietInfo}-Objekt des Gebiets
    */
   public GebietInfo getGebietInfo(String id_Gebiet) {
@@ -365,7 +365,7 @@ public class GebietsBaum implements Serializable {
   /**
    * @param gebietsart
    * @param gebietsnummer
-   * @return Schlüsselobjekt (opaque)
+   * @return Schlï¿½sselobjekt (opaque)
    */
   public static Object createKey(final int gebietsart, final int gebietsnummer) {
     class GebietKey {
@@ -427,10 +427,10 @@ public class GebietsBaum implements Serializable {
   }
 
   /**
-   * Berechnet einen vollständig aufgebauten Baum. Dieser enthält sämtliche Objekte für die
-   * übergebenen Wahl
+   * Berechnet einen vollstï¿½ndig aufgebauten Baum. Dieser enthï¿½lt sï¿½mtliche Objekte fï¿½r die
+   * ï¿½bergebenen Wahl
    * 
-   * @param hint Set der geänderten Gebiete; wenn <code>null</code> wird der Baum vollständig neu
+   * @param hint Set der geï¿½nderten Gebiete; wenn <code>null</code> wird der Baum vollstï¿½ndig neu
    *          berechnet
    * @throws FinderException wenn die untergeordneten Gebiete nicht gefunden werden konnten
    */
@@ -476,7 +476,7 @@ public class GebietsBaum implements Serializable {
       }
 
       if (untergebietInfo.isAuswertungseinheitOderTiefer()) {
-        // Prüfung wegen Sondergebiete und änhliche die eventuell nicht gezählt werden
+        // Prï¿½fung wegen Sondergebiete und ï¿½nhliche die eventuell nicht gezï¿½hlt werden
         if (untergebietInfo.getAnzahlGesamt() > 0) {
           gesamt++;
         }
@@ -485,7 +485,7 @@ public class GebietsBaum implements Serializable {
       }
 
       if (untergebietInfo.isAuswertungseinheitOderTiefer()) {
-        // Prüfung wegen Sondergebiete und änhliche die eventuell nicht gezählt werden
+        // Prï¿½fung wegen Sondergebiete und ï¿½nhliche die eventuell nicht gezï¿½hlt werden
         if (untergebietInfo.getAnzahlGesamt() > 0) {
           erwartet++;
           if (untergebietInfo.isVollstaendig()) {

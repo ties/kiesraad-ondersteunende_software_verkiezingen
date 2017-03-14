@@ -19,13 +19,13 @@ import de.ivu.wahl.auswertung.erg.NavigationErgebnis;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietInfo;
-import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 
 /**
  * Clientbean zur Beschaffung eines Navigationsbaumes. Die Arbeit wird weitgehend auf der
  * Serverseite durch. de.ivu.wahl.auswertung.NavigationHandlingBean erbracht.
  * 
- * @author bae@ivu.de Copyright (c) 2003 IVU Traffic Technologies AG
+ * @author bae@ivu.de Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class NavigationBean implements Serializable {
   private static final long serialVersionUID = -8562972341530053407L;
@@ -37,7 +37,7 @@ public class NavigationBean implements Serializable {
    * liefert einen Navigationsbaum mit den darzustellenden Treenodes, und nur diesen Nodes. Er
    * stellt somit einen Ausschnitt aus dem Gesamtnode dar. Der Nodepath eines jeden Knotens ist
    * Vergleichbar mit dem des Gesamttrees, jedoch nicht gleich. Dem Nodepath ist eine Roothierarchie
-   * hinzugefügt, die die einzelnen Wahlartlevel representieren. Zum Beispiel 0_1_2 könnte im
+   * hinzugefï¿½gt, die die einzelnen Wahlartlevel representieren. Zum Beispiel 0_1_2 kï¿½nnte im
    * GesamtNode 1_2 heissen.
    * 
    * @param appBean
@@ -56,7 +56,7 @@ public class NavigationBean implements Serializable {
    * liefert einen AdminNavigationsbaum mit den darzustellenden Treenodes, und nur diesen Nodes. Er
    * stellt somit einen Ausschnitt aus dem Gesamtnode dar. Der Nodepath eines jeden Knotens ist
    * Vergleichbar mit dem des Gesamttrees, jedoch nicht gleich. Dem Nodepath ist eine Roothierarchie
-   * hinzugefügt, die die einzelnen Wahlartlevel representieren. Zum Beispiel 0_1_2 könnte im
+   * hinzugefï¿½gt, die die einzelnen Wahlartlevel representieren. Zum Beispiel 0_1_2 kï¿½nnte im
    * GesamtNode 1_2 heissen.
    * 
    * @param appBean
@@ -108,7 +108,7 @@ public class NavigationBean implements Serializable {
   }
 
   /**
-   * Bearbeitet den Baum für einen wahlart-Level
+   * Bearbeitet den Baum fï¿½r einen wahlart-Level
    * 
    * @return rootNode gefuellt mit allen darzustellenden Kindern. Der rootNode ist nicht
    *         darzustellen, sondern nur ein Container. Die Kinder enthalten die Informationen im
@@ -124,7 +124,7 @@ public class NavigationBean implements Serializable {
     boolean isFilterGebietAchse = isFilterGebietAchse(filterGebiet, gebietId, false);
     int aktuellerLevel = anzuzeigendeLevels[0];
     DefaultMutableTreeNode retNode = new DefaultMutableTreeNode(
-        GebietModel.GEBIETSART_KLARTEXT[aktuellerLevel]);
+        Gebietsart.getKlartext(aktuellerLevel));
     if (isAddTeilBaum(naviankerpath, posInWahlartLevel_noTeilbaum)) {
       addGebiet(retNode,
           anzuzeigendeLevels,
@@ -255,7 +255,7 @@ public class NavigationBean implements Serializable {
 
     /*
      * todo evtl. hier dynamisch die Sortierung unterhalb des Parent nach einer lokalen Eigenschaft
-     * von Child sicherstellen und mit insert einfügen
+     * von Child sicherstellen und mit insert einfï¿½gen
      */
     DefaultMutableTreeNode node = new DefaultMutableTreeNode(gebietInfo);
     parentNode.add(node);
@@ -264,13 +264,13 @@ public class NavigationBean implements Serializable {
   }
 
   /**
-   * liefert eine Instanz aus dem GesamtTree mit übereinstimmenden NodePath
+   * liefert eine Instanz aus dem GesamtTree mit ï¿½bereinstimmenden NodePath
    * 
    * @see #getNavigationTree(ApplicationBean, String)
    * @param appBean
    * @param nodePath
    * @param isNavigationPath Falls true wird ein NodePath mit vorarngestelltem Wahlartlevel erwartet
-   * @return Instanz aus dem GesamtTree mit übereinstimmenden NodePath
+   * @return Instanz aus dem GesamtTree mit ï¿½bereinstimmenden NodePath
    * @throws EJBException
    */
   public static DefaultMutableTreeNode getTreeNode(ApplicationBean appBean,
@@ -296,11 +296,11 @@ public class NavigationBean implements Serializable {
 
   /**
    * liefert ein Navigation-Objekt, bei dem das NavigationErgebnis-Objekt nur mit dem Root-Element
-   * (z.B. Bund) gefüllt ist Ermittelt wird der Wert aus dem Wahlobjekt
+   * (z.B. Bund) gefï¿½llt ist Ermittelt wird der Wert aus dem Wahlobjekt
    * 
    * @param appBean
    * @return Navigation-Objekt, bei dem das Navigation-Ergebnisobjekt nur mit dem Root-Element
-   *         gefüllt ist
+   *         gefï¿½llt ist
    * @throws EJBException
    */
   public static DefaultMutableTreeNode getRootEbene(ApplicationBean appBean) throws EJBException {
@@ -308,12 +308,12 @@ public class NavigationBean implements Serializable {
   }
 
   /**
-   * Liefert einen Enumerator, der immer nur ein Element enthält, nämlich das übergebene. Verwendung
-   * findet dieser Enumerator im UebersichtWahlkreise.jsp, für den Fall, dass die zweite eben sich
-   * aus Wahleinheiten zusammensetzen und somit eine horizontal Darstellung gewünscht ist.
+   * Liefert einen Enumerator, der immer nur ein Element enthï¿½lt, nï¿½mlich das ï¿½bergebene. Verwendung
+   * findet dieser Enumerator im UebersichtWahlkreise.jsp, fï¿½r den Fall, dass die zweite eben sich
+   * aus Wahleinheiten zusammensetzen und somit eine horizontal Darstellung gewï¿½nscht ist.
    * 
    * @param treeNode
-   * @return Enumerator, der nur das übergebene Element enthält
+   * @return Enumerator, der nur das ï¿½bergebene Element enthï¿½lt
    */
   public Enumeration<DefaultMutableTreeNode> getSingleEnumeration(DefaultMutableTreeNode treeNode) {
     return new SingleEnumeration(treeNode);
@@ -365,8 +365,8 @@ public class NavigationBean implements Serializable {
   }
 
   /**
-   * Liefert den Nodepath zu einem Gebiet. Der Treecounter (z.b. 0_ für den ersten Baum) muss noch
-   * hinzugefügt werden. Wird das Gebiet nicht gefunden, wird der Pfad zum Root-Knoten geliefert
+   * Liefert den Nodepath zu einem Gebiet. Der Treecounter (z.b. 0_ fï¿½r den ersten Baum) muss noch
+   * hinzugefï¿½gt werden. Wird das Gebiet nicht gefunden, wird der Pfad zum Root-Knoten geliefert
    * 
    * @param appBean
    * @param id_Gebiet

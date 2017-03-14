@@ -2,7 +2,7 @@
  * ImportElectionMetadata
  * 
  * Created on 27.04.2007
- * Copyright (c) 2007 IVU Traffic Technologies AG
+ * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -22,6 +22,7 @@ import static de.ivu.wahl.dataimport.XMLTags.WAHL_IDENTIFIER;
 import static de.ivu.wahl.modell.GebietModel.EBENE_CSB;
 import static de.ivu.wahl.modell.GebietModel.EBENE_HSB;
 import static de.ivu.wahl.modell.GebietModel.EBENE_PSB;
+import static de.ivu.wahl.modell.GebietModel.GEBIETSART_ALGEMEEN_BESTUUR;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_BUND;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_GEMEINDE;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_INSELGEMEINDE;
@@ -44,6 +45,7 @@ import de.ivu.wahl.export.Roman;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.modell.impl.GebietModelImpl;
 import de.ivu.wahl.util.EMLFilenameCheck;
@@ -52,7 +54,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 import de.ivu.wahl.wus.xmlsecurity.XmlParseException;
 
 /**
- * Java-Entsprechung der Konfigurationsdatei für den Import der Metadaten einer Wahl
+ * Java-Entsprechung der Konfigurationsdatei fÃ¼r den Import der Metadaten einer Wahl
  * 
  * @author cos@ivu.de, IVU Traffic Technologies AG
  */
@@ -378,9 +380,9 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
     Element ec = electionIdentifier.getFirstChildElement(WAHL_ART, NS_EML);
     String value = ec.getValue();
     ElectionCategory electionCategory = ElectionCategory.valueOf(value);
-    int gebietsartMitContest = (ElectionCategory.EK.equals(electionCategory)
-        ? GebietModel.GEBIETSART_LAND
-        : GebietModel.GEBIETSART_WAHLKREIS);
+    Gebietsart gebietsartMitContest = (ElectionCategory.EK.equals(electionCategory)
+        ? Gebietsart.LAND
+        : Gebietsart.WAHLKREIS);
 
     Element gebiete = wahldefinition.getFirstChildElement(ED_ELECTION_TREE, NS_KR);
     List<GebietModel> ret = new ArrayList<GebietModel>();
@@ -411,13 +413,13 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
             Messages.bind(MessageKeys.Error_GebietNr_0_HatKeinenText, nummer));
       }
       gebiet.setName(name.getValue());
-      if (gebiet.getGebietsart() < gebietsartMitContest
+      if (gebiet.getGebietsart() < gebietsartMitContest.getId()
           || XMLTags.ATTR_VAL_CONTEST_ID_ALLE.equals(gebietIdContestIdentifier)
           || XMLTags.ATTR_VAL_CONTEST_ID_GEEN.equals(gebietIdContestIdentifier)
           || hasParentWithIDandArt(node,
               nodes,
               gebietIdContestIdentifier,
-              GebietModel.GEBIETSART_KLARTEXT_EXPORT[gebietsartMitContest])) {
+              gebietsartMitContest.getKlartextExport())) {
         ret.add(gebiet);
       }
     }
@@ -497,6 +499,8 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
     } else if (_level == EBENE_CSB) {
       if (_electionCategory.equals(ElectionCategory.PS)) {
         _gebietsart = GEBIETSART_LAND;
+      } else if (_electionCategory.equals(ElectionCategory.AB)) {
+        _gebietsart = GEBIETSART_ALGEMEEN_BESTUUR;
       } else {
         _gebietsart = GEBIETSART_BUND;
       }
@@ -574,7 +578,8 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
         case GebietModel.EBENE_PSB :
           if (_electionCategory.isMunicipalityElection()) {
             _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
-          } else if (_electionCategory.equals(ElectionCategory.PS)) {
+          } else if (_electionCategory.equals(ElectionCategory.PS)
+              || _electionCategory.equals(ElectionCategory.AB)) {
             // no current location at this point of time
             // compare of managing authority and current location not possible
             _securityLevel = SecurityLevel.ASK_FOR_HASH_CODE;
@@ -586,7 +591,8 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
         case GebietModel.EBENE_HSB :
           if (_electionCategory.isMunicipalityElection()) {
             _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
-          } else if (_electionCategory.equals(ElectionCategory.PS)) {
+          } else if (_electionCategory.equals(ElectionCategory.PS)
+              || _electionCategory.equals(ElectionCategory.AB)) {
             String authorityName = readManagingAuthorityName(eml230);
             if (_wurzelGebiet != null && authorityName != null
                 && authorityName.equals(_wurzelGebiet.getName())) {

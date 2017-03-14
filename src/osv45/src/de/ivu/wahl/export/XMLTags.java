@@ -2,7 +2,7 @@
  * XMLTags
  * 
  * Created on 24.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -66,6 +66,8 @@ public interface XMLTags {
   String RG_TOTAL_SEATS_ASSIGNED = "TotalSeatsAssigned"; //$NON-NLS-1$
   String RG_LIST_COMBINED_LIST = "ListOrCombinedList"; //$NON-NLS-1$
   String ATTR_COMBINATION_ID = "combinationId"; //$NON-NLS-1$
+  String ATTR_PRIOR_SEATS = "PriorSeats"; //$NON-NLS-1$
+  String ATTR_NEW_SEATS = "NewSeats"; //$NON-NLS-1$
   String RG_LIST_IN_COMBINATION = "ListInCombination"; //$NON-NLS-1$
   String RG_VOTES = "Votes"; //$NON-NLS-1$
   String RG_SEATS = "Seats"; //$NON-NLS-1$
@@ -96,6 +98,7 @@ public interface XMLTags {
   String RG_RESIDUAL_SEATS = "ResidualSeats"; //$NON-NLS-1$
   String RG_REMAINDER = "Remainder"; //$NON-NLS-1$
   String RG_CANDIDATES_RESULTS = "OverviewOfCandidatesAndResults"; //$NON-NLS-1$
+  String RG_ANOMALY_IN_SEAT_DISTRIBUTION = "AnomalyInSeatDistribution"; //$NON-NLS-1$
   String RG_LIST_RESULTS = "ListAndResults"; //$NON-NLS-1$
   String RG_LIST_GROUP_RESULTS = "ListGroupAndResults"; //$NON-NLS-1$
   String RG_DEAD_CANDIDATE = "DeadCandidate"; //$NON-NLS-1$
@@ -111,6 +114,7 @@ public interface XMLTags {
   String ATTR_BY_LOT = "byLot"; //$NON-NLS-1$
   String RG_DECEASED = "Deceased"; //$NON-NLS-1$
   String RG_NEW_LIST_POSITION = "NewPositionOnList"; //$NON-NLS-1$
+  String RG_ELECTED_CANDIDATE = "ElectedCandidate"; //$NON-NLS-1$
   String RG_ELECTED_CANDIDATES = "OverviewOfElectedCandidates"; //$NON-NLS-1$
   String RG_VOTERS_OBJECTIONS = "ObjectionsByVoters"; //$NON-NLS-1$
   String RG_OBJECTIONS = "Objections"; //$NON-NLS-1$
@@ -122,6 +126,8 @@ public interface XMLTags {
   String RG_MEMBER_OF_COMMITTEE_3 = "MemberOfElectoralCommittee3"; //$NON-NLS-1$ // Not an XML element
   String RG_POSTAL_VOTES = "PostalVotes"; //$NON-NLS-1$
   String RG_PRESENCE_VOTES = "PresenceVotes"; //$NON-NLS-1$
+  String RG_CAST = "Cast"; //$NON-NLS-1$
+  String RG_TOTAL_COUNTED = "TotalCounted"; //$NON-NLS-1$
   String RG_BLANC_VOTES = "BlancVotes"; //$NON-NLS-1$
   String RG_INVALID_VOTES = "InvalidVotes"; //$NON-NLS-1$
   // Bericht aan de verkozen kandidaten
@@ -139,6 +145,7 @@ public interface XMLTags {
   String RG_REJECTION_POSTALCODE = "PostalCodeForRejection"; //$NON-NLS-1$
   // EML 510 and 520
   String RG_AFFILIATION_VOTES = "AffiliationVotes"; //$NON-NLS-1$
+  String ATTR_PUBLICATION_LANGUAGE = "PublicationLanguage"; //$NON-NLS-1$
   String RG_CANDIDATE_VOTES = "CandidateVotes"; //$NON-NLS-1$
   String RG_PROPOSAL_NAME = "ProposalName"; //$NON-NLS-1$
 

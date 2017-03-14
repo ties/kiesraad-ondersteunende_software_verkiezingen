@@ -19,9 +19,9 @@ import de.ivu.wahl.modell.ejb.Recht;
 import de.ivu.wahl.modell.ejb.RechtHome;
 
 /**
- * Trägt alle Rechte des Anwenders bei sich trägt und kann prüfen, ob ein Anwender was darf ...
+ * Trï¿½gt alle Rechte des Anwenders bei sich trï¿½gt und kann prï¿½fen, ob ein Anwender was darf ...
  * 
- * @author cos@ivu.de klie@ivu.de (c) 2003 IVU Traffic Technologies AG
+ * @author cos@ivu.de klie@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class AnwRechte implements Serializable {
@@ -31,7 +31,7 @@ public class AnwRechte implements Serializable {
   private static final Map<String, List<String>> __anw = new HashMap<String, List<String>>();
 
   /**
-   * Gibt die aktuellen Rechte des Anwenders zurück (AnwRechte-Instanz wird hier
+   * Gibt die aktuellen Rechte des Anwenders zurï¿½ck (AnwRechte-Instanz wird hier
    * zwischengespeichert)
    * 
    * @param c Anwenderkontext
@@ -58,10 +58,10 @@ public class AnwRechte implements Serializable {
   }
 
   /**
-   * Setzt die zwischengespeicherten Rechte eines Anwenders zurück. Sie werden beim nächsten Zugriff
+   * Setzt die zwischengespeicherten Rechte eines Anwenders zurï¿½ck. Sie werden beim nï¿½chsten Zugriff
    * neu aus der Datenbank geholt.
    * 
-   * @param id_Anwender Primärschlüssel des betroffenen Anwenders
+   * @param id_Anwender Primï¿½rschlï¿½ssel des betroffenen Anwenders
    */
   public static void resetAnwRechte(String id_Anwender) {
     List<String> gebietRechte = __anw.get(id_Anwender);
@@ -75,7 +75,7 @@ public class AnwRechte implements Serializable {
   private final long _timestamp = System.currentTimeMillis();
   private final Set<String> _rights = new HashSet<String>();
   // wird bei gleichbleibender Objekt-ID von RMI
-  // nur einmal vom Server zum Client übertragen!
+  // nur einmal vom Server zum Client ï¿½bertragen!
   private final Set<GebietKey> _gebiete;
 
   protected AnwRechte(String id_Anwender, String id_Gebiet) throws EJBException {
@@ -91,7 +91,7 @@ public class AnwRechte implements Serializable {
   }
 
   /**
-   * Gibt den Zeitstempel des zwischengespeicherten Objekts zurück (wegen Gültigkeitsprüfung)
+   * Gibt den Zeitstempel des zwischengespeicherten Objekts zurï¿½ck (wegen Gï¿½ltigkeitsprï¿½fung)
    * 
    * @return Zeitstempel des zwischengespeicherten Objekts
    */
@@ -100,9 +100,9 @@ public class AnwRechte implements Serializable {
   }
 
   /**
-   * Prüfen, ob ein Anwender etwas darf
+   * Prï¿½fen, ob ein Anwender etwas darf
    * 
-   * @param right das Recht, das geprüft wird
+   * @param right das Recht, das geprï¿½ft wird
    * @return <code>true</code>, wenn der Anwender darf
    */
   public boolean checkRight(String right) {
@@ -110,11 +110,11 @@ public class AnwRechte implements Serializable {
   }
 
   /**
-   * Prüfen, ob ein Anwender etwas auf einem Gebiet darf
+   * Prï¿½fen, ob ein Anwender etwas auf einem Gebiet darf
    * 
-   * @param right das Recht, das geprüft wird
-   * @param gebietsart Gebietsart des geprüften Gebietes
-   * @param gebietsnummer Nummer des geprüften Gebietes
+   * @param right das Recht, das geprï¿½ft wird
+   * @param gebietsart Gebietsart des geprï¿½ften Gebietes
+   * @param gebietsnummer Nummer des geprï¿½ften Gebietes
    * @return <code>true</code>, wenn der Anwender darf
    */
   public boolean checkRightForGebiet(String right, int gebietsart, int gebietsnummer) {

@@ -1,10 +1,8 @@
 /*
  * Created on Oct 29, 2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
-
-import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 
 import java.util.Map;
 
@@ -42,16 +40,11 @@ public class InitGuiCommandEP_P4 extends InitGuiCommand_P4 implements Applicatio
   }
 
   @Override
-  protected void createCommandGebietErgebnisKandidat(Map<String, String> jspLevelWorkName,
-      GUICommandList[] befehleInitial) {
-    String name = getBundleString("Gebiet_Ergebnis_Kandidat"); //$NON-NLS-1$
-    GUICommand cmd = createCommand(name, GEB_ERG_KAN, null, false, "gebietErgebnisKandidat.jsp", //$NON-NLS-1$
-        getBundleString("Gebiet_Ergebnis_Kandidat_titel"), //$NON-NLS-1$
-        GUI_CLASS_1);
+  protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
+    helper.setRights(null);
+    GUICommand cmd = helper.addCommand(Command.GEB_ERG_KAN,
+        "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     cmd.setNurGebiete(true);
-
-    jspLevelWorkName.put(LEVEL_UNABHAENGIG + "_" + GEB_ERG_KAN, name); //$NON-NLS-1$
-    befehleInitial[LEVEL_UNABHAENGIG].add(cmd);
   }
 
 }

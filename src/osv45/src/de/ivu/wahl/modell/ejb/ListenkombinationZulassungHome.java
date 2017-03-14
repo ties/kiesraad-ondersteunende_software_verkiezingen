@@ -7,8 +7,8 @@ import javax.ejb.FinderException;
 /**
  * ListenkombinationZulassungHome
  * 
- * @author cos@ivu.de (c) 2003-7 IVU Traffic Technologies AG
- * @version $Id$
+ * @author cos@ivu.de (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+
  */
 
 public interface ListenkombinationZulassungHome extends BasicListenkombinationZulassungHome {

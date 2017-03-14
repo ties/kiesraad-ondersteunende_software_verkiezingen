@@ -2,7 +2,7 @@
  * DBABase
  * 
  * Created on 08.10.2003
- * Copyright (c) 2003-5 IVU Traffic Technologies AG
+ * Copyright (c) 2003-5 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb.fw;
 
@@ -29,7 +29,7 @@ import org.apache.log4j.Category;
 import de.ivu.util.debug.Log4J;
 
 /**
- * Basisklasse für die Zugriffe auf die Datenbank
+ * Basisklasse fï¿½r die Zugriffe auf die Datenbank
  * 
  * @author cos@ivu.de, IVU Traffic Technologies AG
  */
@@ -92,7 +92,7 @@ public abstract class DBABase extends DatabaseAccess {
     }
 
     /**
-     * @return Parameter für das {@link PreparedStatement}
+     * @return Parameter fï¿½r das {@link PreparedStatement}
      */
     public Object[] getParams() {
       return _params;
@@ -109,9 +109,9 @@ public abstract class DBABase extends DatabaseAccess {
   /**
    * Methode retrieveIDs liefert eine Collection von IDs
    * 
-   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgeführt wird
+   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgefï¿½hrt wird
    * @param query Anfrage mit Platzhaltern
-   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgeführt wird
+   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgefï¿½hrt wird
    * @param queryCondition konkrete Suchbedingungen
    * @return eine Collection von IDs
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft
@@ -127,10 +127,10 @@ public abstract class DBABase extends DatabaseAccess {
   /**
    * Liefert eine Map von ID-Integer-Paaren
    * 
-   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgeführt wird
+   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgefï¿½hrt wird
    * @param query Anfrage mit Platzhaltern
    * @param queryCondition konkrete Suchbedingungen
-   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgeführt wird
+   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgefï¿½hrt wird
    * @return eine Map von Abbildungen von IDs auf Zahlenwerte
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft
    */
@@ -145,10 +145,10 @@ public abstract class DBABase extends DatabaseAccess {
   /**
    * Liefert eine Map von ID-BigDecimal-Paaren
    * 
-   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgeführt wird
+   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgefï¿½hrt wird
    * @param query Anfrage mit Platzhaltern
    * @param queryCondition konkrete Suchbedingungen
-   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgeführt wird
+   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgefï¿½hrt wird
    * @return eine Map von Abbildungen von IDs auf Zahlenwerte
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft
    */
@@ -161,15 +161,15 @@ public abstract class DBABase extends DatabaseAccess {
   }
 
   /**
-   * Führt die Query aus und liefert einen vom Command abhängigen Ergebnisbehälter
+   * Fï¿½hrt die Query aus und liefert einen vom Command abhï¿½ngigen Ergebnisbehï¿½lter
    * 
-   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgeführt wird
+   * @param prologSQL beliebiges SQL, das vor der eigentlichen Abfrage ausgefï¿½hrt wird
    * @param query Anfrage mit Platzhaltern
    * @param queryCondition konkrete Suchbedingungen
-   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgeführt wird
-   * @param resultCopier Command Pattern implementierung, die das ResultSet in den gewünschten
-   *          Behälter umkopiert
-   * @return vom Command abhängiger Ergebnisbehälter
+   * @param epilogSQL beliebiges SQL, das nach der eigentlichen Abfrage ausgefï¿½hrt wird
+   * @param resultCopier Command Pattern implementierung, die das ResultSet in den gewï¿½nschten
+   *          Behï¿½lter umkopiert
+   * @return vom Command abhï¿½ngiger Ergebnisbehï¿½lter
    * @throws SQLException
    */
   private static <T> T retreive(KomplexSQL[] prologSQL,
@@ -223,7 +223,7 @@ public abstract class DBABase extends DatabaseAccess {
     public List<String> copyResult(ResultSet r) throws SQLException {
       List<String> retRows = new ArrayList<String>();
       while (r.next()) {
-        // Achtung funktioniert nicht für zusammengesetzte PKs
+        // Achtung funktioniert nicht fï¿½r zusammengesetzte PKs
         retRows.add(r.getString(1));
       }
       return retRows;
@@ -298,11 +298,11 @@ public abstract class DBABase extends DatabaseAccess {
   }
 
   /**
-   * Löscht aus der Tabelle mittels einer, aus den Parametern gebildeten WHERE Klausel
+   * Lï¿½scht aus der Tabelle mittels einer, aus den Parametern gebildeten WHERE Klausel
    * 
    * @param query Anfrage mit Platzhaltern
    * @param condition konkrete Suchbedingungen
-   * @return <code>true</code> wenn das Objekt erfolgreich gelöscht wurde <code>false</code>
+   * @return <code>true</code> wenn das Objekt erfolgreich gelï¿½scht wurde <code>false</code>
    *         andernfalls
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft
    */
@@ -311,11 +311,11 @@ public abstract class DBABase extends DatabaseAccess {
   }
 
   /**
-   * Löscht aus der Tabelle mittels einer, aus den Parametern gebildeten WHERE Klausel
+   * Lï¿½scht aus der Tabelle mittels einer, aus den Parametern gebildeten WHERE Klausel
    * 
    * @param query Anfrage mit Platzhaltern
    * @param condition konkrete Suchbedingungen
-   * @return Anzahl gelöschter Zeilen
+   * @return Anzahl gelï¿½schter Zeilen
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft
    */
   public static int deleteAll(String query, Object[] condition) throws SQLException {
@@ -340,8 +340,8 @@ public abstract class DBABase extends DatabaseAccess {
   }
 
   /**
-   * Methode liefert die Anzahl der Objekte, die mittels einer WHERE-Klausel über die Parameter
-   * eingeschränkt wurde
+   * Methode liefert die Anzahl der Objekte, die mittels einer WHERE-Klausel ï¿½ber die Parameter
+   * eingeschrï¿½nkt wurde
    * 
    * @param query Anfrage mit Platzhaltern
    * @param condition konkrete Suchbedingungen
@@ -377,7 +377,7 @@ public abstract class DBABase extends DatabaseAccess {
   /**
    * Methode liefert die Anzahl der Zeilen der Tabelle Anwender
    * 
-   * @param query select count(*) from "table" oder ähnlich
+   * @param query select count(*) from "table" oder ï¿½hnlich
    * @return Anzahl der Zeilen
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft
    */
@@ -464,7 +464,7 @@ public abstract class DBABase extends DatabaseAccess {
           Map<Integer, String> pksSorted = new TreeMap<Integer, String>();
           for (int i = 1; columnsRS.next(); i++) {
             String string = columnsRS.getString("COLUMN_NAME"); //$NON-NLS-1$
-            // Primärschlüssel erst einmal herausnehmen
+            // Primï¿½rschlï¿½ssel erst einmal herausnehmen
             if (pks.contains(string)) {
               pksSorted.put(i, string);
             } else {
@@ -492,7 +492,7 @@ public abstract class DBABase extends DatabaseAccess {
     }
 
     /**
-     * @return Liste der Spaltennamen für die SELECT- oder INSERT-Klausel
+     * @return Liste der Spaltennamen fï¿½r die SELECT- oder INSERT-Klausel
      */
     public String getPropertyList() {
       if (_propertyList == null) {
@@ -510,7 +510,7 @@ public abstract class DBABase extends DatabaseAccess {
     }
 
     /**
-     * @return Liste der Fragezeichne für die VALUES-Klausel
+     * @return Liste der Fragezeichne fï¿½r die VALUES-Klausel
      */
     public String getValuesWildCards() {
       if (_valuesWildCards == null) {
@@ -529,7 +529,7 @@ public abstract class DBABase extends DatabaseAccess {
     }
 
     /**
-     * @return Liste der Zuweisungen von Platzhaltern für die SET-Klausel
+     * @return Liste der Zuweisungen von Platzhaltern fï¿½r die SET-Klausel
      */
     public synchronized String getUpdateSets() {
       if (_updateSets == null) {

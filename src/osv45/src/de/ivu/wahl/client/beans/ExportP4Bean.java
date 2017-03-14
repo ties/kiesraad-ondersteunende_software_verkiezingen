@@ -1,7 +1,7 @@
 /*
  * ExportP4Bean
  * 
- * Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -14,9 +14,11 @@ import static de.ivu.wahl.client.beans.ExportP4Type.O3;
 import static de.ivu.wahl.client.beans.ExportP4Type.OSV4_1;
 import static de.ivu.wahl.client.beans.ExportP4Type.OSV4_4;
 import static de.ivu.wahl.client.beans.ExportP4Type.OSV4_5;
+import static de.ivu.wahl.client.beans.ExportP4Type.OSV4_6;
 import static de.ivu.wahl.client.beans.ExportP4Type.REF;
 import static de.ivu.wahl.client.beans.ExportP4Type.T11;
 import static de.ivu.wahl.client.beans.ExportP4Type.VOTES_CSV;
+import static de.ivu.wahl.client.beans.ExportP4Type.WRR83;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +46,9 @@ import de.ivu.wahl.admin.DialogStateHolder;
 import de.ivu.wahl.admin.P4ExportStateO3;
 import de.ivu.wahl.admin.P4ExportStateOSV4_4;
 import de.ivu.wahl.admin.P4ExportStateOSV4_5;
+import de.ivu.wahl.admin.P4ExportStateOSV4_6;
 import de.ivu.wahl.admin.P4ExportStateT11;
+import de.ivu.wahl.admin.P4ExportStateWrr83;
 import de.ivu.wahl.auswertung.erg.ResultSummary;
 import de.ivu.wahl.client.util.ClientHelper;
 import de.ivu.wahl.i18n.MessageKeys;
@@ -90,6 +94,8 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       put(OSV4_4, new P4ExportStateOSV4_4());
       put(OSV4_5, new P4ExportStateOSV4_5());
       put(T11, new P4ExportStateT11());
+      put(WRR83, new P4ExportStateWrr83());
+      put(OSV4_6, new P4ExportStateOSV4_6());
     }
   };
 
@@ -140,6 +146,12 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       // Eingabe von Properties
       DialogStateHolder state = getP4ExportStateT11();
       state._modus = handlePropEingabeAllg(request, Konstanten.PROP_T11_D1, state._modus);
+      return;
+    }
+    if (ExportP4Commands.EXP_P4_PROP_EINGABE_WRR83.equals(cmd)) {
+      // Eingabe von Properties
+      DialogStateHolder state = getP4ExportStateWrr83();
+      state._modus = handlePropEingabeAllg(request, Konstanten.PROP_WRR83_D1, state._modus);
       return;
     }
     throw new RuntimeException(Messages.bind(MessageKeys.Error_Command_0_Unknown, cmd));
@@ -214,7 +226,7 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
         && !Arrays.asList(N10_1, EMPTY_EML, T11).contains(config);
     final ReportOutputFormatEnum outputFormat = determineOutputFormat(request, config);
     boolean isCSB = (SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_CSB);
-    ExportEml exportEml = draft || Arrays.asList(N10_1, OSV4_4, T11).contains(config)
+    ExportEml exportEml = draft || Arrays.asList(N10_1, OSV4_4, T11, OSV4_6).contains(config)
         ? ExportEml.NO
         : ExportEml.OVERWRITE;
 
@@ -237,6 +249,8 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
         case OSV4_5 :
         case EMPTY_EML :
         case T11 :
+        case WRR83 :
+        case OSV4_6 :
           ReportConfigurer configurer = new ReportConfigurer();
           configurer.setDocument(template, outputFormat);
           configurer.setProgramNameAndVersion(EJBUtil.getProgramSpecificAffix(),
@@ -414,6 +428,14 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
     return getState(VOTES_CSV);
   }
 
+  public DialogStateHolder getP4ExportStateWrr83() {
+    return getState(WRR83);
+  }
+
+  public DialogStateHolder getP4ExportStateOSV4_6() {
+    return getState(OSV4_6);
+  }
+
   public void resetExportStateN10_1() {
     reset(N10_1);
   }
@@ -444,6 +466,14 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
 
   public void resetExportStateCSV() {
     reset(VOTES_CSV);
+  }
+
+  public void resetP4ExportStateWrr83() {
+    reset(WRR83);
+  }
+
+  public void resetP4ExportStateOSV4_6() {
+    reset(OSV4_6);
   }
 
   public void resetExportStateEML510c() {

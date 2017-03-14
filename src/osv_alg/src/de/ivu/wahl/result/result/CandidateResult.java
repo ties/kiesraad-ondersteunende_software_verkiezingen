@@ -2,7 +2,7 @@
  * CandidateResult
  * 
  * Created on 21.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.result;
 
@@ -194,9 +194,13 @@ public class CandidateResult {
     }
 
     String result = Messages
-        .bind(MessageKeys.Result_Tracelog_0_1_2_OldPosition_3_District_4_Votes_5, elected
-            .getDisplay(), getNewListPosition(), candidate.getName(), getOldListPosition(), p2List
-            .getElectoralDistrictNumber(), votes);
+        .bind(MessageKeys.Result_Tracelog_0_1_2_OldPosition_3_District_4_Votes_5,
+            elected.getDisplay(),
+            getNewListPosition(),
+            candidate.getName(),
+            getOldListPosition(),
+            p2List.getElectoralDistrictNumbers(),
+            votes);
     if (abovePreferentialBarrier) {
       result += ", "; //$NON-NLS-1$
       result += Messages.getString(MessageKeys.Result_Tracelog_AbovePreferencialBarrier);

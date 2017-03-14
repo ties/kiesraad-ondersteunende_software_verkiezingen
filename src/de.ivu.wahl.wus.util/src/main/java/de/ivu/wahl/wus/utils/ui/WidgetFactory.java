@@ -2,8 +2,9 @@
  * WidgetFactory
  * 
  * Created on Nov 19, 2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
+
 package de.ivu.wahl.wus.utils.ui;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import de.ivu.wahl.wus.utils.ui.provider.ToStringLabelProvider;
 import de.ivu.wahl.wus.utils.ui.widget.GBATextField;
 
 public class WidgetFactory {
+
   private static final Logger LOGGER = Logger.getLogger(WidgetFactory.class);
 
   public static final Country[] COUNTRIES = readCountries();
@@ -56,7 +58,6 @@ public class WidgetFactory {
   }
 
   public static ComboViewer createCountryCombo(final Composite parent, final int style) {
-
     final Combo w = new Combo(parent, style);
     final ComboViewer viewer = new ComboViewer(w);
     viewer.setContentProvider(new ObjectArrayContentProvider());
@@ -64,7 +65,16 @@ public class WidgetFactory {
     viewer.setInput(COUNTRIES);
     addFieldHelp(w, Messages.widgetFactoryHelpTooltipCountry);
     return viewer;
+  }
 
+  public static ComboViewer createLanguageCombo(Composite parent, int style, Object input) {
+    Combo w = new Combo(parent, style);
+    ComboViewer viewer = new ComboViewer(w);
+    viewer.setContentProvider(new ObjectArrayContentProvider());
+    viewer.setLabelProvider(new ToStringLabelProvider());
+    viewer.setInput(input);
+    //    addFieldHelp(w, Messages.widgetFactoryHelpTooltipCountry);
+    return viewer;
   }
 
   private static Country[] readCountries() {
@@ -84,8 +94,8 @@ public class WidgetFactory {
     final List<String> cities = getCities();
     final String[] cityProposals = cities.toArray(new String[cities.size()]);
     final String[] gbaProposals = getGbaProposals();
-    new CityAndGBAAutoCompleteField(cityText, new TextContentAdapter(), cityProposals,
-        new TextContentAdapter(), gbaProposals);
+    new CityAndGBAAutoCompleteField(cityText, new TextContentAdapter(), cityProposals, new TextContentAdapter(),
+        gbaProposals);
     addFieldHelp(cityText, Messages.widgetFactoryHelpTooltipCity);
 
     return cityText;
@@ -121,8 +131,8 @@ public class WidgetFactory {
   public static GBATextField createGbaTextField(final Composite parent, final int style) {
     final GBATextField gbaTextField = new GBATextField(parent, style);
     final String[] proposals = getGbaProposals();
-    gbaTextField.setGbaAutoCompleteField(new GBAAutoCompleteField(gbaTextField.getText(),
-        new TextContentAdapter(), proposals));
+    gbaTextField.setGbaAutoCompleteField(new GBAAutoCompleteField(gbaTextField.getText(), new TextContentAdapter(),
+        proposals));
 
     return gbaTextField;
   }
@@ -149,9 +159,7 @@ public class WidgetFactory {
    */
   public static void addFieldHelp(final Control field, final String tooltip) {
     final String decoratorId = FieldDecorationRegistry.DEC_INFORMATION;
-    final Image image = FieldDecorationRegistry.getDefault()
-        .getFieldDecoration(decoratorId)
-        .getImage();
+    final Image image = FieldDecorationRegistry.getDefault().getFieldDecoration(decoratorId).getImage();
     final ControlDecoration decoration = new ControlDecoration(field, SWT.RIGHT | SWT.CENTER);
     decoration.setImage(image);
     decoration.setDescriptionText(tooltip);

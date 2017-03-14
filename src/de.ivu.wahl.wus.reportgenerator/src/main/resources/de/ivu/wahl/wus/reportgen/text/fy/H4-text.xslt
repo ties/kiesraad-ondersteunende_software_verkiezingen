@@ -8,8 +8,8 @@
     <xsl:param name="H4_050_UMagZich" select="'Jo meie jo net omkeapje litte ta it ôflizzen fan dizze stipeferklearring. Dejinge dy’t jo omkeapet of jo dêrta op oare wize twingt, is tagelyk strafber. Op beide misdriuwen stiet in finzenisstraf fan maksimaal seis moannen of in jildboete.'"/>
     <xsl:param name="H4_060_PolitiekeGroepering" select="'Politike groepearring'"/>
     <xsl:param name="H4_060_PolitiekeGroepering_BC" select="'(Politieke) groepering'"/>
-    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt" select="'De politike groepearring dêr’t jo de kandidatelist fan stypje: '"/>
-    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt_BC" select="'De (politieke) groepering waarvan u de kandidatenlijst ondersteunt: '"/>
+    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt" select="'De oantsjutting fan de politike groepearring dêr’t jo de kandidatelist fan stypje: '"/>
+    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt_BC" select="'De aanduiding van de (politieke) groepering waarvan u de kandidatenlijst ondersteunt: '"/>
     <xsl:param name="H4_080_KandidatenOpDeLijst" select="'Kandidaten op de list'"/>
     <xsl:param name="H4_100_Ondertekening" select="'Undertekening troch de kiezer'"/>
     <xsl:param name="H4_110_IkVerklaar" select="'Ik ferklearje dat ik de boppeneamde kandidatelist stypje.'"/>

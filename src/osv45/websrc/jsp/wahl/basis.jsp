@@ -3,7 +3,7 @@
  * basis
  * JSP-Seite enthält das Frameset des Basis-Systems
  *
- * author:  mur@ivu.de  Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: basis.jsp,v 1.19 2010/11/19 09:45:18 jon Exp $
  *******************************************************************************
  --%>

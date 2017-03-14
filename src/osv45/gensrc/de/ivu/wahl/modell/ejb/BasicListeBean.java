@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Liste as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
+  * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicListeBean extends BMPBeanBase implements EntityBean, ListeModel {
@@ -80,6 +80,7 @@ public abstract class BasicListeBean extends BMPBeanBase implements EntityBean, 
       _details = (ListeModel)createModel(id_Liste);
       _details.setTyp(""); //$NON-NLS-1$
       _details.setName(""); //$NON-NLS-1$
+      _details.setPublicationLanguage(""); //$NON-NLS-1$
       create(_details);
       return id_Liste;
    }
@@ -233,6 +234,36 @@ public abstract class BasicListeBean extends BMPBeanBase implements EntityBean, 
       }
    }
 
+   /**
+     * Returns the set of entities of the type {@link Liste}, filtered by publicationLanguage.
+     *
+     * @param publicationLanguage searching condition
+     * @return  {@link Collection} of primary keys of the entities Liste
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   public Collection<String> ejbFindAllByPublicationLanguage(String publicationLanguage) throws IVUFinderException {
+      try {
+         return ListeDBA.retrieveIDsByPublicationLanguage(publicationLanguage);
+      } catch (SQLException se) {
+         throw new IVUFinderException(se.getMessage(), se);
+      }
+   }
+
+   /**
+     * Returns the set of entities of the type {@link Liste}, filtered by publicationLanguage.
+     *
+     * @param publicationLanguage searching condition
+     * @return  {@link Collection} of primary keys of the entities Liste
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   public Collection<String> ejbFindAllLikePublicationLanguage(String publicationLanguage) throws IVUFinderException {
+      try {
+         return ListeDBA.retrieveIDsLikePublicationLanguage(publicationLanguage);
+      } catch (SQLException se) {
+         throw new IVUFinderException(se.getMessage(), se);
+      }
+   }
+
    // internal Bean methods
 
    /**
@@ -280,6 +311,7 @@ public abstract class BasicListeBean extends BMPBeanBase implements EntityBean, 
          setSatz(details.getSatz());
          setName(details.getName());
          setGeschlechtSichtbar(details.isGeschlechtSichtbar());
+         setPublicationLanguage(details.getPublicationLanguage());
       }
    }
 
@@ -460,6 +492,24 @@ public abstract class BasicListeBean extends BMPBeanBase implements EntityBean, 
      */
    public boolean isGeschlechtSichtbar() {
       return _details.isGeschlechtSichtbar();
+   }
+
+   /**
+     * Sets the value of publicationLanguage in the entity Liste
+     *
+     * @param publicationLanguage new value of the attribute publicationLanguage
+     */
+   public void setPublicationLanguage(String publicationLanguage) {
+      _details.setPublicationLanguage(publicationLanguage);
+   }
+
+   /**
+     * Gets the value of publicationLanguage in the entity Liste
+     *
+     * @return value of the attribute publicationLanguage
+     */
+   public String getPublicationLanguage() {
+      return _details.getPublicationLanguage();
    }
 
    /**
@@ -933,6 +983,9 @@ public abstract class BasicListeBean extends BMPBeanBase implements EntityBean, 
             string +=  ", name = " + _details.getName(); //$NON-NLS-1$
          }
          string +=  ", geschlechtSichtbar = " + _details.isGeschlechtSichtbar(); //$NON-NLS-1$
+         if (_details.getPublicationLanguage() != null) {
+            string +=  ", publicationLanguage = " + _details.getPublicationLanguage(); //$NON-NLS-1$
+         }
          return string  + "]" ; //$NON-NLS-1$
       } catch (Exception e) {
          LOGGER.error(e, e);

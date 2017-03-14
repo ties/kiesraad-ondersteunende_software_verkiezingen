@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
-		<parameter name="generateDate" default="(date missing)"/>
-		<parameter name="hashCode" default="01 23 45 67 89 AB CD EF 01 23 45 67 89 AB CD EF 01 23 45 67"/>
+		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
+		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
 		<parameter name="isDraft" default="false"/>
 		<parameter name="lang" default="1"/>
 	</parameters>
@@ -51,7 +51,6 @@
 			<designfragment match="FootnoteKieskring" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="FootnoteSign" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="Gender" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="Gender2" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="Gender3" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="HashCode" spsfile="reused-parts.sps" isactive="1"/>
 			<designfragment match="Initials" spsfile="reused-parts.sps" isactive="0"/>
@@ -68,7 +67,6 @@
 			<designfragment match="ObjectionsByVoters2a" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="ObjectionsReference" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="PartyName" spsfile="reused-parts.sps" isactive="0"/>
-			<designfragment match="PartyName2" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="PartyNameInOmissions" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="PartyNameOrFirstCandidate" spsfile="reused-parts.sps" isactive="0"/>
 			<designfragment match="PostalCode" spsfile="reused-parts.sps" isactive="0"/>
@@ -95,7 +93,7 @@
  // </script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-text.xslt"/>

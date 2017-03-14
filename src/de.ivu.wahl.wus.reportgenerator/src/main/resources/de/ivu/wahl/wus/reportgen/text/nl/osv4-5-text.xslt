@@ -3,12 +3,16 @@
     <xsl:param name="o4-5_010_Titel" select="'Controlelijst ten behoeve van de vaststelling van de uitslag van de stemming  voor de verkiezing van de leden van de Eerste Kamer der Staten-Generaal'"/>
     <xsl:param name="o4-5_020_Provincie" select="'Provincie: '"/>
     <xsl:param name="o4-5_030_Dag_stemming" select="'Dag van de stemming: '"/>
-    <xsl:param name="o4-5_040_aanwezigeLeden" select="'Het aantal in de vergadering aanwezige leden, vermeerderd met het aantal leden die als gemachtigde aan de stemming mochten deelnemen, bedroeg: '"/>
-    <xsl:param name="o4-5_050_ingeleverde" select="'Het aantal ingeleverde stembiljetten bedroeg: '"/>
-    <xsl:param name="o4-5_060_blanco" select="'Het aantal blanco stembiljetten bedroeg: '"/>
-    <xsl:param name="o4-5_070_ongeldige" select="'Het totale aantal ongeldige stembiljetten bedroeg: '"/>
-    <xsl:param name="o4-5_080_geldige" select="'Het aantal geldige, niet-zijnde blanco, stembiljetten bedroeg derhalve: '"/>
-    <xsl:param name="o4-5_090_volgendeAantalStemmen" select="'Op de verschillende lijsten is het volgende aantal stemmen uitgebracht:'"/>
+    <xsl:param name="o4-5_032_DagZitting" select="'Dag van de zitting: '"/>
+    <xsl:param name="o4-5_034_TijdstipZitting" select="'Tijdstip van de zitting: '"/>
+    <xsl:param name="o4-5_040_aanwezigeLeden" select="'Het aantal aanwezige leden dat aan de stemming heeft deelgenomen: '"/>
+    <xsl:param name="o4-5_045_gemachtigde" select="'Het aantal leden dat als gemachtigde voor een ander statenlid stemt: '"/>
+    <xsl:param name="o4-5_050_toegelatenKiezers" select="'Het aantal toegelaten kiezers: '"/>
+    <xsl:param name="o4-5_055_uitgebrachteStemmen" select="'Het aantal uitgebrachte stemmen: '"/>
+    <xsl:param name="o4-5_060_blanco" select="'Het aantal blanco stemmen: '"/>
+    <xsl:param name="o4-5_070_ongeldige" select="'Het aantal ongeldige stemmen: '"/>
+    <xsl:param name="o4-5_080_geldige" select="'Het aantal geldige stemmen op kandidaten: '"/>
+    <xsl:param name="o4-5_090_volgendeAantalStemmen" select="'Op de verschillende lijsten zijn de volgende aantallen stemmen uitgebracht:'"/>
     <xsl:param name="o4-5_100_1_HierbijVerklaart" select="'Hierbij verklaart ondergetekende dat de hierboven opgenomen aantallen voor de verkiezing van de Eerste Kamer gehouden in de provincie '"/>
     <xsl:param name="o4-5_100_2_HierbijVerklaart" select="' gelijk zijn aan de opgenomen aantallen in het op '"/>
     <xsl:param name="o4-5_100_3_HierbijVerklaart" select="' ondertekende proces-verbaal ter vaststelling van de uitslag van de stemming (T 11).'"/>

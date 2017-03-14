@@ -1,7 +1,7 @@
 /*
  * GebietBean
  * 
- * Copyright (c) 2002-6 IVU Traffic Technologies AG
+ * Copyright (c) 2002-2006 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb;
 
@@ -54,12 +54,12 @@ public class GebietBean extends BasicGebietBean {
   /** Logger */
   private static final Category LOGGER = Log4J.configure(GebietBean.class);
 
-  /** Format für die Ausgabe der Kann-Fehler */
+  /** Format fï¿½r die Ausgabe der Kann-Fehler */
   private static final NumberFormat NF_GER = NumberFormat.getNumberInstance(Locale.GERMANY);
 
   static {
     LOGGER.info(Log4J.dumpVersion(GebietBean.class, Log4J.extractVersion("$Revision: 1.40 $"))); //$NON-NLS-1$
-    // Anzahl der Nachkommastellen für Ausgabe der Kannfehler
+    // Anzahl der Nachkommastellen fï¿½r Ausgabe der Kannfehler
     NF_GER.setMaximumFractionDigits(4);
     NF_GER.setMinimumFractionDigits(4);
   }

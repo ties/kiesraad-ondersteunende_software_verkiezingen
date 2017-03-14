@@ -2,7 +2,7 @@
  * ConstantMap
  * 
  * Created on 06.02.2007
- * Copyright (c) 2007 IVU Traffic Technologies AG
+ * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.util;
 
@@ -16,8 +16,8 @@ import java.util.Set;
  * {@link Map} zum Vorhalten von konstanten Abbildungen
  * 
  * @author cos@ivu.de, IVU Traffic Technologies AG
- * @param <K> Datentyp für Key
- * @param <V> Datentyp für Value
+ * @param <K> Datentyp fï¿½r Key
+ * @param <V> Datentyp fï¿½r Value
  */
 public abstract class ConstantMap<K, V> extends AbstractMap<K, V> {
   private Set<Entry<K, V>> _entrySet = new LinkedHashSet<Entry<K, V>>();

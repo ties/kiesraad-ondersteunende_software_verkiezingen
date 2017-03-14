@@ -1,6 +1,6 @@
 /*
  * Created on 06.09.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -23,7 +23,6 @@ public class ReportNameComponentsP5CSV extends AbstractReportNameComponents {
     super();
     setElectionIdentifier(electionIdentifier);
     setElectionCategory(electionCategory);
-    setElectionDomain(electionDomain);
   }
 
   public ReportGeneratingProgram getProgramId() {
@@ -36,14 +35,7 @@ public class ReportNameComponentsP5CSV extends AbstractReportNameComponents {
 
   public List<String> getNameComponents() {
     List<String> result = new ArrayList<String>();
-    // Add election identifier
     addElectionIdentifier(result);
-
-    String electionDomain = getElectionDomain();
-    if (electionDomain != null) {
-      // Add election domain
-      result.add(electionDomain);
-    }
 
     return result;
   }

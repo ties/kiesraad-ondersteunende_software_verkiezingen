@@ -1,7 +1,7 @@
 /*
  * Wert
  * 
- * Copyright (c) 2002-9 IVU Traffic Technologies AG
+ * Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg;
 
@@ -12,7 +12,7 @@ import org.apache.log4j.Category;
 import de.ivu.util.debug.Log4J;
 
 /**
- * Objekt, welches einen Integer und einen Vergleichswert hält und auch vergleichende Funktionen
+ * Objekt, welches einen Integer und einen Vergleichswert hï¿½lt und auch vergleichende Funktionen
  * anbietet
  * 
  * @author klie@ivu.de - IVU Traffic Technologies AG
@@ -88,7 +88,7 @@ public class Wert implements Serializable, Cloneable {
   }
 
   public void plus(int akt, int vgl) {
-    // Summiere nur, wenn der Wert >= 0!! Negative Werte sind Marker für keine Kandidaten/Listen!!!
+    // Summiere nur, wenn der Wert >= 0!! Negative Werte sind Marker fï¿½r keine Kandidaten/Listen!!!
     if (akt >= 0) {
       _wertAkt = _wertAkt + akt;
     }
@@ -115,7 +115,7 @@ public class Wert implements Serializable, Cloneable {
    * 
    * @param valArt String mit dem Wert aus der akuellen Wahlergebnisart
    * @param valVerglArt String mit dem Wert aus der Vergleichswahlergebnisart
-   * @return Wert, gebildet aus den übergebenen Strings
+   * @return Wert, gebildet aus den ï¿½bergebenen Strings
    */
   public static Wert fromDBString(String valArt, String valVerglArt) {
     Wert ret = null;

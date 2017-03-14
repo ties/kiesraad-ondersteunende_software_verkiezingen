@@ -2,7 +2,7 @@
  * ImportClientDb
  * 
  * Created on 21.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -19,6 +19,7 @@ import static de.ivu.wahl.modell.GebietModel.GEBIETSART_ORTSTEIL;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +44,7 @@ import de.ivu.wahl.modell.GruppeKonstanten;
 import de.ivu.wahl.modell.GruppeModel;
 import de.ivu.wahl.modell.ListenkandidaturModel;
 import de.ivu.wahl.modell.PersonendatenModel;
+import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.RepositoryModel;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.ejb.Wahl;
@@ -59,6 +61,8 @@ import de.ivu.wahl.util.XMLImportHelper;
  * @author ugo@ivu.de, IVU Traffic Technologies AG
  */
 public class ImportClientDb extends AbstractImportClient {
+
+  private static final String DEFAULT_TIME_OF_MEETING_T11 = "15:00"; //$NON-NLS-1$
 
   private static final Category LOGGER = Log4J.configure(ImportClientDb.class);
 
@@ -137,6 +141,14 @@ public class ImportClientDb extends AbstractImportClient {
     propertyHandling.setProperty(Konstanten.KEY_PARENT_REGION_NAME, parentRegionName);
   }
 
+  @Override
+  protected void setElectioalDistrictNameAndNumber(String parentRegionName, String idElterngebiet)
+      throws ImportException {
+    PropertyHandling propertyHandling = getPropertyHandling();
+    propertyHandling.setProperty(Konstanten.KEY_ELECTORAL_DISTRICT_NAME, parentRegionName);
+    propertyHandling.setProperty(Konstanten.KEY_ELECTORAL_DISTRICT_ID, idElterngebiet);
+  }
+
   /**
    * Constructor
    * 
@@ -148,15 +160,8 @@ public class ImportClientDb extends AbstractImportClient {
   }
 
   private void finish() throws ImportException {
-    // initialize properties
-    RepositoryModel prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
-    prop.setName(Konstanten.PROP_DOUBLE_INPUT);
-    prop.setWert(String.valueOf(2));
-    _models.add(prop);
-    prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
-    prop.setName(Konstanten.PROP_IS_INPUT_MODE_COMPLETE);
-    prop.setWert(String.valueOf(Boolean.TRUE));
-    _models.add(prop);
+    initProperties();
+
     // Create other Objects
     flushModels(_models);
     // // set Names for blank lists
@@ -200,6 +205,28 @@ public class ImportClientDb extends AbstractImportClient {
     }
 
     wahl.setStatus(status);
+  }
+
+  private void initProperties() {
+    RepositoryModel prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
+    prop.setName(Konstanten.PROP_DOUBLE_INPUT);
+    prop.setWert(String.valueOf(Konstanten.INPUT_MODE_DOUBLE));
+    _models.add(prop);
+    prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
+    prop.setName(Konstanten.PROP_IS_INPUT_MODE_COMPLETE);
+    prop.setWert(String.valueOf(Boolean.TRUE));
+    _models.add(prop);
+    if (isEK()) {
+      prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
+      prop.setName(de.ivu.wahl.export.XMLTags.RG_TIME_OF_MEETING);
+      prop.setWert(String.valueOf(DEFAULT_TIME_OF_MEETING_T11));
+      _models.add(prop);
+      prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
+      prop.setName(de.ivu.wahl.export.XMLTags.RG_DATE_OF_MEETING);
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); //$NON-NLS-1$
+      prop.setWert(dateFormat.format(_wahlModel.getTermin()));
+      _models.add(prop);
+    }
   }
 
   private void flushModels(List<Model> models) throws ImportException {
@@ -291,6 +318,7 @@ public class ImportClientDb extends AbstractImportClient {
         gruppe.getID_Gruppe(),
         XMLTags.LISTEN_TYP_IDENTISCH,
         false,
+        PublicationLanguage.NL.getAbbreviation(),
         gruppe.getNameLang());
 
     // create region specific group data

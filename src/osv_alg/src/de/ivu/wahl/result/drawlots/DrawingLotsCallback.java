@@ -2,7 +2,7 @@
  * DrawingLotsCallback
  * 
  * Created on 15.12.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.result.drawlots;
 

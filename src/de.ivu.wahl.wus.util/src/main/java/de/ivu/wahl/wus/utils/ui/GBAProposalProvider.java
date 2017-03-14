@@ -1,7 +1,7 @@
 /*
  * GBAProposalProvider
  * 
- * Created on Jan 6, 2009 Copyright (c) 2009 IVU Traffic Technologies AG
+ * Created on Jan 6, 2009 Copyright (c) 2009 Kiesraad
  */
 
 package de.ivu.wahl.wus.utils.ui;

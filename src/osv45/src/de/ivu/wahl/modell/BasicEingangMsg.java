@@ -1,7 +1,7 @@
 /*
  * BasicEingangMsg
  * 
- * Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell;
 
@@ -421,7 +421,7 @@ public abstract class BasicEingangMsg implements EingangMsg, Serializable {
   public String getErgebnisHash() {
     StringBuilder resultAsString = new StringBuilder();
     for (Entry<Integer, Gruppenergebnis> entry : getGruppenergebnisse().entrySet()) {
-      if (!entry.getKey().equals(GruppeAllgemein.WAHLBERECHTIGTE.position)) {
+      if (!entry.getKey().equals(GruppeAllgemein.WAHLBERECHTIGTE.getPosition())) {
         // Create hash code from all groups excluding the number of voters
         Gruppenergebnis gruppenergebnis = entry.getValue();
         resultAsString.append(gruppenergebnis.getErgebnisAsString());

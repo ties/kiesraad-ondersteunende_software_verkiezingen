@@ -8,6 +8,9 @@
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="uplBean" scope="session" class="de.ivu.wahl.client.beans.UploadBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "dateiUpload"; //$NON-NLS-1$
+
 String breite = "100%";
 String errorMsg = null;
 String confirmationMsg = null;
@@ -22,6 +25,7 @@ if (uplBean._adminConfirmationMsg != null && !uplBean._adminConfirmationMsg.isEm
 %>
 <html>
 <head>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><ivu:int key="UploadWahkreiswahldaten"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
       <style type="text/css">
@@ -30,12 +34,7 @@ if (uplBean._adminConfirmationMsg != null && !uplBean._adminConfirmationMsg.isEm
 </head>
 <body class="hghell">
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-   <tr class="hgeeeeee" align="right">
-        <td><ivu:help key="dateiUpload"/></td>
-   </tr>
-   <tr class="hgeeeeee">
-      <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-   </tr>
+   <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">

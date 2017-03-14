@@ -2,7 +2,7 @@
  * RG510Helper
  * 
  * Created on 25.11.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -124,7 +124,7 @@ public class RG510Helper extends BasicRGHelper {
 
           try {
             // append normal votes
-            bean.appendAffiliationVotes(resultSummary,
+            bean.appendAffiliationVotesAndGeneralGroups(resultSummary,
                 rg510,
                 region,
                 normalVoteRegions,
@@ -133,7 +133,7 @@ public class RG510Helper extends BasicRGHelper {
                 emlType);
 
             // append postal votes
-            bean.appendAffiliationVotes(resultSummary,
+            bean.appendAffiliationVotesAndGeneralGroups(resultSummary,
                 rg510,
                 region,
                 postalVoteRegions,
@@ -151,21 +151,23 @@ public class RG510Helper extends BasicRGHelper {
         // should not happen
       }
 
-    } else if (emptyResults) {
-      bean.appendEmptyAffiliationVotes(rg510, id_Gebiet, emlType);
     } else {
       Element presenceVotes = XMLHelper.createElement(de.ivu.wahl.export.XMLTags.RG_PRESENCE_VOTES,
           NS_RG);
       rg510.appendChild(presenceVotes);
+      if (emptyResults) {
+        bean.appendEmptyAffiliationVotes(presenceVotes, id_Gebiet, emlType);
+      } else {
 
-      // without any postal vote office
-      String id_Ergebniseingang = region.getLetzterGueltigerEingang().getID_Ergebniseingang();
-      bean.appendAffiliationVotes(id_Ergebniseingang,
-          presenceVotes,
-          id_Gebiet,
-          isReferendum,
-          emlType);
-      appendBlancVotesAndInvalidVotes(presenceVotes, id_Ergebniseingang);
+        // without any postal vote office
+        String id_Ergebniseingang = region.getLetzterGueltigerEingang().getID_Ergebniseingang();
+        bean.appendAffiliationVotes(id_Ergebniseingang,
+            presenceVotes,
+            id_Gebiet,
+            isReferendum,
+            emlType);
+        appendVotesForRGGeneralGroups(presenceVotes, id_Ergebniseingang);
+      }
     }
 
     // objections

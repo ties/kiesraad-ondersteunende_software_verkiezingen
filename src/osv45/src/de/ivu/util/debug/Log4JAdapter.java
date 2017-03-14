@@ -2,7 +2,7 @@
  * Log4JAdapter
  * 
  * Created on 08.04.2003
- * Copyright (c) 2003 IVU Traffic Technologies AG
+ * Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.util.debug;
 

@@ -1,7 +1,7 @@
 /*
  * WahlInfo
  * 
- * Created on 16.10.2003 Copyright (c) 2003 IVU Traffic Technologies AG
+ * Created on 16.10.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl;
 
@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.ejb.EJBException;
 import javax.ejb.FinderException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import de.ivu.util.debug.Log4J;
@@ -36,6 +37,7 @@ import de.ivu.wahl.dataimport.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.Wahldaten;
 import de.ivu.wahl.modell.ejb.Gebiet;
@@ -106,8 +108,8 @@ public class WahlInfo implements Serializable, Cloneable {
       }
       // this system does not support many elections
       if (wahlen.size() > 1) {
-        throw new RuntimeException(Messages
-            .getString(MessageKeys.Error_WahlInfoKannNichtErzeugtWerdenEsGibtMehrereWahlen));
+        throw new RuntimeException(
+            Messages.getString(MessageKeys.Error_WahlInfoKannNichtErzeugtWerdenEsGibtMehrereWahlen));
       }
       Wahl wahl = wahlen.iterator().next();
       if (wahl.getStatus() != WahlModel.STATE_INITIAL
@@ -197,9 +199,13 @@ public class WahlInfo implements Serializable, Cloneable {
    * @return
    */
   public String getNameWurzelgebiet() {
-    return _wahl.getWurzelgebiet() != null ? " - " //$NON-NLS-1$
-        + GebietModel.GEBIETSART_KLARTEXT[getGebietsartWurzelgebiet()] + " " //$NON-NLS-1$
-        + _wahl.getWurzelgebiet().getName() : ""; //$NON-NLS-1$
+    Gebiet wurzelgebiet = _wahl.getWurzelgebiet();
+    if (wurzelgebiet == null) {
+      return StringUtils.EMPTY;
+    }
+    return " - " //$NON-NLS-1$
+        + Gebietsart.getGebietsartKlartext(wurzelgebiet) + " " //$NON-NLS-1$
+        + wurzelgebiet.getName();
   }
 
   /**
@@ -224,8 +230,8 @@ public class WahlInfo implements Serializable, Cloneable {
     if (_wahl != null) {
       return _wahl;
     } else {
-      throw new UnsupportedOperationException(Messages
-          .getString(MessageKeys.Error_Wahl_getWahIstNurAufDerServerseiteVorhanden));
+      throw new UnsupportedOperationException(
+          Messages.getString(MessageKeys.Error_Wahl_getWahIstNurAufDerServerseiteVorhanden));
     }
   }
 
@@ -487,8 +493,7 @@ public class WahlInfo implements Serializable, Cloneable {
    * @return true, if postal vote office is a selectable option for stembureaus.
    */
   public boolean isPostalVoteOfficeSelectable() {
-    if ((ElectionCategory.TK.equals(getElectionCategory()) || ElectionCategory.EP
-        .equals(getElectionCategory()))
+    if (getElectionCategory().hasPostalVotes()
         && getGebietsnummerWurzelgebiet() == XMLTags.MUNICIPALITY_WITH_POSTAL_VOTE_OFFICE
         && getGebietsartWurzelgebiet() == GebietModel.GEBIETSART_GEMEINDE) {
       return true;
@@ -507,9 +512,8 @@ public class WahlInfo implements Serializable, Cloneable {
     ReportNameComponentsP0 nameComponentsP0 = new ReportNameComponentsP0();
     nameComponentsP0.setElectionIdentifier(getWahlNameKurz());
     nameComponentsP0.setElectionCategory(electionCategory);
-//    nameComponentsP0.setElectionSubcategory(getElectionSubcategory());
+    // nameComponentsP0.setElectionSubcategory(getElectionSubcategory());
     if (_wahl != null) {
-      nameComponentsP0.setElectionDomain(_wahl.getElectionDomain());
       if (_wahl.getWurzelgebiet() != null
           && (ElectionCategory.GR.equals(electionCategory) || ElectionCategory.ER
               .equals(electionCategory))) {
@@ -520,19 +524,17 @@ public class WahlInfo implements Serializable, Cloneable {
       }
     }
     return nameComponentsP0.getEmlFileFirstName()
-        + FilenameProvider.getConstantFileComponents(nameComponentsP0)
-        + RgConstants.SUFFIX_EML_XML;
+        + FilenameProvider.getConstantFileComponents(nameComponentsP0) + RgConstants.SUFFIX_EML_XML;
   }
 
   public String getEML230bFilename() {
     ElectionCategory electionCategory = getElectionCategory();
-    
+
     ReportNameComponentsEml230b nameComponentsEml230b = new ReportNameComponentsEml230b();
     nameComponentsEml230b.setElectionIdentifier(getWahlNameKurz());
     nameComponentsEml230b.setElectionCategory(electionCategory);
     nameComponentsEml230b.setElectionSubcategory(getElectionSubcategory());
     if (_wahl != null) {
-      nameComponentsEml230b.setElectionDomain(_wahl.getElectionDomain());
       if (_wahl.getWurzelgebiet() != null
           && (ElectionCategory.GR.equals(electionCategory) || ElectionCategory.ER
               .equals(electionCategory))) {
@@ -546,7 +548,7 @@ public class WahlInfo implements Serializable, Cloneable {
         + FilenameProvider.getConstantFileComponents(nameComponentsEml230b)
         + RgConstants.SUFFIX_EML_XML;
   }
-  
+
   public String getEML510Filename(boolean complete) {
     ReportNameComponentsP4 nameComponentsP4 = new ReportNameComponentsP4(complete);
     nameComponentsP4.setElectionIdentifier(getWahlNameKurz());
@@ -586,7 +588,6 @@ public class WahlInfo implements Serializable, Cloneable {
     nameComponentsP5.setElectionIdentifier(getWahlNameKurz());
     nameComponentsP5.setElectionCategory(getElectionCategory());
     if (_wahl != null) {
-      nameComponentsP5.setElectionDomain(_wahl.getElectionDomain());
       if (_wahl.getWurzelgebiet() != null) {
         nameComponentsP5.setElectoralDistrict(_wahl.getWurzelgebiet().getName());
       }
@@ -597,24 +598,26 @@ public class WahlInfo implements Serializable, Cloneable {
 
   public String getMissingExportFoldersForResultsZipMsgKey(PropertyHandling propertyHandling) {
     File exportFolder = propertyHandling.getFileProperty(Konstanten.PROP_EXPORT_FORMULAR_DIR);
-    String overallExportPath = exportFolder.getPath().substring(0, exportFolder.getPath().lastIndexOf(File.separator) + 1);
+    String overallExportPath = exportFolder.getPath().substring(0,
+        exportFolder.getPath().lastIndexOf(File.separator) + 1);
 
-    if (ElectionCategory.PS.equals(getElectionCategory())
+    if (ElectionCategory.AB.equals(getElectionCategory())
+        || ElectionCategory.PS.equals(getElectionCategory())
         || ElectionCategory.TK.equals(getElectionCategory())
         || ElectionCategory.EP.equals(getElectionCategory())) {
       // check for P4_HSB
       if (!new File(overallExportPath + "P4_HSB").isDirectory()) { //$NON-NLS-1$
         return "Export_FinalMessage_Warning_P4_HSB"; //$NON-NLS-1$
       }
-      
+
     } else {
       // check for P4_PSB
       if (!new File(overallExportPath + "P4_PSB").isDirectory()) { //$NON-NLS-1$
         return "Export_FinalMessage_Warning_P4_PSB"; //$NON-NLS-1$
       }
-    
+
     }
-    
+
     return null;
   }
 }

@@ -1,7 +1,7 @@
 /*
  * ImportHandling
  * 
- * Copyright (c) 2004-8 IVU Traffic Technologies AG
+ * Copyright (c) 2004-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -14,7 +14,7 @@ import de.ivu.ejb.bmp.Model;
 import de.ivu.wahl.modell.exception.ImportException;
 
 /**
- * Interface des SessionBeans für die Unterstützung des ImportClient
+ * Interface des SessionBeans fï¿½r die Unterstï¿½tzung des ImportClient
  * 
  * @author cos@ivu.de
  */

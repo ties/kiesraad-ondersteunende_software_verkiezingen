@@ -2,7 +2,7 @@
  * ListeKonstanten
  * 
  * Created on 06.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell;
 
@@ -10,7 +10,7 @@ import de.ivu.wahl.util.BundleHelper;
 
 /**
  * @author ugo@ivu.de, IVU Traffic Technologies AG
- * @version $Id$
+
  */
 public class ListeKonstanten {
 

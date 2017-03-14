@@ -6,18 +6,18 @@ import java.util.Map;
 
 /**
  * Kleines Hilfobjekt zum erfassen, von durch den Anwender anstossbaren Aktionen Die Visualisierung
- * wird in der entsprechenden JSP umgesetzt. im ApplicationBean werden Listen von für den
- * Angemeldeten Anwender zulässigen Befehlen zusammengestellt und bereitgehalten.
+ * wird in der entsprechenden JSP umgesetzt. im ApplicationBean werden Listen von fï¿½r den
+ * Angemeldeten Anwender zulï¿½ssigen Befehlen zusammengestellt und bereitgehalten.
  * 
- * @author klie@ivu.de Copyright (c) 2002-5 IVU Traffic Technologies AG
+ * @author klie@ivu.de Copyright (c) 2002-5 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class GUICommand implements Serializable {
   private static final long serialVersionUID = -993265416544665946L;
 
   /**
-   * GUIClass Um optisch verschieden Blöcke im Befehlsframe schaffen zu könne, werden den
-   * GUICommands classes für die HTML-Oberfläche mitgegeben. Hiermit können über einen Stylesheet
+   * GUIClass Um optisch verschieden Blï¿½cke im Befehlsframe schaffen zu kï¿½nne, werden den
+   * GUICommands classes fï¿½r die HTML-Oberflï¿½che mitgegeben. Hiermit kï¿½nnen ï¿½ber einen Stylesheet
    * (*.css) den Befehlen unterschiedliches Aussehen verliehen werden.
    */
   private static final String GUI_CLASS_PRE = "guiBefehl_";
@@ -32,17 +32,17 @@ public class GUICommand implements Serializable {
   // Arbeitsview, kodiert durch Konstanten im ApplicationBean
   private int _viewNr = -1;
 
-  // benötigtes Recht (Konstanten in de.ivu.wahl.anwender.Rechte)
+  // benï¿½tigtes Recht (Konstanten in de.ivu.wahl.anwender.Rechte)
   // null beduetet, es ist kein recht erforderlich
   private String _recht = null;
 
-  // wenn true dann abhängigkeit von land
+  // wenn true dann abhï¿½ngigkeit von land
   private boolean _gebietsabhaengig = false;
 
   // anzuzeigener Tooltip auf dem Befehlslink
   private String _tooltip = null;
 
-  // legt fest, zu welcher Farbgruppe (durch class in HTML) dieser Befehl gehört
+  // legt fest, zu welcher Farbgruppe (durch class in HTML) dieser Befehl gehï¿½rt
   private String _guiClass = null;
 
   public static final int STATE_DONT_CARE = -1;
@@ -50,7 +50,7 @@ public class GUICommand implements Serializable {
   // Ist dies der Fall, dann steht er hier drin
   private int _appstate = STATE_DONT_CARE;
 
-  // Befehl ist nur bei einer bestimmten Eingabeart möglich
+  // Befehl ist nur bei einer bestimmten Eingabeart mï¿½glich
   private int _wahlart = STATE_DONT_CARE;
 
   // Soll der Befehl nur Angezeigt werden, wenn die Freigabe durch den Bundeswahlleiter erfolgt ist
@@ -68,7 +68,7 @@ public class GUICommand implements Serializable {
   // erfolgt ist
   private boolean _nurNichtFreigegeben = false;
 
-  // ist ein recht eingetragen, wird dieses benötigt, damir der Befehl auch ohne Freigabe sichtbar
+  // ist ein recht eingetragen, wird dieses benï¿½tigt, damir der Befehl auch ohne Freigabe sichtbar
   // wird
   private String _rechtOderFreigabe = null;
 
@@ -82,12 +82,12 @@ public class GUICommand implements Serializable {
   private boolean _nurGebiete = false;
 
   // soll nur angezeigt werden, wenn Anwender das entprechende Recht auf dem Wurzelgebiet hat.
-  // z.B. Admin- Grundeinstellungen ändern
+  // z.B. Admin- Grundeinstellungen ï¿½ndern
   private boolean _nurWennRechtAufWurzelgebiet = false;
 
   /**
    * Position, an der der Command angezeigt werden soll. Ist nur die Position in einer Liste, an der
-   * der Command abgelegt wird. Setzt zu einem späteren Zeitpunkt jemand einen Command an die
+   * der Command abgelegt wird. Setzt zu einem spï¿½teren Zeitpunkt jemand einen Command an die
    * gleiche Position, wird vorheriger um eine Position nach hinten verschoben
    */
   private int _position = -1;
@@ -105,8 +105,8 @@ public class GUICommand implements Serializable {
   private boolean _nurWahlgebiete = false;
 
   /**
-   * Befehlsbezeichnung zum Anzeigen Map, um bei LEVELUNABHÄNGIGKEIT für verschiedene Level
-   * verschieden Name angeben zu können
+   * Befehlsbezeichnung zum Anzeigen Map, um bei LEVELUNABHï¿½NGIGKEIT fï¿½r verschiedene Level
+   * verschieden Name angeben zu kï¿½nnen
    */
   private final Map<Object, String> _bezeichnungsmap;
   private static final String DEFAULTNAME = "defaultname"; //$NON-NLS-1$
@@ -134,7 +134,7 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * Setter für die Eigenschaft des Applikationszustandes, da dies eher selten gebraucht wird
+   * Setter fï¿½r die Eigenschaft des Applikationszustandes, da dies eher selten gebraucht wird
    * 
    * @param state Zustand der Application in der der Befehl bereitgestellt wird
    */
@@ -143,14 +143,14 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @return true, wenn befehl vom Land abhängig ist
+   * @return true, wenn befehl vom Land abhï¿½ngig ist
    */
   public boolean getGebietsabhaengig() {
     return _gebietsabhaengig;
   }
 
   /**
-   * @return Nummer des Views für das Ergebnis des Befehls
+   * @return Nummer des Views fï¿½r das Ergebnis des Befehls
    */
   public int getViewNr() {
     return _viewNr;
@@ -173,14 +173,14 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @return Recht, das für die Ausführung nötig ist
+   * @return Recht, das fï¿½r die Ausfï¿½hrung nï¿½tig ist
    */
   public String getRecht() {
     return _recht;
   }
 
   /**
-   * @return Inhalt des Tooltips für den Befehl
+   * @return Inhalt des Tooltips fï¿½r den Befehl
    */
   public String getTooltip() {
     return _tooltip;
@@ -191,30 +191,30 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @return die Eingabeart, für die der befehl vorhanden sein soll oder State_dont_care
+   * @return die Eingabeart, fï¿½r die der befehl vorhanden sein soll oder State_dont_care
    */
   public int getWahlArt() {
     return _wahlart;
   }
 
   /**
-   * Setze die Eingabeart, für den der Befehl sichtbar sein soll
+   * Setze die Eingabeart, fï¿½r den der Befehl sichtbar sein soll
    * 
-   * @param art Eingabeart, für die der Befehl sichtbar sein soll
+   * @param art Eingabeart, fï¿½r die der Befehl sichtbar sein soll
    */
   public void setWahlArt(int art) {
     _wahlart = art;
   }
 
   /**
-   * @return <code>true</code>, wenn der Befehl nur bei freigegebener Wahl verfügbar ist
+   * @return <code>true</code>, wenn der Befehl nur bei freigegebener Wahl verfï¿½gbar ist
    */
   public boolean getNurFreigegeben() {
     return _nurFreigegeben;
   }
 
   /**
-   * @param nurFreigegeben <code>true</code>, wenn der Befehl nur bei freigegebener Wahl verfügbar
+   * @param nurFreigegeben <code>true</code>, wenn der Befehl nur bei freigegebener Wahl verfï¿½gbar
    *          ist
    */
   public void setNurFreigegeben(boolean nurFreigegeben) {
@@ -222,7 +222,7 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @return <code>true</code>, wenn der Befehl nur bei nicht freigegebener Wahl verfügbar ist
+   * @return <code>true</code>, wenn der Befehl nur bei nicht freigegebener Wahl verfï¿½gbar ist
    */
   public boolean getNurNichtFreigegeben() {
     return _nurNichtFreigegeben;
@@ -230,14 +230,14 @@ public class GUICommand implements Serializable {
 
   /**
    * @param nurNichtFreigegeben <code>true</code>, wenn der Befehl nur bei nicht freigegebener Wahl
-   *          verfügbar ist
+   *          verfï¿½gbar ist
    */
   public void setNurNichtFreigegeben(boolean nurNichtFreigegeben) {
     _nurNichtFreigegeben = nurNichtFreigegeben;
   }
 
   /**
-   * @return Recht, das nötig ist, um diesen Befehl vor der Freigabe zu nutzen (impliziert nach
+   * @return Recht, das nï¿½tig ist, um diesen Befehl vor der Freigabe zu nutzen (impliziert nach
    *         Freigabe immer nutzbar)
    */
   public String getRechtOderFreigabe() {
@@ -245,7 +245,7 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @param recht Recht, das nötig ist, um diesen Befehl vor der Freigabe zu nutzen (impliziert nach
+   * @param recht Recht, das nï¿½tig ist, um diesen Befehl vor der Freigabe zu nutzen (impliziert nach
    *          Freigabe immer nutzbar)
    */
   public void setRechtOderFreigabe(String recht) {
@@ -253,7 +253,7 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @return Recht, das nötig ist, um diesen Befehl nach dem Schließen der Wahl zu nutzen
+   * @return Recht, das nï¿½tig ist, um diesen Befehl nach dem Schlieï¿½en der Wahl zu nutzen
    *         (impliziert sonst gar nicht nutzbar!)
    */
   public String getRechtUndGeschlossen() {
@@ -261,7 +261,7 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @param recht Recht, das nötig ist, um diesen Befehl nach dem Schließen der Wahl zu nutzen
+   * @param recht Recht, das nï¿½tig ist, um diesen Befehl nach dem Schlieï¿½en der Wahl zu nutzen
    *          (impliziert sonst gar nicht nutzbar!)
    */
   public void setRechtUndGeschlossen(String recht) {
@@ -300,14 +300,14 @@ public class GUICommand implements Serializable {
   }
 
   /**
-   * @return <code>true</code>, wenn der Befehl nur auf Gebieten zur Verfügung steht
+   * @return <code>true</code>, wenn der Befehl nur auf Gebieten zur Verfï¿½gung steht
    */
   public boolean getNurGebiete() {
     return _nurGebiete;
   }
 
   /**
-   * @return <code>true</code>, wenn der Befehl auf allen Leveln zur Verfügung steht
+   * @return <code>true</code>, wenn der Befehl auf allen Leveln zur Verfï¿½gung steht
    */
   public boolean getAlleLevel() {
     return _alleLevel;
@@ -332,7 +332,7 @@ public class GUICommand implements Serializable {
 
   /**
    * @return Position des Commands in den verschiedenen Command-Listen: -1 wenn der Command einfach
-   *         ans Ende gehängt werden soll
+   *         ans Ende gehï¿½ngt werden soll
    */
   public int getPosition() {
     return _position;
@@ -340,7 +340,7 @@ public class GUICommand implements Serializable {
 
   /**
    * Setzt die Position, an der der Command angezeigt werden soll. Ist nur die Position in einer
-   * Liste, an der der Command abgelegt wird. Setzt zu einem späteren Zeitpunkt jemand einen Command
+   * Liste, an der der Command abgelegt wird. Setzt zu einem spï¿½teren Zeitpunkt jemand einen Command
    * an die gleiche Position, wird vorheriger um eine Position nach hinten verschoben.
    * 
    * @param position Position, an der der Command angezeigt werden soll

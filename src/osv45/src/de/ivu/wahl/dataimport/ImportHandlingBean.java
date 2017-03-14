@@ -1,7 +1,7 @@
 /*
  * ImportHandlingBean
  * 
- * Copyright (c) 2004-8 IVU Traffic Technologies AG
+ * Copyright (c) 2004-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -41,6 +41,7 @@ import de.ivu.wahl.admin.AdminHandlingBean;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
+import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GruppeGebietsspezifischModel;
 import de.ivu.wahl.modell.GruppeKonstanten;
 import de.ivu.wahl.modell.ejb.Gebiet;
@@ -58,7 +59,7 @@ import de.ivu.wahl.util.XMLImportHelper;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * SessionBean für die Unterstützung des ImportClient
+ * SessionBean fï¿½r die Unterstï¿½tzung des ImportClient
  * 
  * @author cos@ivu.de
  */
@@ -162,6 +163,7 @@ public class ImportHandlingBean extends WahlStatelessSessionBeanBase implements 
    * (non-Javadoc)
    * @see de.ivu.wahl.dataimport.ImportHandling#createListenkombinationen(java.util.Map)
    */
+  @Override
   public void updateGruppennamen() throws ImportException {
     try {
       GruppeHome gruppeHome = (GruppeHome) EJBUtil.findLocalHomeNoCache("Gruppe"); //$NON-NLS-1$
@@ -208,7 +210,7 @@ public class ImportHandlingBean extends WahlStatelessSessionBeanBase implements 
       // max existing region number
       for (int idx = 1 + maxNumber; idx <= anzahl + maxNumber; ++idx) {
         GebietModel gebiet = new GebietModelImpl(EJBUtil.getUniqueKey());
-        gebiet.setName(GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_STIMMBEZIRK] + "_" //$NON-NLS-1$
+        gebiet.setName(Gebietsart.STIMMBEZIRK.getKlartext() + "_" //$NON-NLS-1$
             + idx);
         gebiet.setNummer(idx);
         gebiet.setID_Wahl(wahlInfo.getID_Wahl());
@@ -301,10 +303,9 @@ public class ImportHandlingBean extends WahlStatelessSessionBeanBase implements 
         .getFirstChildElement(XMLTags.EML_REPORTING_UNIT_IDENTIFIER, XMLTags.NS_EML),
         XMLTags.ATTR_EML_ID);
     if (nrUebergeordnetesGebiet != nrUebergeordnetesGebietFromFile) {
-      String regionFound = GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_GEMEINDE] + " " //$NON-NLS-1$
+      String regionFound = Gebietsart.GEMEINDE.getKlartext() + " " //$NON-NLS-1$
           + nrUebergeordnetesGebietFromFile;
-      String regionExpected = GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_GEMEINDE]
-          + " " + nrUebergeordnetesGebiet; //$NON-NLS-1$
+      String regionExpected = Gebietsart.GEMEINDE.getKlartext() + " " + nrUebergeordnetesGebiet; //$NON-NLS-1$
       LOGGER.error(Messages.bind(MessageKeys.Error_Datei_0_EnthaeltDatenFuer_1_Nicht_2,
           url110b.toExternalForm(),
           regionFound,
@@ -316,17 +317,16 @@ public class ImportHandlingBean extends WahlStatelessSessionBeanBase implements 
               regionExpected));
     }
     // Check rootregiontype --> if (Deelraad == Deelgemeente) else Gemeente
-    final int gebietsart;
+    final Gebietsart gebietsart;
     if (wahlInfo.getElectionCategory().equals(ElectionCategory.BC)
         || wahlInfo.getElectionCategory().equals(ElectionCategory.GC)) {
-      gebietsart = GebietModel.GEBIETSART_ORTSTEIL;
+      gebietsart = Gebietsart.ORTSTEIL;
     } else if (wahlInfo.getElectionCategory().isOnIsland()) {
-      gebietsart = GebietModel.GEBIETSART_INSELGEMEINDE;
+      gebietsart = Gebietsart.INSELGEMEINDE;
     } else {
-      gebietsart = GebietModel.GEBIETSART_GEMEINDE;
+      gebietsart = Gebietsart.GEMEINDE;
     }
-    String nameUebergeordnetesGebiet = GebietModel.GEBIETSART_KLARTEXT[gebietsart]
-        + " " + supRegion.getName(); //$NON-NLS-1$
+    String nameUebergeordnetesGebiet = gebietsart.getKlartext() + " " + supRegion.getName(); //$NON-NLS-1$
     String nameUebergeordnetesGebietFromFile = XMLImportHelper.getText(reportingUnitNode
         .getFirstChildElement(XMLTags.EML_REPORTING_UNIT_IDENTIFIER, XMLTags.NS_EML));
     if (!nameUebergeordnetesGebiet.equals(nameUebergeordnetesGebietFromFile)) {
@@ -369,8 +369,7 @@ public class ImportHandlingBean extends WahlStatelessSessionBeanBase implements 
           // older version with xal:Address element
           String importName = getText(address, XMLTags.EML_ADDRESS, XMLTags.NS_XAL);
           if (importName != null) {
-            String namePrefix = GebietModel.GEBIETSART_KLARTEXT[GebietModel.GEBIETSART_STIMMBEZIRK]
-                + " "; //$NON-NLS-1$
+            String namePrefix = Gebietsart.STIMMBEZIRK.getKlartext() + " "; //$NON-NLS-1$
             if (importName.length() >= namePrefix.length()
                 && namePrefix.equals(importName.substring(0, namePrefix.length()))) {
               importName = importName.substring(namePrefix.length());

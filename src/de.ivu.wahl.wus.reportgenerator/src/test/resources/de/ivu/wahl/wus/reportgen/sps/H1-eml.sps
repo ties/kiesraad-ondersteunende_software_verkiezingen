@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure version="16" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
+<structure version="18" xsltversion="1" html-doctype="HTML4 Transitional" compatibility-view="IE9" html-outputextent="Complete" relativeto="*SPS" encodinghtml="UTF-8" encodingrtf="UTF-8" encodingpdf="UTF-8" useimportschema="1" embed-images="1" pastemode="xml" enable-authentic-scripts="1" authentic-scripts-in-debug-mode-external="0" generated-file-location="DEFAULT">
 	<parameters>
 		<parameter name="generateDate" default="01-02-2003 04:05:06"/>
 		<parameter name="hashCode" default="12 34 56 78 90 AB CD EF 12 34 56 78 90 AB CD EF FF FF FF FF"/>
@@ -47,6 +47,10 @@
 			<designfragment match="FirstCandidateName" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="FootnoteKieskring" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Gender2" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender3" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="Gender4" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderInAffiliationVotes" spsfile="reused-parts-simple.sps" isactive="0"/>
+			<designfragment match="GenderRG" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="Kieskring" spsfile="reused-parts-simple.sps" isactive="1"/>
 			<designfragment match="ObjectionsByVoters1" spsfile="reused-parts-simple.sps" isactive="0"/>
 			<designfragment match="ObjectionsByVoters1b" spsfile="reused-parts-simple.sps" isactive="0"/>
@@ -65,7 +69,7 @@
 		<script language="javascript">function doInitialize() {  markLoaded();  return false;  }  function doIntref(inVerwijzingRef, inLabelRef) {  var myWin = window;  var myLabel = &apos;label-&apos; + inLabelRef;  myWin.location.replace(&apos;#&apos; + myLabel);  }  //</script>
 	</scripts>
 	<script-project>
-		<Project version="2" app="AuthenticView"/>
+		<Project version="3" app="AuthenticView"/>
 	</script-project>
 	<importedxslt>
 		<file url="D:\projekte\de.ivu.wahl.wus.reportgenerator\src\main\resources\de\ivu\wahl\wus\reportgen\text\nl\reused-parts-simple-text.xslt"/>
@@ -537,7 +541,7 @@
 														<children>
 															<conditionbranch xpath="$lang=0">
 																<children>
-																	<text fixtext="Ik ben verplicht de volgende bijlagen in te leveren bij de kandidatenlijst (aanvinken wat van toepassing is):"/>
+																	<text fixtext="Ik ben verplicht de volgende bijlage(n) in te leveren bij de kandidatenlijst (aanvinken wat van toepassing is):"/>
 																</children>
 															</conditionbranch>
 															<conditionbranch>
@@ -716,6 +720,15 @@
 																		</children>
 																	</tgridbody-rows>
 																</children>
+																<wizard-data-repeat>
+																	<children/>
+																</wizard-data-repeat>
+																<wizard-data-rows>
+																	<children/>
+																</wizard-data-rows>
+																<wizard-data-columns>
+																	<children/>
+																</wizard-data-columns>
 															</tgrid>
 															<condition>
 																<children>
@@ -751,7 +764,7 @@
 																												<children>
 																													<conditionbranch xpath="$lang=0">
 																														<children>
-																															<text fixtext=" Een betalingsbewijs van de waarborgsom want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H 12)."/>
+																															<text fixtext=" Een betalingsbewijs van de waarborgsom, want de lijst komt niet in aanmerking voor de ontheffing van deze verplichting (model H 12)."/>
 																														</children>
 																													</conditionbranch>
 																													<conditionbranch>
@@ -768,6 +781,15 @@
 																						</children>
 																					</tgridbody-rows>
 																				</children>
+																				<wizard-data-repeat>
+																					<children/>
+																				</wizard-data-repeat>
+																				<wizard-data-rows>
+																					<children/>
+																				</wizard-data-rows>
+																				<wizard-data-columns>
+																					<children/>
+																				</wizard-data-columns>
 																			</tgrid>
 																		</children>
 																	</conditionbranch>
@@ -775,7 +797,7 @@
 															</condition>
 															<condition>
 																<children>
-																	<conditionbranch xpath="//eml:ElectionCategory[ text() = &quot;PS&quot; or text() = &quot;GR&quot; or text() = &quot;BC&quot; or text() = &quot;ER&quot; ]">
+																	<conditionbranch xpath="//eml:ElectionCategory[ text() = &quot;PS&quot; or text() = &quot;AB&quot; or text() = &quot;GR&quot; or text() = &quot;BC&quot; or text() = &quot;ER&quot; ]">
 																		<children>
 																			<tgrid>
 																				<properties border="0" cellpadding="1" cellspacing="0" width="100%"/>
@@ -811,7 +833,7 @@
 																																<children>
 																																	<conditionbranch xpath="$lang=0">
 																																		<children>
-																																			<text fixtext=" Een verklaring van voorgenomen vestiging voor ieder op de lijst voorkomende kandidaat die niet woonachtig is in het gebied waarop de verkiezing betrekking heeft (alleen bij gemeenteraads- of provinciale statenverkiezingen en de eilandsraadsverkiezingen van het openbare lichaam Bonaire, Saba of Sint Eustatius)."/>
+																																			<text fixtext=" Een verklaring van voorgenomen vestiging van iedere op de lijst voorkomende kandidaat die niet woonachtig is in het gebied waarop de verkiezing betrekking heeft (alleen bij een verkiezing van provinciale staten, het algemeen bestuur van een waterschap, een gemeenteraad en de eilandsraden van de openbare lichamen Bonaire, Saba of Sint Eustatius)."/>
 																																		</children>
 																																	</conditionbranch>
 																																	<conditionbranch>
@@ -829,7 +851,7 @@
 																																<children>
 																																	<conditionbranch xpath="$lang=0">
 																																		<children>
-																																			<text fixtext=" Een verklaring van voorgenomen vestiging voor ieder op de lijst voorkomende kandidaat die niet woonachtig is in het gebied waarop de verkiezing betrekking heeft (alleen bij verkiezingen van het algemeen bestuur van de bestuurscommissie of gemeenteraads- of provinciale statenverkiezingen en de eilandsraadsverkiezingen van het openbare lichaam Bonaire, Saba of Sint Eustatius)."/>
+																																			<text fixtext=" Een verklaring van voorgenomen vestiging van iedere op de lijst voorkomende kandidaat die niet woonachtig is in het gebied waarop de verkiezing betrekking heeft (alleen bij een verkiezing van het algemeen bestuur van de bestuurscommissie, provinciale staten, het algemeen bestuur van een waterschap, een gemeenteraad en de eilandsraden van de openbare lichamen Bonaire, Saba of Sint Eustatius)."/>
 																																		</children>
 																																	</conditionbranch>
 																																	<conditionbranch>
@@ -850,6 +872,15 @@
 																						</children>
 																					</tgridbody-rows>
 																				</children>
+																				<wizard-data-repeat>
+																					<children/>
+																				</wizard-data-repeat>
+																				<wizard-data-rows>
+																					<children/>
+																				</wizard-data-rows>
+																				<wizard-data-columns>
+																					<children/>
+																				</wizard-data-columns>
 																			</tgrid>
 																		</children>
 																	</conditionbranch>
@@ -937,6 +968,15 @@
 																						</children>
 																					</tgridbody-rows>
 																				</children>
+																				<wizard-data-repeat>
+																					<children/>
+																				</wizard-data-repeat>
+																				<wizard-data-rows>
+																					<children/>
+																				</wizard-data-rows>
+																				<wizard-data-columns>
+																					<children/>
+																				</wizard-data-columns>
 																			</tgrid>
 																		</children>
 																	</conditionbranch>
@@ -1100,7 +1140,9 @@
 																							<tgridcell>
 																								<properties valign="bottom"/>
 																								<children>
-																									<text fixtext="_________________________________________________________"/>
+																									<text fixtext="_________________________________________________________">
+																										<properties class="underline"/>
+																									</text>
 																								</children>
 																							</tgridcell>
 																						</children>
@@ -1142,7 +1184,9 @@
 																							<tgridcell>
 																								<properties valign="bottom"/>
 																								<children>
-																									<text fixtext="_________________________________________________________"/>
+																									<text fixtext="_________________________________________________________">
+																										<properties class="underline"/>
+																									</text>
 																								</children>
 																							</tgridcell>
 																						</children>
@@ -1150,6 +1194,15 @@
 																				</children>
 																			</tgridbody-rows>
 																		</children>
+																		<wizard-data-repeat>
+																			<children/>
+																		</wizard-data-repeat>
+																		<wizard-data-rows>
+																			<children/>
+																		</wizard-data-rows>
+																		<wizard-data-columns>
+																			<children/>
+																		</wizard-data-columns>
 																	</tgrid>
 																</children>
 																<variables/>
@@ -1470,6 +1523,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 					<calltemplate subtype="named" match="LineBreakTable">
 						<parameters/>
@@ -1557,7 +1619,7 @@
 													<calltemplate subtype="named" match="LineBreak">
 														<parameters/>
 													</calltemplate>
-													<text fixtext="_______________________________">
+													<text fixtext="_________________________">
 														<properties class="underline"/>
 													</text>
 												</children>
@@ -1567,7 +1629,7 @@
 													<calltemplate subtype="named" match="LineBreak">
 														<parameters/>
 													</calltemplate>
-													<text fixtext="_______________________________">
+													<text fixtext="_________________">
 														<properties class="underline"/>
 													</text>
 												</children>
@@ -1654,7 +1716,7 @@
 													<calltemplate subtype="named" match="LineBreak">
 														<parameters/>
 													</calltemplate>
-													<text fixtext="_______________________________">
+													<text fixtext="_________________________">
 														<properties class="underline"/>
 													</text>
 												</children>
@@ -1664,7 +1726,7 @@
 													<calltemplate subtype="named" match="LineBreak">
 														<parameters/>
 													</calltemplate>
-													<text fixtext="_______________________________">
+													<text fixtext="_________________">
 														<properties class="underline"/>
 													</text>
 												</children>
@@ -1674,7 +1736,7 @@
 													<calltemplate subtype="named" match="LineBreak">
 														<parameters/>
 													</calltemplate>
-													<text fixtext="_______________________________">
+													<text fixtext="________________________">
 														<properties class="underline"/>
 													</text>
 												</children>
@@ -1684,6 +1746,15 @@
 								</children>
 							</tgridbody-rows>
 						</children>
+						<wizard-data-repeat>
+							<children/>
+						</wizard-data-repeat>
+						<wizard-data-rows>
+							<children/>
+						</wizard-data-rows>
+						<wizard-data-columns>
+							<children/>
+						</wizard-data-columns>
 					</tgrid>
 					<calltemplate subtype="named" match="LineBreakTable">
 						<parameters/>

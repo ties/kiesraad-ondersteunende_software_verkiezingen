@@ -2,7 +2,7 @@
  * ContestIdentifierService
  * 
  * Created on 30.08.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -15,8 +15,8 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
 
 public class ContestIdentifierService {
-  public final String ALLE = "alle";
-  public final String GEEN = "geen";
+  public final String ALLE = "alle"; //$NON-NLS-1$
+  public final String GEEN = "geen"; //$NON-NLS-1$
 
   public String getContestIdentifierId(GruppeGebietsspezifisch candidateList,
       Gebiet district,
@@ -34,6 +34,8 @@ public class ContestIdentifierService {
       } else {
         return getNumericalContestIdentifierId(district);
       }
+    } else if (ElectionCategory.AB.equals(category)) {
+      return Integer.toString(1);
     } else if (ElectionCategory.PS.equals(category)) {
       ElectionSubcategory subcategory = election.getElectionSubcategory();
       if (ElectionSubcategory.PS1.equals(subcategory)) {
@@ -46,6 +48,7 @@ public class ContestIdentifierService {
         }
       }
     }
+
     return null;
   }
 

@@ -10,7 +10,7 @@
     <xsl:param name="I1_080_Kandidatenlijsten" select="'Kandidatenlijsten'"/>
     <xsl:param name="I1_090_DeVolgendeKandidatenlijsten" select="'De volgende kandidatenlijsten zijn ingeleverd:'"/>
     <xsl:param name="I1_100_Kieskring" select="'Kieskring'"/>
-    <xsl:param name="I1_105_KieskringNederland" select="'Kieskring Netherland'"/>
+    <xsl:param name="I1_105_KieskringNederland" select="'Kieskring Nederland'"/>
     <xsl:param name="I1_110_aanduidingBovenKandidatenlijst" select="'aanduiding boven kandidatenlijst'"/>
     <xsl:param name="I1_120_eersteKandidaat" select="'naam en voorletters eerste kandidaat'"/>
     <xsl:param name="I1_130_aantalNamen" select="'aantal namen op lijst'"/>

@@ -9,6 +9,7 @@
 <%@ page import="de.ivu.wahl.admin.P5ExportStateP22_2Appendix"%>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.beans.ExportP5Commands"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -16,12 +17,14 @@
 <%@ page import="de.ivu.wahl.modell.GruppeModel"%>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.wus.electioncategory.ElectionCategory"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%
-  String breite = "100%";
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "ProtocolAppendixExport"; //$NON-NLS-1$
+
+String breite = "100%";
 String prefix = ApplicationBeanKonstanten.PREFIX;
 int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX + "subwork"), 0);
 DialogStateHolder state = admBean.getP5ExportStateP22_2Appendix();
@@ -30,6 +33,7 @@ boolean legende = false;
 %>
 <html>
 <head>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title>P22_1</title>
    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/wahl2002.css">
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery.autocomplete.css">
@@ -105,9 +109,7 @@ boolean legende = false;
             </div>
         </div>
         <div id="trans">
-            <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-                <ivu:help key="ProtocolAppendixExport"/>
-            </div>
+            <%@include file="/jsp/fragments/help_div.jspf"%>
             <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
                 &nbsp;
             </div>
@@ -225,18 +227,15 @@ boolean legende = false;
                                                <tr>
                                                 <td height="20" valign="top" class="guiBefehle"><%
                                                   int buttonIdx = 0;
-                                                                                                 String selectedKey = null;
-                                                                                                 for (String buttonName : Konstanten.PROP_P22_2_APPENDIX.keySet()) {
-                                                                                                   String url = ClientHelper.generateURL(request, ClientHelper.getWork(request), true)
-                                                                                                                    + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + buttonIdx;
-                                                                                   
-                                                                                                   boolean selected = buttonIdx++ == subwork;
-                                                                                                   if (selected) {
-                                                                                                    selectedKey = buttonName;
-                                                                                                   }
-                                                                                                       String styleClass =  GUICommand.GUI_CLASS_1;
+                                                    String selectedKey = null;
+                                                    for (String buttonName : Konstanten.PROP_P22_2_APPENDIX.keySet()) {
+                                                       boolean selected = buttonIdx++ == subwork;
+                                                       if (selected) {
+                                                        selectedKey = buttonName;
+                                                       }
+                                                       String styleClass =  GUICommand.GUI_CLASS_1;
                                                 %> 
-                                                   <ivu:a clazz='<%=styleClass%>' href='<%=url%>' ><%=buttonName%></ivu:a><%
+                                                   <span class='<%=styleClass%>'><%=buttonName%></span><%
                                                      }
                                                    %>
                                                   </td>
@@ -427,7 +426,7 @@ boolean legende = false;
                                                                                 // reset export status
                                                                                 admBean.resetExportStateP22_2Appendix();
                                                                                 //forward to Werkmap
-                                                                                String urlExp = "/osv?cmd=" + ExportP5Commands.CMD_ADM_EXPORT_P22_2_APPENDIX + "&" + ApplicationBeanKonstanten.WORK + "=" + ApplicationBeanKonstanten.EXPORT_VERZEICHNIS + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                                                                String urlExp = "/osv?cmd=" + ExportP5Commands.CMD_ADM_EXPORT_P22_2_APPENDIX + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                      %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="Export_Protocol_Appendix"/></b></legend>

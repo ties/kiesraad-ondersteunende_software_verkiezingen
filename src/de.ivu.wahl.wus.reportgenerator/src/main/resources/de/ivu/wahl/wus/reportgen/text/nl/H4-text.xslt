@@ -8,8 +8,8 @@
     <xsl:param name="H4_050_UMagZich" select="'U mag zich niet laten omkopen tot het afleggen van deze ondersteuningsverklaring. Degene die u omkoopt of u hiertoe anderszins dwingt, is tevens strafbaar. Op beide misdrijven staat een gevangenisstraf van maximaal zes maanden of een geldboete.'"/>
     <xsl:param name="H4_060_PolitiekeGroepering" select="'Politieke groepering'"/>
     <xsl:param name="H4_060_PolitiekeGroepering_BC" select="'(Politieke) groepering'"/>
-    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt" select="'De politieke groepering waarvan u de kandidatenlijst ondersteunt: '"/>
-    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt_BC" select="'De (politieke) groepering waarvan u de kandidatenlijst ondersteunt: '"/>
+    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt" select="'De aanduiding van de politieke groepering waarvan u de kandidatenlijst ondersteunt: '"/>
+    <xsl:param name="H4_070_DePolitiekeGroeperingUOndersteunt_BC" select="'De aanduiding van de (politieke) groepering waarvan u de kandidatenlijst ondersteunt: '"/>
     <xsl:param name="H4_080_KandidatenOpDeLijst" select="'Kandidaten op de lijst'"/>
     <xsl:param name="H4_100_Ondertekening" select="'Ondertekening door de kiezer'"/>
     <xsl:param name="H4_110_IkVerklaar" select="'Ik verklaar dat ik de bovengenoemde kandidatenlijst ondersteun.'"/>

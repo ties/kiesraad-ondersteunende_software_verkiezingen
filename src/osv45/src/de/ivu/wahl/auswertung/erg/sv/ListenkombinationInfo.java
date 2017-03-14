@@ -2,7 +2,7 @@
  * ListenkombinationInfo
  * 
  * Created on 23.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg.sv;
 

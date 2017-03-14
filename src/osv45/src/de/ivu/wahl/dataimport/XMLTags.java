@@ -103,6 +103,7 @@ public interface XMLTags {
   public String KR_LISTEN_DATUM = "ListDate"; //$NON-NLS-1$
   public String KR_NOMINIERUNGS_DATUM = "NominationDate"; //$NON-NLS-1$
   public String ATTR_GESCHLECHT_SICHTBAR = "PublishGender"; //$NON-NLS-1$
+  public String ATTR_PUBLICATION_LANGUAGE = "PublicationLanguage"; //$NON-NLS-1$
   public String ATTR_IDENTISCHE_LISTE = "BelongsToSet"; //$NON-NLS-1$
   public String ATTR_LISTENKOMBINATION = "BelongsToCombination"; //$NON-NLS-1$
   public String LISTEN_TYP_KOMBINATION = "lijstencombinatie"; //$NON-NLS-1$

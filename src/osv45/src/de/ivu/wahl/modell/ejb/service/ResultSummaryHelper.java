@@ -2,7 +2,7 @@
  * ResultSummaryHelper
  * 
  * Created on 06.11.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.ejb.service;
 
@@ -102,8 +102,8 @@ public class ResultSummaryHelper {
       Map<String, Integer> ggsAndVotes,
       VoteValues voteValues) {
     Gruppe gruppe = gruppeGebietsspezifisch.getGruppe();
-    PartyWithCandidates partyWithCandidates = new PartyWithCandidates(gruppe.getNameKurz(), gruppe
-        .getID_Gruppe(), gruppeGebietsspezifisch.getPosition(), voteValues);
+    PartyWithCandidates partyWithCandidates = new PartyWithCandidates(gruppe.getNameKurz(),
+        gruppe.getID_Gruppe(), gruppeGebietsspezifisch.getPosition(), voteValues);
 
     // Fill results into partyWithCandidates for all child-regions
     int childRegionIndex = 0;
@@ -148,6 +148,8 @@ public class ResultSummaryHelper {
             votes,
             positionInList,
             listenkandidatur.getID_Listenkandidatur());
+
+        partyWithCandidates.setPublicationLanguage(candidateship.getPublicationLanguage());
       }
     }
 

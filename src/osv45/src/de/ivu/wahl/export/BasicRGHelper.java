@@ -2,7 +2,7 @@
  * BasicRGHelper
  * 
  * Created on 27.11.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -36,7 +36,7 @@ public class BasicRGHelper {
     this.bean = bean;
   }
 
-  protected void appendBlancVotesAndInvalidVotes(Element parent, String id_Ergebniseingang) {
+  protected void appendVotesForRGGeneralGroups(Element parent, String id_Ergebniseingang) {
     String id_WurzelGebiet = WahlInfo.getWahlInfo().getID_Wurzelgebiet();
     Gebiet wurzelGebiet;
     try {
@@ -47,7 +47,8 @@ public class BasicRGHelper {
     }
     GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
     List<GruppeAllgemein> gruppenAllgemein = GruppeKonstanten.GruppeAllgemein
-        .filterGruppenAllgemeinVisibleInRegion(wurzelGebiet, adapter.getGruppenAllgemein());
+        .filterGruppenAllgemeinVisibleInRegionOrGueltige(wurzelGebiet,
+            adapter.getGruppenAllgemein());
 
     GeneralVotingResults generalVotingResults = bean.getVotesHandling()
         .getGeneralVotingResults(id_Ergebniseingang, id_WurzelGebiet);

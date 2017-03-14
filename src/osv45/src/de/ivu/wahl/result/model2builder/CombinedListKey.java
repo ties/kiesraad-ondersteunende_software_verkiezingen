@@ -2,7 +2,7 @@
  * CombinedListKey
  * 
  * Created on 26.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.result.model2builder;
 

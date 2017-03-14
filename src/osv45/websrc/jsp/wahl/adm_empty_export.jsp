@@ -2,6 +2,7 @@
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="java.util.List"%>
@@ -21,7 +22,11 @@
 <%@ page import="de.ivu.wahl.wus.electioncategory.ElectionCategory"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="expP4Bean" scope="session" class="de.ivu.wahl.client.beans.ExportP4Bean" />
+<jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%  
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "ExpEmpty"; //$NON-NLS-1$
+
 String breite = "100%"; //$NON-NLS-1$
 DialogStateHolder p4ES = expP4Bean.getP4ExportStateEmptyEml();
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
@@ -47,6 +52,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
 %>
 <html>
 <head>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><ivu:int key="<%=i18nName%>"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
      <script type="text/javascript">
@@ -113,12 +119,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
         </div>
         <div id="trans">
             <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-               <tr class="hgeeeeee" align="right">
-                  <td><ivu:help key="ExpEmpty"/></td>
-               </tr>
-               <tr class="hgeeeeee">
-                  <td class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-               </tr>
+               <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
@@ -187,7 +188,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                                     // reset export status
                                                     expP4Bean.resetExportStateEmptyEml();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=expP4_exportP4_EmptyEml&"+ApplicationBeanKonstanten.WORK+"="+ ApplicationBeanKonstanten.EXPORT_VERZEICHNIS+"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                                    String urlExp = "/osv?cmd=expP4_exportP4_EmptyEml&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                             %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>

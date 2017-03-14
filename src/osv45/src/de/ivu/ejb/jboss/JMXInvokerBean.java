@@ -2,7 +2,7 @@
  * JMXInvokerBean
  * 
  * Created on 18.01.2005
- * Copyright (c) 2005-8 IVU Traffic Technologies AG
+ * Copyright (c) 2005-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.ejb.jboss;
 

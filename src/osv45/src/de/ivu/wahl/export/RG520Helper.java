@@ -2,7 +2,7 @@
  * RG520Helper
  * 
  * Created on 31.08.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -39,8 +39,11 @@ import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.dataimport.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
+import de.ivu.wahl.modell.BesonderheitConstants;
 import de.ivu.wahl.modell.GruppeKonstanten;
+import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.ejb.Alternative;
+import de.ivu.wahl.modell.ejb.Besonderheit;
 import de.ivu.wahl.modell.ejb.DHondtQuotient;
 import de.ivu.wahl.modell.ejb.FiktiveSitzverteilung;
 import de.ivu.wahl.modell.ejb.Gebiet;
@@ -106,15 +109,18 @@ public class RG520Helper extends BasicRGHelper {
       boolean forCandidateLetters,
       boolean forProtocolAppendix) {
     Element rg520 = createRGElement(RG_520_ELEMENT);
-    if (!forCandidateLetters && !forProtocolAppendix) {
+    if (!forProtocolAppendix) {
       String dateStr = bean.getPropertyHandling().getProperty(RG_DATE_OF_MEETING_O1P20);
       rg520.appendChild(createRGElementWithValue(RG_DATE_OF_MEETING_O1P20,
           XMLHelper.createDateString(dateStr)));
+    }
+
+    if (!forCandidateLetters && !forProtocolAppendix) {
       String timeStr = bean.getPropertyHandling().getProperty(RG_TIME_OF_MEETINGP20);
       rg520.appendChild(createRGElementWithValue(RG_TIME_OF_MEETINGP20, timeStr));
 
       // For EK only
-      dateStr = bean.getPropertyHandling().getProperty(RG_DATE_PUBLICATION_VOTE_VALUES);
+      String dateStr = bean.getPropertyHandling().getProperty(RG_DATE_PUBLICATION_VOTE_VALUES);
       if (dateStr != null && dateStr.length() > 0) {
         rg520.appendChild(createRGElementWithValue(RG_DATE_PUBLICATION_VOTE_VALUES,
             XMLHelper.createDateString(dateStr)));
@@ -139,7 +145,7 @@ public class RG520Helper extends BasicRGHelper {
           false,
           EMLMessageType.EML520);
     }
-    appendBlancVotesAndInvalidVotes(presenceVotes, id_Ergebniseingang);
+    appendVotesForRGGeneralGroups(presenceVotes, id_Ergebniseingang);
 
     if (!forProtocolAppendix) {
       appendElectoralDistrictsOverview(rg520, gebiete);
@@ -499,10 +505,47 @@ public class RG520Helper extends BasicRGHelper {
    */
   private Element createOverviewOfCandidatesAndResults(String id_Ergebniseingang) {
     Element results = createRGElement(RG_CANDIDATES_RESULTS);
+    appendAnomalyInSeatDistributions(results, id_Ergebniseingang);
     for (Gruppe gruppe : bean.getGruppeHandling().getGroupsSorted()) {
       appendListGroupAndResults(results, id_Ergebniseingang, gruppe);
     }
     return results;
+  }
+
+  private void appendAnomalyInSeatDistributions(Element parent, String id_Ergebniseingang) {
+    try {
+      List<Besonderheit> besonderheiten = getBesonderheiten(id_Ergebniseingang);
+      for (Besonderheit besonderheit : besonderheiten) {
+        if (besonderheit.getBesonderheitart() == BesonderheitConstants.ART_SHALL_BE_PUBLISHED_IN_P22) {
+          parent.appendChild(createRGElementWithValue(RG_ANOMALY_IN_SEAT_DISTRIBUTION,
+              besonderheit.getText()));
+        }
+      }
+    } catch (FinderException e) {
+      throw new EJBException(
+          Messages.bind(MessageKeys.Error_FehlerBeimLesenDer_0, "Besonderheiten"), e); //$NON-NLS-1$
+    }
+  }
+
+  private List<Besonderheit> getBesonderheiten(String id_Ergebniseingang) throws FinderException {
+    try {
+      List<Besonderheit> list = new ArrayList<Besonderheit>(bean.getBesonderheitHome()
+          .findAllByErgebniseingang(id_Ergebniseingang));
+      Collections.sort(list, new Comparator<Besonderheit>() {
+
+        @Override
+        public int compare(Besonderheit x, Besonderheit y) {
+          return x.getNummer() - y.getNummer();
+        }
+      });
+      return list;
+    } catch (FinderException e) {
+      if (inConflict) {
+        return null;
+      } else {
+        throw e;
+      }
+    }
   }
 
   private void appendListGroupAndResults(Element parent, String id_Ergebniseingang, Gruppe gruppe) {
@@ -662,15 +705,7 @@ public class RG520Helper extends BasicRGHelper {
     String listType = contestIdentifierService.getListType(liste).getEml();
     listResult.appendChild(createRGElementWithValue(RG_TYPE, listType));
 
-    boolean publishGender = liste.isGeschlechtSichtbar();
-    Element listData = XMLHelper.createElementWithAttribute(XMLTags.KR_LISTENDATEN,
-        XMLTags.NS_KR,
-        XMLTags.ATTR_GESCHLECHT_SICHTBAR,
-        String.valueOf(publishGender));
-    int satz = liste.getSatz();
-    if (satz > 0) {
-      listData.addAttribute(new Attribute(ATTR_BELONGS_TO_SET, String.valueOf(satz)));
-    }
+    Element listData = createListData(liste);
     listResult.appendChild(listData);
 
     listResult.appendChild(createRGElementWithValue(RG_SEATS, seats.toString()));
@@ -695,6 +730,24 @@ public class RG520Helper extends BasicRGHelper {
     VotesByRegionNumber votesByRegionNumber = votesHelper.getVotesForP2ListByRegion(liste);
     appendVotesInElectoralDistrictParts(listResult, votesByRegionNumber);
     parent.appendChild(listResult);
+  }
+
+  private Element createListData(Liste liste) {
+    boolean publishGender = liste.isGeschlechtSichtbar();
+    Element listData = XMLHelper.createElementWithAttribute(XMLTags.KR_LISTENDATEN,
+        XMLTags.NS_KR,
+        XMLTags.ATTR_GESCHLECHT_SICHTBAR,
+        String.valueOf(publishGender));
+
+    String publicationLanguage = PublicationLanguage.toValidAbbreviation(liste
+        .getPublicationLanguage());
+    listData.addAttribute(new Attribute(XMLTags.ATTR_PUBLICATION_LANGUAGE, publicationLanguage));
+
+    int satz = liste.getSatz();
+    if (satz > 0) {
+      listData.addAttribute(new Attribute(ATTR_BELONGS_TO_SET, String.valueOf(satz)));
+    }
+    return listData;
   }
 
   private Set<String> getListsWithChangedPositions(String id_Ergebniseingang) {
@@ -1007,12 +1060,17 @@ public class RG520Helper extends BasicRGHelper {
         // For each P3-list in the combined list, find out the votes, first assignment seats,
         // Niemeyer seats, Niemeyer remainder
         SortedMap<Integer, Element> listNumberAndLine = new TreeMap<Integer, Element>();
+        int priorSeats = 0;
         for (String id_Gruppe : sbeHelper.getChildren(id_Listenkombination)) {
-          createAssignmentWithinCombinedListsLine(sbeHelper, id_Gruppe, listNumberAndLine);
+          priorSeats += createAssignmentWithinCombinedListsLine(sbeHelper,
+              id_Gruppe,
+              listNumberAndLine);
         }
         for (Element line : listNumberAndLine.values()) {
           awcl.appendChild(line);
         }
+        awcl.addAttribute(new Attribute(ATTR_PRIOR_SEATS, String.valueOf(priorSeats)));
+        awcl.addAttribute(new Attribute(ATTR_NEW_SEATS, String.valueOf(uv.getSitze() - priorSeats)));
 
         // Special cases: drawing lots (Niemeyer), exhausted list, d'Hondt
         List<Konflikt> decisionsNiemeyer = getDecisionsForCombinedList(konflikteNiemeyer,
@@ -1176,8 +1234,10 @@ public class RG520Helper extends BasicRGHelper {
   /**
    * Creates a new Element and adds it under the key of the P3-list to the given map
    * assignmentWithinCombinedListsLines
+   * 
+   * @return the number of seats from the first assignment (votes / quota) truncated
    */
-  private void createAssignmentWithinCombinedListsLine(SitzberechnungErgebnisHelper sbeHelper,
+  private int createAssignmentWithinCombinedListsLine(SitzberechnungErgebnisHelper sbeHelper,
       String id_Gruppe,
       SortedMap<Integer, Element> listNumberAndLine) {
     Element line = createRGElement(RG_ASSIGNMENT_COMBINED_LISTS_LINE);
@@ -1187,13 +1247,16 @@ public class RG520Helper extends BasicRGHelper {
         ATTR_LIST_NUMBER,
         String.valueOf(gruppeSchluessel)));
     line.appendChild(createRGElementWithValue(RG_VOTES, firstAss.getZaehler()));
-    line.appendChild(createRGElementWithValue(RG_PRIOR_SEATS, firstAss.getSitze()));
+    int priorSeats = firstAss.getSitze();
+    line.appendChild(createRGElementWithValue(RG_PRIOR_SEATS, priorSeats));
     line.appendChild(createRGElementWithValue(RG_NEW_SEATS, sbeHelper.getNiemeyerSeats(id_Gruppe)));
     Element remainder = createRGElement(RG_REMAINDER);
     remainder.appendChild(createFractionRG(firstAss.getZaehlerVomRest(),
         firstAss.getNennerVomRest()));
     line.appendChild(remainder);
     listNumberAndLine.put(gruppeSchluessel, line);
+
+    return priorSeats;
   }
 
   private void appendAssignmentsWithinListGroups(Element rg520,
@@ -1650,6 +1713,13 @@ public class RG520Helper extends BasicRGHelper {
         }
       });
       for (ListenkandidaturErgebnis lke : electedCol) {
+        Element electedCandidate = createRGElement(RG_ELECTED_CANDIDATE);
+        Liste liste = lke.getListenkandidatur().getListe();
+
+        Element listData = createListData(liste);
+        electedCandidate.appendChild(bean.createListIdentifierElement(liste.getGruppe()));
+        electedCandidate.appendChild(listData);
+
         Element candidateElement = bean.createCandidateElement(lke.getListenkandidatur(),
             false,
             false,
@@ -1661,7 +1731,9 @@ public class RG520Helper extends BasicRGHelper {
           Element agentElement = createAgent(personendatenAgent);
           candidateElement.appendChild(agentElement);
         }
-        results.appendChild(candidateElement);
+
+        electedCandidate.appendChild(candidateElement);
+        results.appendChild(electedCandidate);
       }
       return results;
     } catch (FinderException e) {

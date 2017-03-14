@@ -2,7 +2,7 @@
  * ReportConfigurationImpl
  * 
  * Created on 18.11.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -20,7 +20,6 @@ import de.ivu.wahl.wus.reportgen.extension.IPDFOpener;
  */
 public class ReportConfigurationImpl implements ReportConfiguration {
   private final static List<ReportTemplateEnum> ALWAYS_RTF = Arrays.asList(ReportTemplateEnum.OSV2_1,
-      ReportTemplateEnum.OSV3_1,
       ReportTemplateEnum.OSV3_2,
       ReportTemplateEnum.OSV3_7,
       ReportTemplateEnum.OSV5_1,

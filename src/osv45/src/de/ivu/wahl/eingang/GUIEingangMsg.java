@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2002-10 IVU Traffic Technologies AG
+ * Copyright (c) 2002-10 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.eingang;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -16,6 +17,7 @@ import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.BasicEingangMsg;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
 import de.ivu.wahl.modell.ErgebniseingangModel;
+import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
 import de.ivu.wahl.modell.ejb.Gebiet;
 
 /**
@@ -29,7 +31,7 @@ public class GUIEingangMsg extends BasicEingangMsg implements EingangMsg, Serial
 
   protected String _infoText = null;
   protected String _confirmationText = null;
-  protected final Map<Integer, Gruppendaten> _gruppendaten = new TreeMap<Integer, Gruppendaten>();
+  protected final Map<Integer, Gruppendaten> _gruppendaten;
   protected Gebiet _erfassungseinheit;
   protected ErgebniseingangModel _ergebniseingang = null;
   protected ErgebniseingangModel _letzterGueltigerErgebniseingangModel = null;
@@ -241,10 +243,45 @@ public class GUIEingangMsg extends BasicEingangMsg implements EingangMsg, Serial
     }
   }
 
+  /**
+   * Spezieller Comparator, der dafür sorgt, dass die Referendum-Optionen nicht zum Schluss kommen,
+   * sondern an der Stelle der GUELTIGE eingefügt werden.
+   */
+  static final class ReferendumGruppenComparator implements Comparator<Integer> {
+    @Override
+    public int compare(Integer x, Integer y) {
+      int result = getBlock(x) - getBlock(y);
+      if (result != 0) {
+        return result;
+      } else {
+        return x - y;
+      }
+    }
+
+    /**
+     * Display the special groups upto (excluding) GUELTIGE, then the normal groups, then the other
+     * special groups
+     */
+    private int getBlock(Integer x) {
+      int positionGueltige = GruppeAllgemein.GUELTIGE.getPosition();
+      if (x < positionGueltige) {
+        return 0;
+      } else if (x < 0) {
+        return 2;
+      } else {
+        return 1;
+      }
+    }
+  }
+
   public GUIEingangMsg(AnwContext ersteller) {
     super(ersteller);
     // da der Constructor nur auf der Server-Seite ausgef�hrt wird...
     WahlInfo wahlInfo = WahlInfo.getWahlInfo(ersteller);
+
+    Comparator<Integer> referendumGruppenComparator = new ReferendumGruppenComparator();
+    _gruppendaten = wahlInfo.isReferendum() ? new TreeMap<Integer, Gruppendaten>(
+        referendumGruppenComparator) : new TreeMap<Integer, Gruppendaten>();
 
     _wahlkurzname = wahlInfo.getWahlNameKurz();
     _wahlergebnisart = wahlInfo.getAktuelleWahlergebnisart();

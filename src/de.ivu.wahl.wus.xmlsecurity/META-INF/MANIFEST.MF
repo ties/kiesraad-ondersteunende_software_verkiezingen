@@ -7,5 +7,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: external-libs/xom-1.1.jar,
  .
 Export-Package: de.ivu.wahl.wus.xmlsecurity
-Require-Bundle: org.junit4;bundle-version="4.3.1"
 Bundle-Vendor: IVU Traffic Technologies AG

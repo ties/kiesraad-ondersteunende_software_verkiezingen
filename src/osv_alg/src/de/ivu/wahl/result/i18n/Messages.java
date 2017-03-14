@@ -2,7 +2,7 @@
  * Messages
  * 
  * Created on 05.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.i18n;
 

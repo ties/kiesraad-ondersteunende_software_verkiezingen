@@ -2,7 +2,7 @@
  * Anomaly
  * 
  * Created on 12.10.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.result.result;
 
@@ -20,10 +20,12 @@ package de.ivu.wahl.result.result;
 public class Anomaly {
   private final String _text;
   private final int _number;
+  private final boolean _shallBePublishedInModelP22;
 
-  Anomaly(String text, int number) {
+  Anomaly(String text, int number, boolean shallBePublishedInModelP22) {
     this._text = text;
     this._number = number;
+    this._shallBePublishedInModelP22 = shallBePublishedInModelP22;
   }
 
   public String getText() {
@@ -34,4 +36,7 @@ public class Anomaly {
     return _number;
   }
 
+  public boolean isShallBePublishedInModelP22() {
+    return _shallBePublishedInModelP22;
+  }
 }

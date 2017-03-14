@@ -12,7 +12,7 @@ import de.ivu.wahl.auswertung.erg.Ergebnis;
 /**
  * Ergebnisobjekt zum Transport der Sitzverteilung vom Server zum Client
  * 
- * @author mur@ivu.de, cos@ivu.de Copyright (c) 2004 IVU Traffic Technologies AG
+ * @author mur@ivu.de, cos@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class SitzverteilungErg extends Ergebnis {
   private static final long serialVersionUID = 1831519522587865476L;
@@ -26,9 +26,9 @@ public class SitzverteilungErg extends Ergebnis {
   }
 
   /**
-   * Liefert eine Collection von Gebietlistenquote für die Partei
+   * Liefert eine Collection von Gebietlistenquote fï¿½r die Partei
    * 
-   * @return Collection von Gebietlistenquote für die Partei
+   * @return Collection von Gebietlistenquote fï¿½r die Partei
    */
   public Set<Gruppenzeile> getGruppenzeileCol() {
     return _gruppenzeileCol;

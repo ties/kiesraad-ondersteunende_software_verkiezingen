@@ -1,7 +1,7 @@
 /*
  * XMLHelper
  * 
- * Copyright (c) 2002-7 IVU Traffic Technologies AG
+ * Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.util;
 
@@ -24,9 +24,9 @@ import de.ivu.wahl.export.Roman;
 import de.ivu.wahl.modell.exception.ImportException;
 
 /**
- * Kleine Hilfsmethoden für das Parsen von XML über DOM
+ * Kleine Hilfsmethoden fï¿½r das Parsen von XML ï¿½ber DOM
  * 
- * @author klie@ivu.de Copyright (c) 2002 IVU Traffic Technologies AG
+ * @author klie@ivu.de Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public abstract class XMLImportHelper {
@@ -66,10 +66,10 @@ public abstract class XMLImportHelper {
   }
 
   // /**
-  // * Holt die Konketenation aller text-nodes und fügt für ander nodes Zeilenumbrüche ein ...
+  // * Holt die Konketenation aller text-nodes und fï¿½gt fï¿½r ander nodes Zeilenumbrï¿½che ein ...
   // *
   // * @param node der Node
-  // * @return den zusammengefügten Text
+  // * @return den zusammengefï¿½gten Text
   // */
   // public static String getAllText(Node node) {
   // StringBuilder erg = new StringBuilder();
@@ -89,7 +89,7 @@ public abstract class XMLImportHelper {
    * Gibt den Inhalt eines Textknotens bzw. des ersten Kindknotens, der ein Textknoten ist
    * 
    * @param node der Node
-   * @return den zusammengefügten Text
+   * @return den zusammengefï¿½gten Text
    */
   public static String getText(Element node) {
     if (node == null) {
@@ -204,7 +204,7 @@ public abstract class XMLImportHelper {
    * Gibt den Inhalt eines Textknotens bzw. des ersten Kindknotens, der ein Textknoten ist
    * 
    * @param node der Node
-   * @return den zusammengefügten Text
+   * @return den zusammengefï¿½gten Text
    * @throws ImportException
    */
   public static String getText(Element node, String elementName, String namespace)

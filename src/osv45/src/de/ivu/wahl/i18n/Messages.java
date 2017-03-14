@@ -2,7 +2,7 @@
  * Messages
  * 
  * Created on 05.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.i18n;
 

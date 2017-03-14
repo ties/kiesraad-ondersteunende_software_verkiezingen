@@ -2,7 +2,7 @@
  * ReportNameComponentsMTP
  * 
  * Created on 31.03.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 

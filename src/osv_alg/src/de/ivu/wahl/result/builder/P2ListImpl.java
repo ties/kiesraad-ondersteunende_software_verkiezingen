@@ -2,7 +2,7 @@
  * P2ListImpl
  * 
  * Created on 18.12.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.result.builder;
 
@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import de.ivu.wahl.result.Candidate;
 import de.ivu.wahl.result.CandidateList;
@@ -112,5 +114,25 @@ public class P2ListImpl implements P2List {
 
   public DrawingLotsIdentifier getIdentifier() {
     return new DrawingLotsIdentifier(this);
+  }
+
+  @Override
+  public String getElectoralDistrictNumbers() {
+    SortedSet<Integer> set = new TreeSet<Integer>();
+    for (CandidateList candidateList : _candidateLists) {
+      set.add(candidateList.getElectoralDistrict().getNumber());
+    }
+    Integer[] array = set.toArray(new Integer[0]);
+    StringBuilder b = new StringBuilder();
+    for (int i = 0; i < array.length; i++) {
+      Integer integer = array[i];
+      b.append(integer);
+      if (i < array.length - 2) {
+        b.append(", ");
+      } else if (i == array.length - 2) {
+        b.append(" en ");
+      }
+    }
+    return b.toString();
   }
 }

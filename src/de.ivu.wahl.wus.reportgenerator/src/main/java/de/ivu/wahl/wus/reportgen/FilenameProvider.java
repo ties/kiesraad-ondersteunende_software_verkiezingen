@@ -2,7 +2,7 @@
  * FilenameProvider
  * 
  * Created on 28.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -145,6 +145,6 @@ public class FilenameProvider {
   }
 
   private static boolean filter(Character ch) {
-    return Character.isDigit(ch) || 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
+    return Character.isDigit(ch) || 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
   }
 }

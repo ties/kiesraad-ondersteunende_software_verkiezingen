@@ -28,13 +28,15 @@
  *******************************************************************************
  * Namesliste der Kandidaten alphabetisch geordnet
  *
- * author:  mur@ivu.de  Copyright (c) 2008 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <% 
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
  
  Collection<Personendaten> personendatenListe = appBean.getPersonenAlphabetisch(); 
  String formurl = ClientHelper.generateURL(request, null, "adm_Kandidaten_waehlbar", -1, true);
@@ -68,11 +70,7 @@
         </style>
     </head>
     <body class="hghell">
-        <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-            <a name="oben" href="javascript:window.print()" style="text-decoration: none;" id=
-               "oben"><span class="linkdklrot"><img src="<%= request.getContextPath() %>/img/icon/drucken.gif" alt="" border="0" height="9" width="24"><ivu:int key="SeiteDrucken"/></span></a>
-            <ivu:help key="admKandidatWaehlbar"/>
-        </div>
+        <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>

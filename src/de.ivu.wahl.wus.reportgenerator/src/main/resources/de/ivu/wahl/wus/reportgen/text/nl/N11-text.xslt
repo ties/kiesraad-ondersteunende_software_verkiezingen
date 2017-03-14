@@ -25,7 +25,7 @@
     <xsl:param name="N11_130_De" select="'De '"/>
     <xsl:param name="N11_140_Burgemeester" select="'Burgemeester'"/>
     <xsl:param name="N11_145_Gezaghebber" select="'Gezaghebber'"/>
-    <xsl:param name="N11_150_Vorzitter" select="'Vorzitter'"/>
+    <xsl:param name="N11_150_Vorzitter" select="'Voorzitter'"/>
     <xsl:param name="N11_160_sGravenhage" select="'2. De burgemeester van de gemeente ’s-Gravenhage heeft overeenkomstig artikel N 11, derde lid, van de Kieswet ten aanzien van iedere lijst het aantal in de briefstembureaus op iedere kandidaat uitgebrachte stemmen en het totale aantal in de briefstembureaus op de lijst uitgebrachte stemmen alsmede het aantal uitgebrachte blanco en ongeldige stemmen vastgesteld. De aldus verkregen uitkomsten luiden:'"/>
     <xsl:param name="N11_170_BurgemeesterVanSGravenhage" select="'De Burgemeester van ’s-Gravenhage,'"/>
     <xsl:param name="N11_180_Aanduiding" select="'Aanduiding van de groepering: '"/>

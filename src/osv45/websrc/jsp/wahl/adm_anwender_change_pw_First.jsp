@@ -10,7 +10,7 @@
  * Seite zum initialen Ändern des Passworts des default-Anwenders ("osv")
  * Ändert das Passwort des angemeldeten Benutzers
  *
- * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-13 IVU Traffic Technologies AG
+ * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-2013 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>

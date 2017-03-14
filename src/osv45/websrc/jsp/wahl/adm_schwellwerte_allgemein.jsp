@@ -10,7 +10,7 @@
  * Arbeitsjsp für die Administration von allgemeinen (= Parteiunabhängigen) Schwellwerten
  * Es werden immer alle Schwellwerte geschrieben!
  *
- * author:  mur@ivu.de  Copyright (c) 2004-7 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2004-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_schwellwerte_allgemein.jsp,v 1.9 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>

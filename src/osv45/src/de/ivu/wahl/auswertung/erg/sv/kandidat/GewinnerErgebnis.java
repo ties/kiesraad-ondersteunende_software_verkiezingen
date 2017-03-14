@@ -2,7 +2,7 @@
  * GewinnerErgebnis
  * 
  * Created on 19.01.2005
- * Copyright (c) 2004 IVU Traffic Technologies AG
+ * Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.auswertung.erg.sv.kandidat;
 
@@ -36,7 +36,7 @@ public class GewinnerErgebnis extends Ergebnis {
   }
 
   /**
-   * @return Gibt listMitGGundIhrenEingegangenenGebietsIDs zurück.
+   * @return Gibt listMitGGundIhrenEingegangenenGebietsIDs zurï¿½ck.
    */
   public Map<String, List<Serializable>> getListMitGGundIhrenEingegangenenGebietsIDs() {
     if (_listMitGGundIhrenEingegangenenGebietsIDs == null) {
@@ -46,7 +46,7 @@ public class GewinnerErgebnis extends Ergebnis {
   }
 
   /**
-   * @param listMitGGundIhrenEingegangenenGebietsIDs Neuer Wert für
+   * @param listMitGGundIhrenEingegangenenGebietsIDs Neuer Wert fï¿½r
    *          listMitGGundIhrenEingegangenenGebietsIDs.
    */
   public void setListMitGGundIhrenEingegangenenGebietsIDs(Map<String, List<Serializable>> listMitGGundIhrenEingegangenenGebietsIDs) {

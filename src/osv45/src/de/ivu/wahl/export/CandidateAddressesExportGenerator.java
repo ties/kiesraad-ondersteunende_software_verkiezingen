@@ -1,6 +1,6 @@
 /*
  * Created on 30.08.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.export;
 
@@ -101,6 +101,7 @@ public class CandidateAddressesExportGenerator {
     }
     // Removed because of OSV-1009, re-introduce for OSV-1203
     table.add(Messages.getString(MessageKeys.CandidateExportGenerator_publishGender));
+    table.add(Messages.getString(MessageKeys.CandidateExportGenerator_publicationLanguage));
 
     table.add(Messages.getString(MessageKeys.CandidateExportGenerator_positionOnList)); // 1.
     table.add(Messages.getString(MessageKeys.CandidateExportGenerator_lastname));
@@ -151,6 +152,9 @@ public class CandidateAddressesExportGenerator {
     } else {
       table.add(NO);
     }
+
+    // 6. publicationLanguage
+    table.add(candidateList.getListe().getPublicationLanguage());
   }
 
   private String getPoliticalGroupName(GruppeGebietsspezifisch x) {
@@ -203,7 +207,8 @@ public class CandidateAddressesExportGenerator {
     table.add(nullSafe(person.getLand()));
 
     // 7. gender (m or v or f or -)
-    table.add(PersonendatenKonstanten.Geschlecht.getName(person.getGeschlecht()));
+    table.add(PersonendatenKonstanten.Geschlecht.getName(person.getGeschlecht(), candidate
+        .getListe().getPublicationLanguage()));
 
     // 8. VOID !!! date of birth (in the format "dd-mm-yyyy")
 

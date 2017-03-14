@@ -1,7 +1,7 @@
 /*
  * ObjectArrayContentProvider
  * 
- * Created on Nov 19, 2008 Copyright (c) 2008 IVU Traffic Technologies AG
+ * Created on Nov 19, 2008 Copyright (c) 2008 Kiesraad
  */
 
 package de.ivu.wahl.wus.utils.ui.provider;

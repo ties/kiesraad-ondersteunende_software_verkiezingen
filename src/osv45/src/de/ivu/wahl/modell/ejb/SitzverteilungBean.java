@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * SitzverteilungBean
  *
- * @author cos@ivu.de  (c) 2003-5 IVU Traffic Technologies AG
+ * @author cos@ivu.de  (c) 2003-5 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import java.sql.SQLException;

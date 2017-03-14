@@ -56,4 +56,9 @@ public class ImportClient extends AbstractImportClient {
   protected void setParentRegionName(String parentRegionName) throws ImportException {
     // Do nothing
   }
+
+  @Override
+  protected void setElectioalDistrictNameAndNumber(String value, String idElterngebiet) {
+    // Do nothing
+  }
 }

@@ -2,7 +2,7 @@
  * ReportGeneratorTest
  * 
  * Created on 19.11.2008
- * Copyright (c) 2008 IVU Traffic Technologies AG
+ * Copyright (c) 2008 Kiesraad
  */
 package de.ivu.wahl.wus.reportgen;
 
@@ -68,7 +68,6 @@ public class ReportGeneratorTest {
 
     program = 3;
     src = DefaultXmlSourceProvider.instance.getDomXmlSource(program, blanko);
-    create3Formats(src, ReportTemplateEnum.OSV3_1, timestamp, isDraft, openDocumentViewer, program);
     create3Formats(src, ReportTemplateEnum.OSV3_2, timestamp, isDraft, openDocumentViewer, program);
     create3Formats(src, ReportTemplateEnum.OSV3_4, timestamp, isDraft, openDocumentViewer, program);
 
@@ -146,7 +145,6 @@ public class ReportGeneratorTest {
         eml230bNameComponents.setElectionCategory(ElectionCategory.EP);
         eml230bNameComponents.setElectionSubcategory(ElectionSubcategory.EP);
         eml230bNameComponents.setElectionIdentifier("EP2009");
-        eml230bNameComponents.setElectionDomain(null);
         eml230bNameComponents.setElectoralDistrict("Limburg");
         reportNameComponents = eml230bNameComponents;
       }
@@ -176,20 +174,17 @@ public class ReportGeneratorTest {
     if (program == 1) {
       ReportNameComponentsP1 result = new ReportNameComponentsP1();
       result.setElectionIdentifier("EP2009");
-      result.setElectionDomain(null);
       result.setListName("Hermans Lijst");
       result.setSubmitterName("\u0106osi\u0107");
       return result;
     } else if (program == 2) {
       ReportNameComponentsP2 result = new ReportNameComponentsP2();
       result.setElectionIdentifier("EP2009");
-      result.setElectionDomain(null);
       result.setElectoralDistrict("Limburg");
       return result;
     } else if (program == 3) {
       ReportNameComponentsP3 result = new ReportNameComponentsP3();
       result.setElectionIdentifier("EP2009");
-      result.setElectionDomain(null);
       return result;
     } else {
       ReportNameComponentsP4 result = new ReportNameComponentsP4(true);

@@ -2,7 +2,7 @@
  * MessageKeys
  * 
  * Created on 05.01.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.i18n;
 
@@ -130,6 +130,7 @@ public class MessageKeys {
   public static final String ERROR_DieDateiIstZuGross_0 = "ERROR_DieDateiIstZuGross_0"; //$NON-NLS-1$
   public static final String ERROR_UpdateSchlugFehl = "ERROR_UpdateSchlugFehl"; //$NON-NLS-1$
   public static final String Error_IllegalInputModus_0 = "Error_IllegalInputModus_0"; //$NON-NLS-1$
+  public static final String Error_IllegalColorValue = "Error_IllegalColorValue"; //$NON-NLS-1$
 
   // Export failed
   public static final String Error_CandidateAddress_KonnteNichtExportiertWerden = "Error_CandidateAddress_KonnteNichtExportiertWerden"; //$NON-NLS-1$
@@ -148,6 +149,8 @@ public class MessageKeys {
   public static final String Error_Referendum_KonnteNichtExportiertWerden = "Error_Referendum_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_T11_KonnteNichtExportiertWerden = "Error_T11_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_U16_KonnteNichtExportiertWerden = "Error_U16_KonnteNichtExportiertWerden"; //$NON-NLS-1$
+  public static final String Error_OSV4_6_KonnteNichtExportiertWerden = "Error_OSV4_6_KonnteNichtExportiertWerden"; //$NON-NLS-1$
+  public static final String Error_WRR83_KonnteNichtExportiertWerden = "Error_WRR83_KonnteNichtExportiertWerden"; //$NON-NLS-1$
 
   public static final String Error_0_mussEingetragenWerden = "Error_0_mussEingetragenWerden"; //$NON-NLS-1$" 
   public static final String Msg_ReportdateienErfolgreichExportiert_0 = "Msg_ReportdateienErfolgreichExportiert_0"; //$NON-NLS-1$ 
@@ -302,6 +305,7 @@ public class MessageKeys {
   public static final String Error_FehlerBeimSchreibenDesKonfliktes = "Error_FehlerBeimSchreibenDesKonfliktes"; //$NON-NLS-1$
   public static final String Error_FehlerBeimHolenDesListenkandidaten = "Error_FehlerBeimHolenDesListenkandidaten"; //$NON-NLS-1$
   public static final String Logger_AutomatischesAbmeldenNachTimeout_AnwenderID = "Logger_AutomatischesAbmeldenNachTimeout_AnwenderID"; //$NON-NLS-1$
+  public static final String Logger_GebieteEntsperrtNachAutomatischemAbmelden = "Logger_GebieteEntsperrtNachAutomatischemAbmelden"; //$NON-NLS-1$
   public static final String Error_FehlerBeimAufloesenDerSession = "Error_FehlerBeimAufloesenDerSession"; //$NON-NLS-1$
   public static final String Logger_AnwenderContextGefundenFuerAnwenderMitDerID = "Logger_AnwenderContextGefundenFuerAnwenderMitDerID"; //$NON-NLS-1$
   public static final String Msg_KonnteRechteDesAnwendersNichtLesen = "Msg_KonnteRechteDesAnwendersNichtLesen"; //$NON-NLS-1$
@@ -406,11 +410,14 @@ public class MessageKeys {
   public static final String Error_StimmenAufPosition_0_Listenplatz_1 = "Error_StimmenAufPosition_0_Listenplatz_1"; //$NON-NLS-1$
   public static final String Error_AnzahlDerWaehlerMussKleinerOderGleichDerAnzahlDerWahlberechtigtenSein = "Error_AnzahlDerWaehlerMussKleinerOderGleichDerAnzahlDerWahlberechtigtenSein"; //$NON-NLS-1$
   public static final String Msg_ausGueltigenUngueltigenUndLeerenStimmen = "Msg_ausGueltigenUngueltigenUndLeerenStimmen"; //$NON-NLS-1$
+  public static final String Msg_ausDenReferendumOptionenUngueltigenUndLeerenStimmen = "Msg_ausDenReferendumOptionenUngueltigenUndLeerenStimmen"; //$NON-NLS-1$
   public static final String Msg_ausElectionNoticesUndProxyVotersUndPollingCards = "Msg_ausElectionNoticesUndProxyVotersUndPollingCards"; //$NON-NLS-1$
+  public static final String Msg_ausElectionNoticesUndProxyVoters = "Msg_ausElectionNoticesUndProxyVoters"; //$NON-NLS-1$
   public static final String Error_unsupposedMoreValidVotesThanAdmittedVoters_PSB_0_1 = "Error_unsupposedMoreValidVotesThanAdmittedVoters_PSB_0_1"; //$NON-NLS-1$
   public static final String Error_unsupposedLessValidVotesThanAdmittedVoters_PSB_0_1 = "Error_unsupposedLessValidVotesThanAdmittedVoters_PSB_0_1"; //$NON-NLS-1$
   public static final String Error_unsupposedMoreValidVotesThanAdmittedVoters = "Error_unsupposedMoreValidVotesThanAdmittedVoters"; //$NON-NLS-1$
   public static final String Error_unsupposedLessValidVotesThanAdmittedVoters = "Error_unsupposedLessValidVotesThanAdmittedVoters"; //$NON-NLS-1$
+  public static final String Error_validVotesNotEqualToAdmittedVoters = "Error_validVotesNotEqualToAdmittedVoters"; //$NON-NLS-1$
   public static final String Error_DieAnzahlDerWahlberechtigtenIst20ProzentHoeherAlsDerSchwellwert_SchwellwertPlus20Prozent_0 = "Error_DieAnzahlDerWahlberechtigtenIst20ProzentHoeherAlsDerSchwellwert_SchwellwertPlus20Prozent_0"; //$NON-NLS-1$
   public static final String Error_DasFeldFuerDieAnzahlDer_0_MussEineNichtNegativeGanzeZahlEnthalten = "Error_DasFeldFuerDieAnzahlDer_0_MussEineNichtNegativeGanzeZahlEnthalten"; //$NON-NLS-1$
   public static final String Logger_FehlerhafterEingang = "Logger_FehlerhafterEingang"; //$NON-NLS-1$
@@ -461,11 +468,13 @@ public class MessageKeys {
 
   public static final String Msg_AuthorityIdentifier = "Msg_AuthorityIdentifier"; //$NON-NLS-1$
   public static final String Msg_CandidateName = "Msg_CandidateName"; //$NON-NLS-1$
+  public static final String Msg_Answer = "Msg_Answer"; //$NON-NLS-1$
   public static final String Msg_ElectionDate = "Msg_ElectionDate"; //$NON-NLS-1$
   public static final String Msg_ElectionDomain = "Msg_ElectionDomain"; //$NON-NLS-1$
   public static final String Msg_ElectionName = "Msg_ElectionName"; //$NON-NLS-1$
   public static final String Msg_ListName = "Msg_ListName"; //$NON-NLS-1$
   public static final String Msg_ListNumber = "Msg_ListNumber"; //$NON-NLS-1$
+  public static final String Msg_QuestionNumber = "Msg_QuestionNumber"; //$NON-NLS-1$
   public static final String Msg_PositionOnList = "Msg_PositionOnList"; //$NON-NLS-1$
   public static final String Msg_Total = "Msg_Total"; //$NON-NLS-1$
 
@@ -493,6 +502,7 @@ public class MessageKeys {
   public static final String CandidateExportGenerator_positionOnList = "CandidateExportGenerator_positionOnList"; //$NON-NLS-1$
   public static final String CandidateExportGenerator_postcode = "CandidateExportGenerator_postcode"; //$NON-NLS-1$
   public static final String CandidateExportGenerator_publishGender = "CandidateExportGenerator_publishGender"; //$NON-NLS-1$
+  public static final String CandidateExportGenerator_publicationLanguage = "CandidateExportGenerator_publicationLanguage"; //$NON-NLS-1$
   public static final String CandidateExportGenerator_street = "CandidateExportGenerator_street"; //$NON-NLS-1$
   public static final String CandidateExportGenerator_subtitle = "CandidateExportGenerator_subtitle"; //$NON-NLS-1$
   public static final String CandidateExportGenerator_title = "CandidateExportGenerator_title"; //$NON-NLS-1$

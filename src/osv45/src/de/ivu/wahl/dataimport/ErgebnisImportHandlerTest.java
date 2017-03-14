@@ -2,7 +2,7 @@
  * ErgebnisImportHandlerTest
  * 
  * Created on 06.02.2009
- * Copyright (c) 2009 IVU Traffic Technologies AG
+ * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -153,8 +153,12 @@ public class ErgebnisImportHandlerTest implements ErgebnisImportHandler {
     int anzUngueltige = adapter.getXml(resultNode, GruppeAllgemein.UNGUELTIGE);
     int anzLeere = adapter.getXml(resultNode, GruppeAllgemein.LEER);
     int anzWaehler = anzGueltige + anzUngueltige + anzLeere;
+    int anzGueltigOderLeer = anzGueltige + anzLeere;
+
     if (!isWurzelgebiet) {
       gesamtstimmen.addGruppenstimmen(GruppeAllgemein.WAEHLER.schluessel, anzWaehler);
+      gesamtstimmen.addGruppenstimmen(GruppeAllgemein.GUELTIG_ODER_LEER.schluessel,
+          anzGueltigOderLeer);
     }
 
     // Admitted voters
@@ -162,7 +166,7 @@ public class ErgebnisImportHandlerTest implements ErgebnisImportHandler {
     // Explaining the difference between admitted voters and counted votes
     Iterable<GruppeAllgemein> gruppen = adapter.getGruppenAllgemein();
     for (GruppeAllgemein gruppeAllgemein : gruppen) {
-      int value = adapter.getXmlOr0(resultNode, gruppeAllgemein);
+      int value = adapter.getFromEmlOr0(resultNode, gruppeAllgemein);
       if (!isWurzelgebiet) {
         gesamtstimmen.addGruppenstimmen(gruppeAllgemein.schluessel, value);
       }

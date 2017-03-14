@@ -2,7 +2,7 @@
  * GeneralVotingResults
  * 
  * Created on 05.02.2010
- * Copyright (c) 2010 IVU Traffic Technologies AG
+ * Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.modell.etc;
 
@@ -32,7 +32,7 @@ public class GeneralVotingResults {
   }
 
   public Integer getVotes(GruppeAllgemein generalGroup) {
-    return generalResults.get(generalGroup.position);
+    return generalResults.get(generalGroup.getPosition());
   }
 
 }

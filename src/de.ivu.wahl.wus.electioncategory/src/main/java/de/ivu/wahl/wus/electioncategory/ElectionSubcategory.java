@@ -2,7 +2,7 @@
  * ElectionSubcategory
  * 
  * Created on 03.04.2009
- * Copyright (c) 2009-2013 IVU Traffic Technologies AG
+ * Copyright (c) 2009-2013 Kiesraad
  */
 package de.ivu.wahl.wus.electioncategory;
 
@@ -23,6 +23,12 @@ public enum ElectionSubcategory {
 
   /** Provinciale Staaten with one electoral district */
   PS1(ElectionCategory.PS),
+
+  /** Waterschapsverkiezing with 19 or more members */
+  AB2(ElectionCategory.AB),
+
+  /** Waterschapsverkiezing with less than 19 members */
+  AB1(ElectionCategory.AB),
 
   /** Gemeenteraad with 19 or more members */
   GR2(ElectionCategory.GR),

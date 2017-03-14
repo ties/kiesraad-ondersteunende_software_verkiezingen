@@ -9,6 +9,7 @@
 <%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
+<%@ page import="de.ivu.wahl.client.beans.Command"%>
 <%@ page import="java.util.Collection"%>
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Comparator"%>
@@ -25,12 +26,15 @@
 <jsp:useBean id="impBean" scope="session" class="de.ivu.wahl.client.beans.WahlImportBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "admStimmbez"; //$NON-NLS-1$
+
     WahlInfo wahlInfo = WahlInfo.getWahlInfo();
     
     boolean newSBs = true;
     int work = ClientHelper.getWork(request, -1);
     if (work != -1) {
-        if (work == ApplicationBeanKonstanten.ADM_STIMMBEZIRKE_EDIT) {
+        if (Command.ADM_STIMMBEZIRKE_EDIT.hasId(work)) {
             newSBs = false; 
         }
     }
@@ -141,9 +145,7 @@
             </div>
         </div>
         <div id="trans">
-  <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-            <ivu:help key="admStimmbez"/>
-  </div>
+  <%@include file="/jsp/fragments/help_div.jspf"%>
   <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
    &nbsp;
   </div>

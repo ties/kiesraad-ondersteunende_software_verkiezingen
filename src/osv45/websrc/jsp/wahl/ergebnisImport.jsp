@@ -18,6 +18,9 @@
 <jsp:useBean id="ergImpBean" scope="session" class="de.ivu.wahl.client.beans.ErgebnisImportBean" />
 
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "ergImp"; //$NON-NLS-1$
+
 GebietsBaum gebietsBaum = appBean.getGebietsBaum();
 GebietInfo rootInfo = (GebietInfo)gebietsBaum.getWurzel().getUserObject();
 int level = ClientHelper.getLevel(request, rootInfo.getGebietsart());
@@ -31,7 +34,6 @@ SystemInfo systemInfo = SystemInfo.getSystemInfo();
 String breite = "100%";
 
 boolean isReferendum = wahlInfo.isReferendum();
-String helpKey = "ergImp";
 if (isReferendum) {
    helpKey = "ergImpRef";
 }
@@ -48,6 +50,7 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
 <%= BundleHelper.getBundleString("Ergebnisse_importieren_titel_" + messageKeySuffix) %>
 </c:set>
 <html>
+   <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
     <head>
         <title>${titel}</title>
         <script>
@@ -89,9 +92,7 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
         </div>
     </div>
     <div id="trans">
-        <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-            <ivu:help key="<%=helpKey%>"/>
-        </div>
+        <%@include file="/jsp/fragments/help_div.jspf"%>
         <div class="hgschwarz"
             style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;

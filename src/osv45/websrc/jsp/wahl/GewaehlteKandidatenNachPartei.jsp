@@ -12,6 +12,7 @@
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatInfo"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean"%>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.beans.NavigationBean"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
@@ -24,7 +25,7 @@
  *******************************************************************************
  * Namesliste alphabetisch geordnet
  *
- * author:  mur@ivu.de  Copyright (c) 2009 IVU Traffic Technologies AG
+ * author:  mur@ivu.de  Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
@@ -32,6 +33,9 @@
 <jsp:useBean id="appBean" scope="session"
     class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%
+String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+String helpKey = "gewKandPartei"; //$NON-NLS-1$
+
   WahlInfo wahlInfo = appBean.getWahlInfo();
   String id_ergebniseingang = wahlInfo.getWahl().getWurzelgebiet().getID_LetzterEingang();
   
@@ -73,9 +77,7 @@ if   (appBean.isIE  ()) { //%> body {
 </style>
     </head>
     <body class="hghell">
-        <div class="hgeeeeee" style="height: 14px; width: 100%;" align="right">
-            <a name="oben" href="javascript:window.print()" style="text-decoration: none;" id="oben"><span class="linkdklrot"><img src="<%= request.getContextPath() %>/img/icon/drucken.gif" alt="" border="0" height="9" width="24"><ivu:int key="SeiteDrucken"/></span></a><ivu:help key="gewKandPartei"/>
-        </div>
+        <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>
@@ -135,7 +137,7 @@ if   (appBean.isIE  ()) { //%> body {
                                                                         </td>
                                                                         <td>
                                                                             <%
-                                                                            String url = "/osv?" + ApplicationBeanKonstanten.WORK +"=" + ApplicationBeanKonstanten.AUSW_SITZVERTEILUNG_GEBIET+"&"+ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                                                            String url = "/osv?" + ClientHelper.workIs(Command.AUSW_SITZVERTEILUNG_GEBIET) + "&"+ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                                                             %>
                                                                             <ivu:form action="<%= url %>">
                                                                                 <ivu:int key="wechseln_zu_sitzverteilungsansicht"/>&nbsp;&nbsp;&nbsp;<input type="submit" id="box2" value="<%= ClientHelper.getBundleString("wechseln_zu_sitzverteilungsansicht_button") %>">
@@ -229,7 +231,7 @@ if   (appBean.isIE  ()) { //%> body {
                                                                                             <%= kandidatInfo.getUrspruenglicherListenplatz() %>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%= kandidatInfo.getPraefix() %> <%= nachname %>, <%= kandidatInfo.getInitialen() %> <%= kandidatInfo.isGeschlechtSichtbar() ? "("+PersonendatenKonstanten.Geschlecht.getName(kandidatInfo.getGeschlecht()) +")" : ""%><%= kandidatInfo.isBevorzugtGewaehlt() ?  "<b>&nbsp;*</b>" : ""%>
+                                                                                            <%= kandidatInfo.getPraefix() %> <%= nachname %>, <%= kandidatInfo.getInitialen() %><%=kandidatInfo.displayGeschlecht()%><%= kandidatInfo.isBevorzugtGewaehlt() ?  "<b>&nbsp;*</b>" : ""%>
                                                                                         </td>
                                                                                         <td>
                                                                                             <%= kandidatInfo.getWohnort() %> <%= kandidatInfo.getLand() %>

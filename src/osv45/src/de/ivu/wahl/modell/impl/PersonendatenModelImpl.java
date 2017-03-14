@@ -3,8 +3,8 @@ package de.ivu.wahl.modell.impl;
 /**
  * PersonendatenModelImpl
  *
- * @author cos@ivu.de  (c) 2003-7 IVU Traffic Technologies AG
- * @version $Id$
+ * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+
  */
 
 import org.apache.log4j.Category;
