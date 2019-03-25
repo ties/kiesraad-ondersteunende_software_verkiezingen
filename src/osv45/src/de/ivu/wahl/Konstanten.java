@@ -20,11 +20,11 @@ import de.ivu.wahl.util.BundleHelper;
 
 public interface Konstanten {
   /** Version des Wahlabwicklungssystems */
-  String VERSION_P4 = "2.23.5"; //$NON-NLS-1$
-  String VERSION_P5 = "2.23.5"; //$NON-NLS-1$
+  String VERSION_P4 = "2.23.6"; //$NON-NLS-1$
+  String VERSION_P5 = "2.23.6"; //$NON-NLS-1$
 
   /** Datum aus dem CVS (beim Einchecken vergeben) */
-  String CVS_DATUM = "$Date: 2019-02-12 15:15:21 +0100 (Di, 12. Feb 2019) $"; //$NON-NLS-1$
+  String CVS_DATUM = "$Date: 2019-02-16 17:58:52 +0100 (Sa, 16. Feb 2019) $"; //$NON-NLS-1$
 
   /** Aus CVS_DATUM automatisch gebildetes Datum in normaler Schreibweise */
   String DATUM = CVS_DATUM.substring(15, 17) + '.' + CVS_DATUM.substring(12, 14) + '.'
