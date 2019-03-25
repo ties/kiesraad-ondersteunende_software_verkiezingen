@@ -27,10 +27,9 @@ import de.ivu.wahl.modell.ejb.Gebiet;
  * them can be replaced by the other. To my (JON, 24-11-2009) knowledge, {@link GesamtstimmenImpl}
  * is better in performance.
  * 
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class ResultSummary {
-  private static final long serialVersionUID = -6529062328338123485L;
 
   private Collection<Gebiet> _gebiete = new ArrayList<Gebiet>();
   private final SortedSet<PartyWithCandidates> _gruppenMitKandidaten = new TreeSet<PartyWithCandidates>();

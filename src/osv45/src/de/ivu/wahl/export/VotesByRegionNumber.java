@@ -16,7 +16,7 @@ import de.ivu.wahl.modell.ejb.service.VoteValues;
  * Utility class to store the votes of a candidate, list, group or whatever per region. The regions
  * are sorted by region number. For EK elections, automatic weighting of the votes is supported.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class VotesByRegionNumber {
   private final SortedMap<Integer, Integer> votesMap;

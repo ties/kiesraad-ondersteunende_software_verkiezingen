@@ -26,7 +26,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 /**
  * Kleine Hilfsmethoden f�r das Parsen von XML �ber DOM
  * 
- * @author klie@ivu.de Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author P. Kliem Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public abstract class XMLImportHelper {

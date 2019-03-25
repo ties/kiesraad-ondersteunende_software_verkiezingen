@@ -3,7 +3,7 @@
  * basis
  * JSP-Seite enthält das Frameset des Basis-Systems
  *
- * author:  mur@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: basis.jsp,v 1.19 2010/11/19 09:45:18 jon Exp $
  *******************************************************************************
  --%>
@@ -24,6 +24,7 @@
   <link rel='icon' href='<c:url value="/FAVICON.ICO"/>' type='image/ico'>
   <title><%=SystemInfo.getSystemInfo().getEbenenklartextTitel() %> (<%=SystemInfo.getSystemInfo().getModusklartext() %>) <%=appBean.getWahlName()%></title>
  </head>
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
    response.setCharacterEncoding(Konstanten.ENCODING);
    if (appBean.getAnwContext() == null) { //

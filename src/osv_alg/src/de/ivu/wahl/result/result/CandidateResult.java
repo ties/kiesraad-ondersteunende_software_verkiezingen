@@ -17,7 +17,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * A CandidateResult belongs to a candidate and a P2List. It contains all information about the
  * election result with respect to this candidate on this P2List.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CandidateResult {
   public static Comparator<CandidateResult> BY_OLD_POSITION = new Comparator<CandidateResult>() {
@@ -156,7 +156,7 @@ public class CandidateResult {
    * ANOTHER_P2_LIST means that the candidate was elected on another P2-list of the same P3-list. If
    * the candidate was elected on another P3-list, the value is NOWHERE.
    * 
-   * @author jon@ivu.de, IVU Traffic Technologies AG
+   * @author J. Nottebaum, IVU Traffic Technologies AG
    */
   public enum Elected {
     HERE("(**)"), ANOTHER_P2_LIST("(*)"), NOWHERE(""), DEAD(""), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ 

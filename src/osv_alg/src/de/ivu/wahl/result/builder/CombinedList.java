@@ -20,7 +20,7 @@ import de.ivu.wahl.result.i18n.Messages;
 /**
  * A combined list as submitted (i.e. independent of the election result).
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CombinedList implements DrawingLotsAlternative {
   private final Object externalKey;

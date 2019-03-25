@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  * methods it contains methods for creation of unique step IDs, and for cleanup of older steps in
  * order to reduce consumed resources.
  * 
- * @author Dr. Domagoj Cosic (cos@ivu.de)
+ * @author Dr. Domagoj Cosic (D. Cosic)
  * @created 23. Mai 2001
  */
 public class SessionHandler implements SessionState, HttpSessionBindingListener {
@@ -138,8 +138,8 @@ public class SessionHandler implements SessionState, HttpSessionBindingListener 
   /**
    * Creates a new Step object which is a blueprint of the Step object corresponding to the given
    * unique ID. If the current step ID is <CODE>
-    *  null </CODE> , an empty step is returned. If the step
-   * identified by a non <CODE> null</CODE> ID cannot be found, a SessionStepException is thrown.
+   *  null </CODE> , an empty step is returned. If the step identified by a non <CODE> null</CODE>
+   * ID cannot be found, a SessionStepException is thrown.
    * 
    * @param currentStepId the unique ID of the received current step.
    * @return the new step object.

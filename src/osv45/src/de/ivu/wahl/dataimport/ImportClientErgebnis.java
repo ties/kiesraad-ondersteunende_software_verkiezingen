@@ -25,12 +25,13 @@ import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.modell.Gesamtstimmen;
 import de.ivu.wahl.modell.GesamtstimmenImpl;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
+import de.ivu.wahl.modell.Plus;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.util.XMLImportHelper;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class ImportClientErgebnis {
   private static final Category LOGGER = Log4J.configure(ImportClientErgebnis.class);
@@ -133,13 +134,13 @@ public class ImportClientErgebnis {
 
         gruppe = startNewGroup(selectionNode);
         anzKandidaten = 0;
-        gesamtstimmenGebiet += gruppe.getGesamtstimmenGruppe();
+        gesamtstimmenGebiet = Plus.plus(gesamtstimmenGebiet, gruppe.getGesamtstimmenGruppe(), true);
 
         // Save total votes for the party
         _importHandler.addStimmen(gebiet,
             gruppe.getSchluessel(),
             null,
-            gruppe.getGesamtstimmenGruppe());
+            Plus.truncate(gruppe.getGesamtstimmenGruppe(), true));
       } else if (hasCandidates) {
         anzKandidaten++;
         internalReadRegionResults(gebiet, gruppe, selectionNode);
@@ -184,8 +185,8 @@ public class ImportClientErgebnis {
               gruppe.getSchluessel(),
               gebiet.getBezeichnung()));
     }
-    int stimmen = XMLImportHelper.getIntValue(selectionNode
-        .getFirstChildElement(XMLTags.EML_VALID_VOTES, NS_EML));
+    int stimmen = Plus.truncate(XMLImportHelper.getIntValue(selectionNode
+        .getFirstChildElement(XMLTags.EML_VALID_VOTES, NS_EML)), true);
     gruppe.subtract(stimmen);
     _gesamtstimmen.addKandidatenstimmen(gruppe.getSchluessel(),
         listenplatz,
@@ -289,8 +290,8 @@ public class ImportClientErgebnis {
       kandidatIdent = shortCode;
     }
 
-    int stimmen = XMLImportHelper.getIntValue(ergebnis
-        .getFirstChildElement(XMLTags.EML_VALID_VOTES, NS_EML));
+    int stimmen = Plus.truncate(XMLImportHelper.getIntValue(ergebnis
+        .getFirstChildElement(XMLTags.EML_VALID_VOTES, NS_EML)), true);
     if (_importHandler.checkConsistency()) {
       gruppe.subtract(stimmen);
       int stimmenVgl = gesamtstimmen.getStimmen(gruppe.getSchluessel(), listenplatz, shortCode);
@@ -376,7 +377,8 @@ public class ImportClientErgebnis {
     GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
 
     // Persons entitled to vote
-    int anzWahlberechtigte = adapter.getXml(totalVotes, GruppeAllgemein.WAHLBERECHTIGTE);
+    int anzWahlberechtigte = Plus.truncate(adapter.getXml(totalVotes,
+        GruppeAllgemein.WAHLBERECHTIGTE), true);
     int summeRegionalerWahlberechtigter = gesamtstimmen
         .getGruppenstimmen(GruppeAllgemein.WAHLBERECHTIGTE.schluessel);
     if (anzWahlberechtigte != summeRegionalerWahlberechtigter) {
@@ -388,24 +390,26 @@ public class ImportClientErgebnis {
     }
 
     // Number of votes
-    int anzGueltige = adapter.getXml(totalVotes, GruppeAllgemein.GUELTIGE);
-    if (anzGueltige != gesamtstimmen.getGruppenstimmen(GruppeAllgemein.GUELTIGE.schluessel)) {
+    int anzGueltige = Plus.truncate(adapter.getXml(totalVotes, GruppeAllgemein.GUELTIGE), true);
+    int summeDerRegionalstimmen = gesamtstimmen
+        .getGruppenstimmen(GruppeAllgemein.GUELTIGE.schluessel);
+    if (anzGueltige != summeDerRegionalstimmen) {
       throw new ImportException(
           Messages
               .bind(MessageKeys.Error_SummeDerRegionalstimmen_0_EntsprichtNichtAnzahlWaehlerInDatei_1,
-                  gesamtstimmen.getGruppenstimmen(GruppeAllgemein.GUELTIGE.schluessel),
+                  summeDerRegionalstimmen,
                   anzGueltige));
     }
 
     // Invalid votes
-    int anzUngueltige = adapter.getXml(totalVotes, GruppeAllgemein.UNGUELTIGE);
+    int anzUngueltige = Plus.truncate(adapter.getXml(totalVotes, GruppeAllgemein.UNGUELTIGE), true);
     if (anzUngueltige != gesamtstimmen.getGruppenstimmen(GruppeAllgemein.UNGUELTIGE.schluessel)) {
       throw new ImportException(
           Messages.bind(MessageKeys.Error_SummeDerOngeldigRegionalstimmen_0_EntsprichtNicht_1,
               GruppeAllgemein.UNGUELTIGE.getName(),
               anzUngueltige));
     }
-    int anzLeere = adapter.getXml(totalVotes, GruppeAllgemein.LEER);
+    int anzLeere = Plus.truncate(adapter.getXml(totalVotes, GruppeAllgemein.LEER), true);
     if (anzLeere != gesamtstimmen.getGruppenstimmen(GruppeAllgemein.LEER.schluessel)) {
       throw new ImportException(
           Messages
@@ -413,7 +417,7 @@ public class ImportClientErgebnis {
                   GruppeAllgemein.LEER.getName(),
                   anzLeere));
     }
-    int anzWaehler = anzGueltige + anzUngueltige + anzLeere;
+    int anzWaehler = Plus.plus(anzGueltige, anzUngueltige, anzLeere, true);
     if (anzWaehler != gesamtstimmen.getGruppenstimmen(GruppeAllgemein.WAEHLER.schluessel)) {
       throw new ImportException(
           Messages.bind(MessageKeys.Error_SummeDerRegionalstimmen_0_1_EntsprichtNicht_2,
@@ -431,7 +435,7 @@ public class ImportClientErgebnis {
     Element listIdentifier = selectionNode.getFirstChildElement(XMLTags.EML_LISTEN_IDENTIFIER,
         NS_EML);
     int schluessel = XMLImportHelper.getAttributeIntValue(listIdentifier, XMLTags.ATTR_EML_ID);
-    return new Gruppe(schluessel, gesamtstimmenGruppe);
+    return new Gruppe(schluessel, Plus.truncate(gesamtstimmenGruppe, true));
   }
 
   /**

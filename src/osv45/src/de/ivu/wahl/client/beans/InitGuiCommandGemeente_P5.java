@@ -11,7 +11,7 @@ import java.util.Map;
 import de.ivu.wahl.modell.WahlModel;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class InitGuiCommandGemeente_P5 extends InitGuiCommandGR_DR_P5
     implements

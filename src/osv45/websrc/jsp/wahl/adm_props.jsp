@@ -4,7 +4,8 @@
  * Arbeits-JSP für die Administration von Properties. Dies sind insbesondere auch die
  * für Ausgaben und Eingaben verwendeten Verzeichnisse.
  *
- * author:  klie@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  P. Kliem M. Murdfield D. Cosic  
+ * Copyright (c) 2002-17 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_props.jsp,v 1.25 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -13,7 +14,6 @@
 <jsp:directive.page import="de.ivu.wahl.Konstanten" />
 <jsp:directive.page import="de.ivu.wahl.Basiseinstellung"/>
 <jsp:directive.page import="de.ivu.wahl.client.util.GUICommand"/>
-<jsp:directive.page import="java.util.Map.Entry"/>
 <jsp:directive.page import="java.util.List"/>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.i18n.Messages"%>
@@ -25,10 +25,12 @@
 <%@ page errorPage="/jsp/MainErrorPage.jsp"  %>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
-   String breite = "100%";
-   int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0);
+   String breite = "100%"; //$NON-NLS-1$
+   String prefix = ApplicationBeanKonstanten.PREFIX;
+   int subwork = ClientHelper.getIntParameter(request.getParameter(prefix + "subwork"), 0); //$NON-NLS-1$
    SystemInfo systemInfo = SystemInfo.getSystemInfo();
    WahlInfo wahlInfo = appBean.getWahlInfo();
    boolean freigegeben = appBean.isFreigegeben(wahlInfo.getAktuelleWahlergebnisart());

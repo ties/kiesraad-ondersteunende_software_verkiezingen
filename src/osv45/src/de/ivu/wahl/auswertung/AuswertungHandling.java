@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.GruppeModel;
 import de.ivu.wahl.modell.ejb.Personendaten;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface AuswertungHandling {
   /**

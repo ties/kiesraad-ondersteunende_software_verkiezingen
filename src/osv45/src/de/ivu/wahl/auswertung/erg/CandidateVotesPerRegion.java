@@ -18,7 +18,7 @@ import de.ivu.wahl.modell.ejb.Gebiet;
  * Holds the counted votes of a candidate per region (i.e. for each region). compareTo() sorts by
  * last name of the candidate
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CandidateVotesPerRegion implements Comparable<CandidateVotesPerRegion> {
   static Comparator<CandidateVotesPerRegion> SORT_BY_POSITION_ON_LIST = new Comparator<CandidateVotesPerRegion>() {

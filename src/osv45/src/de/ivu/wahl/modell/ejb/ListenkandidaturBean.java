@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * ListenkandidaturBean
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import static de.ivu.ejb.fw.DBABase.retrieveIDs;
@@ -16,10 +16,7 @@ import java.util.List;
 
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.impl.BasicGruppeDBA;
 import de.ivu.wahl.modell.impl.GruppeGebietsspezifischDBA;
 import de.ivu.wahl.modell.impl.ListeDBA;
@@ -27,12 +24,6 @@ import de.ivu.wahl.modell.impl.ListenkandidaturDBA;
 
 public class ListenkandidaturBean extends BasicListenkandidaturBean {
   private static final long serialVersionUID = 598005195285664717L;
-
-  private static final Category LOGGER = Log4J.configure(ListenkandidaturBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(ListenkandidaturBean.class, Log4J
-        .extractVersion("$Revision: 1.23 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Get the region where the candidature was set

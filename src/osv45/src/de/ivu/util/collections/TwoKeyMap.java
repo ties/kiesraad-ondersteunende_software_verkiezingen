@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * A TwoKeyMap maps each combination of two keys to a single value.
  * 
- * @author jon@ivu.de cos@ivu.de
+ * @author J. Nottebaum D. Cosic
  * @since 03.11.2003
  * @param < K1 > Datentyp des ersten Schl�ssels
  * @param < K2 > Datentyp des zweiten Schl�ssels

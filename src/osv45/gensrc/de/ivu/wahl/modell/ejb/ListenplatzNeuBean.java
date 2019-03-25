@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity ListenplatzNeu as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListenplatzNeuBean extends BMPBeanBase implements EntityBean, ListenplatzNeuModel {
@@ -105,13 +105,13 @@ public class ListenplatzNeuBean extends BMPBeanBase implements EntityBean, Liste
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Ergebniseingang ID of the objects to be searched
+     * @param id_Liste ID of the objects to be searched
      * @return  {@link Collection} of the found ListenplatzNeu-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
+   public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
       try {
-         return ListenplatzNeuDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
+         return ListenplatzNeuDBA.retrieveIDsByID_Liste(id_Liste);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -121,13 +121,13 @@ public class ListenplatzNeuBean extends BMPBeanBase implements EntityBean, Liste
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Liste ID of the objects to be searched
+     * @param id_Ergebniseingang ID of the objects to be searched
      * @return  {@link Collection} of the found ListenplatzNeu-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
+   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
       try {
-         return ListenplatzNeuDBA.retrieveIDsByID_Liste(id_Liste);
+         return ListenplatzNeuDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -213,24 +213,24 @@ public class ListenplatzNeuBean extends BMPBeanBase implements EntityBean, Liste
 
    @Override
    protected void checkRelations() {
-      if (null == _details.getID_Ergebniseingang()) {
-         _ergebniseingang = null;
-         _relchk_Ergebniseingang = true;
-      } else {
-         _relchk_Ergebniseingang = false;
-      }
       if (null == _details.getID_Liste()) {
          _liste = null;
          _relchk_Liste = true;
       } else {
          _relchk_Liste = false;
       }
+      if (null == _details.getID_Ergebniseingang()) {
+         _ergebniseingang = null;
+         _relchk_Ergebniseingang = true;
+      } else {
+         _relchk_Ergebniseingang = false;
+      }
    }
 
    @Override
    protected void resetRelations() {
-      _ergebniseingang = null;
       _liste = null;
+      _ergebniseingang = null;
    }
 
    /**
@@ -323,51 +323,6 @@ public class ListenplatzNeuBean extends BMPBeanBase implements EntityBean, Liste
    }
 
    /**
-     * Relation zu Ergebniseingang
-     */
-   protected Ergebniseingang _ergebniseingang;
-
-   /**
-     * Flag for the validity of the relation Ergebniseingang
-     */
-   protected boolean _relchk_Ergebniseingang = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Ergebniseingang}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Ergebniseingang getErgebniseingang() throws EJBException {
-      if (!_relchk_Ergebniseingang) {
-         if (null == _details.getID_Ergebniseingang()) {
-            _ergebniseingang = null;
-         } else if (null == _ergebniseingang || !_ergebniseingang.getPrimaryKey().equals(_details.getID_Ergebniseingang())) {
-            try {
-               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
-               _ergebniseingang = home.findByPrimaryKey(_details.getID_Ergebniseingang());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Ergebniseingang", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Ergebniseingang = true;
-      }
-      return _ergebniseingang;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Ergebniseingang}
-     *
-     * @param ergebniseingang the corresponding EJBObject
-     */
-   public void setErgebniseingang(Ergebniseingang ergebniseingang) {
-      _ergebniseingang = ergebniseingang;
-      _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
-   }
-
-   /**
      * Relation zu Liste
      */
    protected Liste _liste;
@@ -410,6 +365,51 @@ public class ListenplatzNeuBean extends BMPBeanBase implements EntityBean, Liste
    public void setListe(Liste liste) {
       _liste = liste;
       _details.setID_Liste(liste == null ? null : (String)liste.getPrimaryKey());
+   }
+
+   /**
+     * Relation zu Ergebniseingang
+     */
+   protected Ergebniseingang _ergebniseingang;
+
+   /**
+     * Flag for the validity of the relation Ergebniseingang
+     */
+   protected boolean _relchk_Ergebniseingang = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Ergebniseingang}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Ergebniseingang getErgebniseingang() throws EJBException {
+      if (!_relchk_Ergebniseingang) {
+         if (null == _details.getID_Ergebniseingang()) {
+            _ergebniseingang = null;
+         } else if (null == _ergebniseingang || !_ergebniseingang.getPrimaryKey().equals(_details.getID_Ergebniseingang())) {
+            try {
+               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
+               _ergebniseingang = home.findByPrimaryKey(_details.getID_Ergebniseingang());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Ergebniseingang", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Ergebniseingang = true;
+      }
+      return _ergebniseingang;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Ergebniseingang}
+     *
+     * @param ergebniseingang the corresponding EJBObject
+     */
+   public void setErgebniseingang(Ergebniseingang ergebniseingang) {
+      _ergebniseingang = ergebniseingang;
+      _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
    }
 
    /**

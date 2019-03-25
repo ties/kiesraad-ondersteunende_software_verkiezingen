@@ -14,7 +14,7 @@ import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.modell.ejb.Gebiet;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class InitGuiCommandProv_P5 extends InitGuiCommand_P5 implements ApplicationBeanKonstanten {
 

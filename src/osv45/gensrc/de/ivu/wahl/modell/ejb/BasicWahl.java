@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.WahlModel;
   * Interface for the entity Wahl as Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicWahl extends EJBLocalObject, WahlModel {
@@ -46,21 +46,6 @@ public interface BasicWahl extends EJBLocalObject, WahlModel {
      * @return the corresponding EJBObject
      * @throws EJBException: an error occurred
      */
-   Gebiet getWurzelgebiet() throws EJBException;
-
-   /**
-     * Setting of the associated entity of the type {@link Gebiet}
-     *
-     * @param wurzelgebiet the corresponding EJBObject
-     */
-   void setWurzelgebiet(Gebiet wurzelgebiet);
-
-   /**
-     * Navigation to the associated entity of the type {@link Gebiet}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
    Gebiet getWahlgebiet() throws EJBException;
 
    /**
@@ -69,6 +54,21 @@ public interface BasicWahl extends EJBLocalObject, WahlModel {
      * @param wahlgebiet the corresponding EJBObject
      */
    void setWahlgebiet(Gebiet wahlgebiet);
+
+   /**
+     * Navigation to the associated entity of the type {@link Gebiet}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   Gebiet getWurzelgebiet() throws EJBException;
+
+   /**
+     * Setting of the associated entity of the type {@link Gebiet}
+     *
+     * @param wurzelgebiet the corresponding EJBObject
+     */
+   void setWurzelgebiet(Gebiet wurzelgebiet);
 
    /**
      * Returns the set of entities of the type {@link Ergebniseingang}.

@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+    	xCIL: eXtensible Customer Information Language
+		This is an XML document type definition (DTD) for
+		defining customer information. This DTD helps to define a language that
+		uniquely identifes a Customer. It only enables storing customer-centric
+		information that helps to uniquely identify a customer  
+		A Customer is defined as "A Person" or "An Organisation".
+		An Organisation can be: Company, Institution, School, Club, a group, etc
+		Date of Original Creation of xCIL: 9 May 2001
+		Copyright(c) 2000, OASIS. All Rights Reserved [http://www.oasis-open.org]
+		Contact: Customer Information Quality Technical Committee, OASIS
+		         http://www.oasis-open.org/committees/ciq
+		VERSION: 2.0 (MAJOR RELEASE - Uses V2.0 of xNL and V2.0 of xAL) - Creation Date: 01 May 2002
+		Last Update: 24 July 2002
+		Last Modified by: Ram Kumar
+		Previous Release: V1.4
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+<!--Here xNL & xAL DTDs are defined as external entities.  --> 
+<!-- xNL V2.0: Name Markup Language; xAL V2.0: Address Markup Language -->
+<!ENTITY % xNL SYSTEM "xNL.dtd"> 
+<!ENTITY % xAL SYSTEM "xAL.dtd"> 
+
+<!-- Code : This attribute is used throughout the DTD. This attribute indicates the address element code used by
+            groups like ECCMA, ADIS, UN/PROLST, etc. for postal services  
+-->
+
+<!--Root element to define the unique characteristics of a Customer (Person or Organisation) in detail-->
+<!ELEMENT xCIL (CustomerDetails+)>
+<!--Version: Used by DTD to indicate DTD version -->
+<!ATTLIST xCIL		Version						CDATA #FIXED "2.0"> 
+
+<!--A container for defining the unique characteristics of a customer-->
+<!ELEMENT CustomerDetails (CustomerID*, NameDetails?, AddressDetails*, (OrganisationInfo | PersonInfo)?)>
+<!--CustomerType: Type of customer. Example: Person, organisation, business, club, association, charity, etc.-->
+<!--CustomerDetailsKey: Key identifier for the element for not reinforced references from other elements. 
+						Not required to be unique for the document to be valid, but application may get 
+						confused if not unique. Extend this schema adding unique contraint if needed.-->
+<!ATTLIST CustomerDetails
+	CustomerType CDATA #IMPLIED
+	CustomerDetailsKey CDATA #IMPLIED
+>
+<!-- ***************************************** UNIQUE CUSTOMER ID ********************************* -->
+<!--A UNIQUE CUSTOMER IDENTIFIER-->
+<!ELEMENT CustomerID (#PCDATA)>
+<!--Type: May specify where the ID is applicable. Example:  when the same customer has different 
+		  IDs in different DBs-->
+<!ATTLIST CustomerID
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!-- Reference to eXtensible Name Language to define NAME OF THE CUSTOMER -->
+%xNL; 
+
+<!-- Reference to eXtensible Address Language to define ADDRESS OF THE CUSTOMER -->
+%xAL; 
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++ ORGANISATION AND PERSON ROOT ELEMENT CONTAINERS +++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!-- Container to represent organisation details -->		
+<!ELEMENT OrganisationInfo (FreeTextLine*, Branches?, ContactNumbers?, EmailAddresses?, FinancialAccounts?, 
+							ReferenceContacts?, RegistrationInfo*, Revenue?, SizeInfo?, StockMarkets?, URLs?, 
+							Vehicles?)>
+<!--OrganisationType: Company, Trust, Bank, Society, Club, etc.-->
+<!--OrganisationNature: Commercial, charity, non-commercial, etc.-->
+<!ATTLIST OrganisationInfo
+	OrganisationType CDATA #IMPLIED
+	OrganisationNature CDATA #IMPLIED
+>
+
+<!--Container to represent person details (only customer-centric data)-->
+<!ELEMENT PersonInfo (FreeTextLine*, AgeInfo?, BirthInfo?, ContactNumbers?, CountriesOfResidence?, 
+					  EmailAddresses?, Ethnicity?, FamilyMembers?,FinancialAccounts?, Gender?, Habits?, Hobbies?, 
+					  Incomes?, IDCards?, Languages?, MaritalStatus?, Memberships?, Nationality*, Occupations?, Pagers?, 
+					  Passports?, PhysicalInfo?, PhysicalStatus?, Qualifications?, ReferenceContacts?,  
+					  Religion?, TaxNumber*, URLs?, Vehicles?)>
+<!--PersonType:  PersonType: Adult, Child, Baby, etc.. -->
+<!ATTLIST PersonInfo
+	PersonType CDATA #IMPLIED
+>
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++ ELEMENTS SHARED BY BOTH PERSON AND ORGANISATION ++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!--Use this element to define any data specific to the container element of this element as a free format text-->
+<!ELEMENT FreeTextLine (#PCDATA)>
+<!--Type: Type of data defined as a free format text.  For example if the free format text is 12345678, 
+		  then define what "Type" it is say, a phone number, or a customer ID, etc. -->
+<!ATTLIST FreeTextLine
+	Type CDATA #IMPLIED
+>
+
+<!-- An element to define a number. Eg. Passport number, account number, etc-->
+<!ELEMENT Number	(#PCDATA)>
+<!-- Type: Type of number. For example, area code for telephone -->
+<!ATTLIST Number
+	Type CDATA #IMPLIED>
+	
+<!--  CONTACT NUMBERS (PHONE/FAX/CELL) -->
+<!--A container to define all kinds of telecommunication lines of the customer. 
+	Example: faxes, landlines, mobiles, etc.-->
+<!ELEMENT ContactNumbers (ContactNumber+)>
+<!--Universal telecommunication number structure-->
+<!ELEMENT ContactNumber (FreeTextLine*, CountryCode?, AreaCode*, (Number | (NumberRangeFrom, NumberRangeTo))?, 
+						 Extension?, ContactHours*, Pin*)>
+<!--Type: Type of Contact defined. Example: Telephone, Mobile or Fax-->
+<!--NumberType: Type of contact number. Example: Free Call number, Toll Free number, Residential number, 
+				Business number, etc.-->
+<!--ContactNature: Nature of contact. Example: Business or Personal-->
+<!ATTLIST ContactNumber
+	Type CDATA #IMPLIED
+	NumberType CDATA #IMPLIED
+	ContactNature (Business | Personal) #IMPLIED
+>
+<!--Only clean country code-->
+<!ELEMENT CountryCode (#PCDATA)>
+<!--Only clean area code. Type Attribute example: National Code, City Code, etc-->
+<!ELEMENT AreaCode (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the 
+		  type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST AreaCode
+	Type CDATA #IMPLIED
+>
+<!-- For Number element: Local number or combined with other adjacent elements (+extention or area code +)-->
+<!-- Attribute Type: Extended information if the number includes any of additional pieces such as area code or 
+	 extension -->
+ 
+<!--First number in a corporate range of numbers (numeration plan)-->
+<!ELEMENT NumberRangeFrom (#PCDATA)>
+<!--Last number in a corporate range of numbers (numeration plan)-->
+<!ELEMENT NumberRangeTo (#PCDATA)>
+<!--Only clean extension number-->
+<!ELEMENT Extension (#PCDATA)>
+<!--Time as free text or comments on the contact period. Text can be combined with the attributes-->
+<!ELEMENT ContactHours (#PCDATA)>
+<!--Start: Can be contacted from this time.-->
+<!--End: Can be contacted till this time.-->
+<!--TimeType: 12HR, 24HR, etc.-->
+<!ATTLIST ContactHours
+	Start CDATA #IMPLIED
+	End CDATA #IMPLIED
+	TimeType CDATA #IMPLIED
+>
+<!--Pin-code to access the phone /fax line-->
+<!ELEMENT Pin (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type or put 
+		  some supplementary information, otherwise ignore it.-->
+<!ATTLIST Pin
+	Type CDATA #IMPLIED
+>
+
+<!-- E-MAIL DETAILS -->
+<!--A container to define the email addresses of the customer-->
+<!ELEMENT EmailAddresses (EmailAddress+)>
+<!--Email address details-->
+<!ELEMENT EmailAddress (#PCDATA)>
+<!--Type: Work, home, temporary, etc.-->
+<!ATTLIST EmailAddress
+	Type CDATA #IMPLIED
+>
+ 
+<!-- URL DETAILS --> 
+<!--A container to define the URLs of the customer-->
+<!ELEMENT URLs (URL+)>
+<!ELEMENT URL (#PCDATA)>
+<!--Title: An informative title for  the URL to display.-->
+<!ATTLIST URL
+	Title CDATA #IMPLIED
+>							 
+
+<!--  FINANCIAL ACCOUNT DETAILS -->
+<!--A container to define the financial accounts of the customer-->
+<!ELEMENT FinancialAccounts (FinancialAccount+)>
+<!--Container for a financial account of the customer-->
+<!ELEMENT FinancialAccount (FreeTextLine*, Number?, BranchNumber?, OwnershipInfo?, FinancialInstitutionDetails?, 
+		  AccountBalance?, JoinDate?)>
+<!--Type: Could be savings, cheque, home loan, etc.-->
+<!ATTLIST FinancialAccount
+	Type CDATA #IMPLIED
+>					 
+
+<!-- For Number element: Account number -->
+<!-- Attribute Type:  Use this attribute of any further details to the number has to be mentioned. Else, ignore -->
+
+<!ELEMENT BranchNumber (#PCDATA)>
+<!--Type: Indicates encoding scheme used for defining branch number-->
+<!ATTLIST BranchNumber
+	Type CDATA #IMPLIED
+>
+<!--Container for information about the owners of the account.-->
+<!ELEMENT OwnershipInfo (FreeTextLine*, NameDetails*)>
+<!--OwnershipType: Joint, Individual-->
+<!ATTLIST OwnershipInfo
+	OwnershipType CDATA #IMPLIED
+>
+<!--Container for information about the financial institution-->
+<!ELEMENT FinancialInstitutionDetails (FreeTextLine*, NameDetails?, AddressDetails?)>
+<!--Type: Credit Union, Bank, etc-->
+<!--IDCode: Code of the institution-->
+<!--CustomerDetailsKeyRef: A foreign key to reference attribute Key of CustomerDetails.-->
+<!ATTLIST FinancialInstitutionDetails
+	Type CDATA #IMPLIED
+	IDCode CDATA #IMPLIED
+	CustomerDetailsKeyRef CDATA #IMPLIED
+>
+<!-- Account Balance -->
+<!ELEMENT AccountBalance (FreeTextLine*, Amount?, AmountRange?)>
+
+<!-- REFERENCE CHECK/CONTACT DETAILS -->
+<!--A container to define reference contacts about the customer-->
+<!ELEMENT ReferenceContacts (ReferenceContact+)>
+<!--Full details of the contact-->
+<!ELEMENT ReferenceContact (FreeTextLine*, NameDetails?, AddressDetails?, ContactNumbers?, EmailAddresses?)>
+<!--Type: Could be personal reference check, credit reference check, etc..-->
+<!--CustomerDetailsKeyRef: A foreign key to reference attribute Key of CustomerDetails.-->
+<!ATTLIST ReferenceContact
+	Type CDATA #IMPLIED
+	CustomerDetailsKeyRef CDATA #IMPLIED
+>						 
+ 
+<!-- VEHICLE DETAILS --> 
+<!-- A container for vehicles owned by the customer -->
+<!ELEMENT Vehicles (Vehicle+)>
+<!ELEMENT Vehicle (FreeTextLine*, Make?, Model?, ManufactureDate?, EngineNumber?, ChassisNumber?, 
+				   BodyNumber?, VehicleRegistration?)>
+<!--Type: Type of vehicle. Example: Truck, Jeep, Car, motorbike, Boat, etc-->
+<!ATTLIST Vehicle
+	Type CDATA #IMPLIED
+>
+<!ELEMENT Make (#PCDATA)>
+<!--Model of the vehicle. Example: Landcruiser as in Toyota, MX-6 as in Mazda, etc-->
+<!ELEMENT Model (#PCDATA)>
+<!--Type: Some special features. E.g. sedan/station vagon, soft top/hard top, etc.-->
+<!ATTLIST Model
+	Type CDATA #IMPLIED
+>
+<!--Date of manufacture of the vehicle-->
+<!ELEMENT ManufactureDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST ManufactureDate
+	Date CDATA #IMPLIED
+>
+<!--Engine number of the vehicle as defined by the manufacturer-->
+<!ELEMENT EngineNumber (#PCDATA)>
+<!--Chassis/suspension number of the vehicle as defined by the manufacturer-->
+<!ELEMENT ChassisNumber (#PCDATA)>
+<!--Body number of the vehicle as defined by the manufacturer-->
+<!ELEMENT BodyNumber (#PCDATA)>
+<!--Container to define the Registration details of the vehicle-->
+<!ELEMENT VehicleRegistration (Number?, (RegistrationAddress | (RegistrationPlace?, CountryName?))?, 
+					    RegistrationDate?, ExpiryDate?)>
+
+<!-- For Number element: Registration number plate. Example: SNR 999-->
+<!-- Attribute Type:  Use this attribute of any further details to the number has to be mentioned. Else, ignore -->
+
+<!--Address of registration-->
+<!ELEMENT RegistrationAddress (AddressDetails)> 
+<!--Place of registration, but not the country name. E.g. state, city, etc.-->
+<!ELEMENT RegistrationPlace (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate the type or 
+		  put some supplementary information, otherwise ignore it.-->
+<!ATTLIST RegistrationPlace
+	Type CDATA #IMPLIED
+>
+<!--Date of registration of the vehicle-->
+<!ELEMENT RegistrationDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST RegistrationDate
+	Date CDATA #IMPLIED
+>
+
+<!--Date of Joining. Example: Membership, etc -->
+<!ELEMENT JoinDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST JoinDate
+	Date CDATA #IMPLIED
+>
+
+<!--Expiry date . Eg. Registration, Passport, etc -->
+<!ELEMENT ExpiryDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST ExpiryDate
+	Date CDATA #IMPLIED
+> 
+
+<!-- Date if Issue . Eg. Passport, IDCard, etc-->
+<!ELEMENT IssueDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST IssueDate
+	Date CDATA #IMPLIED
+>
+
+<!--Place of issue. Example: City name, town name, embassy name, etc-->
+<!ELEMENT IssuePlace (#PCDATA)>
+<!--Type: Type of the place: city, embassy, state, high commission, etc.-->
+<!ATTLIST IssuePlace
+	Type CDATA #IMPLIED
+>
+
+<!ELEMENT Years (#PCDATA)>
+<!ELEMENT Months (#PCDATA)>
+<!ELEMENT Days (#PCDATA)>
+<!ELEMENT Date (#PCDATA)>
+<!ELEMENT Year (#PCDATA)>
+<!ELEMENT Month (#PCDATA)>
+<!ELEMENT Day (#PCDATA)>
+
+<!-- A container to define organisation name -->
+<!ELEMENT NameOfOrganisation (OrganisationNameDetails)>
+<!-- A container to define organisation address -->
+<!ELEMENT OrganisationAddress (AddressDetails)>
+ 
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++++++++++ ORGANISATION DETAILS +++++++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!-- +++++ BRANCHES OF THE ORGANISATION ++++ -->
+<!--A container to define the branches, franchaisees, etc. of the customer-->
+<!ELEMENT Branches (Branch+)>
+<!--Branch, franchise or other subdivision details -->
+<!ELEMENT Branch (CustomerID*, NameDetails?, AddressDetails?, (OrganisationInfo | PersonInfo)?)>
+<!--CustomerType: Type of customer. Example: Person, organisation, business, club, association, charity, etc.-->
+<!--CustomerDetailsKey: Key identifier for the element for not reinforced references from other elements. 
+	Not required to be unique for the document to be valid, but application may get confused if not unique. 
+	Extend this schema adding unique contraint if needed.-->
+<!--CustomerDetailsKeyRef: A foreign key to reference attribute Key of CustomerDetails.-->
+<!ATTLIST Branch
+	CustomerType CDATA #IMPLIED
+	CustomerDetailsKey    CDATA #IMPLIED
+	CustomerDetailsKeyRef CDATA #IMPLIED
+>
+
+<!-- ++++ REGISTRATION DETAILS OF THE ORGANISATION ++++ -->
+<!--A container to define the registration details of the customer. Example: Company registration-->
+<!ELEMENT RegistrationInfo (FreeTextLine*, RegistrationNumber*, TaxNumber*, FormationDate?, OrganisationCode*)>
+<!--Registration Number of the customer-->
+<!ELEMENT RegistrationNumber (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate the type or 
+		  put some supplementary information, otherwise ignore it. Example: ACN/ABN in Australia-->
+<!ATTLIST RegistrationNumber
+	Type CDATA #IMPLIED
+>
+<!--Government assigned tax numbers-->
+<!ELEMENT TaxNumber (#PCDATA)>
+<!--Type: Type of tax number: number. Example: ACN, ABN as in Australia-->
+<!ATTLIST TaxNumber
+	Type CDATA #IMPLIED
+>
+<!--Date of formation of the organisation.-->
+<!ELEMENT FormationDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST FormationDate
+	Date CDATA #IMPLIED
+>
+<!--Codes assigned to the organisation by different bodies, agencies, headquarters, etc.-->
+<!ELEMENT OrganisationCode (#PCDATA)>
+<!--Type: Description of the code. E.g. statistical, taxation, industry, internal, etc.-->
+<!--AssignedBy: Name of the organisation who produced the code.-->
+<!ATTLIST OrganisationCode
+	Type CDATA #IMPLIED
+	AssignedBy CDATA #IMPLIED
+>
+
+<!-- ++++ REVENUE DETAILS OF THE ORGANISATION ++++ -->
+<!--A container to define the Revenue details of the customer-->
+<!ELEMENT Revenue (FreeTextLine*, Amount?, AmountRange?)>
+<!--Exact numeric amount as free text. Example: $12,756,000.75-->
+<!ELEMENT Amount (#PCDATA)>
+<!--CurrencyType: Currency name or symbol. Example: Dollar, $, Rupees, Rs., etc-->
+<!--FinancialYear: Defines the financial year. Example: 1999, 1999-2000, etc.-->
+<!--Period: Defines the period in the financial year. Example: Quarter 1, Spring Quarter, 
+			January to March, July-Sept., etc-->
+<!--PeriodUnits: Units to measure the Period. Example: 374 Days, 32 Months, 2 Years, etc.-->
+<!--Type: Defines the type of amount. Example: Total earning, profit, loss, turnover, etc.-->
+<!ATTLIST Amount
+	CurrencyType CDATA #IMPLIED
+	FinancialYear CDATA #IMPLIED
+	Period CDATA #IMPLIED
+	PeriodUnits CDATA #IMPLIED
+	Type CDATA #IMPLIED
+>
+<!--Approximate amount as free text. Example: $1 Million - 5 Million-->
+<!ELEMENT AmountRange (#PCDATA)>
+<!--CurrencyType: Currency name or symbol. Example: Dollar, $, Rupees, Rs., etc-->
+<!--FinancialYear: Defines the financial year. Example: 1999, 1999-2000, etc.-->
+<!--Period: Defines the period in the financial year. Example: Quarter 1, Spring Quarter, 
+			January to March, July-Sept., etc-->
+<!--PeriodUnits: Units to measure the Period. Example: 374 Days, 32 Months, 2 Years, etc.--> 
+<!--Type: Defines the type of amount. Example: Total earning, profit, loss, turnover, etc.-->
+<!ATTLIST AmountRange
+	CurrencyType CDATA #IMPLIED
+	FinancialYear CDATA #IMPLIED
+	Period CDATA #IMPLIED
+	PeriodUnits CDATA #IMPLIED
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ SIZE OF THE ORGANISATION ++++ -->
+<!--A container to define the size of the organisation in terms of its number of employees-->
+<!ELEMENT SizeInfo (Size | SizeRange)> 
+<!--Exact number of employees. Eg. 100, 200, 223, etc.-->
+<!ELEMENT Size (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example: total number -->
+<!ATTLIST Size
+	Units CDATA #IMPLIED
+>
+<!--Number range of employees. Eg. 100-200, around 100, etc-->
+<!ELEMENT SizeRange (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example: total number -->
+<!ATTLIST SizeRange
+	Units CDATA #IMPLIED
+>
+
+<!-- +++++++++++ STOCK MARKET INFORMATION OF THE ORGANISATION ++++++++++ -->
+<!--A container to define the details of listing of the organisation in stock markets -->
+<!ELEMENT StockMarkets (StockMarket+)>
+<!--A Stock market listing details-->
+<!ELEMENT StockMarket (FreeTextLine*, CountryName?, StockMarketName?, ListedCode?, ListedDate?, ListedValue?)>
+<!--Stock Exchange name where  the stock is listed. Example: NASDAQ, Singapore Stock Exchange, etc-->
+<!ELEMENT StockMarketName (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate the type or 
+		  put some supplementary information, otherwise ignore it.-->
+<!ATTLIST StockMarketName
+	Type CDATA #IMPLIED
+>
+<!--The code that is used to list the organisation on the stock exchange. Example: XYZB for XYZ Bank, etc-->
+<!ELEMENT ListedCode (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate the type or 
+		  put some supplementary information, otherwise ignore it.-->
+<!ATTLIST ListedCode
+	Type CDATA #IMPLIED
+>
+<!--Date when the organisation was listed on the stock exchange-->
+<!ELEMENT ListedDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST ListedDate
+	Date CDATA #IMPLIED
+>
+<!--Value of the stock when listed on the stock exchange-->
+<!ELEMENT ListedValue (FreeTextLine*, Amount?, AmountRange?)>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --> 
+<!-- ++++++++++++++++++++++++++++++++++ PERSON DETAILS ++++++++++++++++++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!-- ++++ AGE DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the age details of a  Person -->
+<!ELEMENT AgeInfo ((Age | (Years?, Months?, Days?) | AgeRange), CaptureDate?)> 
+<!--Exact age as a free text. Example: 25 years-->
+<!ELEMENT Age (#PCDATA)>
+<!--Units: Defines the unit of measurement. Eg. Years, Days, Months, etc -->
+<!ATTLIST Age
+	Units CDATA #IMPLIED
+>
+<!--Free text expression of age range. E.g. 20-25, retired, teenager, etc-->
+<!ELEMENT AgeRange (#PCDATA)>
+<!--Units: Defines the unit of measurement. Eg. Years, Months, Days, etc -->
+<!ATTLIST AgeRange
+	Units CDATA #IMPLIED
+>
+<!--Date when age information was captured. -->
+<!ELEMENT CaptureDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST CaptureDate
+	Date CDATA #IMPLIED
+>
+
+<!-- ++++ BIRTH DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the Date of Birth Details of a customer (person)-->
+<!ELEMENT BirthInfo (FreeTextLine*, BirthDate*, BirthPlace?, BirthTime?, Latitude?, Longitude?, 
+					 BirthStar*, BirthSign*)>
+<!--Some have more than one birthdays. Eg. As per English Calender and Tamil/Chinese Calender-->
+<!ELEMENT BirthDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!--CalenderType: Grigoran calendar, Moon clendar, etc-->
+<!--WeekDay: Monday to Sunday-->
+<!ATTLIST BirthDate
+	Date CDATA #IMPLIED
+	CalenderType CDATA #IMPLIED
+	WeekDay CDATA #IMPLIED
+>
+<!--Defines the place of birth. Can be just a place name or a full address-->
+<!ELEMENT BirthPlace (AddressDetails)>
+<!--Exact time of birth-->
+<!ELEMENT BirthTime (#PCDATA)>
+<!ATTLIST BirthTime
+	BirthTime CDATA #IMPLIED
+>
+<!--Absolute coordinate of place of birth-->
+<!ELEMENT Latitude (#PCDATA)>
+<!--Absolute coordinate of place of birth-->
+<!ELEMENT Longitude (#PCDATA)>
+<!--Star of birth as per Astrology. Can be multiple stars for some nationalities. Example: Chinese, Indians, etc.-->
+<!ELEMENT BirthStar (#PCDATA)>
+<!--Type: Mainly type of the calendar or the system to figure out the birth star name. 
+		  Example: Chinese/Tamil Calendar.-->
+<!ATTLIST BirthStar
+	Type CDATA #IMPLIED
+>
+<!--Sign of birth as per Astrology. Can be multiple signs for some nationalities. Example: Chinese, Indians, etc.-->
+<!ELEMENT BirthSign (#PCDATA)>
+<!--Type: Mainly type of the calendar or the system to figure out the birth sign name. 
+		  Example: Chinese/Tamil Calendar.-->
+<!ATTLIST BirthSign
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ COUNTRIES OF RESIDENCY OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container for all citizenships and residencies -->
+<!ELEMENT CountriesOfResidence (CountryOfResidence+)>
+<!--A citizenship and residence-->
+<!ELEMENT CountryOfResidence (FreeTextLine*, CountryName?, IssueDate?, Visas?)>
+<!--CitizenshipNumber: Some countries provide citizenship certificates-->
+<!--ResidencyType: Work, permamnent resident, temporary resident, citizen, refugee, etc.-->
+<!ATTLIST CountryOfResidence
+	CitizenshipNumber CDATA #IMPLIED
+	ResidencyType CDATA #IMPLIED
+>
+<!--A container to define the VISAs of the customer-->
+<!ELEMENT Visas (Visa+)>
+<!--All information about Visa details.-->
+<!ELEMENT Visa (FreeTextLine*, Number?, VisaCategoryNumber?, IssueDate?, IssuePlace?, CountryName?, 
+				ExpiryDate?, EntryExpiryDate?, MaximumStay?, SpecialConditions*)>
+<!--Type: Type of VISA. Example: Worker's Visa, Visitor's visa, Permanent Residency Visa, etc.-->
+<!ATTLIST Visa
+	Type CDATA #IMPLIED
+>
+
+<!-- For Number element: Visa Number -->
+<!-- Attribute Type:  Use this attribute of any further details to the number has to be mentioned. Else, ignore -->
+
+<!--Visa category number depending upon the type of visa. Example: H-1 for employment visa as in the USA-->
+<!ELEMENT VisaCategoryNumber (#PCDATA)>
+<!--Once the visa is issued, the customer can enter the country before a certain date. 
+	If not, the visa cannot be used.-->
+<!ELEMENT EntryExpiryDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST EntryExpiryDate
+	Date CDATA #IMPLIED
+>
+<!--Maximum allowed length of stay.-->
+<!ELEMENT MaximumStay (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example: Months, Years, Days, Hours.-->
+<!ATTLIST MaximumStay
+	Units CDATA #IMPLIED
+>
+<!--Any special conditions as free text. Example: Multiple entry, cannot work, etc. 
+	Type attribute example: work restrictions, entry restrictions, etc-->
+<!ELEMENT SpecialConditions (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate the 
+		  type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST SpecialConditions
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ ETHNICITY OF THE CUSTOMER (PERSON) ++++ -->
+<!--Asian, African, etc,-->
+<!ELEMENT Ethnicity (#PCDATA)>
+
+<!-- ++++ FAMILY MEMBERS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define closely associated people of the customer. If the relationship
+    between the customer and the family members have to be in detail, use xCRL standard.
+	Example: partner, Parents, Children, Spouse, etc-->
+<!ELEMENT FamilyMembers (FamilyMember+)>
+<!--Family member's Details-->
+<!ELEMENT FamilyMember (FreeTextLine*, PersonName?, Gender?, SpecialDate*)>
+<!--RelationshipType: Type of relationship example: living together, fiance, married, etc-->
+<!--Type: Type of Family member: Parent, child, partner, uncle, aunt, etc.-->
+<!--CustomerDetailsKeyRef: A foreign key to reference attribute Key of CustomerDetails.-->
+<!ATTLIST FamilyMember
+	RelationshipType CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	CustomerDetailsKeyRef CDATA #IMPLIED
+>
+<!--Any special date associated with the family member. Example: If spouse of the customer, say, 
+	anniversary date, birth date, etc. -->
+<!ELEMENT SpecialDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!--Type: Anniversary date, first date date, adoption date, etc. -->
+<!ATTLIST SpecialDate
+	Date CDATA #IMPLIED
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ GENDER OF THE CUSTOMER (PERSON) ++++ -->
+<!--Defines the Gender. Example: Male, female, etc-->
+<!ELEMENT Gender (#PCDATA)>
+
+<!-- ++++ HABITS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define customer habits -->
+<!ELEMENT Habits (Habit+)>
+<!--Personal habits of a cutomer. E.g. smoking, drinking, gambling, etc.-->
+<!ELEMENT Habit (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate 
+		  the type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST Habit
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ HOBBIES OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define customer hobbies -->
+<!ELEMENT Hobbies (Hobby+)>
+<!--A hobby of the person. E.g.  craft, sport, recreational activity, etc.-->
+<!ELEMENT Hobby (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate the 
+		  type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST Hobby
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ ID CARDS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define ID cards of the customer-->
+<!ELEMENT IDCards (IDCard+)>
+<!--ID CARD Eg. License, Credit Card, Mileage Card, Bank card, others-->
+<!ELEMENT IDCard (FreeTextLine*, IssuerName?, IDCardName?, GroupName?, Number?, SeriesCode?, IDCardIssuePlace?, 
+				  IssueDate?, JoinDate?, ExpiryDate?, NameOnIDCard?, PrivilegeType?, Status?, Validity?, 
+				  Restriction*, CreditAmount?)>
+<!--Type: Type of the card: License, Credit Card, Mileage Card, Bank card, etc-->
+<!ATTLIST IDCard
+	Type CDATA #IMPLIED
+>
+<!-- Name of the issuing authority -->
+<!ELEMENT IssuerName (NameLine+|PersonName|JointPersonName|OrganisationNameDetails)> 
+<!--VISA, KEYCARD, etc.-->
+<!ELEMENT IDCardName (#PCDATA)>
+<!--Code: Code: codes for card issuers-->
+<!ATTLIST IDCardName
+	Code CDATA #IMPLIED
+>
+<!--Eg. Mileage Program Groups-->
+<!ELEMENT GroupName (#PCDATA)>
+<!--GroupType: Example: Star Alliance, One World as in Mileage Program-->
+<!ATTLIST GroupName
+	GroupType CDATA #IMPLIED
+>
+
+<!-- For Number element: ID Card Number -->
+<!-- Attribute Type:  Use this attribute of any further details to the number has to be mentioned. Else, ignore -->
+
+<!--Some cards have series ID.-->
+<!ELEMENT SeriesCode (#PCDATA)>
+<!--Place of issue of the ID Card. Could be an address, country, city, etc-->
+<!ELEMENT IDCardIssuePlace (AddressDetails)>
+<!--Customer Name as on the ID card-->
+<!ELEMENT NameOnIDCard (NameLine+|PersonName|JointPersonName|OrganisationNameDetails)> 
+<!--Gold, Silver, etc-->
+<!ELEMENT PrivilegeType (#PCDATA)>
+<!--Full driver's license, full member, etc-->
+<!ELEMENT Status (#PCDATA)>
+<!--International license, etc-->
+<!ELEMENT Validity (#PCDATA)>
+<!--Eg. 2 wheelers in a license. Type Attribute example: Driving-->
+<!ELEMENT Restriction (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attributes to indicate 
+		  the type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST Restriction
+	Type CDATA #IMPLIED
+>
+<!--Applies to credit cards-->
+<!ELEMENT CreditAmount (FreeTextLine*, Amount?, AmountRange?)>
+
+<!-- ++++ INCOME DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the Income Details of the customer-->
+<!ELEMENT Incomes (Income+)>
+<!--A container for an Income Details description-->
+<!ELEMENT Income (FreeTextLine*, Amount?, AmountRange?)>
+<!--IncomeSource: Where this income comes from-->
+<!--PaymentType: Type of payment: daily, weekly, monthly, etc. -->
+<!ATTLIST Income
+	IncomeSource CDATA #IMPLIED
+	PaymentType CDATA #IMPLIED
+>
+
+<!-- ++++ LANGUAGES (SPEAK, READ, WRITE) OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the Languages Spoken by the customer-->
+<!ELEMENT Languages (Language+)>
+<!--Mother tongue, by birth, second language, etc.-->
+<!ELEMENT Language (#PCDATA)>
+<!--Type: Mother tongue, by birth, etc-->
+<!--Speak: Indicates ability to speak: yes, no, poor-->
+<!--Read: Indicates ability to read: yes, no, poor-->
+<!--Write: Indicates ability to write: yes, no, poor-->
+<!--Preference: Indicates preferred language of communication (read and/or write and/or speak)-->
+<!ATTLIST Language
+	Type CDATA #IMPLIED
+	Speak CDATA #IMPLIED
+	Read CDATA #IMPLIED
+	Write CDATA #IMPLIED
+	Preference CDATA #IMPLIED
+>
+
+<!-- ++++ MARITIAL STATUS OF THE CUSTOMER (PERSON) ++++ -->
+<!--Marital Status of the customer. Example: Single, Married, Widow, Divorcee, etc-->
+<!ELEMENT MaritalStatus (#PCDATA)>
+
+<!-- ++++ MEMBERSHIPS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the memberships of the customer-->
+<!ELEMENT Memberships (Membership+)>
+<!--Membership Details-->
+<!ELEMENT Membership (FreeTextLine*, MembershipName*, Number?, CountryName?, NameOfOrganisation?, OrganisationAddress?, 
+					  Level?, CurrentStatus?, JoinDate?, LeaveDate?, ExpiryDate?)>
+<!--Type: High level description of the membership. E.g. professional association, golf club, sport club, etc.-->
+<!ATTLIST Membership
+	Type CDATA #IMPLIED
+>
+
+<!-- Name of membership. Example: Australian Computer Society -->
+<!ELEMENT MembershipName (#PCDATA)>
+<!-- Type: Type of membership name. Example: Abbreviation -->
+<!ATTLIST MembershipName
+	Type CDATA #IMPLIED>
+<!-- For Number element: Membership Number -->
+<!-- Attribute Type:  Use this attribute of any further details to the number has to be mentioned. Else, ignore -->
+
+<!--Associate, Full, Gold, Silver, etc-->
+<!ELEMENT Level (#PCDATA)>
+<!--valid, dis-continued, etc.-->
+<!ELEMENT CurrentStatus (#PCDATA)>
+<!--Date of leaving the organisation.-->
+<!ELEMENT LeaveDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format (xs:date)-->
+<!ATTLIST LeaveDate
+	Date CDATA #IMPLIED
+>
+
+<!-- ++++ NATIONALITY OF THE CUSTOMER (PERSON) ++++ -->
+<!--Nationality/Residency of the customer. Type attribute example: By birth, by naturalization, etc-->
+<!ELEMENT Nationality (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type 
+		  or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST Nationality
+	Type CDATA #IMPLIED
+>
+
+<!-- ++++ OCCUPATION DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the occupations of the customer-->
+<!ELEMENT Occupations (Occupation+)>
+<!--Occupation Details-->
+<!--Status: Status of occupation: Previous, current, etc -->
+<!ELEMENT Occupation (FreeTextLine*, Position?, WorkType?, Department?, NameOfOrganisation?, OrganisationAddress?, 
+					  ManagerName?, AssistantName?, CostCentre?, OccupationStartDate?, OccupationEndDate?)>
+<!ATTLIST Occupation
+	Status CDATA #IMPLIED
+>
+<!--Position details-->
+<!ELEMENT Position (FreeTextLine*, PositionTitle?, Role*)>
+<!--The name of the position. Example: CEO, Manager, etc-->
+<!ELEMENT PositionTitle (#PCDATA)>
+<!--The nature of the position and key responsibilities. Example: Decision Maker, Influencer, etc-->
+<!ELEMENT Role (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type or put 
+		  some supplementary information, otherwise ignore it.-->
+<!ATTLIST Role
+	Type CDATA #IMPLIED
+>
+<!--full-time (FT),part-time (PT), etc.-->
+<!ELEMENT WorkType (#PCDATA)>
+<!--Manager name as free text or a structure-->
+<!ELEMENT ManagerName (FreeTextLine* | PersonName)?>
+<!--Position: Title of the position held by the person-->
+<!ATTLIST ManagerName
+	Position CDATA #IMPLIED
+>
+<!--Assistant name as free text or a structure-->
+<!ELEMENT AssistantName (FreeTextLine* | PersonName)?>
+<!--Position: Title of the position held by the person-->
+<!ATTLIST AssistantName
+	Position CDATA #IMPLIED
+>
+<!--Customer's cost centre details-->
+<!ELEMENT CostCentre (FreeTextLine*, CostCentreName?, CostCentreNumber?)>
+<!--Name of the cost centre associated with the customer-->
+<!ELEMENT CostCentreName (#PCDATA)>
+<!--Cost centre number of the customer-->
+<!ELEMENT CostCentreNumber (#PCDATA)>
+<!--Start date of the employment-->
+<!ELEMENT OccupationStartDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST OccupationStartDate
+	Date CDATA #IMPLIED
+>
+<!--End/Finish date of the employment-->
+<!ELEMENT OccupationEndDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST OccupationEndDate
+	Date CDATA #IMPLIED
+>
+
+<!-- ++++ PAGER DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define pagers of the customer-->
+<!ELEMENT Pagers (Pager+)>
+<!--Pager details-->
+<!ELEMENT Pager (FreeTextLine*, URL?, ContactNumber?, Number?)>
+
+<!-- PASSPORT DETAILS OF THE CUSTOMER (PERSON) ++++ --> 
+<!--A container to define the passports for the customer-->
+<!ELEMENT Passports (Passport+)>
+<!--Passport Details-->
+<!ELEMENT Passport (FreeTextLine*, CountryName?, Number?, IssueDate?, IssuePlace?, IssueCountry?, 
+					ExpiryDate?, NativeScriptName*)>
+
+<!-- For Number element: Pasport Number -->
+<!-- Attribute Type:  Use this attribute of any further details to the number has to be mentioned. Else, ignore -->
+
+<!--Country where the passport was issued.-->
+<!ELEMENT IssueCountry (#PCDATA)>
+<!--EncodingScheme: Country code scheme possible values, but not limited to: iso.3166-2, iso.3166-3 
+	for two and three character country codes.-->
+<!ATTLIST IssueCountry
+	EncodingScheme CDATA #IMPLIED
+>
+<!--Some Passports contain different versions of spelling the name in native languages.-->
+<!ELEMENT NativeScriptName (PersonName*)>
+
+<!-- ++++ PHYSICAL DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the Physical Characteristics of the customer-->
+<!ELEMENT PhysicalInfo (FreeTextLine*, Height?, Weight?, ColorInfo?, Marks*, BloodGroup?, Disability?, 
+					    OtherPhysicalInfo*)>
+<!--Height of the customer-->
+<!ELEMENT Height (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example: Inches, feet, cm, meters, etc -->
+<!--Type: Defines the type of height. Example: Tall, short, average -->
+<!ATTLIST Height
+	Units CDATA #IMPLIED
+	Type  CDATA #IMPLIED
+>
+<!--Weight of the customer-->
+<!ELEMENT Weight (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example: kgs, pounds, etc.-->
+<!--Type: Defines the type of weight. Example: Over weight, average, under weight, etc -->
+<!ATTLIST Weight
+	Units CDATA #IMPLIED
+	Type  CDATA #IMPLIED
+>
+<!--Color characteristics -->
+<!ELEMENT ColorInfo (Eye?, Hair?, Skin?)> 
+<!-- Blue eyes, brown eyes, etc -->
+<!ELEMENT Eye (#PCDATA)> 
+<!-- black, blonde, etc -->
+<!ELEMENT Hair (#PCDATA)> 
+<!-- dark, white, brown, etc -->
+<!ELEMENT Skin (#PCDATA)>
+<!--Any specific visible and unique physical marks. Example: A dimple on the left chin-->
+<!ELEMENT Marks (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the 
+		  type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST Marks
+	Type CDATA #IMPLIED
+>
+<!--Blood group of the customer. Example: A+, B-, etc-->
+<!ELEMENT BloodGroup (#PCDATA)>
+<!--Description of person's disability.-->
+<!ELEMENT Disability (DisabilityType+)>
+<!--Disability type: dumb, deaf, etc.-->
+<!ELEMENT DisabilityType (#PCDATA)>
+<!--Cause: Cause:  Natural, accident, etc.-->
+<!ATTLIST DisabilityType
+	Cause CDATA #IMPLIED
+>
+<!--Any other information such as body build info,different body sizes and measurements, etc-->
+<!ELEMENT OtherPhysicalInfo (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example: Inches, feet, cm, meters, days, months, 
+		   years, kgs, pounds, etc.-->
+<!ATTLIST OtherPhysicalInfo
+	Units CDATA #IMPLIED
+>					    
+
+<!-- ++++ PHYSCIAL STATUS OF THE CUSTOMER (PERSON) ++++ -->
+<!--Physical status of the customer. Example: Living, Deceased, retired, etc.-->
+<!ELEMENT PhysicalStatus (#PCDATA)>
+
+<!-- ++++ QUALIFICATION DETAILS OF THE CUSTOMER (PERSON) ++++ -->
+<!--A container to define the qualifications of the customer-->
+<!ELEMENT Qualifications (Qualification+)>
+<!--Educational Qualification-->
+<!ELEMENT Qualification (FreeTextLine*, QualificationName?, Major?, Minor?, CourseDuration?, NameOfOrganisation?, 
+						 CountryName?, OrganisationAddress?, Award*, StartDate?, CompletionDate?, ExpiryDate?)>
+<!--Status: E.g. completed, incomplete, on hold, under suspension, etc.-->
+<!ATTLIST Qualification
+	Status CDATA #IMPLIED
+>
+<!--Name of the qualification. Example: Bachelor of Science, etc. -->
+<!ELEMENT QualificationName (#PCDATA)>
+<!--Type: Diploma, 4 year degree, certificate, apprenticeship, etc..-->
+<!--Mode: Mode of Study. Example: By Research, Course work -->
+<!ATTLIST QualificationName
+	Type CDATA #IMPLIED
+	Mode CDATA #IMPLIED
+>
+<!--Major subject-->
+<!ELEMENT Major (#PCDATA)>
+<!--Minor subject-->
+<!ELEMENT Minor (#PCDATA)>
+<!--Course duration as free text. Example: 4 years-->
+<!ELEMENT CourseDuration (#PCDATA)>
+<!--Units: Defines the unit of measurement. Example:  days, months, etc.-->
+<!--Type: Type of study. Example: Part-time, full-time -->
+<!ATTLIST CourseDuration
+	Units CDATA #IMPLIED
+	Type  CDATA #IMPLIED
+>
+<!--Special distinction award. E.g. Gold Medal, Honor, etc.Type attribute example: Special Performance Award-->
+<!ELEMENT Award (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type or 
+		  put some supplementary information, otherwise ignore it.-->
+<!ATTLIST Award
+	Type CDATA #IMPLIED
+>
+<!--Start date of the course to obtain the qualification-->
+<!ELEMENT StartDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST StartDate
+	Date CDATA #IMPLIED
+>
+<!--Completion date of the course to obtain the qualification-->
+<!ELEMENT CompletionDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST CompletionDate
+	Date CDATA #IMPLIED
+>
+
+<!-- ++++ RELIGION DETAILS OF THE CUSTOMER (PERSON) ++++ --> 
+<!-- A container to define the religion of the customer -->
+<!ELEMENT Religion (FreeTextLine*, ReligionName?, Caste?)>
+<!-- Name of the religion. Example: Hindu, Muslim, Christian, etc -->
+<!ELEMENT ReligionName  (#PCDATA)>
+<!-- Classification: Classification of Religion.  Example: Catholics, Protestants as in Christianity Religion  --> 
+<!ATTLIST ReligionName
+	Classification CDATA #IMPLIED
+>
+<!-- Some countries like India and Sri Lanka have Caste system in addition to religion. 
+	Example: Gounder, Pillai, etc-->
+<!ELEMENT Caste (#PCDATA)>
+<!--Type: Defines the type of caste. Example: Kongu Vellalar, Naattu Gounder, etc. for a caste "Gounder".-->
+<!ATTLIST Caste
+	Type CDATA #IMPLIED
+>
+
+

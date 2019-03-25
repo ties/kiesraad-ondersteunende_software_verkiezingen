@@ -16,7 +16,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public interface ErgebnisImportHandler {
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="external-libs/xom-1.2.10.jar" sourcepath="external-libs/xom-1.2.10.zip">
+	<classpathentry exported="true" kind="lib" path="external-libs/xom-1.2.10.jar" sourcepath="external-libs/xom-1.2.10-src.zip">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/de.ivu.wahl.wus.xmlsecurity/external-libs/xom-1.2.10.zip!/XOM/apidocs"/>
 		</attributes>

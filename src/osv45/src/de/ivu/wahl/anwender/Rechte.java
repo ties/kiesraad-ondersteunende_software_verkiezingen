@@ -6,7 +6,7 @@ import de.ivu.wahl.util.BundleHelper;
  * Konstanten f�r die Abbildung von Funktionen auf Rechte Beinhaltet auch die Zuordnung f�r die
  * Initialisierung der Rechtegruppen
  * 
- * @author klie@ivu.de Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author P. Kliem Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface Rechte {
@@ -84,11 +84,6 @@ public interface Rechte {
   String R_EINGABE_ERLAUBEN = "wk_eingeben_erlauben"; //$NON-NLS-1$
 
   /**
-   * Upload von Wahleinheitergebnissen
-   */
-  String R_UPLOAD = "wk_ergebnis_upload"; //$NON-NLS-1$
-
-  /**
    * Exportieren von Ergebnissen
    */
   String R_EXPORT = "exportieren"; //$NON-NLS-1$
@@ -112,6 +107,11 @@ public interface Rechte {
    * recht, die Freigabe zu zu erteilen
    */
   String R_FREIGABE = "r_freigabe"; //$NON-NLS-1$
+
+  /**
+   * recht, die Freigabe zu zu erteilen
+   */
+  String R_RE_INDEX_DATABASE = "r_re_index_database"; //$NON-NLS-1$
 
   /**
    * recht, die Freigabe zur�ckzunehmen
@@ -152,22 +152,18 @@ public interface Rechte {
       {R_ADM_SCHWELLWERTE_PARTEIEN_UEBERSCHREIBEN, RG_ADMIN}, {R_EINGABE, RG_ADMIN},
       {R_ADM_ANGEMELDETE, RG_ADMIN}, {R_ADM_ANW_AENDERN, RG_ADMIN}, {R_ADM_ANW_ANLEGEN, RG_ADMIN},
       {R_ADM_ANW_ANZEIGEN, RG_ADMIN}, {R_IMPORT, RG_ADMIN}, {R_IMPORT_ADM, RG_ADMIN},
-      {R_ADM_STIMMBEZIRKE_EDIT, RG_ADMIN}, {R_ADM_PROPS, RG_ADMIN}, {R_UPLOAD, RG_ADMIN},
-      {R_OUTDIR, RG_ADMIN}, {R_HOCHRECHNUNG, RG_ADMIN}, {R_ADM_WAHLCREATEREMOVE, RG_ADMIN},
+      {R_ADM_STIMMBEZIRKE_EDIT, RG_ADMIN}, {R_ADM_PROPS, RG_ADMIN}, {R_OUTDIR, RG_ADMIN},
+      {R_HOCHRECHNUNG, RG_ADMIN}, {R_ADM_WAHLCREATEREMOVE, RG_ADMIN},
       {R_ADM_VOTE_VALUES, RG_ADMIN}, {R_ADM_KANDIDAT_WAEHLBAR, RG_ADMIN},
-      {R_ADM_EMPTY_EML_EXPORT, RG_ADMIN}, {R_ADM_N10_1_EXPORT, RG_ADMIN},
-      {R_EXPORT, RG_ADMIN},
-      {R_FREIGABE, RG_ADMIN},
-      {R_FREIGABE_RUECK, RG_ADMIN},
-      {R_SITZVERTEILUNG_BERECHNEN, RG_ADMIN},
-      {R_GEB_STATUS, RG_ADMIN},
+      {R_ADM_EMPTY_EML_EXPORT, RG_ADMIN}, {R_ADM_N10_1_EXPORT, RG_ADMIN}, {R_EXPORT, RG_ADMIN},
+      {R_FREIGABE, RG_ADMIN}, {R_FREIGABE_RUECK, RG_ADMIN}, {R_SITZVERTEILUNG_BERECHNEN, RG_ADMIN},
+      {R_GEB_STATUS, RG_ADMIN}, {R_RE_INDEX_DATABASE, RG_ADMIN},
       {R_EINGABE_ERLAUBEN, RG_ADMIN},
 
       // normalerAnwender
       {R_EINGABE, RG_ANWENDER}, // {R_IMPORT, RG_ANWENDER},
 
       // Sitzverteilung
-      {R_IMPORT, RG_SITZVERTEILUNG}, {R_UPLOAD, RG_SITZVERTEILUNG},
-      {R_SITZVERTEILUNG_BERECHNEN, RG_SITZVERTEILUNG}, {R_EXPORT, RG_SITZVERTEILUNG},
-      {R_FREIGABE, RG_SITZVERTEILUNG}};
+      {R_IMPORT, RG_SITZVERTEILUNG}, {R_SITZVERTEILUNG_BERECHNEN, RG_SITZVERTEILUNG},
+      {R_EXPORT, RG_SITZVERTEILUNG}, {R_FREIGABE, RG_SITZVERTEILUNG}};
 }

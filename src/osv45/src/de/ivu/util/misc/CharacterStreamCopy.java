@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Copies data from a {@link Reader} to a {@link Writer} .
  * 
- * @author cos@ivu.de
+ * @author D. Cosic
  * @created 2009/04/03
  * @version $Id $
  */

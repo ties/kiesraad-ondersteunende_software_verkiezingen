@@ -4,13 +4,14 @@
  * Abmelden
  * Seite, die vor dem tatsächlichen Logout angezeigt wird
  *
- * author:  klie@ivu.de cos@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  P. Kliem D. Cosic  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor();
 String breite = "100%";

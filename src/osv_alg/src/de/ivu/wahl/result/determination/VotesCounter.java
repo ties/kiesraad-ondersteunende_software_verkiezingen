@@ -31,7 +31,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * <li>P3-list</li>
  * </ul>
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 class VotesCounter {
   private final Map<CandidateList, Long> votesPerList;

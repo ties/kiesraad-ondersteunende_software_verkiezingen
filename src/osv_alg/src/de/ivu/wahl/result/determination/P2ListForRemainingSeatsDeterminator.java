@@ -27,7 +27,7 @@ import de.ivu.wahl.result.result.AnomalyFactory;
  * Assigns seats to candidates that received less votes than the preferencial barrier. These seats
  * are assigned according to the list order. See kieswet article P 17 and P 18.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class P2ListForRemainingSeatsDeterminator {
   private final SeatDistributionInP3List dist;
@@ -166,8 +166,8 @@ public class P2ListForRemainingSeatsDeterminator {
     while (p2List != null) {
       dist.removeRemainingSeat(p2List);
       P2List receiver = getP2ListFromRfs();
-      anomalyFactory.lateListExhaustion(p2List, receiver);
       if (receiver != null) {
+        anomalyFactory.lateListExhaustion(p2List, receiver);
         dist.addRemainingSeat(receiver);
         APPLOG.info(Messages
             .bind(MessageKeys.Result_Tracelog_SeatOf_CannotBeAssignedToCandidateAndPassesTo_1,

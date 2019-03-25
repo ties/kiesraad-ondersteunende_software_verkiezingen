@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Provides name components for file names and folder names to the report generator
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ReportNameComponents {
 

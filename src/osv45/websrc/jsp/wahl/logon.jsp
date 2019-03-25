@@ -17,6 +17,7 @@ Es erfolgt die Weiterleitung auf login_dialog.jsp
 <jsp:directive.page import="de.ivu.wahl.modell.ejb.AnwenderHome"/>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
       Locale.setDefault(Konstanten.LOCALE);
       Logger log = Logger.getLogger( "jsp.logon" ); //$NON-NLS-1$
@@ -51,9 +52,6 @@ Es erfolgt die Weiterleitung auf login_dialog.jsp
      AnwenderHome anwenderHome = EJBUtil.findLocalHomeNoCache("Anwender"); //$NON-NLS-1$
       String url = anwenderHome.findAll().isEmpty() ? "adminInit.jsp?anwender=true" : "login_dialog.jsp"; //$NON-NLS-1$ //$NON-NLS-2$
       
-      response.setHeader("Cache-Control","no-cache"); //HTTP 1.1 //$NON-NLS-1$ //$NON-NLS-2$
-      response.setHeader("Pragma","no-cache"); //HTTP 1.0 //$NON-NLS-1$ //$NON-NLS-2$
-      response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  //$NON-NLS-1$
       response.setCharacterEncoding(Konstanten.ENCODING);
 %>
 <jsp:forward page="<%=url%>"/>

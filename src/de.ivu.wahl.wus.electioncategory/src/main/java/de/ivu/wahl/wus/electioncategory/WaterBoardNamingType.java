@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 public enum WaterBoardNamingType {
-  WATERSCHAP("waterschap", 1, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19, 20, 21, 22, 23),
+  WATERSCHAP("waterschap", 1, 3, 5, 7, 8, 10, 15, 16, 17, 18, 19, 20, 23, 24, 25),
 
   WETTERSKIP("wetterskip", 2),
 
-  HOOGHEEMRAADSCHAP("hoogheemraadschap", 9, 10, 11),
+  HOOGHEEMRAADSCHAP("hoogheemraadschap", 9, 11),
 
   HOOGHEEMRAADSCHAP_VAN("hoogheemraadschap van", 12, 13, 14);
 

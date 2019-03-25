@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Konflikt.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class KonfliktDBA extends DBABase {
@@ -64,16 +64,31 @@ public class KonfliktDBA extends DBABase {
       if ((idx = columns.get(ID_KONFLIKT.toUpperCase())) != null) {
          m._id_Konflikt = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_KONFLIKT)) != null) {
+         m._id_Konflikt = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LOSALTERNATIVE.toUpperCase())) != null) {
          m._id_LosAlternative = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LOSALTERNATIVE)) != null) {
+         m._id_LosAlternative = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(NUMMER.toUpperCase())) != null) {
          m._nummer = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(NUMMER)) != null) {
+         m._nummer = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(KONFLIKTART.toUpperCase())) != null) {
+         m._konfliktart = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(KONFLIKTART)) != null) {
          m._konfliktart = r.getInt(idx.intValue());
       }
    }
@@ -89,16 +104,16 @@ public class KonfliktDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_LOSALTERNATIVE.toUpperCase())) {
+      if (columns.containsKey(ID_LOSALTERNATIVE.toUpperCase()) || columns.containsKey(ID_LOSALTERNATIVE)) {
          p.setString(idx++, m._id_LosAlternative);
       }
-      if (columns.containsKey(NUMMER.toUpperCase())) {
+      if (columns.containsKey(NUMMER.toUpperCase()) || columns.containsKey(NUMMER)) {
          p.setInt(idx++, m._nummer);
       }
-      if (columns.containsKey(KONFLIKTART.toUpperCase())) {
+      if (columns.containsKey(KONFLIKTART.toUpperCase()) || columns.containsKey(KONFLIKTART)) {
          p.setInt(idx++, m._konfliktart);
       }
       p.setString(idx++, m._id_Konflikt);
@@ -284,23 +299,6 @@ public class KonfliktDBA extends DBABase {
    }
 
    /**
-     * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of Konflikt IDs
-     *
-     * @param id_Ergebniseingang searching condition
-
-     * @return a {@link Collection} of Konflikt IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Ergebniseingang(String id_Ergebniseingang)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Konflikt from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Ergebniseingang});
-   }
-
-   /**
      * Method retrieveIDsByID_LosAlternative returns a {@link Collection} of Konflikt IDs
      *
      * @param id_LosAlternative searching condition
@@ -315,6 +313,23 @@ public class KonfliktDBA extends DBABase {
          "select ID_Konflikt from " + TABLENAME + " where ID_LosAlternative=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_LosAlternative});
+   }
+
+   /**
+     * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of Konflikt IDs
+     *
+     * @param id_Ergebniseingang searching condition
+
+     * @return a {@link Collection} of Konflikt IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Ergebniseingang(String id_Ergebniseingang)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Konflikt from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Ergebniseingang});
    }
 
    /**

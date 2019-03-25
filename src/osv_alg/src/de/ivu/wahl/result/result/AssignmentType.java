@@ -11,7 +11,7 @@ package de.ivu.wahl.result.result;
  * AssignmentType for the assignment within a one-element P42-list or one-element P3-list.
  * 
  * @see StepType
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum AssignmentType {
   FIRST_ASSIGNMENT(1, "FA"), //$NON-NLS-1$ 

@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * ListenkandidaturErgebnisBean
  *
- * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
 
  */
 
@@ -14,20 +14,12 @@ import java.util.Collection;
 
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.impl.ListenkandidaturDBA;
 import de.ivu.wahl.modell.impl.ListenkandidaturErgebnisDBA;
 
 public class ListenkandidaturErgebnisBean extends BasicListenkandidaturErgebnisBean {
   private static final long serialVersionUID = 1989508301869923292L;
-  private static final Category LOGGER = Log4J.configure(ListenkandidaturErgebnisBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(ListenkandidaturErgebnisBean.class, Log4J
-        .extractVersion("$Revision$"))); //$NON-NLS-1$
-  }
 
   /**
    * Find list candidature results by result and list candidature
@@ -120,27 +112,5 @@ public class ListenkandidaturErgebnisBean extends BasicListenkandidaturErgebnisB
       throw new IVUFinderException(se.getMessage(), se);
     }
   }
-
-  // public Collection<String> ejbFindGewaehltByGebiet(String id_Gebiet) throws FinderException {
-  // try {
-  // return retrieveIDs("select " + ListenkandidaturErgebnisDBA.ID_LISTENKANDIDATUR + " from "
-  // + ListenkandidaturErgebnisDBA.TABLENAME + " lk, " + GruppeGebietsspezifischDBA.TABLENAME
-  // + " gg where gg." + GruppeGebietsspezifischDBA.ID_GEBIET + "=? and gg."
-  // + GruppeGebietsspezifischDBA.ID_LISTE + "=lk." + ListenkandidaturErgebnisDBA.ID_LISTE
-  // + " and lk." + GEWAEHLT_QUAL + " = 1", new Object[]{id_Gebiet});
-  // } catch (SQLException se) {
-  // throw new IVUFinderException(se.getMessage(), se);
-  // }
-  // }
-  //
-  // public Collection<String> ejbFindGewaehltByListe(String id_Liste) throws FinderException {
-  // try {
-  // return retrieveIDs("select " + ListenkandidaturErgebnisDBA.ID_LISTENKANDIDATUR + " from "
-  // + TABLENAME + " where " + ListenkandidaturErgebnisDBA.ID_LISTE + "=? and"
-  // + ListenkandidaturErgebnisDBA.GEWAEHLT + " = 1", new Object[]{id_Liste});
-  // } catch (SQLException se) {
-  // throw new IVUFinderException(se.getMessage(), se);
-  // }
-  // }
 
 }

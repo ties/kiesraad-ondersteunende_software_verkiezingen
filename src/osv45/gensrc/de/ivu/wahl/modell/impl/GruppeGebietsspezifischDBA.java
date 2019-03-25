@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity GruppeGebietsspezifisch.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class GruppeGebietsspezifischDBA extends DBABase {
@@ -68,22 +68,43 @@ public class GruppeGebietsspezifischDBA extends DBABase {
       if ((idx = columns.get(ID_GRUPPEGEBIETSSPEZIFISCH.toUpperCase())) != null) {
          m._id_GruppeGebietsspezifisch = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPEGEBIETSSPEZIFISCH)) != null) {
+         m._id_GruppeGebietsspezifisch = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_UEBERGEORDNETEGG.toUpperCase())) != null) {
+         m._id_UebergeordneteGG = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_UEBERGEORDNETEGG)) != null) {
          m._id_UebergeordneteGG = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GEBIET.toUpperCase())) != null) {
+         m._id_Gebiet = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_GEBIET)) != null) {
          m._id_Gebiet = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTE)) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(POSITION.toUpperCase())) != null) {
          m._position = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(POSITION)) != null) {
+         m._position = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(LISTEZUGELASSEN.toUpperCase())) != null) {
+         m._listeZugelassen = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(LISTEZUGELASSEN)) != null) {
          m._listeZugelassen = r.getBoolean(idx.intValue());
       }
    }
@@ -99,22 +120,22 @@ public class GruppeGebietsspezifischDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_UEBERGEORDNETEGG.toUpperCase())) {
+      if (columns.containsKey(ID_UEBERGEORDNETEGG.toUpperCase()) || columns.containsKey(ID_UEBERGEORDNETEGG)) {
          p.setString(idx++, m._id_UebergeordneteGG);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(ID_GEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_GEBIET.toUpperCase()) || columns.containsKey(ID_GEBIET)) {
          p.setString(idx++, m._id_Gebiet);
       }
-      if (columns.containsKey(ID_LISTE.toUpperCase())) {
+      if (columns.containsKey(ID_LISTE.toUpperCase()) || columns.containsKey(ID_LISTE)) {
          p.setString(idx++, m._id_Liste);
       }
-      if (columns.containsKey(POSITION.toUpperCase())) {
+      if (columns.containsKey(POSITION.toUpperCase()) || columns.containsKey(POSITION)) {
          p.setInt(idx++, m._position);
       }
-      if (columns.containsKey(LISTEZUGELASSEN.toUpperCase())) {
+      if (columns.containsKey(LISTEZUGELASSEN.toUpperCase()) || columns.containsKey(LISTEZUGELASSEN)) {
          p.setBoolean(idx++, m._listeZugelassen);
       }
       p.setString(idx++, m._id_GruppeGebietsspezifisch);
@@ -308,6 +329,21 @@ public class GruppeGebietsspezifischDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Liste returns a {@link Collection} of GruppeGebietsspezifisch IDs
+     *
+     * @param id_Liste searching condition
+
+     * @return a {@link Collection} of GruppeGebietsspezifisch IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Liste(String id_Liste) throws SQLException {
+      return retrieveIDs(
+         "select ID_GruppeGebietsspezifisch from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Liste});
+   }
+
+   /**
      * Method retrieveIDsByID_UebergeordneteGG returns a {@link Collection} of GruppeGebietsspezifisch IDs
      *
      * @param id_UebergeordneteGG searching condition
@@ -352,21 +388,6 @@ public class GruppeGebietsspezifischDBA extends DBABase {
          "select ID_GruppeGebietsspezifisch from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Gruppe});
-   }
-
-   /**
-     * Method retrieveIDsByID_Liste returns a {@link Collection} of GruppeGebietsspezifisch IDs
-     *
-     * @param id_Liste searching condition
-
-     * @return a {@link Collection} of GruppeGebietsspezifisch IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Liste(String id_Liste) throws SQLException {
-      return retrieveIDs(
-         "select ID_GruppeGebietsspezifisch from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Liste});
    }
 
    /**

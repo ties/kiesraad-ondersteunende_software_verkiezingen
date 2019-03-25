@@ -21,7 +21,7 @@ import de.ivu.wahl.modell.ejb.RechtHome;
 /**
  * Tr�gt alle Rechte des Anwenders bei sich tr�gt und kann pr�fen, ob ein Anwender was darf ...
  * 
- * @author cos@ivu.de klie@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic P. Kliem (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class AnwRechte implements Serializable {

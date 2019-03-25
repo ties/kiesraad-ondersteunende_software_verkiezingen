@@ -25,7 +25,7 @@ import de.ivu.wahl.modell.Gebietsart;
  * Clientbean zur Beschaffung eines Navigationsbaumes. Die Arbeit wird weitgehend auf der
  * Serverseite durch. de.ivu.wahl.auswertung.NavigationHandlingBean erbracht.
  * 
- * @author bae@ivu.de Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author bae Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class NavigationBean implements Serializable {
   private static final long serialVersionUID = -8562972341530053407L;

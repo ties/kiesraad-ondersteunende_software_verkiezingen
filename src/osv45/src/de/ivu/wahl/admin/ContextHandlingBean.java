@@ -22,12 +22,11 @@ import org.apache.catalina.connector.Connector;
 import org.apache.log4j.Logger;
 
 import de.ivu.ejb.jboss.JMXInvoker;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 @Stateless
 @Local(ContextHandling.class)
@@ -38,11 +37,6 @@ public class ContextHandlingBean implements ContextHandling, Serializable {
   private static final String EXCEPTION_MSG_NO_SERVER = Messages
       .getString(MessageKeys.Msg_KonnteDieAdresseFuerDenInternenZugriffAufDenEingebettetenHTTPServerNichtErmitteln);
   private static final Object[] EMPTY_OBJECT_ARRAY = new Object[]{};
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(ContextHandlingBean.class, Log4J
-        .extractVersion("$Revision: 1.4 $"))); //$NON-NLS-1$
-  }
 
   @EJB
   private JMXInvoker _jmxInvoker;

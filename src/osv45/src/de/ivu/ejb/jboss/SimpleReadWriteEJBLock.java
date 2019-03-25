@@ -54,7 +54,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
   static final boolean DEBUG = false;
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   protected static class CompetitorRecord {
     private final Transaction _transaction;
@@ -539,7 +539,7 @@ public class SimpleReadWriteEJBLock extends BeanLockSupport {
   }
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   protected static class ReadLockReliever implements Synchronization {
     SimpleReadWriteEJBLock lock;

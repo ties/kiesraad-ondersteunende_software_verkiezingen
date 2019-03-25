@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * @author tdu@ivu.de
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class TextCellEditorWithContentProposal extends TextCellEditor {
 

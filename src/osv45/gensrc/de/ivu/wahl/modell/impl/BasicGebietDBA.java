@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Gebiet.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGebietDBA extends DBABase {
@@ -88,52 +88,103 @@ public abstract class BasicGebietDBA extends DBABase {
       if ((idx = columns.get(ID_GEBIET.toUpperCase())) != null) {
          m._id_Gebiet = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GEBIET)) != null) {
+         m._id_Gebiet = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_UEBERGEORDNETESGEBIET.toUpperCase())) != null) {
+         m._id_UebergeordnetesGebiet = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_UEBERGEORDNETESGEBIET)) != null) {
          m._id_UebergeordnetesGebiet = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_WAHL)) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_LETZTEREINGANG.toUpperCase())) != null) {
+         m._id_LetzterEingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_LETZTEREINGANG)) != null) {
          m._id_LetzterEingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ERFASSUNGSEINHEIT.toUpperCase())) != null) {
          m._erfassungseinheit = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(ERFASSUNGSEINHEIT)) != null) {
+         m._erfassungseinheit = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(WAHLEINHEIT.toUpperCase())) != null) {
+         m._wahleinheit = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(WAHLEINHEIT)) != null) {
          m._wahleinheit = r.getBoolean(idx.intValue());
       }
       if ((idx = columns.get(GEBIETSART.toUpperCase())) != null) {
          m._gebietsart = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(GEBIETSART)) != null) {
+         m._gebietsart = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(NUMMER.toUpperCase())) != null) {
+         m._nummer = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(NUMMER)) != null) {
          m._nummer = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(ROEMISCH.toUpperCase())) != null) {
          m._roemisch = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(ROEMISCH)) != null) {
+         m._roemisch = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(NAME.toUpperCase())) != null) {
+         m._name = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(NAME)) != null) {
          m._name = r.getString(idx.intValue());
       }
       if ((idx = columns.get(KUERZEL.toUpperCase())) != null) {
          m._kuerzel = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(KUERZEL)) != null) {
+         m._kuerzel = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(POSITION.toUpperCase())) != null) {
+         m._position = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(POSITION)) != null) {
          m._position = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(WAHLBERECHTIGTE.toUpperCase())) != null) {
          m._wahlberechtigte = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(WAHLBERECHTIGTE)) != null) {
+         m._wahlberechtigte = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(GUIEINGABEERLAUBT.toUpperCase())) != null) {
+         m._gUIEingabeErlaubt = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(GUIEINGABEERLAUBT)) != null) {
          m._gUIEingabeErlaubt = r.getBoolean(idx.intValue());
       }
       if ((idx = columns.get(POSTALVOTE.toUpperCase())) != null) {
          m._postalvote = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(POSTALVOTE)) != null) {
+         m._postalvote = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(VOTEVALUE.toUpperCase())) != null) {
          m._voteValue = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(VOTEVALUE)) != null) {
+         m._voteValue = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ZIPCODE.toUpperCase())) != null) {
+         m._zipcode = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ZIPCODE)) != null) {
          m._zipcode = r.getString(idx.intValue());
       }
    }
@@ -149,52 +200,52 @@ public abstract class BasicGebietDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_UEBERGEORDNETESGEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_UEBERGEORDNETESGEBIET.toUpperCase()) || columns.containsKey(ID_UEBERGEORDNETESGEBIET)) {
          p.setString(idx++, m._id_UebergeordnetesGebiet);
       }
-      if (columns.containsKey(ID_WAHL.toUpperCase())) {
+      if (columns.containsKey(ID_WAHL.toUpperCase()) || columns.containsKey(ID_WAHL)) {
          p.setString(idx++, m._id_Wahl);
       }
-      if (columns.containsKey(ID_LETZTEREINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_LETZTEREINGANG.toUpperCase()) || columns.containsKey(ID_LETZTEREINGANG)) {
          p.setString(idx++, m._id_LetzterEingang);
       }
-      if (columns.containsKey(ERFASSUNGSEINHEIT.toUpperCase())) {
+      if (columns.containsKey(ERFASSUNGSEINHEIT.toUpperCase()) || columns.containsKey(ERFASSUNGSEINHEIT)) {
          p.setBoolean(idx++, m._erfassungseinheit);
       }
-      if (columns.containsKey(WAHLEINHEIT.toUpperCase())) {
+      if (columns.containsKey(WAHLEINHEIT.toUpperCase()) || columns.containsKey(WAHLEINHEIT)) {
          p.setBoolean(idx++, m._wahleinheit);
       }
-      if (columns.containsKey(GEBIETSART.toUpperCase())) {
+      if (columns.containsKey(GEBIETSART.toUpperCase()) || columns.containsKey(GEBIETSART)) {
          p.setInt(idx++, m._gebietsart);
       }
-      if (columns.containsKey(NUMMER.toUpperCase())) {
+      if (columns.containsKey(NUMMER.toUpperCase()) || columns.containsKey(NUMMER)) {
          p.setInt(idx++, m._nummer);
       }
-      if (columns.containsKey(ROEMISCH.toUpperCase())) {
+      if (columns.containsKey(ROEMISCH.toUpperCase()) || columns.containsKey(ROEMISCH)) {
          p.setBoolean(idx++, m._roemisch);
       }
-      if (columns.containsKey(NAME.toUpperCase())) {
+      if (columns.containsKey(NAME.toUpperCase()) || columns.containsKey(NAME)) {
          p.setString(idx++, m._name);
       }
-      if (columns.containsKey(KUERZEL.toUpperCase())) {
+      if (columns.containsKey(KUERZEL.toUpperCase()) || columns.containsKey(KUERZEL)) {
          p.setString(idx++, m._kuerzel);
       }
-      if (columns.containsKey(POSITION.toUpperCase())) {
+      if (columns.containsKey(POSITION.toUpperCase()) || columns.containsKey(POSITION)) {
          p.setInt(idx++, m._position);
       }
-      if (columns.containsKey(WAHLBERECHTIGTE.toUpperCase())) {
+      if (columns.containsKey(WAHLBERECHTIGTE.toUpperCase()) || columns.containsKey(WAHLBERECHTIGTE)) {
          p.setInt(idx++, m._wahlberechtigte);
       }
-      if (columns.containsKey(GUIEINGABEERLAUBT.toUpperCase())) {
+      if (columns.containsKey(GUIEINGABEERLAUBT.toUpperCase()) || columns.containsKey(GUIEINGABEERLAUBT)) {
          p.setBoolean(idx++, m._gUIEingabeErlaubt);
       }
-      if (columns.containsKey(POSTALVOTE.toUpperCase())) {
+      if (columns.containsKey(POSTALVOTE.toUpperCase()) || columns.containsKey(POSTALVOTE)) {
          p.setBoolean(idx++, m._postalvote);
       }
-      if (columns.containsKey(VOTEVALUE.toUpperCase())) {
+      if (columns.containsKey(VOTEVALUE.toUpperCase()) || columns.containsKey(VOTEVALUE)) {
          p.setInt(idx++, m._voteValue);
       }
-      if (columns.containsKey(ZIPCODE.toUpperCase())) {
+      if (columns.containsKey(ZIPCODE.toUpperCase()) || columns.containsKey(ZIPCODE)) {
          p.setString(idx++, m._zipcode);
       }
       p.setString(idx++, m._id_Gebiet);
@@ -416,6 +467,23 @@ public abstract class BasicGebietDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_LetzterEingang returns a {@link Collection} of Gebiet IDs
+     *
+     * @param id_LetzterEingang searching condition
+
+     * @return a {@link Collection} of Gebiet IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_LetzterEingang(String id_LetzterEingang)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Gebiet from " + TABLENAME + " where ID_LetzterEingang=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_LetzterEingang});
+   }
+
+   /**
      * Method retrieveIDsByID_UebergeordnetesGebiet returns a {@link Collection} of Gebiet IDs
      *
      * @param id_UebergeordnetesGebiet searching condition
@@ -445,23 +513,6 @@ public abstract class BasicGebietDBA extends DBABase {
          "select ID_Gebiet from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Wahl});
-   }
-
-   /**
-     * Method retrieveIDsByID_LetzterEingang returns a {@link Collection} of Gebiet IDs
-     *
-     * @param id_LetzterEingang searching condition
-
-     * @return a {@link Collection} of Gebiet IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_LetzterEingang(String id_LetzterEingang)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Gebiet from " + TABLENAME + " where ID_LetzterEingang=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_LetzterEingang});
    }
 
    /**

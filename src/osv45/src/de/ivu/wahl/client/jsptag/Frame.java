@@ -10,22 +10,22 @@ import org.apache.log4j.Logger;
 import de.ivu.wahl.client.util.ClientHelper;
 
 /**
- * Erweitertes HTML-FRAME-Tag, der selbständig für die Source-URL das URL-Rewriting im ClientHelper
- * aufruft. Außerdem werden sinnvolle Vorgaben gesetzt.
+ * Erweitertes HTML-FRAME-Tag, der selbstï¿½ndig fï¿½r die Source-URL das URL-Rewriting im ClientHelper
+ * aufruft. Auï¿½erdem werden sinnvolle Vorgaben gesetzt.
  * 
- * @author Dr. Domagoj Cosic <cos@ivu.de>
+ * @author Dr. Domagoj Cosic <D. Cosic>
  */
 
 public class Frame extends TagSupport {
   private static final long serialVersionUID = -8924418570276400966L;
 
   /**
-   * Logger für diese Klasse
+   * Logger fï¿½r diese Klasse
    */
   private final static Logger LOGGER = Logger.getLogger(Frame.class);
 
   /**
-   * URL für das Frame
+   * URL fï¿½r das Frame
    */
   protected String src;
 
@@ -40,12 +40,12 @@ public class Frame extends TagSupport {
   protected String marginwidth = "0"; //$NON-NLS-1$
 
   /**
-   * Randhöhe
+   * Randhï¿½he
    */
   protected String marginheight = "0"; //$NON-NLS-1$
 
   /**
-   * Keine Größenänderung durch den Benutzer, Voreinstellung definiert
+   * Keine Grï¿½ï¿½enï¿½nderung durch den Benutzer, Voreinstellung definiert
    */
   protected boolean noresize = true;
 
@@ -70,9 +70,9 @@ public class Frame extends TagSupport {
   protected String scrolling;
 
   /**
-   * Setze URL für das Frame.
+   * Setze URL fï¿½r das Frame.
    * 
-   * @param value URL für das Frame
+   * @param value URL fï¿½r das Frame
    */
   public void setSrc(String value) {
     src = value;
@@ -97,18 +97,18 @@ public class Frame extends TagSupport {
   }
 
   /**
-   * Setze Randhöhe.
+   * Setze Randhï¿½he.
    * 
-   * @param value Randhöhe
+   * @param value Randhï¿½he
    */
   public void setMarginheight(String value) {
     marginheight = value;
   }
 
   /**
-   * Setze Verbot Größenänderung durch den Benutzer, Voreinstellung definiert.
+   * Setze Verbot Grï¿½ï¿½enï¿½nderung durch den Benutzer, Voreinstellung definiert.
    * 
-   * @param value Verbot Größenänderung durch den Benutzer, Voreinstellung definiert
+   * @param value Verbot Grï¿½ï¿½enï¿½nderung durch den Benutzer, Voreinstellung definiert
    */
   public void setNoresize(String value) {
     noresize = Boolean.valueOf(value);
@@ -216,7 +216,7 @@ public class Frame extends TagSupport {
   }
 
   /**
-   * End-Tag interpretieren. Schließt nur den FRAME-Tag ab.
+   * End-Tag interpretieren. Schlieï¿½t nur den FRAME-Tag ab.
    * 
    * @return EVAL_PAGE = setze die Seitenverarbeitung fort
    * @see javax.servlet.jsp.tagext.Tag#doEndTag()

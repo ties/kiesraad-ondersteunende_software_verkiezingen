@@ -20,7 +20,7 @@ import de.ivu.wahl.result.result.Distribution;
 /**
  * Business services with respect to seats
  * 
- * @author jon@ivu.de
+ * @author J. Nottebaum
  */
 @Stateless
 @Local(SeatsHandling.class)

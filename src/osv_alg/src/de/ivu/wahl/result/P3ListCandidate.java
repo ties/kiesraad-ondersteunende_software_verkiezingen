@@ -15,7 +15,7 @@ import de.ivu.wahl.result.i18n.Messages;
 /**
  * Pair of a Candidate and a P3List. This pair is used for drawing lots.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class P3ListCandidate implements DrawingLotsAlternative {
   private final Candidate candidate;

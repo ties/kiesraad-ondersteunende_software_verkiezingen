@@ -30,7 +30,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * With this builder the lists, groups of lists, sets of identical lists including their respective
  * _candidates can be created.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CandidatesBuilder {
   private final Election _election;
@@ -309,6 +309,8 @@ public class CandidatesBuilder {
 
   // ********* Combine lists ***************
 
+  @Deprecated
+  // Should no longer be used, see OSV-1938
   public void combineLists(final Object externalKey, final P3List... p3lists) {
     combineLists(externalKey, Arrays.asList(p3lists));
   }
@@ -316,6 +318,8 @@ public class CandidatesBuilder {
   /**
    * Method for testing only. Works only if the externalKeys are Strings.
    */
+  @Deprecated
+  // Should no longer be used, see OSV-1938
   public void combineLists(final Object externalKey, final List<String> p3listNames) {
     List<P3List> result = new ArrayList<P3List>();
     for (String p3listName : p3listNames) {
@@ -324,6 +328,8 @@ public class CandidatesBuilder {
     combineLists(externalKey, result);
   }
 
+  @Deprecated
+  // Should no longer be used, see OSV-1938
   public void combineLists(final Object externalKey, final Collection<P3List> p3lists) {
     CombinedList combinedList = new CombinedList(externalKey, p3lists);
     assert combinedList.getP3Lists().size() > 1 : Messages

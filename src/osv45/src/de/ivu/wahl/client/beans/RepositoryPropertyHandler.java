@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 
 import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.Basiseinstellung;
+import de.ivu.wahl.InputMode;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.admin.AdminHandling;
@@ -63,7 +64,7 @@ import de.ivu.wahl.util.BundleHelper;
 import de.ivu.wahl.wus.reportgen.ReportOutputFormatEnum;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class RepositoryPropertyHandler {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy"); //$NON-NLS-1$
@@ -172,8 +173,9 @@ public class RepositoryPropertyHandler {
         // Leere Eingabefelder werden als null gesetzt!
         if (wert != null && wert.trim().length() == 0) {
           if (basiseinstellung.isPflichtfeld()) {
-            _adminMsgProps += Messages.bind(MessageKeys.Error_0_mussEingetragenWerden,
-                basiseinstellung.getBeschreibung()) + Konstanten.BR;
+            String errorMsg = Messages.bind(MessageKeys.Error_0_mussEingetragenWerden,
+                basiseinstellung.getBeschreibung());
+            addErrorMessage(errorMsg);
           }
           // wert = null;
         }
@@ -184,8 +186,9 @@ public class RepositoryPropertyHandler {
           case RelURL :
           case String :
           case Textarea :
-            // steht im Schl�ssel der Property "dir" wird, falls ben�tigt, ein
-            // / angeh�ngt
+          case Option :
+            // steht im Schluessel der Property "dir" wird, falls benoetigt, ein
+            // / angehaengt
             if (property.toLowerCase().indexOf("dir") != -1) { //$NON-NLS-1$
               if (wert != null) {
                 if (!wert.endsWith("/")) { //$NON-NLS-1$
@@ -194,9 +197,9 @@ public class RepositoryPropertyHandler {
                 File file = new File(wert);
                 file.mkdirs();
                 if (!file.isDirectory()) {
-                  _adminMsgProps += Messages
-                      .bind(MessageKeys.Error_Verzeichnis_0_KonnteNichtAngelegtWerden, wert)
-                      + Konstanten.BR;
+                  String errorMsg = Messages
+                      .bind(MessageKeys.Error_Verzeichnis_0_KonnteNichtAngelegtWerden, wert);
+                  addErrorMessage(errorMsg);
                   throw new Exception(
                       Messages.getString(MessageKeys.Error_VerzeichnisNichtAngelegt));
                 }
@@ -204,16 +207,15 @@ public class RepositoryPropertyHandler {
             }
             if (basiseinstellung.getRegex() != null && !wert.matches(basiseinstellung.getRegex())) {
               String errorMsg = Messages.bind(basiseinstellung.getRegexErrorMsgKey(), wert);
-              _adminMsgProps += errorMsg + Konstanten.BR;
+              addErrorMessage(errorMsg);
               LOGGER.warn(errorMsg);
               break;
             }
             if (sessionWert == null ? wert != null : !sessionWert.equals(wert)) {
               if (wert != null && wert.length() > RepositoryModel.WERT_LENGTH) {
-                _adminMsgProps += Messages
+                addErrorMessage(Messages
                     .bind(MessageKeys.Error_FeldlaengeUeberschreitetSpaltenbreite_0,
-                        RepositoryModel.WERT_LENGTH)
-                    + Konstanten.BR;
+                        RepositoryModel.WERT_LENGTH));
               }
               adminHandling.setProperty(anwContext, property, wert);
               restart |= basiseinstellung.isRestart();
@@ -223,7 +225,7 @@ public class RepositoryPropertyHandler {
           case Integer :
             if (basiseinstellung.getRegex() != null && !wert.matches(basiseinstellung.getRegex())) {
               String errorMsg = Messages.bind(basiseinstellung.getRegexErrorMsgKey(), wert);
-              _adminMsgProps += errorMsg + Konstanten.BR;
+              addErrorMessage(errorMsg);
               LOGGER.warn(errorMsg);
               break;
             }
@@ -236,14 +238,26 @@ public class RepositoryPropertyHandler {
             } catch (Exception ex) {
               LOGGER.warn(Messages.bind(MessageKeys.Error_KeineZahl_0_ignoriert, wert));
             }
+
+            if (Konstanten.PROP_DOUBLE_INPUT.equals(property)
+                && InputMode.fromProperty(getPropertyHandling()
+                    .getProperty(Konstanten.PROP_DOUBLE_INPUT)).isSingleInput()
+                && getPropertyHandling().getBooleanProperty(Konstanten.PROP_IS_INPUT_MODE_COMPLETE)) {
+              // If single input && complete input is active, set input mode to double input
+              adminHandling.setProperty(anwContext,
+                  Konstanten.PROP_DOUBLE_INPUT,
+                  InputMode.INPUT_MODE_DOUBLE.getProperty());
+              String errorMsg = Messages
+                  .bind(MessageKeys.Error_SingleInputAndCompleteInputNotAllowed, wert);
+              LOGGER.warn(errorMsg);
+              addErrorMessage(errorMsg);
+            }
             break;
           case Date :
             try {
               if (StringUtils.isEmpty(wert)) {
                 wert = null;
               }
-              System.out
-                  .println("RepositoryPropertyHandler.handlePropEingabeAllg() date = " + wert);
               if (wert == null || Pattern.matches(DATE_REGEX, wert)) {
                 if (wert != null && !wert.isEmpty()) {
                   synchronized (DATE_FORMAT) {
@@ -255,14 +269,14 @@ public class RepositoryPropertyHandler {
                   restart |= basiseinstellung.isRestart();
                 }
               } else {
-                _adminMsgProps += Messages.bind(MessageKeys.Error_UngueltigesDatumsFormat, wert)
-                    + Konstanten.BR;
-                LOGGER.warn(Messages.bind(MessageKeys.Error_UngueltigesDatumsFormat, wert));
+                String errorMsg = Messages.bind(MessageKeys.Error_UngueltigesDatumsFormat, wert);
+                addErrorMessage(errorMsg);
+                LOGGER.warn(errorMsg);
               }
             } catch (Exception ex) {
-              _adminMsgProps += Messages.bind(MessageKeys.Error_UngueltigesDatumsFormat, wert)
-                  + Konstanten.BR;
-              LOGGER.error(Messages.bind(MessageKeys.Error_UngueltigesDatumsFormat, wert), ex);
+              String errorMsg = Messages.bind(MessageKeys.Error_UngueltigesDatumsFormat, wert);
+              addErrorMessage(errorMsg);
+              LOGGER.error(errorMsg, ex);
             }
             break;
           case Time :
@@ -278,14 +292,14 @@ public class RepositoryPropertyHandler {
                   restart |= basiseinstellung.isRestart();
                 }
               } else {
-                _adminMsgProps += Messages.bind(MessageKeys.Error_UngueltigesZeitFormat, wert)
-                    + Konstanten.BR;
-                LOGGER.warn(Messages.bind(MessageKeys.Error_UngueltigesZeitFormat, wert));
+                String errorMsg = Messages.bind(MessageKeys.Error_UngueltigesZeitFormat, wert);
+                addErrorMessage(errorMsg);
+                LOGGER.warn(errorMsg);
               }
             } catch (Exception ex) {
-              _adminMsgProps += Messages.bind(MessageKeys.Error_UngueltigesZeitFormat, wert)
-                  + Konstanten.BR;
-              LOGGER.error(Messages.bind(MessageKeys.Error_UngueltigesZeitFormat, wert), ex);
+              String errorMsg = Messages.bind(MessageKeys.Error_UngueltigesZeitFormat, wert);
+              addErrorMessage(errorMsg);
+              LOGGER.error(errorMsg, ex);
             }
             break;
 
@@ -322,14 +336,14 @@ public class RepositoryPropertyHandler {
                   restart |= basiseinstellung.isRestart();
                 }
               } else {
-                _adminMsgProps += Messages.bind(MessageKeys.Error_UngueltigesZipFormat, wert)
-                    + Konstanten.BR;
-                LOGGER.warn(Messages.bind(MessageKeys.Error_UngueltigesZipFormat, wert));
+                String errorMsg = Messages.bind(MessageKeys.Error_UngueltigesZipFormat, wert);
+                addErrorMessage(errorMsg);
+                LOGGER.warn(errorMsg);
               }
             } catch (Exception ex) {
-              _adminMsgProps += Messages.bind(MessageKeys.Error_UngueltigesZipFormat, wert)
-                  + Konstanten.BR;
-              LOGGER.error(Messages.bind(MessageKeys.Error_UngueltigesZipFormat, wert), ex);
+              String errorMsg = Messages.bind(MessageKeys.Error_UngueltigesZipFormat, wert);
+              addErrorMessage(errorMsg);
+              LOGGER.error(errorMsg, ex);
             }
             break;
 
@@ -349,6 +363,10 @@ public class RepositoryPropertyHandler {
       _adminMsgPropsConfirmation = Messages.getString(MessageKeys.Msg_ErfolgreichUebernommen);
     }
 
+  }
+
+  private void addErrorMessage(String errorMsg) {
+    _adminMsgProps += errorMsg + Konstanten.BR;
   }
 
   /**
@@ -379,6 +397,31 @@ public class RepositoryPropertyHandler {
     } else {
       throw new RuntimeException(
           Messages.getString(MessageKeys.Error_No_ReportOutputFormatEnum_Defined));
+    }
+  }
+
+  /**
+   * Use this method if the option is already stored in the database (N11)
+   */
+  protected boolean isExportForCentralCounting() {
+    return Konstanten.OPTION_CENTRAL_COUNTING.equals(getPropertyHandling()
+        .getProperty(Konstanten.PROP_EXPORTS_FOR_CENTRAL_COUNTING));
+  }
+
+  /**
+   * Use this method if the option is not yet stored in the database (N10-1)
+   */
+  protected boolean isExportForCentralCounting(HttpServletRequest request) {
+    String value = request.getParameter(ApplicationBeanKonstanten.PREFIX
+        + Konstanten.PROP_EXPORTS_FOR_CENTRAL_COUNTING);
+    if (Konstanten.OPTION_NO_CENTRAL_COUNTING.equals(value)) {
+      getPropertyHandling().setProperty(Konstanten.PROP_EXPORTS_FOR_CENTRAL_COUNTING, value);
+      return false;
+    } else if (Konstanten.OPTION_CENTRAL_COUNTING.equals(value)) {
+      getPropertyHandling().setProperty(Konstanten.PROP_EXPORTS_FOR_CENTRAL_COUNTING, value);
+      return true;
+    } else {
+      return false;
     }
   }
 

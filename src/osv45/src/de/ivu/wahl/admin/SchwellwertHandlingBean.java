@@ -37,7 +37,7 @@ import de.ivu.wahl.modell.ejb.SchwellwertHome;
 /**
  * Session Bean f�r die Manipulation der Schwellwerte
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 @Stateless
 @Local(SchwellwertHandling.class)
@@ -48,11 +48,6 @@ public class SchwellwertHandlingBean extends WahlStatelessSessionBeanBase
   private static final long serialVersionUID = 7736482281411444271L;
 
   private static final Category LOGGER = Log4J.configure(SchwellwertHandlingBean.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(SchwellwertHandlingBean.class, Log4J
-        .extractVersion("$Revision: 1.10 $"))); //$NON-NLS-1$
-  }
 
   @EJB
   private StateHandling _stateHandling;
@@ -71,9 +66,8 @@ public class SchwellwertHandlingBean extends WahlStatelessSessionBeanBase
     try {
       WahlInfo.getWahlInfo(c).getWahl().readLock();
       String id_Gebiet = getID_Wurzelgebiet(c);
-      SchwellwertHome.HomeFinder.findHome(this).findByGruppeAndGebietAndName(id_Partei,
-          id_Gebiet,
-          name).remove();
+      SchwellwertHome.HomeFinder.findHome(this)
+          .findByGruppeAndGebietAndName(id_Partei, id_Gebiet, name).remove();
       writeAppLog(c, Messages.bind(MessageKeys.Error_Schwellwert_0_FuerPartei_1_in_2_geloescht,
           name,
           id_Partei,
@@ -111,9 +105,8 @@ public class SchwellwertHandlingBean extends WahlStatelessSessionBeanBase
       int schwellwertart = sw.getArtSchwellwert(schwellwertKey);
       sw.setSchwellwertart(schwellwertart);
       sw.setID_Wahl(c.getID_Wahl());
-      writeAppLog(c, Messages.bind(MessageKeys.Error_Schwellwert_0_auf_1_geaendert,
-          schwellwertKey,
-          wert));
+      writeAppLog(c,
+          Messages.bind(MessageKeys.Error_Schwellwert_0_auf_1_geaendert, schwellwertKey, wert));
     } catch (CreateException ce) {
       throw new EJBException(Messages.getString(MessageKeys.Error_FehlerBeimAnlegen), ce);
     }

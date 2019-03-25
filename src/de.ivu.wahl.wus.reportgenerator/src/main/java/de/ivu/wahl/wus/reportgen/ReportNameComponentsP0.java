@@ -14,7 +14,7 @@ import nu.xom.Document;
 /**
  * To create an instance, use one of the factory methods.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReportNameComponentsP0 extends AbstractReportNameComponents {
 

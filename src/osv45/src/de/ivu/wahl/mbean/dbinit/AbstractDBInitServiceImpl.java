@@ -25,16 +25,22 @@ import de.ivu.util.misc.CharacterStreamCopy;
 /**
  * Database Initialisation
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class AbstractDBInitServiceImpl implements DBInitService {
   private static final Logger LOGGER = Logger.getLogger(AbstractDBInitServiceImpl.class);
 
+  private static final String JDBC_DERBY = "jdbc:derby:"; //$NON-NLS-1$
+  private static final String CREATE_SCRIPT_DERBY = "create_db_derby.sql"; //$NON-NLS-1$
+  private static final String CREATE_SCRIPT_MYSQL = "create_db_mysql.sql"; //$NON-NLS-1$
+
+  @Override
   public void start() throws Exception {
     try {
       DataSource ds = (DataSource) EJBUtil.getInitialContext()
           .lookup("java:/jdbc/wahlDB-" + EJBUtil.getInstallationSpecificAffix()); //$NON-NLS-1$
       Connection connection = ds.getConnection();
+      boolean isDerby = connection.getMetaData().getURL().startsWith(JDBC_DERBY);
       try {
         Statement statement = connection.createStatement();
         try {
@@ -43,16 +49,22 @@ public abstract class AbstractDBInitServiceImpl implements DBInitService {
         } catch (Exception e) {
           // load database script
           StringWriter sw = new StringWriter();
+          String scriptName = isDerby ? CREATE_SCRIPT_DERBY : CREATE_SCRIPT_MYSQL;
           Reader reader = new InputStreamReader(getClass().getClassLoader()
-              .getResourceAsStream("create_db_derby.sql")); //$NON-NLS-1$
+              .getResourceAsStream(scriptName));
           CharacterStreamCopy.copy(reader, sw);
           reader.close();
           sw.close();
           for (String line : sw.toString().split(";")) { //$NON-NLS-1$
-            LOGGER.info(line);
+            String lineOutput = line;
+            int index = lineOutput.indexOf("derby.user.APP"); //$NON-NLS-1$
+            if (index > 0) {
+              lineOutput = line.substring(0, index) + "derby.user.APP', '<password>')"; //$NON-NLS-1$
+            }
+            LOGGER.info(lineOutput);
             statement.execute(line);
           }
-          LOGGER.info("Database schema succesfully created");
+          LOGGER.info("Database schema succesfully created"); //$NON-NLS-1$
         } finally {
           statement.close();
         }

@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * This is a resizable dialog
  * 
- * @author mike@ivu.de, IVU Traffic Technologies AG
+ * @author Mike Gro., IVU Traffic Technologies AG
  */
 public class ResizableDialog extends Dialog {
 

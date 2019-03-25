@@ -19,7 +19,7 @@ import de.ivu.wahl.result.result.CandidateResult;
  * Helper class that implements the part of the algorithm that deals with candidates that are
  * elected on more than one P3-list.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class MultipleElectedCandidate implements Comparable<MultipleElectedCandidate> {
   private final Candidate candidate;

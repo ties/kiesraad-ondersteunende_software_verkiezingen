@@ -17,7 +17,7 @@ import javax.ejb.ObjectNotFoundException;
 import de.ivu.ejb.IVUFinderException;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class GruppeBean extends BasicGruppeBean {
   private static final long serialVersionUID = 6622995079828863472L;

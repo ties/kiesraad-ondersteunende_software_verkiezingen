@@ -31,15 +31,12 @@ import de.ivu.wahl.modell.ejb.GruppeHome;
 /**
  * GruppenInfo
  * 
- * @author ugo@ivu.de cos@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller D. Cosic, IVU Traffic Technologies AG
  * @since 25.11.2003
  */
 public class GruppenInfo implements Serializable, Cloneable {
   private static final long serialVersionUID = 6853382423533077808L;
   private static final Category LOGGER = Log4J.configure(GruppenInfo.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(GruppenInfo.class, Log4J.extractVersion("$Revision: 1.8 $"))); //$NON-NLS-1$
-  }
 
   private final Map<GGKey, Integer> _gruppePositionBySchluesselGebietsnummerUndArt = new HashMap<GGKey, Integer>();
   private final Map<GGKey, Integer> _gruppeSchluesselByPositionGebietsnummerUndArt = new HashMap<GGKey, Integer>();
@@ -119,8 +116,8 @@ public class GruppenInfo implements Serializable, Cloneable {
     GGKey key = new GGKey(gruppe, gebietsart, gebietsnummer);
     Integer position = _gruppePositionBySchluesselGebietsnummerUndArt.get(key);
     if (position == null) {
-      throw new EJBException(Messages
-          .bind(MessageKeys.Error_KeineGueltigeGruppeOderGebietsnummerArtGruppe_0_In_1,
+      throw new EJBException(
+          Messages.bind(MessageKeys.Error_KeineGueltigeGruppeOderGebietsnummerArtGruppe_0_In_1,
               gruppe,
               gebietsnummer));
     }
@@ -132,8 +129,8 @@ public class GruppenInfo implements Serializable, Cloneable {
     GGKey key = new GGKey(position, gebietsart, gebietsnummer);
     Integer schluessel = _gruppeSchluesselByPositionGebietsnummerUndArt.get(key);
     if (schluessel == null) {
-      throw new EJBException(Messages
-          .bind(MessageKeys.Error_KeineGueltigePositionOderGebietsnummerArtPosition_0_In_1,
+      throw new EJBException(
+          Messages.bind(MessageKeys.Error_KeineGueltigePositionOderGebietsnummerArtPosition_0_In_1,
               position,
               gebietsnummer));
     }

@@ -17,7 +17,7 @@
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.auswertung.AuswertungHandling"%>
+<%@ page import="de.ivu.wahl.anwender.Rechte"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.eingang.GUIEingangMsg"%>
@@ -46,25 +46,25 @@
  * Enthält die Prüfung, ob eine Wahleinheit zum Ausbleiben oder zur Nachwahl markiert ist.
  * Hat der Anwender nicht das entsprechende Recht, erhält er den entsprechenden Hinweis
  *
- * author:  mur@ivu.de bae@ivu.de cos@ivu.de Copyright (c) 2004-10 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield, bae, D. Cosic Copyright (c) 2004-10 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
-String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
-String helpKey = "gebietErg"; //$NON-NLS-1$
+   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+   String breite ="100%"; //$NON-NLS-1$
+   String helpKey = "gebietErg"; //$NON-NLS-1$
    
+   SystemInfo systemInfo = SystemInfo.getSystemInfo();
    WahlInfo wahlInfo = appBean.getWahlInfo();
-   Logger log = Logger.getLogger("jsp.gebietErgebnisEK");
+   Logger log = Logger.getLogger("jsp.gebietErgebnisEK"); //$NON-NLS-1$
 
    GebietsBaum gebietsBaum = appBean.getGebietsBaum();
    GebietInfo rootInfo = (GebietInfo)gebietsBaum.getWurzel().getUserObject();
    int gebietsArt = ClientHelper.getLevel(request, rootInfo.getGebietsart());
    int nr = ClientHelper.getGebietNr(request, rootInfo.getNummer());  
-   String breite ="100%";
-
-   AuswertungHandling ah = appBean.getAuswertungHandling();
 
    // Ergebnis abholen
    DefaultMutableTreeNode node = gebietsBaum.getGebietsNode(gebietsArt, nr);
@@ -88,13 +88,22 @@ String helpKey = "gebietErg"; //$NON-NLS-1$
    if (gebietInfo.getStatusLetzterEingang() == ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK) {
       isFirstInput = true;
    }
+   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
    String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKonstanten.GEBE, true);
    %>
 
+<c:set var="systemInfo" value="<%= systemInfo %>" scope="page"/>
 <c:set var="gebietInfo" value="<%= gebietInfo %>" scope="page"/>
 <c:set var="infoText" value="<%= infoText %>" scope="page"/>
 <c:set var="confirmationText" value="<%= confirmationText %>" scope="page"/>
-<c:set var="isShowButtonToGebietEingang" value="<%= isErfassungseinheit && isFirstInput %>" scope="page"/>
+
+<c:set var="ersterErfasser" value="${gebietInfo.ersterErfasser}" scope="page"/>
+<c:set var="aktuellerErfasser" value="${appBean.anwContext.anmeldename}" scope="page"/>
+<c:set var="isDoubleInput" value="${not systemInfo.singleInput}" scope="page"/>
+<c:set var="isZweiterErfasserGleichErsterErfasser" value="${isDoubleInput && ersterErfasser == aktuellerErfasser}" scope="page"/>
+<c:set var="isErfassungseinheit" value="<%= isErfassungseinheit %>" scope="page"/>
+<c:set var="isFirstInput" value="<%= isFirstInput %>" scope="page"/>
+<c:set var="isShowButtonToGebietEingang" value="${isErfassungseinheit && isFirstInput && hatRechtFuerErfassung && not isZweiterErfasserGleichErsterErfasser}" scope="page"/>
 
 <html>
 <head>
@@ -134,21 +143,15 @@ String helpKey = "gebietErg"; //$NON-NLS-1$
          <td></td>
       </tr>
    </c:if>
-      <c:if test="${isShowButtonToGebietEingang}">
+   <c:if test="${isShowButtonToGebietEingang}">
       <tr>
          <td></td>
          <td style="padding-top: 20px; padding-bottom: 30px;">
-            <c:if test="${gebietInfo.vollstaendig}">
-               <ivu:int key="NeueErsteingabeAbgeschlossen"/>
-            </c:if>
-            <c:if test="${!gebietInfo.vollstaendig}">
-               <ivu:int key="ErsteingabeAbgeschlossen"/>
-            </c:if>
             <ivu:a href="<%= urlToGebietEingang %>" id="box2a" style="cursor:pointer" target="_top"><%= BundleHelper.getBundleString("Zweiteingabe") %></ivu:a>
          </td>
          <td></td>
       </tr>
-      </c:if>
+   </c:if>
    <tr>
       <td width="10"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
       <td valign="top" colspan="2">
@@ -159,7 +162,7 @@ String helpKey = "gebietErg"; //$NON-NLS-1$
                      <tr class="hgeeeeee">
                         <td width="5" height="18">&nbsp;</td>
                         <td><b><%=ClientHelper.forHTML(gebietInfo.getCompleteDisplay(", "))%></b></td>
-                        <td align="right"><b><%= wahlInfo.getWahlName() %></b></td>
+                        <td align="right"><b><%= ClientHelper.forHTML(wahlInfo.getWahlName()) %></b></td>
                         <td width="5" height="18">&nbsp;</td>
                      </tr>
                      <tr>
@@ -168,7 +171,6 @@ String helpKey = "gebietErg"; //$NON-NLS-1$
                      <tr>
                         <td colspan="4"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="5"></td>
                      </tr>
-                     
                      <tr>
                         <td width="5"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
                         <td colspan="2" valign="top">
@@ -215,7 +217,7 @@ String helpKey = "gebietErg"; //$NON-NLS-1$
                                                     <img src="<%= request.getContextPath() %>/img/icon/warnung.gif" width="20" height="20" alt="<%= BundleHelper.getBundleString("Warnung")%>" align="middle">
                                                  </td>
                                                  <td>
-                                                    <font color="red"><%= gruppefehler %></font>
+                                                    <font color="red"><%= ClientHelper.forHTML(gruppefehler) %></font>
                                                  </td>
                                              </tr>
                                            </table>
@@ -246,12 +248,12 @@ String helpKey = "gebietErg"; //$NON-NLS-1$
                                             <td>&nbsp;</td>
                                          </tr><%
                                          first = false;
-                                     }
-                                     if (isVisible) {
-                                        j=-j;
-                                     }
-                                   }
-                                 }
+                                         }
+                                      if (isVisible) {
+                                         j=-j;
+                                      }
+                                    }
+                                  }
                               %>
                            </table>
                         </td>

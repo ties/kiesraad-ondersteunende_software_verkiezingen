@@ -20,7 +20,7 @@ import de.ivu.wahl.modell.RechtegruppeModel;
  * werden. Zus�tzlich finden sich weitere n�tzlichen Methoden, die kein "nat�rliches" Pl�tzchen
  * gefunden haben
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface AdminHandling {
 
@@ -165,5 +165,12 @@ public interface AdminHandling {
   void deleteGebiet(String idGebiet) throws EJBException;
 
   void updatePollingStations(Collection<GebietModel> pollingStations);
+
+  /**
+   * Re-creates the indexes of the table stimmergebnis
+   * 
+   * @return
+   */
+  public boolean reIndexStimmergebnis();
 
 }

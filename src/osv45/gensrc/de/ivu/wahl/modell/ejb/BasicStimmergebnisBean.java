@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Stimmergebnis as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicStimmergebnisBean extends BMPBeanBase implements EntityBean, StimmergebnisModel {
@@ -119,6 +119,22 @@ public abstract class BasicStimmergebnisBean extends BMPBeanBase implements Enti
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Ergebniseingang ID of the objects to be searched
+     * @return  {@link Collection} of the found Stimmergebnis-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
+      try {
+         return StimmergebnisDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_GruppeGebietsspezifisch ID of the objects to be searched
      * @return  {@link Collection} of the found Stimmergebnis-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -158,22 +174,6 @@ public abstract class BasicStimmergebnisBean extends BMPBeanBase implements Enti
    public Collection<String> ejbFindAllByListenkandidatur(String id_Listenkandidatur) throws IVUFinderException {
       try {
          return StimmergebnisDBA.retrieveIDsByID_Listenkandidatur(id_Listenkandidatur);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Ergebniseingang ID of the objects to be searched
-     * @return  {@link Collection} of the found Stimmergebnis-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
-      try {
-         return StimmergebnisDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -292,6 +292,12 @@ public abstract class BasicStimmergebnisBean extends BMPBeanBase implements Enti
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_Ergebniseingang()) {
+         _ergebniseingang = null;
+         _relchk_Ergebniseingang = true;
+      } else {
+         _relchk_Ergebniseingang = false;
+      }
       if (null == _details.getID_GruppeGebietsspezifisch()) {
          _gruppeGebietsspezifisch = null;
          _relchk_GruppeGebietsspezifisch = true;
@@ -310,20 +316,14 @@ public abstract class BasicStimmergebnisBean extends BMPBeanBase implements Enti
       } else {
          _relchk_Listenkandidatur = false;
       }
-      if (null == _details.getID_Ergebniseingang()) {
-         _ergebniseingang = null;
-         _relchk_Ergebniseingang = true;
-      } else {
-         _relchk_Ergebniseingang = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _ergebniseingang = null;
       _gruppeGebietsspezifisch = null;
       _gebiet = null;
       _listenkandidatur = null;
-      _ergebniseingang = null;
    }
 
    /**
@@ -513,6 +513,52 @@ public abstract class BasicStimmergebnisBean extends BMPBeanBase implements Enti
    }
 
    /**
+     * Relation zu Ergebniseingang
+     */
+   protected Ergebniseingang _ergebniseingang;
+
+   /**
+     * Flag for the validity of the relation Ergebniseingang
+     */
+   protected boolean _relchk_Ergebniseingang = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Ergebniseingang}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Ergebniseingang getErgebniseingang() throws EJBException {
+      if (!_relchk_Ergebniseingang) {
+         if (null == _details.getID_Ergebniseingang()) {
+            _ergebniseingang = null;
+         } else if (null == _ergebniseingang || !_ergebniseingang.getPrimaryKey().equals(_details.getID_Ergebniseingang())) {
+            try {
+               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
+               _ergebniseingang = home.findByPrimaryKey(_details.getID_Ergebniseingang());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Ergebniseingang", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Ergebniseingang = true;
+      }
+      return _ergebniseingang;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Ergebniseingang}
+     *
+     * @param ergebniseingang the corresponding EJBObject
+     */
+   public void setErgebniseingang(Ergebniseingang ergebniseingang) {
+      if (_readOnly) { throw new EJBException("StimmergebnisBean is in read-only mode");} //$NON-NLS-1$
+      _ergebniseingang = ergebniseingang;
+      _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
+   }
+
+   /**
      * Relation zu GruppeGebietsspezifisch
      */
    protected GruppeGebietsspezifisch _gruppeGebietsspezifisch;
@@ -648,52 +694,6 @@ public abstract class BasicStimmergebnisBean extends BMPBeanBase implements Enti
       if (_readOnly) { throw new EJBException("StimmergebnisBean is in read-only mode");} //$NON-NLS-1$
       _listenkandidatur = listenkandidatur;
       _details.setID_Listenkandidatur(listenkandidatur == null ? null : (String)listenkandidatur.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu Ergebniseingang
-     */
-   protected Ergebniseingang _ergebniseingang;
-
-   /**
-     * Flag for the validity of the relation Ergebniseingang
-     */
-   protected boolean _relchk_Ergebniseingang = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Ergebniseingang}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Ergebniseingang getErgebniseingang() throws EJBException {
-      if (!_relchk_Ergebniseingang) {
-         if (null == _details.getID_Ergebniseingang()) {
-            _ergebniseingang = null;
-         } else if (null == _ergebniseingang || !_ergebniseingang.getPrimaryKey().equals(_details.getID_Ergebniseingang())) {
-            try {
-               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
-               _ergebniseingang = home.findByPrimaryKey(_details.getID_Ergebniseingang());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Ergebniseingang", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Ergebniseingang = true;
-      }
-      return _ergebniseingang;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Ergebniseingang}
-     *
-     * @param ergebniseingang the corresponding EJBObject
-     */
-   public void setErgebniseingang(Ergebniseingang ergebniseingang) {
-      if (_readOnly) { throw new EJBException("StimmergebnisBean is in read-only mode");} //$NON-NLS-1$
-      _ergebniseingang = ergebniseingang;
-      _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
    }
 
    /**

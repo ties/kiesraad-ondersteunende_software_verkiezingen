@@ -31,7 +31,7 @@ import de.ivu.wahl.result.drawlots.DrawingLotsAlternative;
  * <li>In case a decision by lot needs to be made: Type of decision and alternatives to draw from.</li>
  * </ul>
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ElectionResult {
 

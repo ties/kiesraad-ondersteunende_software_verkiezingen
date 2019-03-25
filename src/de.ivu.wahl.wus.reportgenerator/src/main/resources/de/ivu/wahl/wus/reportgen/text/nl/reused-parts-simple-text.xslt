@@ -6,17 +6,12 @@
     <xsl:param name="RP_ChapterElection_HetGaatOmKandidatenlijst" select="'Het gaat om de kandidatenlijst voor de verkiezing van:'" />
     <xsl:param name="RP_ChapterElection_VoorDeProvincie" select="' voor de provincie '" />
 
-    <xsl:param name="RP_ChapterStemming_Stemming" select="'Stemming'" />
-    <xsl:param name="RP_ChapterStemming_deVerkiezingVan" select="'de verkiezing van '" />
-    <xsl:param name="RP_ChapterStemming_het" select="'het '" />
-    <xsl:param name="RP_ChapterStemming_referendum" select="'referendum '" />
-    <xsl:param name="RP_ChapterStemming_over" select="'over '" />
-    <xsl:param name="RP_ChapterStemming_DitProcesVerbaalHeeftBetrekkingOp" select="'Dit proces-verbaal heeft betrekking op:'" />
-    <xsl:param name="RP_ChapterStemming_HetGaatOmVerkiezingVanLeden" select="'Het gaat om de verkiezing van de leden van:'" />
-    <xsl:param name="RP_ChapterStemming_VoorDeProvincie" select="' voor de provincie '" />
-
     <xsl:param name="RP_ChapterPartyName_AanduidingVan" select="'Aanduiding van de politieke groepering'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_H3" select="'Aanduiding van de politieke groepering'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_H3_2" select="'Aanduiding van de politieke groeperingen'" />
     <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC" select="'Aanduiding van de (politieke) groepering'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC_H3" select="'Aanduiding van de (politieke) groepering'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC_H3_2" select="'Aanduiding van de (politieke) groeperingen'" />
     <xsl:param name="RP_ChapterPartyName_AanduidingBoven" select="'Aanduiding boven de kandidatenlijst: '" />
     <xsl:param name="RP_ChapterPartyName_geregistreerdeAanduiding" select="'De geregistreerde aanduiding van de politieke groepering: '" />
     <xsl:param name="RP_ChapterPartyName_samengevoegdeAanduiding" select="'De samengevoegde aanduiding van de politieke groeperingen: '" />
@@ -107,9 +102,6 @@
     <xsl:param name="RP_FooterWithHashcode_hashcode" select="'SHA-256-Hashcode: '" />
 
     <xsl:param name="RP_CombinedList_en" select="'en '" />
-
-    <xsl:param name="RP_CombinedListI17_lijst" select="'- Lijst '" />
-    <xsl:param name="RP_CombinedListI17_enLijst" select="' en lijst '" />
 
     <xsl:param name="RP_CombinedList2_en" select="'en '" />
     <xsl:param name="RP_CombinedList2_lijst" select="' (lijst '" />

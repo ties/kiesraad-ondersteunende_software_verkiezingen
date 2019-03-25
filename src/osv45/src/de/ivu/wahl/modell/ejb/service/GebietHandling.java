@@ -13,7 +13,7 @@ import de.ivu.wahl.modell.ejb.Gebiet;
 /**
  * SessionBean interface for business services related to the entities {@link Gebiet}
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface GebietHandling {
 

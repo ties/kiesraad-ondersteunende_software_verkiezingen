@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+		xNL: eXtensible Name Language
+		This is an XML document type definition (DTD) for defining name(s).
+		A name is defined for "A Person" or "An Organisation".
+		An Organisation can be: Company, Institution, School, Club, a group, etc
+		Date of Original Creation of xNL: 1 March 2001 
+		Copyright(c) 2000, OASIS. All Rights Reserved [http://www.oasis-open.org]
+		Contact: Customer Information Quality Technical Committee, OASIS
+		Version: 2.0 [MAJOR RELEASE] - Creation Date: 01 May 2002
+		Last Update: 24 July 2002
+		Last Modified By: Ram Kumar
+		Previous Version: 1.1
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!-- Attribute "Code" is used throughout the DTD. Code indicates name element code defined by postal standard 
+	 groups like ECCMA, ADIS, UN/PROLIST for postal services. -->
+	 
+<!--Root element.-->
+<!ELEMENT xNL (NameDetails+)>
+<!--Version: DTD version. This attribute is not used for schema and exists only for 
+	DTD compatibility.-->
+<!ATTLIST xNL			Version						CDATA #FIXED "2.0">
+
+<!--Name or part of the name as a free format text. If the name structure has to be broken down into 
+	individual elements, use PersonName Container.-->
+<!ELEMENT NameLine (#PCDATA)>
+<!--Type: Type of data defined as a free format text. Example: Former name, Nick name, Known as, etc. or 
+		  anything else to help identify the line as part of the name.-->
+<!--NameType: Clarifies the meaning of the element. Example: First Name can be Christian name, Given name, 
+			  first name, etc. -->
+<!ATTLIST NameLine
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!--Container for defining the name of a Person or an Organisation-->
+<!ELEMENT NameDetails ((NameLine+ | PersonName | JointPersonName | OrganisationNameDetails)?, AddresseeIndicator?, 
+					    Function?, DependencyName?)>
+<!--PartyType: Indicates the type of entity i.e described namely, Person or an Organisation. 
+	Uses only two values namely, "Person" or "Organisation".-->
+<!--NameDetailsKey: Key identifier for the element for not reinforced references from other elements. 
+					Not required to be unique for the document to be valid, but application may get confused if 
+					not unique. Extend this schema adding unique contraint if needed. -->
+<!ATTLIST NameDetails
+	PartyType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+	NameDetailsKey CDATA #IMPLIED
+>
+
+<!--Function of the Person defined. Example: Managing Director, CEO, Marketing Manager, etc.-->
+<!ELEMENT Function (#PCDATA)>
+<!ATTLIST Function
+	Code CDATA #IMPLIED
+>
+
+<!--Specific for name and address where the addressee is specified. eg. ATTENTION, ter attentie van (in Holland), etc-->
+<!ELEMENT AddresseeIndicator (#PCDATA)>
+<!--Code: Indicates the name element code defined by postal standard groups like ECCMA, ADIS, UN/PROLIST 
+		  for postal services.-->
+<!ATTLIST AddresseeIndicator
+	Code CDATA #IMPLIED
+>
+<!--Use this element to specify every member separately.-->
+<!ELEMENT PersonName (NameLine*, PrecedingTitle*, Title*, FirstName*, MiddleName*, NamePrefix?, 
+					  LastName*, OtherName*, Alias*, GenerationIdentifier*, Suffix*, GeneralSuffix?, 
+					  FormerName*, KnownAs*)>
+<!--Type: Type of Name of a person. Example: Full name, Former Name, Known As, etc.-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. The referenced 
+					   element may be out of the document and the document is still valid. -->
+<!ATTLIST PersonName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+>
+
+<!--His Excellency,Estate of the Late ...-->
+<!ELEMENT PrecedingTitle (#PCDATA)>
+<!--Type: Type of Preceding Title. Example:  Honarary title.-->
+<!ATTLIST PrecedingTitle
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Greeting title. Example: Mr, Dr, Ms, Herr, etc. Can have multiple titles.-->
+<!ELEMENT Title (#PCDATA)>
+<!--Type: Type of Title. Example: Plural Titles such as MESSRS, Formal Degree, Honarary Degree, etc-->
+<!ATTLIST Title
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- Represents the position of the name in a name string. Can be Given Name, Christian Name, 
+	 Surname, family name, etc. Use the attribute "NameType" to define what type this name is.-->
+<!ELEMENT FirstName (#PCDATA)>
+<!--Type: Type of first name. Example: Official, Un-official, abbreviation, initial, etc-->
+<!--NameType: Defines the name type of first name. Example: Given Name, Christian Name, Father's Name, 
+			  etc. In some countries, First name could be a Family Name or a SurName-->
+<!ATTLIST FirstName
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Defines the position of the name in the name string. Middle name (essential part of the name 
+	for many nationalities). Example: Sakthi in "Nivetha Sakthi Shantha". Can have multiple middle names.-->
+<!ELEMENT MiddleName (#PCDATA)>
+<!--Type: Type of middle name. Example: Official, Un-official, abbreviation, initial, etc-->
+<!--NameType: Defines the name type of Middle Name. Example: First name, middle name, maiden name, 
+			  father's name, given name, etc.-->
+<!ATTLIST MiddleName
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--de, van, van de, von, etc. Example: Derick de Clarke-->
+<!ELEMENT NamePrefix (#PCDATA)>
+<!--Type: Type of last name prefix. Example: Official, Un-official, abbreviation, initial, etc--> 
+<!--NameType: efines the type of name associated with the NamePrefix. For example the type of name 
+	is LastName and this prefix is the prefix for this last name.-->
+<!ATTLIST NamePrefix
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- Represents the position of the name in a name string. Can be Given Name, Christian Name, 
+	 Surname, family name, etc. Use the attribute "NameType" to define what type this name is.-->
+<!ELEMENT LastName (#PCDATA)>
+<!--Type: Type of last name. Example: Official, Un-official, abbreviation, initial, etc-->
+<!--NameType: Defines the name type of Last Name. Example: Father's name, Family name, Sur Name, 
+	Mother's Name, Given name, Christian name etc. In some countries, Last name could be the given 
+	name or first name.--> 
+<!ATTLIST LastName
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--All other names, e.g.: Yousuf Khan al Hatab al Sayad-->
+<!ELEMENT OtherName (#PCDATA)>
+<!--Type: Type of Other name. Example: Official, Un-official, abbreviation, initial, etc-->
+<!--NameType: Defines the name type of Other Name. Example: Maiden Name, Patronymic name, Matronymic name, etc--> 
+<!ATTLIST OtherName
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Nick Name, Pet name, etc..-->
+<!ELEMENT Alias (#PCDATA)>
+<!--Type: Type of Alias. Example: Official, UnOfficial, Close Circle, etc-->
+<!--NameType: Defines the name type of Alias. Example: Nick Name, Pet Name, etc-->
+<!ATTLIST Alias
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Jnr, Thr Third, III-->
+<!ELEMENT GenerationIdentifier (#PCDATA)>
+<!--Type: Defines the type of generation identifier. Example: Family Titles-->
+<!ATTLIST GenerationIdentifier
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Could be compressed initials - PhD, VC, QC-->
+<!ELEMENT Suffix (#PCDATA)>
+<!--Type: Defines the type of Suffix. Example: Compressed Initials, Full suffixes, etc-->
+<!ATTLIST Suffix
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Deceased, Retired ...-->
+<!ELEMENT GeneralSuffix (#PCDATA)>
+<!--Type: Defines the type of General Suffix. Example: Employment Status, Living Status, etc-->
+<!ATTLIST GeneralSuffix
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Example: maiden name-->
+<!ELEMENT FormerName (NameLine*, PrecedingTitle*, Title*, FirstName*, MiddleName*, NamePrefix?, 
+					   LastName*, OtherName*, Alias*, GenerationIdentifier*, Suffix*, GeneralSuffix?)>
+<!--Type: Type of Name of a person. Example: Full name, Former Name, Known As, etc.-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. The referenced element 
+			may be out of the document and the document is still valid.-->
+<!--ValidFrom: The first date when the name is valid. Inclusive.-->
+<!--ValidTo: The last date when the name is valid. Inclusive.-->
+<!ATTLIST FormerName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+	ValidFrom CDATA #IMPLIED
+	ValidTo CDATA #IMPLIED
+>
+<!--Sometimes the same person is known under different unofficial or official names-->
+<!ELEMENT KnownAs ((NameLine*, PrecedingTitle*, Title*, FirstName*, MiddleName*, NamePrefix?, 
+					LastName*, OtherName*, Alias*, GenerationIdentifier*, Suffix*, GeneralSuffix?))>
+<!--Type: Type of Name of a person. Example: Full name, Former Name, Known As, etc.-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. The referenced 
+			element may be out of the document and the document is still valid.-->
+<!--ValidFrom: The first date when the name is valid. Inclusive.-->
+<!--ValidTo: The last date when the name is valid. Inclusive.-->
+<!ATTLIST KnownAs
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+	ValidFrom CDATA #IMPLIED
+	ValidTo CDATA #IMPLIED
+>
+<!--A container to define more than one person name. Example: Mrs Mary Johnson and Mr.Patrick Johnson-->
+<!ELEMENT JointPersonName ((NameLine+ | PersonName+))>
+<!--JointNameConnector: The connector used to join more than one person name. Example: Mr Hunt AND 
+	Mrs Clark, where AND is the JointNameConnector-->
+<!ATTLIST JointPersonName
+	JointNameConnector CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!--A container for organisation name details.-->
+<!ELEMENT OrganisationNameDetails ((NameLine*, OrganisationName*, OrganisationType*), 
+								   (OrganisationFormerName*, OrganisationKnownAs*))>
+<!--Type: Type of Organisation Name. Example: Former name, Known as, etc-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. The 
+			referenced element may be out of the document and the document is still valid.-->
+<!ATTLIST OrganisationNameDetails
+	Type CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+>
+<!--Name of the organisation. Example: MSI Business Solutions in "MSI Business Solutions Pty. Ltd" or the 
+	whole name itself -->
+<!ELEMENT OrganisationName (#PCDATA)>
+<!--Type: Type of Organisation name. Example: Official, Legal, Un-official, etc-->
+<!--NameType: Defines the name type of the Organisation name. Example: Former name, new name, abbreviated name etc.-->
+<!ATTLIST OrganisationName
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Indicates the legal status of an organisation. Example: Pty, Ltd, GmbH, etc. Pty. Ltd. in "XYZ Pty. Ltd"-->
+<!ELEMENT OrganisationType (#PCDATA)>
+<!--Type: Defines the Type of Organisation Type. Example: Abbreviation, Legal Type, etc.-->
+<!--NameType: Defines the name type of Organisation Type. Example: Private, Public, proprietary, etc.-->
+<!ATTLIST OrganisationType
+	Type CDATA #IMPLIED
+	NameType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Name history for the organisation-->
+<!ELEMENT OrganisationFormerName ((NameLine*, OrganisationName*, OrganisationType*))>
+<!--Type: Type of Organisation Name. Example: Former name, Known as, etc-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. The referenced 
+			element may be out of the document and the document is still valid.-->
+<!--ValidFrom: The first date when the name is valid. Inclusive.-->
+<!--ValidTo: The last date when the name is valid. Inclusive.-->
+<!ATTLIST OrganisationFormerName
+	Type CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+	ValidFrom CDATA #IMPLIED
+	ValidTo CDATA #IMPLIED
+>
+<!--Any other names the organisation can be known under.-->
+<!ELEMENT OrganisationKnownAs ((NameLine*, OrganisationName*, OrganisationType*))>
+<!--Type: Type of Organisation Name. Example: Former name, Known as, etc-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. The referenced 
+			element may be out of the document and the document is still valid.-->
+<!--ValidFrom: The first date when the name is valid. Inclusive.-->
+<!--ValidTo: The last date when the name is valid. Inclusive.-->
+<!ATTLIST OrganisationKnownAs
+	Type CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+	ValidFrom CDATA #IMPLIED
+	ValidTo CDATA #IMPLIED
+>
+
+<!--Container for a name of a dependent person or organisation. Example: Ram Kumar, C/O MSI Business Solutions-->
+<!ELEMENT DependencyName ((NameLine+ | PersonName | JointPersonName | OrganisationNameDetails))>
+<!--PartyType: Indicates the type of entity i.e described namely, Person or an Organisation. Uses only two 
+			   values namely, "Person" or "Organisation".-->
+<!--DependencyType: Description of the dependency: in trust of, on behalf of, etc.-->
+<!--NameDetailsKeyRef: Reference to another NameDetails element with no foreign key reinforcement. 
+					   The referenced element may be out of the document and the document is still valid.-->
+<!ATTLIST DependencyName
+	PartyType CDATA #IMPLIED
+	Code CDATA #IMPLIED
+	DependencyType CDATA #IMPLIED
+	NameDetailsKeyRef CDATA #IMPLIED
+>
+ 

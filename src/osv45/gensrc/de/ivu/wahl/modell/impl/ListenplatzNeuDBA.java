@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity ListenplatzNeu.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListenplatzNeuDBA extends DBABase {
@@ -62,13 +62,25 @@ public class ListenplatzNeuDBA extends DBABase {
       if ((idx = columns.get(ID_LISTENPLATZNEU.toUpperCase())) != null) {
          m._id_ListenplatzNeu = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENPLATZNEU)) != null) {
+         m._id_ListenplatzNeu = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_LISTE)) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(GEAENDERT.toUpperCase())) != null) {
+         m._geaendert = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(GEAENDERT)) != null) {
          m._geaendert = r.getBoolean(idx.intValue());
       }
    }
@@ -84,13 +96,13 @@ public class ListenplatzNeuDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_LISTE.toUpperCase())) {
+      if (columns.containsKey(ID_LISTE.toUpperCase()) || columns.containsKey(ID_LISTE)) {
          p.setString(idx++, m._id_Liste);
       }
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(GEAENDERT.toUpperCase())) {
+      if (columns.containsKey(GEAENDERT.toUpperCase()) || columns.containsKey(GEAENDERT)) {
          p.setBoolean(idx++, m._geaendert);
       }
       p.setString(idx++, m._id_ListenplatzNeu);
@@ -275,6 +287,21 @@ public class ListenplatzNeuDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Liste returns a {@link Collection} of ListenplatzNeu IDs
+     *
+     * @param id_Liste searching condition
+
+     * @return a {@link Collection} of ListenplatzNeu IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Liste(String id_Liste) throws SQLException {
+      return retrieveIDs(
+         "select ID_ListenplatzNeu from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Liste});
+   }
+
+   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of ListenplatzNeu IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -289,21 +316,6 @@ public class ListenplatzNeuDBA extends DBABase {
          "select ID_ListenplatzNeu from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Ergebniseingang});
-   }
-
-   /**
-     * Method retrieveIDsByID_Liste returns a {@link Collection} of ListenplatzNeu IDs
-     *
-     * @param id_Liste searching condition
-
-     * @return a {@link Collection} of ListenplatzNeu IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Liste(String id_Liste) throws SQLException {
-      return retrieveIDs(
-         "select ID_ListenplatzNeu from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Liste});
    }
 
    /**

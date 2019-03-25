@@ -8,7 +8,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export control of letter of appointment
  * 
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class P5ExportStateKanBen extends DialogStateHolder {
   private static final long serialVersionUID = 1612287001990816626L;

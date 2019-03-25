@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.GebietModel;
   * Interface for the entity Gebiet as Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicGebiet extends EJBLocalObject, GebietModel {
@@ -39,6 +39,21 @@ public interface BasicGebiet extends EJBLocalObject, GebietModel {
      */
    GebietModel getDetails();
 
+
+   /**
+     * Navigation to the associated entity of the type {@link Ergebniseingang}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   Ergebniseingang getLetzterEingang() throws EJBException;
+
+   /**
+     * Setting of the associated entity of the type {@link Ergebniseingang}
+     *
+     * @param letzterEingang the corresponding EJBObject
+     */
+   void setLetzterEingang(Ergebniseingang letzterEingang);
 
    /**
      * Navigation to the associated entity of the type {@link Gebiet}
@@ -69,21 +84,6 @@ public interface BasicGebiet extends EJBLocalObject, GebietModel {
      * @param wahl the corresponding EJBObject
      */
    void setWahl(Wahl wahl);
-
-   /**
-     * Navigation to the associated entity of the type {@link Ergebniseingang}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   Ergebniseingang getLetzterEingang() throws EJBException;
-
-   /**
-     * Setting of the associated entity of the type {@link Ergebniseingang}
-     *
-     * @param letzterEingang the corresponding EJBObject
-     */
-   void setLetzterEingang(Ergebniseingang letzterEingang);
 
    /**
      * Returns the set of entities of the type {@link Anwender}.
@@ -223,51 +223,6 @@ public interface BasicGebiet extends EJBLocalObject, GebietModel {
      * @return  {@link Collection} of {@link EJBLocalObject} type {@link Gebiet}
      * @throws EJBException: an error occurred
      */
-   Collection<Gebiet> getElterngebietCol() throws EJBException;
-
-   /**
-     * Adds the object to the set of entities of the type {@link Gebiet}.
-     *
-     * @param elterngebiet Gebiet-object
-     */
-   void addElterngebiet(Gebiet elterngebiet);
-
-   /**
-     * Adds the object to the set of entities of the type {@link Gebiet}.
-     *
-     * @param col {@link Collection} of {@link EJBObject}s, which are added to the set.
-     */
-   void addAllElterngebietCol(Collection<Gebiet> col);
-
-   /**
-     * Adds the object, which is marked by the ID, to the set of entities of the type {@link Elterngebiet}.
-     *
-     * @param id_Elterngebiet ID of Elterngebiet entity
-     * @throws EJBException: an error occurred
-     */
-   void addID_Elterngebiet(String id_Elterngebiet) throws EJBException;
-
-   /**
-     * Deletes an entity from the set of entities of the type {@link Gebiet}.
-     *
-     * @param elterngebiet Gebiet-EJBObject, which is removed from the set.
-     */
-   void removeElterngebiet(Gebiet elterngebiet);
-
-   /**
-     * Deletes an entity from the set of entities of the type {@link Gebiet}.
-     *
-     * @param id_Elterngebiet ID of the Gebiet entity to be deleted
-     * @throws EJBException: an error occurred
-     */
-   void removeID_Elterngebiet(String id_Elterngebiet) throws EJBException;
-
-   /**
-     * Returns the set of entities of the type {@link Gebiet}.
-     *
-     * @return  {@link Collection} of {@link EJBLocalObject} type {@link Gebiet}
-     * @throws EJBException: an error occurred
-     */
    Collection<Gebiet> getUntergebietCol() throws EJBException;
 
    /**
@@ -306,6 +261,51 @@ public interface BasicGebiet extends EJBLocalObject, GebietModel {
      * @throws EJBException: an error occurred
      */
    void removeID_Untergebiet(String id_Untergebiet) throws EJBException;
+
+   /**
+     * Returns the set of entities of the type {@link Gebiet}.
+     *
+     * @return  {@link Collection} of {@link EJBLocalObject} type {@link Gebiet}
+     * @throws EJBException: an error occurred
+     */
+   Collection<Gebiet> getElterngebietCol() throws EJBException;
+
+   /**
+     * Adds the object to the set of entities of the type {@link Gebiet}.
+     *
+     * @param elterngebiet Gebiet-object
+     */
+   void addElterngebiet(Gebiet elterngebiet);
+
+   /**
+     * Adds the object to the set of entities of the type {@link Gebiet}.
+     *
+     * @param col {@link Collection} of {@link EJBObject}s, which are added to the set.
+     */
+   void addAllElterngebietCol(Collection<Gebiet> col);
+
+   /**
+     * Adds the object, which is marked by the ID, to the set of entities of the type {@link Elterngebiet}.
+     *
+     * @param id_Elterngebiet ID of Elterngebiet entity
+     * @throws EJBException: an error occurred
+     */
+   void addID_Elterngebiet(String id_Elterngebiet) throws EJBException;
+
+   /**
+     * Deletes an entity from the set of entities of the type {@link Gebiet}.
+     *
+     * @param elterngebiet Gebiet-EJBObject, which is removed from the set.
+     */
+   void removeElterngebiet(Gebiet elterngebiet);
+
+   /**
+     * Deletes an entity from the set of entities of the type {@link Gebiet}.
+     *
+     * @param id_Elterngebiet ID of the Gebiet entity to be deleted
+     * @throws EJBException: an error occurred
+     */
+   void removeID_Elterngebiet(String id_Elterngebiet) throws EJBException;
 
    /**
      * Returns the set of entities of the type {@link Gebietsstatus}.

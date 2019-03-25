@@ -27,7 +27,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
 /**
  * Utility superclass implementing some methods used by the concrete subclasses.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public abstract class AbstractElectionResultDeterminator<T extends GeneralList, P extends GeneralList> {
 

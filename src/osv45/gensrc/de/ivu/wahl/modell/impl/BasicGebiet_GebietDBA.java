@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Gebiet_Gebiet.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGebiet_GebietDBA extends DBABase {
@@ -58,7 +58,13 @@ public abstract class BasicGebiet_GebietDBA extends DBABase {
       if ((idx = columns.get(ID_ELTERNGEBIET.toUpperCase())) != null) {
          m._id_Elterngebiet = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_ELTERNGEBIET)) != null) {
+         m._id_Elterngebiet = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_UNTERGEBIET.toUpperCase())) != null) {
+         m._id_Untergebiet = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_UNTERGEBIET)) != null) {
          m._id_Untergebiet = r.getString(idx.intValue());
       }
    }
@@ -239,24 +245,6 @@ public abstract class BasicGebiet_GebietDBA extends DBABase {
    }
 
    /**
-     * Gets a {@link Collection} of IDs from Elterngebiet-entities, which is described by
-     * N:M relation Gebiet_Gebiet and ID_Untergebiet.
-     *
-     * @param id_Untergebiet searching condition
-
-     * @return a {@link Collection} of Elterngebiet IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Untergebiet(String id_Untergebiet)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Elterngebiet from " + TABLENAME + " where ID_Untergebiet=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Untergebiet});
-   }
-
-   /**
      * Gets a {@link Collection} of IDs from Untergebiet-entities, which is described by
      * N:M relation Gebiet_Gebiet and ID_Elterngebiet.
      *
@@ -272,5 +260,23 @@ public abstract class BasicGebiet_GebietDBA extends DBABase {
          "select ID_Untergebiet from " + TABLENAME + " where ID_Elterngebiet=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Elterngebiet});
+   }
+
+   /**
+     * Gets a {@link Collection} of IDs from Elterngebiet-entities, which is described by
+     * N:M relation Gebiet_Gebiet and ID_Untergebiet.
+     *
+     * @param id_Untergebiet searching condition
+
+     * @return a {@link Collection} of Elterngebiet IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Untergebiet(String id_Untergebiet)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Elterngebiet from " + TABLENAME + " where ID_Untergebiet=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Untergebiet});
    }
 }

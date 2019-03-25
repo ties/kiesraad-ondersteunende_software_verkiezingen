@@ -6,7 +6,7 @@
  *
  * Besonderheit: Überprüfung der Eingabe mit JavaScript
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
@@ -20,6 +20,7 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
  <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
  
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
 String newLocation = "/osv?" + ClientHelper.getSuffix(request);
 boolean isEkP4Hsb = (WahlInfo.getWahlInfo().isEK() && SystemInfo.getSystemInfo().getWahlModus() == AbstractImportEML.MODE_DB_P4 && SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_HSB);

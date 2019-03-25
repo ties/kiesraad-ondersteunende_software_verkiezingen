@@ -2,6 +2,7 @@
 <%@ page isErrorPage="true"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <html>
     <head>
         <title><ivu:int key="Sitzung_abgelaufen"/></title>

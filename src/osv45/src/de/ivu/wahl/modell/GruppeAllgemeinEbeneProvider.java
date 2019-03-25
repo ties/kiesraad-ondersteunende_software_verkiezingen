@@ -11,7 +11,7 @@ import de.ivu.wahl.SystemInfo;
  * runs outside an EJB container. Initialising the SystemInfo raises an exception. This is cought.
  * Instead, the values for wahlEbene and ebenenKlartext are set like in P5.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 final class GruppeAllgemeinEbeneProvider {
   private static String EBENE_KLARTEXT = null;

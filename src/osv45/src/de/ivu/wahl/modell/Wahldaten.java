@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 /**
  * Holding metadata and voting results as needed by the algorithm module
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. MÃ¼ller, IVU Traffic Technologies AG
  */
 public class Wahldaten implements Serializable {
   private static final long serialVersionUID = -8839827636033764703L;
@@ -80,7 +80,7 @@ public class Wahldaten implements Serializable {
   }
 
   /**
-   * Gibt _id_Ergebniseingang zurück.
+   * Gibt _id_Ergebniseingang zurï¿½ck.
    * 
    * @return _id_Ergebniseingang.
    */
@@ -89,9 +89,9 @@ public class Wahldaten implements Serializable {
   }
 
   /**
-   * Setzt den neuen Wert für _id_Ergebniseingang auf _id_Ergebniseingang.
+   * Setzt den neuen Wert fï¿½r _id_Ergebniseingang auf _id_Ergebniseingang.
    * 
-   * @param _id_Ergebniseingang neuer Wert für _id_Ergebniseingang
+   * @param _id_Ergebniseingang neuer Wert fï¿½r _id_Ergebniseingang
    */
   public void setId_Ergebniseingang(String id_Ergebniseingang) {
     this._id_Ergebniseingang = id_Ergebniseingang;

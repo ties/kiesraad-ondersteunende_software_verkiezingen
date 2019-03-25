@@ -1,0 +1,24 @@
+/*------------- Internet Explorer only (hacks for ver =<6 )---------------*/
+div.primary, div.secondary, div#content, div#decor {
+  height:1%;
+}
+div.resource h1 {
+  top:-22px;
+}
+
+div ul#sectionNav li, div ul#sectionNav a  {
+  height:1%;
+}
+div ul#sectionNav li {
+  margin-left:-16px;
+}
+div ul#sectionNav {padding:0; }
+
+#content {
+  width: 75%;
+}
+
+/*---DOCBOOK STUFF FOR IE---*/
+.resize {
+  width: 730px;
+}

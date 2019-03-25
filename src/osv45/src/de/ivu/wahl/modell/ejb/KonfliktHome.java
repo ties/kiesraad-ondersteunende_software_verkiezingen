@@ -7,7 +7,7 @@ import javax.ejb.FinderException;
 /**
  * KonfliktHome
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface KonfliktHome extends BasicKonfliktHome {

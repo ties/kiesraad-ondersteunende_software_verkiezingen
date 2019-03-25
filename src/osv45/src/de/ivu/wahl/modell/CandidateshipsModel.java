@@ -19,7 +19,7 @@ import de.ivu.wahl.result.MultimapUtil;
  * Immutable object.
  * <p>
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CandidateshipsModel {
   private final Map<Gebiet, Map<String, List<Candidateship>>> candidateshipsByRegionAndGroup = new HashMap<Gebiet, Map<String, List<Candidateship>>>();

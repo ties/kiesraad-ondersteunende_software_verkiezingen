@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Listenkandidatur.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListenkandidaturDBA extends DBABase {
@@ -64,16 +64,31 @@ public class ListenkandidaturDBA extends DBABase {
       if ((idx = columns.get(ID_LISTENKANDIDATUR.toUpperCase())) != null) {
          m._id_Listenkandidatur = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKANDIDATUR)) != null) {
+         m._id_Listenkandidatur = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_LISTE)) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_WAHL)) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_PERSONENDATEN.toUpperCase())) != null) {
          m._id_Personendaten = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_PERSONENDATEN)) != null) {
+         m._id_Personendaten = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(LISTENPLATZ.toUpperCase())) != null) {
+         m._listenplatz = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(LISTENPLATZ)) != null) {
          m._listenplatz = r.getInt(idx.intValue());
       }
    }
@@ -89,16 +104,16 @@ public class ListenkandidaturDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_LISTE.toUpperCase())) {
+      if (columns.containsKey(ID_LISTE.toUpperCase()) || columns.containsKey(ID_LISTE)) {
          p.setString(idx++, m._id_Liste);
       }
-      if (columns.containsKey(ID_WAHL.toUpperCase())) {
+      if (columns.containsKey(ID_WAHL.toUpperCase()) || columns.containsKey(ID_WAHL)) {
          p.setString(idx++, m._id_Wahl);
       }
-      if (columns.containsKey(ID_PERSONENDATEN.toUpperCase())) {
+      if (columns.containsKey(ID_PERSONENDATEN.toUpperCase()) || columns.containsKey(ID_PERSONENDATEN)) {
          p.setString(idx++, m._id_Personendaten);
       }
-      if (columns.containsKey(LISTENPLATZ.toUpperCase())) {
+      if (columns.containsKey(LISTENPLATZ.toUpperCase()) || columns.containsKey(LISTENPLATZ)) {
          p.setInt(idx++, m._listenplatz);
       }
       p.setString(idx++, m._id_Listenkandidatur);
@@ -286,6 +301,21 @@ public class ListenkandidaturDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Liste returns a {@link Collection} of Listenkandidatur IDs
+     *
+     * @param id_Liste searching condition
+
+     * @return a {@link Collection} of Listenkandidatur IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Liste(String id_Liste) throws SQLException {
+      return retrieveIDs(
+         "select ID_Listenkandidatur from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Liste});
+   }
+
+   /**
      * Method retrieveIDsByID_Personendaten returns a {@link Collection} of Listenkandidatur IDs
      *
      * @param id_Personendaten searching condition
@@ -315,21 +345,6 @@ public class ListenkandidaturDBA extends DBABase {
          "select ID_Listenkandidatur from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Wahl});
-   }
-
-   /**
-     * Method retrieveIDsByID_Liste returns a {@link Collection} of Listenkandidatur IDs
-     *
-     * @param id_Liste searching condition
-
-     * @return a {@link Collection} of Listenkandidatur IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Liste(String id_Liste) throws SQLException {
-      return retrieveIDs(
-         "select ID_Listenkandidatur from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Liste});
    }
 
    /**

@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Text;
 import de.ivu.wahl.wus.utils.ui.GBAAutoCompleteField;
 
 /**
- * @author tdu@ivu.de
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class GBATextField {
 

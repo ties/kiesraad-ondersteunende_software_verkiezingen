@@ -9,7 +9,7 @@ package de.ivu.wahl.modell;
 /**
  * Enum type for the authorities CSB, HSB, PSB and SB.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum AuthorityLevel {
   // Zentraler Wahlausschuss

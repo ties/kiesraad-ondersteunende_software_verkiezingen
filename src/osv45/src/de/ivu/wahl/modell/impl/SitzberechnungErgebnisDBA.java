@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * SitzberechnungErgebnisDBA
  *
- * @author cos@ivu.de  (c) 2003-4 IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-4 IVU Traffic Technologies AG
  */
 
 import java.sql.Connection;
@@ -67,7 +67,7 @@ public class SitzberechnungErgebnisDBA extends BasicSitzberechnungErgebnisDBA {
       + ID_SITZBERECHNUNGERGEBNIS + "=?"; //$NON-NLS-1$
 
   /**
-   * Query für die Methode retrieveByKey
+   * Query fï¿½r die Methode retrieveByKey
    */
   final static String queryRetrieveByKeyExt = "(" + innerQueryBesetzteSitze + ") as " + SITZE //$NON-NLS-1$ //$NON-NLS-2$
       + fromWhere;
@@ -84,7 +84,7 @@ public class SitzberechnungErgebnisDBA extends BasicSitzberechnungErgebnisDBA {
    * @return <code>int</code> BesetzteSitze, wenn die Zeile in der Datenbank gefunden wurde, sonst
    *         <code>null</code>
    * @throws SQLException Kommunikation mit der Datenbank fehlerhaft TODO: auf ein Ergebnis
-   *           reduziert -> Prüfen!!!
+   *           reduziert -> Prï¿½fen!!!
    */
   public static Integer retrieveCalcByKey(String id_SitzberechnungErgebnis) throws SQLException {
 

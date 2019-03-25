@@ -4,7 +4,7 @@
  * JSP-Seite zeigt den Zustand der Applikation und alle Befehle für den angemel-
  * deten Anwender an
  *
- * author:  mur@ivu.de cos@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield D. Cosic  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -25,9 +25,11 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
-   String backgroundColor = appBean.getBackgroundColor();
    response.setDateHeader("Expires", System.currentTimeMillis() + 60000); //$NON-NLS-1$
+
+   String backgroundColor = appBean.getBackgroundColor();
    String breite = "100%"; //$NON-NLS-1$
    String aktuellerNodePath = request.getParameter(ApplicationBeanKonstanten.NAVI_ANKER);
    int work  =  ClientHelper.getWork(request, ApplicationBeanKonstanten.WORK_INITIAL);

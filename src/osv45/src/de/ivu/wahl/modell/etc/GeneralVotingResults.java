@@ -18,7 +18,7 @@ import de.ivu.wahl.modell.ejb.Stimmergebnis;
  * Voting results for the general groups (votes cast, valid votes, invalid votes, blank votes) for a
  * given region.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class GeneralVotingResults {
   private final Map<Integer, Integer> generalResults;

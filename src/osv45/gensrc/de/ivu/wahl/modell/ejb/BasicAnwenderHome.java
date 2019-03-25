@@ -23,7 +23,7 @@ import de.ivu.wahl.modell.AnwenderModel;
 /**
   * LocalHome interface for the entity Anwender as BMP Entity Bean.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicAnwenderHome extends EJBLocalHome {
@@ -155,6 +155,24 @@ public interface BasicAnwenderHome extends EJBLocalHome {
      * @throws FinderException if an error occurred while searching (does NOT mean "not found").
      */
    Collection<Anwender> findAllLikePasswordHash(String passwordHash) throws FinderException;
+
+   /**
+     * Returns the set of entities of the type {@link Anwender}, filtered by salt.
+     *
+     * @param salt searching condition
+     * @return  {@link Collection} of {@link EJBLocalObject}s of the type {@link Anwender}
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   Collection<Anwender> findAllBySalt(String salt) throws FinderException;
+
+   /**
+     * Returns the set of entities of the type {@link Anwender}, filtered by salt.
+     *
+     * @param salt searching condition
+     * @return  {@link Collection} of {@link EJBLocalObject}s of the type {@link Anwender}
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   Collection<Anwender> findAllLikeSalt(String salt) throws FinderException;
 
    /**
      * Returns the set of entities of the type {@link Anwender}, filtered by fehlversucheAnmeldung.

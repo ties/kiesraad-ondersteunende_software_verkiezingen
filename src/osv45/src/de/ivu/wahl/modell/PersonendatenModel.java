@@ -1,10 +1,11 @@
 package de.ivu.wahl.modell;
 
+import java.util.List;
+
 /**
  * PersonendatenModel
  * 
- * @author cos@ivu.de (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
-
+ * @author D. Cosic (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface PersonendatenModel extends BasicPersonendatenModel {
@@ -19,4 +20,5 @@ public interface PersonendatenModel extends BasicPersonendatenModel {
    */
   boolean hasListenkandidatur();
 
+  List<Integer> getListenkandidaturenGruppenSchluesselSortiert();
 }

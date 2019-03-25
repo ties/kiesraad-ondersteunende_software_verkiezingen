@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) von IVU (IVU) bearbeitet -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtp="http://www.ivu.de" targetNamespace="http://www.ivu.de" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>Describes data type definition to module -1. Copyright 2009. All rights reserved.</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="Moduletype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="prog0"/>
+			<xs:enumeration value="prog1"/>
+			<xs:enumeration value="prog2"/>
+			<xs:enumeration value="prog3"/>
+			<xs:enumeration value="prog4"/>
+			<xs:enumeration value="prog5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Networktype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="email"/>
+			<xs:enumeration value="fax"/>
+			<xs:enumeration value="internet"/>
+			<xs:enumeration value="landline"/>
+			<xs:enumeration value="mobile"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Phonetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="private"/>
+			<xs:enumeration value="office"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Persontype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="contractmanager"/>
+			<xs:enumeration value="election"/>
+			<xs:enumeration value="electionbackup"/>
+			<xs:enumeration value="it"/>
+			<xs:enumeration value="itbackup"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Street" type="xs:string"/>
+			<xs:element name="Postcode" type="xs:string"/>
+			<xs:element name="City" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Will be preselected equal to progr1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Destrict" type="xs:string" minOccurs="0"/>
+			<xs:element name="State" type="xs:string" minOccurs="0"/>
+			<xs:element name="Country" type="xs:string" minOccurs="0"/>
+			<xs:element name="Remark" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Connection">
+		<xs:annotation>
+			<xs:documentation>Describes a phone number or (email-)address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Describes a number or (email-)address</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Network" type="mtp:Networktype">
+				<xs:annotation>
+					<xs:documentation>Fax, mobile, landline, email...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="mtp:Phonetype" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>private, office...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Connections">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="Connection" type="mtp:Connection"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contact">
+		<xs:sequence>
+			<xs:element name="Person" type="mtp:Person">
+				<xs:annotation>
+					<xs:documentation>Describes personal informations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="mtp:Address">
+				<xs:annotation>
+					<xs:documentation>Describes address details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Remark" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contacts">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="Contact" type="mtp:Contact"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Module">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:element name="Moduletype" type="mtp:Moduletype">
+				<xs:annotation>
+					<xs:documentation>modules in use: 0..5</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Modules">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="Module" type="mtp:Module"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Person">
+		<xs:sequence>
+			<xs:element name="Salutation" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mrs., Mr...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Title" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dr., BBA...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Initials" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>H.G.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Firstname" type="xs:string"/>
+			<xs:element name="Nameprefix" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>W., van den...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lastname" type="xs:string"/>
+			<xs:element name="Connections" type="mtp:Connections">
+				<xs:annotation>
+					<xs:documentation>Summarize connection data like phone or email in private or office use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Occupation" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Engineer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Remark" type="xs:string" minOccurs="0"/>
+			<xs:element name="Persontype" type="mtp:Persontype"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Systemkey">
+		<xs:sequence>
+			<xs:element name="Key" type="xs:string"/>
+			<xs:element name="Value" type="xs:string" minOccurs="0"/>
+			<xs:element name="Remark" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Systemkeys">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="Systemkey" type="mtp:Systemkey"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Registration">
+		<xs:annotation>
+			<xs:documentation>Describes the complete registration process (Root)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Createdon" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>Date when registration was created</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Supportaccepted" type="xs:boolean" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>If user wants to have support</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Registeredon" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date when user wants to start with registration</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Person" type="mtp:Person" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Registered person</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Address" type="mtp:Address">
+					<xs:annotation>
+						<xs:documentation>Billing address</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Contacts" type="mtp:Contacts" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Additional contact persons</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Description" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Describes registration process</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Modules" type="mtp:Modules" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Summarize the modules in use</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Systemkeys" type="mtp:Systemkeys" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Selected system parameters</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Remark" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

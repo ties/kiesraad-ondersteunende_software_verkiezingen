@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * ListenkombinationZulassungBean
  *
- * @author cos@ivu.de  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
 
  */
 
@@ -14,20 +14,11 @@ import java.util.Collection;
 
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.impl.ListenkombinationZulassungDBA;
 
 public class ListenkombinationZulassungBean extends BasicListenkombinationZulassungBean {
-  /** long */
   private static final long serialVersionUID = 8672163305750770692L;
-  private static final Category LOGGER = Log4J.configure(ListenkombinationZulassungBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(ListenkombinationZulassungBean.class, Log4J
-        .extractVersion("$Revision$"))); //$NON-NLS-1$
-  }
 
   /**
    * @param id_Ergebniseingang

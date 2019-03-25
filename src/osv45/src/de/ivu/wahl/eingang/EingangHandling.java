@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.exception.ImportException;
  * Lokales Interface f�r die wesentlichen Verarbeitungsfunktionen bei der Eingabe der
  * Erfassungseinheiten und administrativer Nachrichten �ber Dialog oder per Datei.
  * 
- * @author cos@ivu.de (c) 2003-8 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public interface EingangHandling {
 

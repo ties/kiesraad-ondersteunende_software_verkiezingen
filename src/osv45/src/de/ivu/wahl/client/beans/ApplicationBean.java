@@ -3,7 +3,6 @@ package de.ivu.wahl.client.beans;
 import static de.ivu.ejb.EJBUtil.findLocalHomeNoCache;
 import static de.ivu.ejb.EJBUtil.lookupLocal;
 import static de.ivu.wahl.AnwContext.ID_PWAHL_SUPER_ADMIN;
-import static de.ivu.wahl.AnwContext.calcHash;
 import static de.ivu.wahl.Konstanten.DATUM;
 import static de.ivu.wahl.Konstanten.PROP_EXT_LINK_1;
 import static de.ivu.wahl.Konstanten.PROP_EXT_LINK_2;
@@ -64,6 +63,7 @@ import de.ivu.util.session.Step;
 import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.GebietsBaum;
 import de.ivu.wahl.Konstanten;
+import de.ivu.wahl.PasswordService;
 import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.admin.AdminHandling;
@@ -84,7 +84,6 @@ import de.ivu.wahl.auswertung.erg.EingangsHistorieErgebnis;
 import de.ivu.wahl.auswertung.erg.EingangsHistorieErgebnis.EingangsContainer;
 import de.ivu.wahl.auswertung.erg.Status;
 import de.ivu.wahl.auswertung.erg.sv.SitzverteilungErg;
-import de.ivu.wahl.auswertung.erg.sv.SitzverteilungListenkombinationErg;
 import de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatenListe;
 import de.ivu.wahl.auswertung.sv.SitzverteilungHandling;
 import de.ivu.wahl.auswertung.sv.SitzverteilungHandlingBean;
@@ -123,9 +122,12 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
  * Steuerung im Client und arbeitet dabei eng mit den JSPs und den anderen ClientBeans zusammen.
  * Enthaelt einige Durchgriffe auf SessionBeans.
  * 
- * @author mur@ivu.de Copyright (c) 2002-14 IVU Traffic Technologies AG
+ * @author M. Murdfield Copyright (c) 2002-17 IVU Traffic Technologies AG
  */
 public class ApplicationBean implements Executer, Serializable, HttpSessionBindingListener {
+
+  public static final String USER_ATTRIBUTE = "User2017"; //$NON-NLS-1$
+  public static final String PASSWORD_ATTRIBUTE = "Password2017"; //$NON-NLS-1$
 
   private static final long serialVersionUID = 713939946682990818L;
   private SitzverteilungStatus _sitzverteilungStatus = null;
@@ -297,8 +299,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     if (cmd != null) {
       if (cmd.equals("app_login")) { //$NON-NLS-1$
         // Login
-        String name = request.getParameter("User"); //$NON-NLS-1$
-        String pass = request.getParameter("Password"); //$NON-NLS-1$
+        String name = request.getParameter(USER_ATTRIBUTE);
+        String pass = request.getParameter(PASSWORD_ATTRIBUTE);
         doLogin(request, name, pass);
       } else if (cmd.equals("app_logout")) { //$NON-NLS-1$
         // Logout
@@ -374,7 +376,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
    */
   public void valueBound(HttpSessionBindingEvent event) {
     // do nothing
-    LOGGER.info("ApplicationBean bound to session " + event.getSession().getId()); //$NON-NLS-1$
+    LOGGER.info("ApplicationBean bound to session " + truncate(event.getSession().getId(), 4)); //$NON-NLS-1$
   }
 
   /**
@@ -384,24 +386,31 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
    * @param event binding event
    */
   public void valueUnbound(HttpSessionBindingEvent event) {
-    LOGGER.info("ApplicationBean unbound from session " + event.getSession().getId()); //$NON-NLS-1$
+    LOGGER.info("ApplicationBean unbound from session " + truncate(event.getSession().getId(), 4)); //$NON-NLS-1$
     try {
       // wenn ein Anwender angemeldet ist -> abmelden
       if (_anwContext != null) {
         String keyForViewlock = _anwContext.getKeyForViewlock();
         LOGGER.info(Messages
             .getString(MessageKeys.Logger_AutomatischesAbmeldenNachTimeout_AnwenderID)
-            + _anwContext.getID_Anwender() + " - " + keyForViewlock); //$NON-NLS-1$
+            + _anwContext.getID_Anwender() + " - " + KeyForViewlockTruncator.truncate(keyForViewlock)); //$NON-NLS-1$
         getAnwenderHandling().logout(_anwContext);
         getEingangHandling().removeLockForUser(_anwContext);
         LOGGER.info(Messages.bind(MessageKeys.Logger_GebieteEntsperrtNachAutomatischemAbmelden,
-            keyForViewlock));
+            KeyForViewlockTruncator.truncate(keyForViewlock)));
       }
     } catch (Exception e) {
       LOGGER.error(Messages.getString(MessageKeys.Error_FehlerBeimAufloesenDerSession), e);
     } finally {
       _anwContext = null;
     }
+  }
+
+  private String truncate(String original, int maxLength) {
+    if (original == null || original.length() <= maxLength) {
+      return original;
+    }
+    return original.substring(0, maxLength) + "..."; //$NON-NLS-1$
   }
 
   /**
@@ -506,7 +515,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
           try {
             String passHash;
             if (id_WahlAuswahl == null) {
-              passHash = calcHash(name + pass);
+              String salt = getAnwenderHandling().getSalt(name);
+              passHash = PasswordService.INSTANCE.calcHash(name + pass, salt);
             } else {
               name = getAndRemoveAttribute(session, "USERNAME"); //$NON-NLS-1$
               passHash = getAndRemoveAttribute(session, "PASSWORDHASH"); //$NON-NLS-1$
@@ -1502,11 +1512,6 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
 
   public Besonderheiten getBesonderheiten(String id_Ergebniseingang) throws EJBException {
     return getSitzverteilungHandling().getBesonderheiten(id_Ergebniseingang);
-  }
-
-  public SitzverteilungListenkombinationErg getSitzverteilungLKErgebnis(String id_Ergebniseingang,
-      String id_gebiet) throws EJBException {
-    return getVotesHandling().getSitzverteilungLKErgebnis(id_Ergebniseingang, id_gebiet);
   }
 
   public SitzverteilungStatus getSitzverteilungStatus(String id_Ergebniseingang,

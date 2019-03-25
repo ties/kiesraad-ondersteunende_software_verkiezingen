@@ -18,7 +18,7 @@ import de.ivu.wahl.modell.SitzberechnungErgebnisModel;
   * Interface for the entity SitzberechnungErgebnis as Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface SitzberechnungErgebnis extends EJBLocalObject, SitzberechnungErgebnisModel {
@@ -38,6 +38,21 @@ public interface SitzberechnungErgebnis extends EJBLocalObject, SitzberechnungEr
      */
    SitzberechnungErgebnisModel getDetails();
 
+
+   /**
+     * Navigation to the associated entity of the type {@link Listenkombination}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   Listenkombination getListenkombination() throws EJBException;
+
+   /**
+     * Setting of the associated entity of the type {@link Listenkombination}
+     *
+     * @param listenkombination the corresponding EJBObject
+     */
+   void setListenkombination(Listenkombination listenkombination);
 
    /**
      * Navigation to the associated entity of the type {@link Ergebniseingang}
@@ -83,19 +98,4 @@ public interface SitzberechnungErgebnis extends EJBLocalObject, SitzberechnungEr
      * @param gruppe the corresponding EJBObject
      */
    void setGruppe(Gruppe gruppe);
-
-   /**
-     * Navigation to the associated entity of the type {@link Listenkombination}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   Listenkombination getListenkombination() throws EJBException;
-
-   /**
-     * Setting of the associated entity of the type {@link Listenkombination}
-     *
-     * @param listenkombination the corresponding EJBObject
-     */
-   void setListenkombination(Listenkombination listenkombination);
 }

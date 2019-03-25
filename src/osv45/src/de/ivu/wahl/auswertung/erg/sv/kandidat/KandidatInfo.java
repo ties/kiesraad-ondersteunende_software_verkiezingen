@@ -21,7 +21,7 @@ import de.ivu.wahl.modell.PersonendatenModel;
 /**
  * Information about a candidate. Immutable.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class KandidatInfo implements Serializable {
   public final static int KEIN_SATZ = -1;

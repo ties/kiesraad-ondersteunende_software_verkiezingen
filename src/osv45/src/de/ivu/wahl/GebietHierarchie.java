@@ -25,7 +25,7 @@ import de.ivu.wahl.modell.ejb.GebietHome;
 /**
  * Gibt zu jeder ID_Gebiet die Liste der Schl�ssel aller Nachkommen inklusive des Gebiets selbst.
  * 
- * @author cos@ivu.de IVU Traffic Technologies AG
+ * @author D. Cosic IVU Traffic Technologies AG
  */
 
 public class GebietHierarchie implements Serializable {
@@ -35,7 +35,7 @@ public class GebietHierarchie implements Serializable {
    * Kombinierter Gebietsschl�ssel. Fasst zwei Identit�tsangaben eines Gebiets zusammen:
    * Wahlunabh�ngig �ber Gebietsart und Gebietsnummer und Wahlabh�ngig �ber den Prim�rschl�ssel.
    * 
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   public static class GebietKey implements Serializable {
     private static final long serialVersionUID = 4817617457740621450L;

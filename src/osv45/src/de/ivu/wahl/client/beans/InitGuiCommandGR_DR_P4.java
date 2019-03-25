@@ -11,7 +11,7 @@ import de.ivu.wahl.modell.GebietModel;
 /**
  * Common superclass of InitGuiCommandGemeente_P4 and InitGuiCommandDeelraad_P4.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public abstract class InitGuiCommandGR_DR_P4 extends InitGuiCommand_P4
     implements

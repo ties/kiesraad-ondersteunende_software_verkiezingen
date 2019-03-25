@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
  * Interface f�r ein Bean, welches Commandos aus einem HTTP-Request ausf�hrt. Die Commandos sind von
  * der Form cmd=_commando_
  * 
- * @author klie@ivu.de cos@ivu.de - Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author P. Kliem D. Cosic - Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic
+ *         Technologies AG
  */
 
 public interface Executer {
@@ -25,11 +26,6 @@ public interface Executer {
 
     abstract void execute(HttpServletRequest request);
 
-    /**
-     * Gibt Beschreibung zur�ck.
-     * 
-     * @return Beschreibung
-     */
     public String getDescription() {
       return _description;
     }

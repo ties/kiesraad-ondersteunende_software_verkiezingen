@@ -24,20 +24,12 @@ public enum Command {
 
   /** Sitzverteilung im Bund */
   AUSW_SITZVERTEILUNG_GEBIET(19),
-  /** Upload von Wahleinheitergebnissen */
-  UPLOAD_FILE(23),
-  /** Upload of changed texts for the report generator */
-  UPLOAD_RGTEXT(24),
-  /** Reset texts for the report generator */
-  RESET_RGTEXT(25),
   /** Bekanntmachung Endergebnis */
   NLPA(30),
   /** Import der Ergebnisse anzeigen */
   IMPORT_ERGEBNISSE(38),
   /** Exportverzeichnis anzeigen */
   EXPORT_VERZEICHNIS(39),
-  /** Sitzverteilung im Bund */
-  AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION(40),
   /** Exportverzeichnis anzeigen */
   EXPORT(41),
 
@@ -115,7 +107,17 @@ public enum Command {
   /**
    * Freigabesteuerung
    */
-  ADM_FREIGABE(130), ADM_OUTDIR(132),
+  ADM_FREIGABE(130),
+
+  /**
+   * Re-index database
+   */
+  ADM_RE_INDEX_DATABASE(131),
+
+  /**
+   * Output directory
+   */
+  ADM_OUTDIR(132),
 
   /** Neue Wahl importieren */
   ADM_NEUE_WAHL(138),

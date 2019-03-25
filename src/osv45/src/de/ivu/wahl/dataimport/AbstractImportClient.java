@@ -86,7 +86,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * Common superclass for different kinds of import clients
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class AbstractImportClient {
 
@@ -1421,7 +1421,7 @@ public abstract class AbstractImportClient {
   /**
    * Container for adding and holding total votes
    * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   class TotalVotes {
     // <id_Listenkandidatur, votes>

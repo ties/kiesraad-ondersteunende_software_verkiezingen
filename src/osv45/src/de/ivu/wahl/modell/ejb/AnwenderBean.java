@@ -20,15 +20,12 @@ import de.ivu.wahl.GebietHierarchie.GebietKey;
 import de.ivu.wahl.modell.impl.AnwenderDBA;
 
 /**
- * @author SMA@ivu.de, IVU Traffic Technologies AG
+ * @author SMA, IVU Traffic Technologies AG
  */
 public class AnwenderBean extends BasicAnwenderBean {
   private static final long serialVersionUID = 6933624606890668681L;
 
   private static final Category LOGGER = Log4J.configure(AnwenderBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(AnwenderBean.class, Log4J.extractVersion("$Revision: 1.5 $"))); //$NON-NLS-1$
-  }
 
   /**
    * find by user name and password hash
@@ -102,9 +99,9 @@ public class AnwenderBean extends BasicAnwenderBean {
         char quote = '\'';
         for (Iterator<GebietKey> keyItr = gebietKeys.iterator(); keyItr.hasNext();) {
           GebietHierarchie.GebietKey key = keyItr.next();
-          whereIn.append(quote).append(key.getID_Gebiet()).append(quote).append(keyItr.hasNext()
-              ? ", " //$NON-NLS-1$
-              : ""); //$NON-NLS-1$
+          whereIn.append(quote).append(key.getID_Gebiet()).append(quote)
+              .append(keyItr.hasNext() ? ", " //$NON-NLS-1$
+                  : ""); //$NON-NLS-1$
         }
         where.append(AnwenderDBA.ID_GEBIET).append(" in (").append(whereIn).append(") "); //$NON-NLS-1$ //$NON-NLS-2$
       }

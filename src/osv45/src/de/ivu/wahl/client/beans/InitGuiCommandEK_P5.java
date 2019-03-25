@@ -11,7 +11,7 @@ import java.util.Map;
 import de.ivu.wahl.modell.WahlModel;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class InitGuiCommandEK_P5 extends InitGuiCommand_P5 implements ApplicationBeanKonstanten {
   private static final int[][] WAHL_ART_LEVEL = {{GEBIETSART_LAND}};

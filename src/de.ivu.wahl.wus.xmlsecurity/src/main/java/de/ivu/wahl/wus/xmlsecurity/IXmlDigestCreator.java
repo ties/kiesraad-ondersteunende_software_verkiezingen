@@ -14,7 +14,7 @@ import javax.xml.transform.Source;
 /**
  * This interface defines method to create digest values (SHA) for XML messages
  * 
- * @author mike@ivu.de, IVU Traffic Technologies AG
+ * @author Mike Gro., IVU Traffic Technologies AG
  * @version $Id: IXmlDigestCreator.java,v 1.2 2009/04/17 12:12:51 cos Exp $
  */
 public interface IXmlDigestCreator {

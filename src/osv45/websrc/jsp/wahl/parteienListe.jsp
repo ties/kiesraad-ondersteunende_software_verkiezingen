@@ -1,11 +1,12 @@
-
-<%@ page import="de.ivu.wahl.modell.GruppeModel"%><%--
+<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
+<%@ page import="de.ivu.wahl.modell.GruppeModel"%>
+<%--
  *******************************************************************************
  * Liste der Parteien
  * ist eine Liste mit den Parteienkurz- bzw Langnamen
  * und kann als Legende der Parteikurznamen betrachtet werden
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: parteienListe.jsp,v 1.11 2011/03/31 12:36:04 tdu Exp $
  *******************************************************************************
  --%>
@@ -13,9 +14,10 @@
 <%@ page import="de.ivu.wahl.modell.GruppeGebietsspezifischModel" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
    String breite = "100%";
-   %>
+%>
 <html>
 <head>
    <title><ivu:int key="AbkuerzungsverzeichnisParteien"/></title>
@@ -90,7 +92,7 @@
                                           %>
                                           <tr class="<%= i < 1?"hgweiss":"hgeeeeee"%>">
                                              <td>
-                                                <%=nameLang%>
+                                                <%=ClientHelper.forHTML(nameLang)%>
                                              </td>
                                           </tr>
                                           <%

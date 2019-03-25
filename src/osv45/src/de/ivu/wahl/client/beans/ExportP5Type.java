@@ -18,7 +18,7 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
 /**
  * Summary of the most important properties of the different exports of P4.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 enum ExportP5Type implements ExportP5Commands {
   P22_1(CMD_ADM_EXPORT_P22_1, P5ExportStateP22_1.STATUS_P22_1_D3,

@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Sitzverteilung as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicSitzverteilungBean extends BMPBeanBase implements EntityBean, SitzverteilungModel {
@@ -112,6 +112,22 @@ public abstract class BasicSitzverteilungBean extends BMPBeanBase implements Ent
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Listenkombination ID of the objects to be searched
+     * @return  {@link Collection} of the found Sitzverteilung-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByListenkombination(String id_Listenkombination) throws IVUFinderException {
+      try {
+         return SitzverteilungDBA.retrieveIDsByID_Listenkombination(id_Listenkombination);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Ergebniseingang ID of the objects to be searched
      * @return  {@link Collection} of the found Sitzverteilung-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -151,22 +167,6 @@ public abstract class BasicSitzverteilungBean extends BMPBeanBase implements Ent
    public Collection<String> ejbFindAllByGruppe(String id_Gruppe) throws IVUFinderException {
       try {
          return SitzverteilungDBA.retrieveIDsByID_Gruppe(id_Gruppe);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Listenkombination ID of the objects to be searched
-     * @return  {@link Collection} of the found Sitzverteilung-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByListenkombination(String id_Listenkombination) throws IVUFinderException {
-      try {
-         return SitzverteilungDBA.retrieveIDsByID_Listenkombination(id_Listenkombination);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -252,6 +252,12 @@ public abstract class BasicSitzverteilungBean extends BMPBeanBase implements Ent
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_Listenkombination()) {
+         _listenkombination = null;
+         _relchk_Listenkombination = true;
+      } else {
+         _relchk_Listenkombination = false;
+      }
       if (null == _details.getID_Ergebniseingang()) {
          _ergebniseingang = null;
          _relchk_Ergebniseingang = true;
@@ -270,20 +276,14 @@ public abstract class BasicSitzverteilungBean extends BMPBeanBase implements Ent
       } else {
          _relchk_Gruppe = false;
       }
-      if (null == _details.getID_Listenkombination()) {
-         _listenkombination = null;
-         _relchk_Listenkombination = true;
-      } else {
-         _relchk_Listenkombination = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _listenkombination = null;
       _ergebniseingang = null;
       _liste = null;
       _gruppe = null;
-      _listenkombination = null;
    }
 
    /**
@@ -430,6 +430,51 @@ public abstract class BasicSitzverteilungBean extends BMPBeanBase implements Ent
    }
 
    /**
+     * Relation zu Listenkombination
+     */
+   protected Listenkombination _listenkombination;
+
+   /**
+     * Flag for the validity of the relation Listenkombination
+     */
+   protected boolean _relchk_Listenkombination = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Listenkombination}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Listenkombination getListenkombination() throws EJBException {
+      if (!_relchk_Listenkombination) {
+         if (null == _details.getID_Listenkombination()) {
+            _listenkombination = null;
+         } else if (null == _listenkombination || !_listenkombination.getPrimaryKey().equals(_details.getID_Listenkombination())) {
+            try {
+               ListenkombinationHome home = ListenkombinationHome.HomeFinder.findHome(this);
+               _listenkombination = home.findByPrimaryKey(_details.getID_Listenkombination());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Listenkombination", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Listenkombination", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Listenkombination = true;
+      }
+      return _listenkombination;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Listenkombination}
+     *
+     * @param listenkombination the corresponding EJBObject
+     */
+   public void setListenkombination(Listenkombination listenkombination) {
+      _listenkombination = listenkombination;
+      _details.setID_Listenkombination(listenkombination == null ? null : (String)listenkombination.getPrimaryKey());
+   }
+
+   /**
      * Relation zu Ergebniseingang
      */
    protected Ergebniseingang _ergebniseingang;
@@ -562,51 +607,6 @@ public abstract class BasicSitzverteilungBean extends BMPBeanBase implements Ent
    public void setGruppe(Gruppe gruppe) {
       _gruppe = gruppe;
       _details.setID_Gruppe(gruppe == null ? null : (String)gruppe.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu Listenkombination
-     */
-   protected Listenkombination _listenkombination;
-
-   /**
-     * Flag for the validity of the relation Listenkombination
-     */
-   protected boolean _relchk_Listenkombination = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Listenkombination}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Listenkombination getListenkombination() throws EJBException {
-      if (!_relchk_Listenkombination) {
-         if (null == _details.getID_Listenkombination()) {
-            _listenkombination = null;
-         } else if (null == _listenkombination || !_listenkombination.getPrimaryKey().equals(_details.getID_Listenkombination())) {
-            try {
-               ListenkombinationHome home = ListenkombinationHome.HomeFinder.findHome(this);
-               _listenkombination = home.findByPrimaryKey(_details.getID_Listenkombination());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Listenkombination", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Listenkombination", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Listenkombination = true;
-      }
-      return _listenkombination;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Listenkombination}
-     *
-     * @param listenkombination the corresponding EJBObject
-     */
-   public void setListenkombination(Listenkombination listenkombination) {
-      _listenkombination = listenkombination;
-      _details.setID_Listenkombination(listenkombination == null ? null : (String)listenkombination.getPrimaryKey());
    }
 
    /**

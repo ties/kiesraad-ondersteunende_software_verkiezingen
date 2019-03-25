@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Copies data from an {@link InputStream} to an {@link OutputStream} .
  * 
- * @author kie@ivu.de
+ * @author kie
  * @created 2001-06-27
  * @version $Id $
  */

@@ -2,7 +2,7 @@
  * WahlImportBean
  * 
  * Created on 26.04.2007
- * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * Copyright (c) 2007-2017 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -32,7 +32,7 @@ import de.ivu.wahl.i18n.Messages;
 /**
  * Importieren einer neuen Wahl in die Datenbank aus hochgeladenen Metadaten.
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class WahlImportBean extends BasicUploadBean {
   private static final long serialVersionUID = 7453307320770129023L;
@@ -47,14 +47,18 @@ public class WahlImportBean extends BasicUploadBean {
   public static final String FELD_GEBIETSNUMMER = ApplicationBeanKonstanten.PREFIX + "districtNr"; //$NON-NLS-1$
   public static final String FELD_ACCEPT_ELECTIONDEFINITION = ApplicationBeanKonstanten.PREFIX
       + "electionDefinition"; //$NON-NLS-1$
-  public static final String FELD_HASHCODE_230 = ApplicationBeanKonstanten.PREFIX + "hashCode230"; //$NON-NLS-1$
+
+  private static final String FELD_HASHCODE_230 = ApplicationBeanKonstanten.PREFIX + "hashCode230"; //$NON-NLS-1$
+  public static final String FELD_HASHCODE_230_INPUT_0 = FELD_HASHCODE_230 + "Input0"; //$NON-NLS-1$
+  public static final String FELD_HASHCODE_230_INPUT_1 = FELD_HASHCODE_230 + "Input1"; //$NON-NLS-1$
+
   public static final String FELD_HASHCODE_WAHLDEFINITION = ApplicationBeanKonstanten.PREFIX
       + "hashCodeWahldefinition"; //$NON-NLS-1$
   public static final String FELD_EBENE = ApplicationBeanKonstanten.PREFIX + "ebene"; //$NON-NLS-1$
   public static final String FELD_RESET = ApplicationBeanKonstanten.PREFIX + "reset"; //$NON-NLS-1$
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   static final class BRPrintWriter extends PrintWriter {
 
@@ -116,8 +120,12 @@ public class WahlImportBean extends BasicUploadBean {
                 _importMetadata.reset();
               } else if (request.getParameter(FELD_ACCEPT_ELECTIONDEFINITION) != null) {
                 _importMetadata.setDefinitionAccepted(true);
-              } else if (request.getParameter(FELD_HASHCODE_230) != null) {
-                _importMetadata.setTeilHashWert230(request.getParameter(FELD_HASHCODE_230));
+              } else if (request.getParameter(FELD_HASHCODE_230_INPUT_0) != null
+                  || request.getParameter(FELD_HASHCODE_230_INPUT_1) != null) {
+                _importMetadata.setHashWert230Input(0,
+                    request.getParameter(FELD_HASHCODE_230_INPUT_0));
+                _importMetadata.setHashWert230Input(1,
+                    request.getParameter(FELD_HASHCODE_230_INPUT_1));
               } else if (request.getParameter(FELD_GEBIETSNUMMER) != null) {
                 LOGGER.info(Messages.getString("Logger_Gebiet") + request.getParameter(FELD_GEBIETSNUMMER)); //$NON-NLS-1$
                 _importMetadata.setGebietsNr(Integer.parseInt(request
@@ -133,7 +141,9 @@ public class WahlImportBean extends BasicUploadBean {
                               item.getFieldName(),
                               item.getString()));
                     } else {
+                      // Hier werden die Dateien ins Archiv geschrieben
                       writeFileIntoArchiveFolder(item, _importMetadata);
+
                       String fileName = item.getName();
                       String feldName = item.getFieldName();
                       if (fileName != null && !fileName.isEmpty()) {
@@ -210,7 +220,9 @@ public class WahlImportBean extends BasicUploadBean {
                               item.getFieldName(),
                               item.getString()));
                     } else {
+                      // Hier werden die Dateien ins Archiv geschrieben
                       writeFileIntoArchiveFolder(item, _importMetadata);
+
                       String fileName = item.getName();
                       String feldName = item.getFieldName();
                       if (fileName != null && !fileName.isEmpty()) {

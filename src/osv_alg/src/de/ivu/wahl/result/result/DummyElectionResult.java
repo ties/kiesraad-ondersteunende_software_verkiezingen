@@ -18,7 +18,7 @@ import de.ivu.wahl.result.drawlots.DrawingLotsAlternative;
 /**
  * Dummy-Implementation for use in test environment
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class DummyElectionResult implements ElectionResult {
 

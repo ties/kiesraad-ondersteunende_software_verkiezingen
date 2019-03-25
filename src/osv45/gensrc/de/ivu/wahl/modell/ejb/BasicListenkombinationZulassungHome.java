@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.ListenkombinationZulassungModel;
 /**
   * LocalHome interface for the entity ListenkombinationZulassung as BMP Entity Bean.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicListenkombinationZulassungHome extends EJBLocalHome {
@@ -78,6 +78,16 @@ public interface BasicListenkombinationZulassungHome extends EJBLocalHome {
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Gruppe ID of the objects to be searched
+     * @return  {@link Collection} of the found ListenkombinationZulassung-entities
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   Collection<ListenkombinationZulassung> findAllByGruppe(String id_Gruppe) throws FinderException;
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Ergebniseingang ID of the objects to be searched
      * @return  {@link Collection} of the found ListenkombinationZulassung-entities
      * @throws FinderException if an error occurred while searching (does NOT mean "not found".
@@ -93,16 +103,6 @@ public interface BasicListenkombinationZulassungHome extends EJBLocalHome {
      * @throws FinderException if an error occurred while searching (does NOT mean "not found".
      */
    Collection<ListenkombinationZulassung> findAllByListenkombination(String id_Listenkombination) throws FinderException;
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Gruppe ID of the objects to be searched
-     * @return  {@link Collection} of the found ListenkombinationZulassung-entities
-     * @throws FinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   Collection<ListenkombinationZulassung> findAllByGruppe(String id_Gruppe) throws FinderException;
 
    /**
      * Returns the set of entities of the type {@link ListenkombinationZulassung}, filtered by zugelassen.

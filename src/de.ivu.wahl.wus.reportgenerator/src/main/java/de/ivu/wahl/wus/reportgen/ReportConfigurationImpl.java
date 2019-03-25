@@ -16,7 +16,7 @@ import de.ivu.wahl.wus.reportgen.extension.IPDFOpener;
 /**
  * Parameter object for calling {@link ReportGenerator#createReport()}. This class is immutable.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReportConfigurationImpl implements ReportConfiguration {
   private final static List<ReportTemplateEnum> ALWAYS_RTF = Arrays.asList(ReportTemplateEnum.OSV2_1,
@@ -33,7 +33,6 @@ public class ReportConfigurationImpl implements ReportConfiguration {
       ReportTemplateEnum.H3_2,
       ReportTemplateEnum.H4,
       ReportTemplateEnum.H9,
-      ReportTemplateEnum.I10,
       ReportTemplateEnum.OSV1_1);
 
   private final ReportTemplateEnum template;

@@ -1,15 +1,23 @@
+<%--
+Weitgehend identische JSP-Seiten:
+- P4_Export_OSV4_4.jsp
+- P4_Export_OSV4_5.jsp
+- P4_Export_OSV4_6.jsp
+--%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ page import="java.util.Collection"%>
 <%@ page import="java.util.List"%>
 <%@ page import="de.ivu.wahl.Basiseinstellung"%>
 <%@ page import="de.ivu.wahl.Basiseinstellung.Typ"%>
+<%@ page import="de.ivu.wahl.BasiseinstellungMultiMap"%>
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
-<%@ page import="de.ivu.wahl.admin.P4ExportStateOSV4_6"%>
+<%@ page import="de.ivu.wahl.admin.ExportWithParametersState"%>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
-<%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
+<%@ page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -19,70 +27,38 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="expP4Bean" scope="session" class="de.ivu.wahl.client.beans.ExportP4Bean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
-<%  
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
+<%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ExpAppendixWrr83"; //$NON-NLS-1$
 
 String breite = "100%";
 String prefix = ApplicationBeanKonstanten.PREFIX;
-int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0);
+int subwork = ClientHelper.getIntParameter(request.getParameter(prefix+"subwork"), 0);
 DialogStateHolder state = expP4Bean.getP4ExportStateOSV4_4();
+BasiseinstellungMultiMap bmm = Konstanten.PROP_OSV4_4_D1;
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 boolean legende = false;
 %>
-
-<%@page import="de.ivu.wahl.client.beans.ExportP4Commands"%><html>
+<html>
 <head>
    <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><ivu:int key="Export_P4_Appendix_O3"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery.autocomplete.css">
-   <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.3.2.js"></script>
+   <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.3.1.js"></script>
    <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.autocomplete.js"></script>
    <script type="text/javascript" src="<%= request.getContextPath() %>/js/gbadata.js"></script>
+   <script>
+     var contextPath = "<%=request.getContextPath()%>";
+   </script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
    <script type="text/javascript">
-          function doit(i, j, msec)
-            {
-              //alert("doit");
-              var k = i;
-              var l = j;
-              if (k <= 50)
-              {
-                 //alert("doit");
-                eval("document.p" + k + ".src = '<%= request.getContextPath() %>/img/lila.gif'");
-                k++;
-                window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-              } else {
-                 eval("document.p" + l + ".src = '<%= request.getContextPath() %>/img/leer.gif'");
-                if (k == 101) {
-                    k = -1;
-                    l = -1;
-                 }
-                k++;
-                 l++;
-                 window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-              } 
-            }
-            
-            function transp() {
-            var divTag  = document.getElementById("content");
-                divTag.style.filter = "alpha(Opacity=60, FinishOpacity=0, Style=0, StartX=0, StartY=0, FinishX=1000, FinishY=1000)";
-                
-                var divTag  = document.getElementById("trans");
-                divTag.className = "trans";
-                
-                var statusbalken  = document.getElementById("statusbalken");
-                statusbalken.style.display = 'inline';
-                doit(0,0,100);          
-        
-            }
-            
             // GBA support
             $(document).ready(function(){
                 $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_OBJECTIONS %>").autocomplete(gbaData);
                 $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_NOTES %>").autocomplete(gbaData);
             });
-            
    </script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
 </head>
@@ -195,7 +171,7 @@ boolean legende = false;
                                                     </tbody>
                                                 </table>
                                       <% }                                  
-                                    if (P4ExportStateOSV4_6.STATUS_P4_D1 == state._modus){  %>
+                                    if (ExportWithParametersState.STATUS_INITIAL_PAGE == state._modus){  %>
                                                 <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                 <legend><b><ivu:int key="Export_P4_Appendix_O3"/></b></legend>
                                                     <p><ivu:int key="Export_P4_Appendix_O3_D1"/></p>
@@ -210,12 +186,12 @@ boolean legende = false;
                                                         expP4Bean._adminMsgPropsConfirmation = null;
                                                     } %>
                                                     <% if (expP4Bean._adminMsgExport != null && !expP4Bean._adminMsgExport.isEmpty() ){%>
-                                                        <p style="color:red;"><b><%= expP4Bean._adminMsgExport %></b></p>
+                                                        <p style="color:red;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExport)%></b></p>
                                                     <%
                                                         expP4Bean._adminMsgExport = null;
                                                     } %>
                                                     <% if (expP4Bean._adminMsgExportConfirmation != null && !expP4Bean._adminMsgExportConfirmation.isEmpty() ){%>
-                                                        <p style="color:green;"><b><%= expP4Bean._adminMsgExportConfirmation %></b></p>
+                                                        <p style="color:green;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExportConfirmation)%></b></p>
                                                     <%
                                                         expP4Bean._adminMsgExportConfirmation = null;
                                                     } %>
@@ -226,7 +202,7 @@ boolean legende = false;
                                                         <td height="20" valign="top" class="guiBefehle"><%
                                                          int buttonIdx = 0;
                                                          String selectedKey = null;
-                                                         for (String buttonName : Konstanten.PROP_OSV4_4_D1.keySet()) {
+                                                         for (String buttonName : bmm.keySet()) {
                                                            boolean selected = buttonIdx++ == subwork;
                                                            if (selected) {
                                                             selectedKey = buttonName;
@@ -245,7 +221,7 @@ boolean legende = false;
                                                           <ivu:form action="<%= formurl %>">
                                                             <table border="0" cellspacing="4" cellpadding="1" width="<%= breite %>" style="padding: 1em;">
                                                               <colgroup width="50%" span="2"></colgroup><%
-                                                             List<Basiseinstellung> basiseinstellungen = Konstanten.PROP_OSV4_4_D1.get(selectedKey);
+                                                             List<Basiseinstellung> basiseinstellungen = bmm.get(selectedKey);
                                                              for (Basiseinstellung basiseinstellung : basiseinstellungen) {
                                                               boolean restart = basiseinstellung.isRestart();
                                                               String styleClass = restart ? "frot" : "fgrau";
@@ -327,7 +303,7 @@ boolean legende = false;
                                                      } %>
                                                     </table>
                                                  </fieldset>
-                                     <% } else if (P4ExportStateOSV4_6.STATUS_P4_D2 == state._modus){
+                                     <% } else if (ExportWithParametersState.STATUS_P4_D2 == state._modus){
                                             String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_OSV4_6 + "&" + ClientHelper.getAllParameters (request);
                                                    %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
@@ -336,19 +312,19 @@ boolean legende = false;
                                                       <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="Export_P4_Appendix_O3"/></b></legend>
                                                             <% if (expP4Bean._adminMsgExport != null && !expP4Bean._adminMsgExport.isEmpty() ){%>
-                                                                        <p style="color:red;"><b><%= expP4Bean._adminMsgExport %></b></p>
+                                                                        <p style="color:red;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExport)%></b></p>
                                                                     <% 
                                                                         expP4Bean._adminMsgExport = null;
                                                             }
                                                             if (expP4Bean._adminMsgExportConfirmation != null && !expP4Bean._adminMsgExportConfirmation.isEmpty() ){%>
-                                                                        <p style="color:green;"><b><%= expP4Bean._adminMsgExportConfirmation %></b></p>
+                                                                        <p style="color:green;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExportConfirmation)%></b></p>
                                                                     <% 
                                                                         expP4Bean._adminMsgExportConfirmation = null;
                                                             } %>
                                                                     <br/>
                                                            <ivu:form action="<%=urlExp%>" onsubmit="transp();">
                                                             <table cellspacing="4" cellpadding="2" border="0">
-                                                               <%   for (Basiseinstellung basiseinstellung : Konstanten.PROP_OSV4_4_D1_BASIS) { 
+                                                               <%   for (Basiseinstellung basiseinstellung : bmm.getBasis()) { 
                                                                        String property = basiseinstellung.getProperty();
                                                                        String wert = expP4Bean.getProperty(property); %>
                                                                      <tr title="<%= basiseinstellung.getHinweis() %>">
@@ -390,7 +366,7 @@ boolean legende = false;
                                                              <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 1em;">
                                                                             <input id="box2" type="submit" value="<%=RepositoryPropertyHandler.ZURUECK %>" name="<%=ApplicationBeanKonstanten.PREFIX%>uebernehmen"/>
                                                                     <% if (expP4Bean._adminWarningOverride != null && !expP4Bean._adminWarningOverride.isEmpty() ){%>
-                                                                                <p class="warningMessage"><b><%= expP4Bean._adminWarningOverride %><br/>
+                                                                                <p class="warningMessage"><b><%= ClientHelper.forHTML(expP4Bean._adminWarningOverride) %><br/>
                                                                                 <ivu:int key="Datei_Ueberschreiben"/> </b></p>
                                                                                 <% expP4Bean._adminWarningOverride = null; %> 
                                                                                 <input type="hidden" value="1" name="<%=ApplicationBeanKonstanten.PREFIX%>force"/>
@@ -405,7 +381,7 @@ boolean legende = false;
                                                     </td>
                                                  </tr>
                                               </table>
-                                     <% } else if (P4ExportStateOSV4_6.STATUS_P4_D3 == state._modus){
+                                     <% } else if (ExportWithParametersState.STATUS_P4_D3 == state._modus){
                                                     // reset export status
                                                     expP4Bean.resetExportStateOSV4_4();
                                                     //forward to Werkmap
@@ -417,13 +393,13 @@ boolean legende = false;
                                                     <%
                                                       if (expP4Bean._adminMsgExport != null && !expP4Bean._adminMsgExport.isEmpty() ){
                                                     %>
-                                                        <p style="color:red;"><b><%=expP4Bean._adminMsgExport%></b></p>
+                                                        <p style="color:red;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExport)%></b></p>
                                                         <% expP4Bean._adminMsgExport = null;
                                                       
                                                       }
                                                       if (expP4Bean._adminMsgExportConfirmation != null && !expP4Bean._adminMsgExportConfirmation.isEmpty() ){
                                                     %>
-                                                        <p style="color:green;"><b><%=expP4Bean._adminMsgExportConfirmation%></b></p>
+                                                        <p style="color:green;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExportConfirmation)%></b></p>
                                                         <% expP4Bean._adminMsgExportConfirmation = null;
                                                       
                                                       }

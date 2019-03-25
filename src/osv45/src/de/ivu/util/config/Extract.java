@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 /**
  * Helper class to extract values from string.
  * 
- * @author kie@ivu.de
+ * @author kie
  * @created 2001-06-27
  * @since 1.1
  */

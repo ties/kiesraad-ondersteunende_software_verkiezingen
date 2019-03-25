@@ -14,7 +14,7 @@ import de.ivu.wahl.result.Util;
  * according to d'Hondt or Hare-Niemeyer. The fraction is associated to the corresponding list. The
  * compareTo() method reverses the "natural" ordering to get the greatest value first.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class FractionFromList<T extends NamedObject> implements Comparable<FractionFromList<T>> {
   private final T list;

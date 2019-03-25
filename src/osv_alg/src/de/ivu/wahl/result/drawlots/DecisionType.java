@@ -16,7 +16,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
  * by lot. The id is also the number of the article in the electoral law where the respective
  * {@link DecisionType} is described.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum DecisionType {
 

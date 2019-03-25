@@ -6,7 +6,7 @@ import javax.ejb.ObjectNotFoundException;
 /**
  * SchwellwertHome
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 
 public interface SchwellwertHome extends BasicSchwellwertHome {

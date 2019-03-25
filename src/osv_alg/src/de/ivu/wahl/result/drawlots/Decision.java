@@ -16,7 +16,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * A {@link Decision} holds information about the event that one alternative out of a given list of
  * alternatives was drawn.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class Decision {
 

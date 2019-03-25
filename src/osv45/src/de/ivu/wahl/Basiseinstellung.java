@@ -9,7 +9,7 @@ import de.ivu.wahl.util.BundleHelper;
 
 public class Basiseinstellung {
   public static enum Typ {
-    String, Boolean, Integer, RelURL, Date, Textarea, Time, ZIP
+    String, Boolean, Integer, RelURL, Date, Textarea, Time, ZIP, Option
   }
 
   private static String COUNCIL_NAME = null;

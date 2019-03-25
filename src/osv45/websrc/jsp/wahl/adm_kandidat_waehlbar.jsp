@@ -20,20 +20,18 @@
 <%@ page import="de.ivu.wahl.modell.PersonendatenKonstanten.Geschlecht"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
-<%@ page import="java.util.TreeMap"%>
-<%@ page import="java.util.Map"%>
-<%@ page import="java.util.TreeSet"%>
-<%@ page import="java.util.Set"%>
+<%@ page import="java.util.List"%>
 <%--
  *******************************************************************************
  * Namesliste der Kandidaten alphabetisch geordnet
  *
- * author:  mur@ivu.de  Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2008 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <% 
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
@@ -127,11 +125,11 @@ String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
                                                                             <td><%
                                                                                 char letter = '0';
                                                                                 Iterator<Personendaten> iterator = personendatenListe.iterator();
-                                                                                while (iterator.hasNext()){
+                                                                                while (iterator.hasNext()) {
                                                                                     Personendaten personendaten = iterator.next();
-                                                                                String nachname = personendaten.getNachname();
-                                                                                char firstLetter = ClientHelper.getAnfBuchstabeOhneUmlaut(nachname.charAt(0)); //Anfangsbuchstabe
-                                                                                if (letter != firstLetter && personendaten.hasListenkandidatur()) {
+                                                                                    String nachname = personendaten.getNachname();
+                                                                                    char firstLetter = ClientHelper.getAnfBuchstabeOhneUmlaut(nachname.charAt(0)); //Anfangsbuchstabe
+                                                                                    if (letter != firstLetter && personendaten.hasListenkandidatur()) {
                                                                                         letter = firstLetter;%>
                                                                                     <a href="#<%= letter %>">[<%=letter%>]</a><%
                                                                                     }
@@ -170,22 +168,19 @@ String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
                                                                                         while (iterator.hasNext()){
                                                                                             Personendaten personendaten = iterator.next();
                                                                                             if (personendaten.hasListenkandidatur()) {
-                                                                                                Set<Integer> listen = new TreeSet<Integer>();                                                                                           
-                                                                                                for (Listenkandidatur lk : personendaten.getListenkandidaturCol()) {
-                                                                                                  listen.add(lk.getGruppe().getSchluessel());
-                                                                                                }
-                                                                                            String nachname = personendaten.getNachname();
-                                                                                            char firstLetter = ClientHelper.getAnfBuchstabeOhneUmlaut(nachname.charAt(0)); //Anfangsbuchstabe
-                                                                                            String anker = "";
-                                                                                            int colspan = 5;
-                                                                                              if (letterArea != firstLetter) {
-                                                                                                letterArea = firstLetter;
+                                                                                                List<Integer> listen = personendaten.getListenkandidaturenGruppenSchluesselSortiert();                                                                                          
+                                                                                                String nachname = personendaten.getNachname();
+                                                                                                char firstLetter = ClientHelper.getAnfBuchstabeOhneUmlaut(nachname.charAt(0)); //Anfangsbuchstabe
+                                                                                                String anker = "";
+                                                                                                int colspan = 5;
+                                                                                                if (letterArea != firstLetter) {
+                                                                                                    letterArea = firstLetter;
                                                                                                     String name = "name='" + firstLetter + "'";
                                                                                                     if (firstTime) {
-                                                                                                    anker = "";
-                                                                                                    firstTime = false;
+                                                                                                        anker = "";
+                                                                                                        firstTime = false;
                                                                                                     } else {
-                                                                                                    anker = "<a style='text-decoration:none' href='#oben'>[<img src='" + request.getContextPath()+ "/img/icon/pfeil_oben.gif' width='16' height='18' border='0' alt=''>"+ BundleHelper.getBundleString("NachOben") +" ]</a>"; %>
+                                                                                                        anker = "<a style='text-decoration:none' href='#oben'>[<img src='" + request.getContextPath()+ "/img/icon/pfeil_oben.gif' width='16' height='18' border='0' alt=''>"+ BundleHelper.getBundleString("NachOben") +" ]</a>"; %>
                                                                                                         <tr>
                                                                                                             <td colspan="<%=colspan%>" height="30" align="right">
                                                                                                                 <a <%=name%>><%=anker%></a>
@@ -209,13 +204,13 @@ String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
                                                                                                 }%>
                                                                                                 <tr class='<%=i < 1 ? "hgeeeeee" : "hgweiss"%>'>
                                                                                                     <td style="width: 398px;">
-                                                                                                        <ivu:nc value="<%= personendaten.getPraefix() %>" /> <ivu:nc value="<%= personendaten.getNachname() %>" />, <ivu:nc value="<%= personendaten.getInitialen() %>"/> <%=personendaten.getVorname()  != null ? "("+personendaten.getVorname()+")" :""%>
+                                                                                                        <ivu:nc value="<%= ClientHelper.forHTML(personendaten.getPraefix()) %>" /> <ivu:nc value="<%= ClientHelper.forHTML(personendaten.getNachname()) %>" />, <ivu:nc value="<%= ClientHelper.forHTML(personendaten.getInitialen()) %>"/> <%=personendaten.getVorname() != null ? "(" + ClientHelper.forHTML(personendaten.getVorname()) +")" :""%>
                                                                                                     </td>
                                                                                                     <td style="width: 150px;">
-                                                                                                        <ivu:nc value="<%=ClientHelper.intSetToString(listen) %>" />
+                                                                                                        <ivu:nc value="<%=ClientHelper.intsToString(listen) %>" />
                                                                                                     </td>
                                                                                                     <td style="width: 206px;">
-                                                                                                        <ivu:nc value="<%= personendaten.getWohnort() %>"/><%if (personendaten.getLand()!= null ){%> (<%= personendaten.getLand() %>)<% } %>
+                                                                                                        <ivu:nc value="<%= ClientHelper.forHTML(personendaten.getWohnort()) %>"/><%if (personendaten.getLand()!= null ){%> (<%= ClientHelper.forHTML(personendaten.getLand()) %>)<% } %>
                                                                                                     </td>
                                                                                                     <td style="text-align: right;">
                                                                                                         <% if (WahlModel.STATE_CALCULATION_SUCCESSFUL == wahlInfo.getStatus()) { %>

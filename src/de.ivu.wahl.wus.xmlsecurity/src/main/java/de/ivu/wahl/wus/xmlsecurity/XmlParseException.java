@@ -10,7 +10,7 @@ package de.ivu.wahl.wus.xmlsecurity;
  * this exception is thrown if hash calculation fails
  * 
  * 
- * @author mike@ivu.de, IVU Traffic Technologies AG
+ * @author Mike Gro., IVU Traffic Technologies AG
  * @version $Id: XmlParseException.java,v 1.1 2009/01/21 17:36:02 mes Exp $
  */
 public class XmlParseException extends Exception {

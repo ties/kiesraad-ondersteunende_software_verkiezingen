@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Personendaten as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicPersonendatenBean extends BMPBeanBase implements EntityBean, PersonendatenModel {

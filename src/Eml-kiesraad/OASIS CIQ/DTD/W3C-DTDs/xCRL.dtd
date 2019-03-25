@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+    	xCRL: eXtensible Customer Relationship Language
+		This is an XML document type definition (DTD) for
+		defining customer relationships namely, Person-Person, Person-Organisation,
+		and Organisation-Organisation relationships.
+		Date of Original Creation: 20 November 2001
+		Copyright(c) 2001, OASIS. All Rights Reserved [http://www.oasis-open.org]
+		Contact: Customer Information Quality Technical Committee, OASIS
+	        	 http://www.oasis-open.org/committees/ciq
+		VERSION: 1.1. Date of Creation: 01 May 2002
+		Last Update: 24 July 2002
+		Last Modified By: Ram Kumar
+		Previous Version: 1.0 
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+<!ENTITY % xCIL SYSTEM "xCIL.dtd">
+%xCIL;
+
+<!-- Root Element -->
+<!ELEMENT xCRL (RelationshipRecord+)>
+<!ATTLIST xCRL 	Version 	CDATA #FIXED "2.0"> 
+
+<!--Reflects single or multiple relationships between one  or more customers. If more than one customer 
+	say, Mrs Shantha Ramkumar and Mr.Ramkumar, then use the attributes to define that this is more than 
+	one customer and the grouptype is say, "Joint customer"-->
+<!ELEMENT RelationshipRecord (FreeTextLine*, Customer*, InRelationshipWith*)>
+<!--RelationshipRecordKey: Key identifier for the element for not reinforced references from other elements. 
+						   Not required to be unique for the document to be valid, but application may get confused 
+						   if not unique. Extend this schema adding unique contraint if needed.	-->
+<!ATTLIST RelationshipRecord
+	RelationshipRecordKey CDATA #IMPLIED
+>
+<!--One record from xCIL representing a customer. Here a Customer can be defined or a group of Customers say, 
+	Joint Customers, ie. Eg. Customer "A" or Group "A" of Customers 
+	Customer ID : ID of the customer (from xCIL)
+	xNL : Name details of the customer (from xNL)
+	xAL : Address details of the customer (from xAL)
+	OrganisationInfo: Information about the customer (if the customer is an organisation or related type - from xCIL)
+	PersonInfo: Informaion about the customer (if the customer is a person - from xCIL)
+	InRelationshipWith: The customer in relationship with the other customer(s)-->
+<!ELEMENT Customer (CustomerID*, NameDetails?, AddressDetails*, (OrganisationInfo | PersonInfo)?, 
+				    FreeTextLine*, InRelationshipWith*)>
+<!--PartyType: Type of Party(customer). Example: Person, organisation, business, club, association, charity, etc.-->
+<!--CustomerDetailsKey: Key identifier for the element for not reinforced references from other elements. 
+						Not required to be unique for the document to be valid, but application may get confused 
+						if not unique. Extend this schema adding unique contraint if needed.-->
+<!ATTLIST Customer
+	PartyType CDATA #IMPLIED
+	CustomerDetailsKey CDATA #IMPLIED
+>
+
+<!--Primary Customer element is in relationship with a Secondary Customer or a group of secondary customers. 
+	Eg. Customer "A" or Group "A" of Customers are "InRelationshipWith" Customer "B" or a group "B" of 
+	Customers.  Group "B" of Customers or Customer "B" are "InRelationshipWith" Group "C" of Customers or 
+	Customer "C" and so on... Customer "A" is Primary Customer and Cutomer "B" is Secondary Customer.
+	You need InRelationshipWith used again because a group of customers represented here could have a relationship
+	with one or more customers in a common way. -->
+<!ELEMENT InRelationshipWith (FreeTextLine*, Customer+, RelationshipInformation?, ContactHistory?, UpdateHistory?,
+							  InRelationshipWith*)>
+<!--RelationshipRecordKeyRef: Use this element to break up the chain of deeply nested relationships and start it 
+							  from the top again. At the same time the logical chain of relationships will be 
+							  preserved. -->
+<!--RelationshipType: Who to who: person to person, biz to biz and etc. Can be any variation or even encoded. 
+	Different parties have to agree on the list of values for this attribute prior to information exchange, 
+	if required.-->
+<!ATTLIST InRelationshipWith
+	RelationshipRecordKeyRef CDATA #IMPLIED
+	RelationshipType CDATA #IMPLIED
+>
+
+<!--Relationship information between Primary and Secondary Customers. 
+	Direction: Primary Customer(s) to Secondary Customer(s).-->
+<!ELEMENT RelationshipInformation (FreeTextLine*, RelationshipTitle?, PrimaryCustomerRelationshipTitle?, 
+							       SecondaryCustomerRelationshipTitle?, RelationshipNature?, CommonEntities?, 
+							       RelationshipPrivilege*, RelationshipEstablishedDate?, RelationshipStatus?, 
+							       RelationshipLapsedDate?, RelationshipLapsedReason*, RelationshipSuspendedDate?,
+							       RelationshipSuspendedReason*, Account?)>
+<!--Relationship Title between Primary and Secondary Customers. 
+	Eg.: "in trust for", "doing business as", "trading as", etc-->
+<!ELEMENT RelationshipTitle (#PCDATA)>  
+<!--Relationship Title of the Primary Customer with the Secondary Customer. 
+	Example: Customer A "In Trust For" Customer B. Here Customer A is the Primary Customer and the 
+	title is "Trustee"-->
+<!ELEMENT PrimaryCustomerRelationshipTitle (#PCDATA)>
+<!--Relationship Title of the Secondary Customer with the Primary Customer. 
+	Example: Customer A "In Trust For" Customer B. Here Customer B is the Secondary Customer and the 
+	title is "Beneficiary"-->
+<!ELEMENT SecondaryCustomerRelationshipTitle (#PCDATA)>
+<!--E.g.:  formal, informal, legal, illegal, Business Contact, Personal Contact, Personal, etc.-->
+<!ELEMENT RelationshipNature (#PCDATA)>
+<!--Relationship nature between Primary and Secondary Customers. Direction: Primary to Secondary Customer. 
+	Example: Formal, Informal, Legal, Illegal, Business Contact, Personal Contact, Personal, etc--> 
+<!ELEMENT CommonEntities (FreeTextLine*, AddressDetails?, (PersonInfo | OrganisationInfo)?)>
+<!--Privilege level: Gold Customer, Silver Customer, etc -->
+<!ELEMENT RelationshipPrivilege (#PCDATA)>
+<!--Type: Type of privilege -->
+<!ATTLIST RelationshipPrivilege
+	Type CDATA #IMPLIED>
+<!-- Date of establishment of the relationship-->
+<!ELEMENT RelationshipEstablishedDate (Date | (Day?, Month?, Year?))>
+<!-- Date: Date as full date format -->
+<!ATTLIST RelationshipEstablishedDate
+	Date CDATA #IMPLIED
+>
+<!--Potential Customer, Current Customer Former Customer, etc -->
+<!ELEMENT RelationshipStatus (#PCDATA)>
+<!-- Date of lapse of the relationship-->
+<!ELEMENT RelationshipLapsedDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format  -->
+<!ATTLIST RelationshipLapsedDate
+	Date CDATA #IMPLIED
+>
+<!-- Reason for the relationship lapse. Eg. Contract expired, etc -->
+<!ELEMENT RelationshipLapsedReason (#PCDATA)>
+<!--Type: Type of reason -->
+<!ATTLIST RelationshipLapsedReason
+	Type CDATA #IMPLIED>
+<!-- Date of suspension of the relationship-->
+<!ELEMENT RelationshipSuspendedDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format  -->
+<!ATTLIST RelationshipSuspendedDate
+	Date CDATA #IMPLIED
+>
+<!-- Reason for the relationship suspension. Eg. unpaid bills, etc -->
+<!ELEMENT RelationshipSuspendedReason (#PCDATA)>
+<!--Type: Type of reason -->
+<!ATTLIST RelationshipSuspendedReason
+	Type CDATA #IMPLIED>	
+
+<!--Information on who, how and when contacted the customer -->
+<!ELEMENT ContactHistory (FreeTextLine*, ContactDetails*)>
+<!--Contact details as structured information.-->
+<!ELEMENT ContactDetails (FreeTextLine*, ContactDate?, ContactTime?, NameDetails?, ContactVenue?, 
+						  ContactDescription*, ContactMode*)>
+<!-- Date of contacting the customer -->
+<!ELEMENT ContactDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST ContactDate
+	Date CDATA #IMPLIED
+>
+<!-- Time of contact -->
+<!-- TimeType: 12HR, 24HR -->
+<!ELEMENT ContactTime (#PCDATA)>
+<!ATTLIST ContactTime
+	TimeType CDATA #IMPLIED>
+<!--Where the contact happened -->
+<!ELEMENT ContactVenue (FreeTextLine*, ContactNumbers?, AddressDetails?, EmailAddresses?, URL?)>
+<!--Additional contact information.-->
+<!ELEMENT ContactDescription (#PCDATA)>
+<!--Type: Type of contact -->
+<!ATTLIST ContactDescription
+	Type	CDATA #IMPLIED>
+<!-- Mode of contact. Example: In person, Phone, e-mail, fax, etc-->
+<!ELEMENT ContactMode (#PCDATA)>
+<!--Type: Type of contact mode -->
+<!ATTLIST ContactMode
+	Type	CDATA #IMPLIED>
+<!--Information of the last update for this information.-->
+<!ELEMENT UpdateHistory (FreeTextLine*, UpdateDetails*)>
+<!--Stuctured information about update: who updated and when.-->
+<!ELEMENT UpdateDetails (FreeTextLine*, UpdateDate?, UpdateTime?, NameDetails?, UpdateDescription*)>
+<!-- Date of update -->
+<!ELEMENT UpdateDate (Date | (Day?, Month?, Year?))>
+<!--Date: Date as full date format -->
+<!ATTLIST UpdateDate
+	Date CDATA #IMPLIED
+>
+<!-- Time of update -->
+<!-- TimeType: 12HR, 24HR -->
+<!ELEMENT UpdateTime (#PCDATA)>
+<!ATTLIST UpdateTime
+	TimeType CDATA #IMPLIED>
+<!-- Description about the update if any -->
+<!ELEMENT UpdateDescription (#PCDATA)>
+<!--Type: Type of description -->
+<!ATTLIST UpdateDescription
+	Type	CDATA #IMPLIED>
+
+<!--Account information held by a customer about another customer. Eg. A service provider holds its 
+client's account information-->
+<!ELEMENT Account (FreeTextLine*, AccountDescription*, ServiceProvided*, BillPaymentOption?, 
+				   CurrentBillingCycle?, CurrentBalance?, OverDueAmount?, PreviousBalance?, 
+				   LastPayment?, BillingAddress?, OtherCharges*)>
+<!--AccountID: Unique account identifier-->
+<!--ForeignSystemAccountID: If this account information is present in more than one system, this 
+    attribute can be used to link the accounts in different systems-->
+<!--AccountStatus: Current Account status, such as:  Active, Inactive, Locked, Suspended, Disputed, etc.-->
+<!ATTLIST Account
+	AccountID CDATA #IMPLIED
+	ForeignSystemAccountID CDATA #IMPLIED
+	AccountStatus CDATA #IMPLIED
+>
+<!--Description of the account-->
+<!ELEMENT AccountDescription (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate 
+		  the type or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST AccountDescription
+	Type CDATA #IMPLIED
+>
+<!--Describes the type of services provided for this account. Eg. Maintenance of software, ISP, etc-->
+<!ELEMENT ServiceProvided (#PCDATA)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type or 
+          put some supplementary information, otherwise ignore it.-->
+<!ATTLIST ServiceProvided
+	Type CDATA #IMPLIED
+>
+<!--Type attribute: Direct Debit, Cash, Cheque, Credit Card, etc.-->
+<!ELEMENT BillPaymentOption (FreeTextLine*, IDCards?, FinancialAccounts?)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type 
+    or put some supplementary information, otherwise ignore it.-->
+<!ATTLIST BillPaymentOption
+	Type CDATA #IMPLIED
+>
+<!--Billing cycle. eg. monthly, quarterly, etc. -->
+<!ELEMENT CurrentBillingCycle (FreeTextLine*, FirstBillingDate?, LastBillingDate?, PaymentDueDate?, 
+							   NextBillingDate?, BillingAmount?, FinalBillingDate?)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the 
+    type or put some supplementary information, otherwise ignore it.-->
+<!--Period: Period of billing cycle. For example, 26 months contract, 25 years contract. 
+	Example: 36 months, 5 years, 325 days, etc -->
+<!ATTLIST CurrentBillingCycle
+	Type CDATA #IMPLIED
+	Period CDATA #IMPLIED
+>
+<!--Date of first billing in the billing cycle-->
+<!ELEMENT FirstBillingDate (Date | (Day?, Month?, Year?))> 
+<!ATTLIST FirstBillingDate
+	Date CDATA #IMPLIED
+>
+<!--Indicates the date that the Customer's last account is billed up to-->
+<!ELEMENT LastBillingDate (Date | (Day?, Month?, Year?))> 
+<!ATTLIST LastBillingDate
+	Date CDATA #IMPLIED
+>
+<!--Date of payment due for the billing amount. Example: 10 days from billing date -->
+<!ELEMENT PaymentDueDate (Date | (Day?, Month?, Year?))> 
+<!ATTLIST PaymentDueDate
+	Date CDATA #IMPLIED
+>
+<!--Next billing date in the billing cycle -->
+<!ELEMENT NextBillingDate (Date | (Day?, Month?, Year?))> 
+<!ATTLIST NextBillingDate
+	Date CDATA #IMPLIED
+>
+<!--Date of final billing in the billing cycle-->
+<!ELEMENT FinalBillingDate (Date | (Day?, Month?, Year?))> 
+<!ATTLIST FinalBillingDate
+	Date CDATA #IMPLIED
+>
+<!--Amount to be billed for the next billing date-->
+<!ELEMENT BillingAmount (FreeTextLine*, Amount?, AmountRange?)>
+
+
+<!--Current balance on this account-->
+<!ELEMENT CurrentBalance (FreeTextLine*, Amount?, AmountRange?)>
+<!--Any outstanding amount on this account-->
+<!ELEMENT OverDueAmount (FreeTextLine*, Amount?, AmountRange?)>
+<!--Any previous balance amount-->
+<!ELEMENT PreviousBalance (FreeTextLine*, Amount?, AmountRange?)>
+
+<!--Details of last payment made by the customer-->
+<!ELEMENT LastPayment (FreeTextLine*, PaymentDate?, AmountPaid?, PaymentReferenceNumber?,
+					   BillReferenceNumber?)>
+<!--Date of payment-->
+<!ELEMENT PaymentDate (Date | (Day?, Month?, Year?))> 
+<!ATTLIST PaymentDate
+	Date CDATA #IMPLIED
+>
+<!--Amount paid-->
+<!ELEMENT AmountPaid (FreeTextLine*, Amount?, AmountRange?)>
+<!--Reference for payment made-->
+<!ELEMENT PaymentReferenceNumber (#PCDATA)>
+<!--Bill reference for which the payment was made-->
+<!ELEMENT BillReferenceNumber (#PCDATA)>
+
+<!--Address to which bills are sent-->
+<!ELEMENT BillingAddress (AddressDetails)>
+
+<!--Any other charges. Eg. Interest-->
+<!ELEMENT OtherCharges (FreeTextLine*, AmountCharged?, DateCharged?, InterestRate?)>
+<!--Type: If the element can be classified by different types, use this attribute to indicate the type or 
+          put some supplementary information, otherwise ignore it.
+          Example: Any other charges such as Interest, Penalty, re-issue bill, etc-->
+<!ATTLIST OtherCharges
+	Type CDATA #IMPLIED
+>
+<!--Amount charged -->
+<!ELEMENT AmountCharged (FreeTextLine*, Amount?, AmountRange?)>
+<!--Date of charging the amount-->
+<!ELEMENT DateCharged (Date | (Day?, Month?, Year?))> 
+<!ATTLIST DateCharged
+	Date CDATA #IMPLIED
+>
+<!--Interest rate charged on over due amount. Example: 7.5%-->
+<!ELEMENT InterestRate (#PCDATA)>
+<!--Type: Type of interest rate. Example: Compound, daily, fixed, etc.-->
+<!ATTLIST InterestRate
+	Type CDATA #IMPLIED
+>
+
+

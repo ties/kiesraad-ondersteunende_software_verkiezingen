@@ -9,7 +9,7 @@ import java.util.Map;
 import de.ivu.wahl.modell.WahlModel;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class InitGuiCommandEP_P5 extends InitGuiCommand_P5 implements ApplicationBeanKonstanten {
 

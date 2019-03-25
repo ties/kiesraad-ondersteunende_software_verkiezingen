@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import de.ivu.wahl.wus.utils.i18n.Messages;
 
 /**
- * @author tdu@ivu.de
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class KiesraadUrlDialog extends MessageDialog {
 

@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * GebietDBA
  *
- * @author cos@ivu.de  (c) 2003-4 IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-4 IVU Traffic Technologies AG
  */
 
 import java.math.BigDecimal;
@@ -18,10 +18,6 @@ public class GebietDBA extends BasicGebietDBA {
   private static final long serialVersionUID = -4152392337169714239L;
 
   private static final Category LOGGER = Log4J.configure(GebietDBA.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(GebietDBA.class, Log4J.extractVersion("$Revision: 1.6 $"))); //$NON-NLS-1$
-  }
 
   public static Map<String, BigDecimal> getWahlbeteiligungWahleinheiten(String id_Wahl, boolean asc)
       throws SQLException {

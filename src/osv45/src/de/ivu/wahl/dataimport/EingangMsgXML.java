@@ -30,7 +30,7 @@ import de.ivu.wahl.modell.ejb.GruppeGebietsspezifisch;
 /**
  * EingangMsgXML Reading an eml 510 result file for one sub region
  * 
- * @author ugo@ivu.de, cos@ivu.de - IVU Traffic Technologies AG
+ * @author U. Müller, D. Cosic - IVU Traffic Technologies AG
  */
 public class EingangMsgXML extends BasicEingangMsg {
 

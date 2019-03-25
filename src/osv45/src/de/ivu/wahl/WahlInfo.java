@@ -56,16 +56,13 @@ import de.ivu.wahl.wus.reportgen.ReportNameComponentsP5;
 import de.ivu.wahl.wus.reportgen.RgConstants;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class WahlInfo implements Serializable, Cloneable {
   private static final long serialVersionUID = "$Id: WahlInfo.java,v 1.51 2011/02/10 09:14:41 jon Exp $" //$NON-NLS-1$
   .hashCode();
   private static final Category LOGGER = Log4J.configure(WahlInfo.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(WahlInfo.class, Log4J.extractVersion("$Revision: 1.51 $"))); //$NON-NLS-1$
-  }
 
   private static final long UPDATE_INTERVAL = 10000; // 10 sec
   private static final int GEBIET_HASH_SIZE = 499;

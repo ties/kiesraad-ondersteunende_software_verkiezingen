@@ -30,7 +30,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Wahl as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicWahlBean extends BMPBeanBase implements EntityBean, WahlModel {
@@ -110,14 +110,13 @@ public abstract class BasicWahlBean extends BMPBeanBase implements EntityBean, W
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Wurzelgebiet ID of the objects to be searched
-     * @return Key of the entity
-     * @throws ObjectNotFoundException if the entity was not found.
+     * @param id_Wahlgebiet ID of the objects to be searched
+     * @return  {@link Collection} of the found Wahl-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public String ejbFindByWurzelgebiet(String id_Wurzelgebiet) throws IVUFinderException, ObjectNotFoundException {
+   public Collection<String> ejbFindAllByWahlgebiet(String id_Wahlgebiet) throws IVUFinderException {
       try {
-         return findSingle(WahlDBA.retrieveIDsByID_Wurzelgebiet(id_Wurzelgebiet));
+         return WahlDBA.retrieveIDsByID_Wahlgebiet(id_Wahlgebiet);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -127,13 +126,14 @@ public abstract class BasicWahlBean extends BMPBeanBase implements EntityBean, W
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Wahlgebiet ID of the objects to be searched
-     * @return  {@link Collection} of the found Wahl-entities
+     * @param id_Wurzelgebiet ID of the objects to be searched
+     * @return Key of the entity
+     * @throws ObjectNotFoundException if the entity was not found.
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByWahlgebiet(String id_Wahlgebiet) throws IVUFinderException {
+   public String ejbFindByWurzelgebiet(String id_Wurzelgebiet) throws IVUFinderException, ObjectNotFoundException {
       try {
-         return WahlDBA.retrieveIDsByID_Wahlgebiet(id_Wahlgebiet);
+         return findSingle(WahlDBA.retrieveIDsByID_Wurzelgebiet(id_Wurzelgebiet));
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -551,24 +551,24 @@ public abstract class BasicWahlBean extends BMPBeanBase implements EntityBean, W
 
    @Override
    protected void checkRelations() {
-      if (null == _details.getID_Wurzelgebiet()) {
-         _wurzelgebiet = null;
-         _relchk_Wurzelgebiet = true;
-      } else {
-         _relchk_Wurzelgebiet = false;
-      }
       if (null == _details.getID_Wahlgebiet()) {
          _wahlgebiet = null;
          _relchk_Wahlgebiet = true;
       } else {
          _relchk_Wahlgebiet = false;
       }
+      if (null == _details.getID_Wurzelgebiet()) {
+         _wurzelgebiet = null;
+         _relchk_Wurzelgebiet = true;
+      } else {
+         _relchk_Wurzelgebiet = false;
+      }
    }
 
    @Override
    protected void resetRelations() {
-      _wurzelgebiet = null;
       _wahlgebiet = null;
+      _wurzelgebiet = null;
    }
 
    /**
@@ -967,51 +967,6 @@ public abstract class BasicWahlBean extends BMPBeanBase implements EntityBean, W
    }
 
    /**
-     * Relation zu Wurzelgebiet
-     */
-   protected Gebiet _wurzelgebiet;
-
-   /**
-     * Flag for the validity of the relation Wurzelgebiet
-     */
-   protected boolean _relchk_Wurzelgebiet = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Gebiet}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Gebiet getWurzelgebiet() throws EJBException {
-      if (!_relchk_Wurzelgebiet) {
-         if (null == _details.getID_Wurzelgebiet()) {
-            _wurzelgebiet = null;
-         } else if (null == _wurzelgebiet || !_wurzelgebiet.getPrimaryKey().equals(_details.getID_Wurzelgebiet())) {
-            try {
-               GebietHome home = GebietHome.HomeFinder.findHome(this);
-               _wurzelgebiet = home.findByPrimaryKey(_details.getID_Wurzelgebiet());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Wurzelgebiet", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Gebiet", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Wurzelgebiet = true;
-      }
-      return _wurzelgebiet;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Gebiet}
-     *
-     * @param wurzelgebiet the corresponding EJBObject
-     */
-   public void setWurzelgebiet(Gebiet wurzelgebiet) {
-      _wurzelgebiet = wurzelgebiet;
-      _details.setID_Wurzelgebiet(wurzelgebiet == null ? null : (String)wurzelgebiet.getPrimaryKey());
-   }
-
-   /**
      * Relation zu Wahlgebiet
      */
    protected Gebiet _wahlgebiet;
@@ -1054,6 +1009,51 @@ public abstract class BasicWahlBean extends BMPBeanBase implements EntityBean, W
    public void setWahlgebiet(Gebiet wahlgebiet) {
       _wahlgebiet = wahlgebiet;
       _details.setID_Wahlgebiet(wahlgebiet == null ? null : (String)wahlgebiet.getPrimaryKey());
+   }
+
+   /**
+     * Relation zu Wurzelgebiet
+     */
+   protected Gebiet _wurzelgebiet;
+
+   /**
+     * Flag for the validity of the relation Wurzelgebiet
+     */
+   protected boolean _relchk_Wurzelgebiet = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Gebiet}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Gebiet getWurzelgebiet() throws EJBException {
+      if (!_relchk_Wurzelgebiet) {
+         if (null == _details.getID_Wurzelgebiet()) {
+            _wurzelgebiet = null;
+         } else if (null == _wurzelgebiet || !_wurzelgebiet.getPrimaryKey().equals(_details.getID_Wurzelgebiet())) {
+            try {
+               GebietHome home = GebietHome.HomeFinder.findHome(this);
+               _wurzelgebiet = home.findByPrimaryKey(_details.getID_Wurzelgebiet());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Wurzelgebiet", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Gebiet", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Wurzelgebiet = true;
+      }
+      return _wurzelgebiet;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Gebiet}
+     *
+     * @param wurzelgebiet the corresponding EJBObject
+     */
+   public void setWurzelgebiet(Gebiet wurzelgebiet) {
+      _wurzelgebiet = wurzelgebiet;
+      _details.setID_Wurzelgebiet(wurzelgebiet == null ? null : (String)wurzelgebiet.getPrimaryKey());
    }
 
    /**

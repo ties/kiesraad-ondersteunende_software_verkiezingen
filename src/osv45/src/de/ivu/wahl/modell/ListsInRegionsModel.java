@@ -26,7 +26,7 @@ import de.ivu.wahl.modell.ejb.Listenkandidatur;
  * This object shall give complete information about Liste, Gruppe and GruppeGebietsspezifisch
  * throughout all the given regions.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ListsInRegionsModel implements Serializable {
   private static final long serialVersionUID = -561232654244067668L;

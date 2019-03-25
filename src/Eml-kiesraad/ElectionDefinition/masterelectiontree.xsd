@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="simpletypes.xsd"/>
+	<xs:element name="MasterElectionTree">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Region"/>
+			</xs:sequence>
+			<xs:attribute name="CreationDate" type="xs:dateTime" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Region">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RegionName">
+					<xs:annotation>
+						<xs:documentation>Region name</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="Council" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Committee" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Region" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="RegionNumber" type="xs:short"/>
+			<xs:attribute name="RegionCategory" type="RegionCategoryType" use="required"/>
+			<xs:attribute name="RomanNumerals" type="xs:boolean" default="false"/>
+			<xs:attribute name="FrysianExportAllowed" type="xs:boolean" default="false"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RegionName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>District name</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Council">
+		<xs:complexType>
+			<xs:attribute name="ElectionCategory" type="ElectionCategoryType" use="required"/>
+			<xs:attribute name="CouncilName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>If not set, use standard name according to election category.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="NumberOfSeats" type="xs:positiveInteger"/>
+			<xs:attribute name="PreferenceThreshold" type="xs:nonNegativeInteger">
+				<xs:annotation>
+					<xs:documentation>Electoral quota in % a candidate will be prefered.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Committee">
+		<xs:complexType>
+			<xs:attribute name="ElectionCategory" type="ElectionCategoryType" use="required"/>
+			<xs:attribute name="CommitteeCategory" type="CommitteeCategoryType" use="required"/>
+			<xs:attribute name="CommitteeName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>If not set, use region name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AcceptCentralSubmissions" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

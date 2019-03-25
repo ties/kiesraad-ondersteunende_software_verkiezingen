@@ -67,7 +67,7 @@ public class GruppeComposite {
   /**
    * This class corresponds to a candidate list (which belongs to one electoral district)
    * 
-   * @author jon@ivu.de, IVU Traffic Technologies AG
+   * @author J. Nottebaum, IVU Traffic Technologies AG
    */
   public class Liste {
     final String id_Liste;
@@ -143,7 +143,7 @@ public class GruppeComposite {
    * Corresponds to a candidate of a candidate list (not P2-list)
    * 
    * @created 07.01.2009
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   public class Listenkandidat {
     final PersonendatenModel _person;

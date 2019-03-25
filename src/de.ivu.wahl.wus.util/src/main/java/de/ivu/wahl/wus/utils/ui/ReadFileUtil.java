@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 /**
  * Simple helper class reading a plain text file and converting the content to a list of Strings
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReadFileUtil {
   private static final Logger LOGGER = Logger.getLogger(ReadFileUtil.class);

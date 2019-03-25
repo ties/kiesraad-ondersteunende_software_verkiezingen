@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity DHondtQuotient.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class DHondtQuotientDBA extends DBABase {
@@ -66,19 +66,37 @@ public class DHondtQuotientDBA extends DBABase {
       if ((idx = columns.get(ID_DHONDTQUOTIENT.toUpperCase())) != null) {
          m._iD_DHondtQuotient = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_DHONDTQUOTIENT)) != null) {
+         m._iD_DHondtQuotient = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_RESTSITZVERTEILUNG.toUpperCase())) != null) {
+         m._id_Restsitzverteilung = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_RESTSITZVERTEILUNG)) != null) {
          m._id_Restsitzverteilung = r.getString(idx.intValue());
       }
       if ((idx = columns.get(LAUF.toUpperCase())) != null) {
          m._lauf = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(LAUF)) != null) {
+         m._lauf = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ZAEHLER.toUpperCase())) != null) {
+         m._zaehler = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(ZAEHLER)) != null) {
          m._zaehler = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(NENNER.toUpperCase())) != null) {
          m._nenner = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(NENNER)) != null) {
+         m._nenner = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(SITZAUSRESTANTEIL.toUpperCase())) != null) {
+         m._sitzAusRestanteil = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(SITZAUSRESTANTEIL)) != null) {
          m._sitzAusRestanteil = r.getBoolean(idx.intValue());
       }
    }
@@ -94,19 +112,19 @@ public class DHondtQuotientDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_RESTSITZVERTEILUNG.toUpperCase())) {
+      if (columns.containsKey(ID_RESTSITZVERTEILUNG.toUpperCase()) || columns.containsKey(ID_RESTSITZVERTEILUNG)) {
          p.setString(idx++, m._id_Restsitzverteilung);
       }
-      if (columns.containsKey(LAUF.toUpperCase())) {
+      if (columns.containsKey(LAUF.toUpperCase()) || columns.containsKey(LAUF)) {
          p.setInt(idx++, m._lauf);
       }
-      if (columns.containsKey(ZAEHLER.toUpperCase())) {
+      if (columns.containsKey(ZAEHLER.toUpperCase()) || columns.containsKey(ZAEHLER)) {
          p.setInt(idx++, m._zaehler);
       }
-      if (columns.containsKey(NENNER.toUpperCase())) {
+      if (columns.containsKey(NENNER.toUpperCase()) || columns.containsKey(NENNER)) {
          p.setInt(idx++, m._nenner);
       }
-      if (columns.containsKey(SITZAUSRESTANTEIL.toUpperCase())) {
+      if (columns.containsKey(SITZAUSRESTANTEIL.toUpperCase()) || columns.containsKey(SITZAUSRESTANTEIL)) {
          p.setBoolean(idx++, m._sitzAusRestanteil);
       }
       p.setString(idx++, m._iD_DHondtQuotient);

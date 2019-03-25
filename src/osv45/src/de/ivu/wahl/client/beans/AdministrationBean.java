@@ -6,7 +6,6 @@ package de.ivu.wahl.client.beans;
 
 import static de.ivu.ejb.EJBUtil.findLocalHomeNoCache;
 import static de.ivu.ejb.EJBUtil.lookupLocal;
-import static de.ivu.wahl.AnwContext.calcHash;
 import static de.ivu.wahl.Konstanten.BR;
 import static de.ivu.wahl.Konstanten.PREFILL_DB;
 import static de.ivu.wahl.Konstanten.PROP_BENACHRICHTIGUNG_GEWAEHLTE;
@@ -37,6 +36,8 @@ import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +77,6 @@ import de.ivu.wahl.client.util.ClientHelper;
 import de.ivu.wahl.dataimport.AbstractImportEML.UploadStreamHandler;
 import de.ivu.wahl.eingang.EingangMsg;
 import de.ivu.wahl.eingang.GUIEingangMsg;
-import de.ivu.wahl.export.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
@@ -92,7 +92,6 @@ import de.ivu.wahl.modell.ejb.GruppeHome;
 import de.ivu.wahl.modell.ejb.ListeHome;
 import de.ivu.wahl.modell.ejb.Listenkandidatur;
 import de.ivu.wahl.modell.ejb.Personendaten;
-import de.ivu.wahl.modell.ejb.Wahl;
 import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.util.EMLFilenameCheck;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
@@ -111,7 +110,7 @@ import de.ivu.wahl.wus.reportgen.RgConstants;
 /**
  * Administrative client functions, mostly using session bean functions
  * 
- * @author mur@ivu.de, klie@ivu.de
+ * @author M. Murdfield, P. Kliem
  */
 
 public class AdministrationBean extends RepositoryPropertyHandler
@@ -144,11 +143,12 @@ public class AdministrationBean extends RepositoryPropertyHandler
   private static final String CMD_ADM_WAHL_ZURUECK = "adm_wahlZurueck"; //$NON-NLS-1$
   private static final String CMD_ADM_PROP_EINGABE = "adm_propEingabe"; //$NON-NLS-1$
   private static final String CMD_ADM_FREIGABE = "adm_freigabe"; //$NON-NLS-1$
+  public static final String CMD_ADM_RE_INDEX_DATABASE = "adm_re_index_database"; //$NON-NLS-1$
   private static final String CMD_ADM_SW_EINGABE_ALLG = "adm_swEingabeAllg"; //$NON-NLS-1$
   public static final String CMD_ADM_KANDIDATEN_WAEHLBAR = "adm_Kandidaten_waehlbar"; //$NON-NLS-1$
   public static final String CMD_ADM_VOTE_VALUES = "adm_vote_values"; //$NON-NLS-1$
 
-  private static final String PARAM_ANW_NEW_PW1 = PREFIX + "anw_new_pw1"; //$NON-NLS-1$
+  private static final String PARAM_ANW_NEW_PW1 = PREFIX + "anw_new_pw_1"; //$NON-NLS-1$
   private static final String PARAM_ANW_OLD_PW = PREFIX + "anw_old_pw"; //$NON-NLS-1$
   private static final String PARAM_RELEASED = PREFIX + "freigegeben"; //$NON-NLS-1$
   private static final String PARAM_ANW_FAULTS = PREFIX + "anw_fehlanmeldungen"; //$NON-NLS-1$
@@ -225,6 +225,8 @@ public class AdministrationBean extends RepositoryPropertyHandler
     } else if (CMD_ADM_FREIGABE.equals(cmd)) {
       // Freigeben der aktuellen Wahl
       handleFreigabe(request);
+    } else if (CMD_ADM_RE_INDEX_DATABASE.equals(cmd)) {
+      reIndexStimmergebnis(request);
     } else if (CMD_ADM_PROP_EINGABE.equals(cmd)) {
       // Eingabe von Properties
       handlePropEingabeAllg(request);
@@ -934,10 +936,8 @@ public class AdministrationBean extends RepositoryPropertyHandler
         if (ID_NO_REGION.equals(gebietID)) {
           gebietID = null;
         }
-        String passwordHash = null;
         if (passwort != null && passwort.trim().length() > 0) {
           passwort = passwort.trim();
-          passwordHash = calcHash(name_anwender + passwort);
         }
         // Anzahl fehlversuche
         int fehlversucheInt = 0;
@@ -949,7 +949,7 @@ public class AdministrationBean extends RepositoryPropertyHandler
           getAnwenderHandling().createOrModifyAnwender(anwContext,
               name_anwender,
               name,
-              passwordHash,
+              passwort,
               zukuenftigeAnwRechte,
               gebietID,
               fehlversucheInt,
@@ -987,6 +987,17 @@ public class AdministrationBean extends RepositoryPropertyHandler
       }
     } catch (Exception e) {
       LOGGER.error(e, e);
+    }
+  }
+
+  private void reIndexStimmergebnis(HttpServletRequest request) {
+    _adminMsg = null;
+    _confirmationMsg = null;
+    boolean success = getAdminHandling().reIndexStimmergebnis();
+    if (success) {
+      _confirmationMsg = Messages.getString(MessageKeys.Msg_ReIndexDatabaseSuccessful);
+    } else {
+      _adminMsg = Messages.getString(MessageKeys.Msg_ReIndexDatabaseFailed);
     }
   }
 
@@ -1044,6 +1055,13 @@ public class AdministrationBean extends RepositoryPropertyHandler
       return;
     }
 
+    if (newPW.length() < Konstanten.MIN_PASSWORD_LENGTH) {
+      // Sollte vom GUI per JavaScript verhindert werden
+      _adminMsg = Messages.bind(MessageKeys.Msg_Passwort_veraendern_error_Passwort_zu_kurz,
+          Konstanten.MIN_PASSWORD_LENGTH);
+      return;
+    }
+
     AnwContext anwContext = getAnwContext(request);
     if (anwContext == null || anwContext.getAnmeldename() == null) {
       if (hasDefaultUserUnchangedPasswort) {
@@ -1054,10 +1072,8 @@ public class AdministrationBean extends RepositoryPropertyHandler
       }
     }
 
-    String oldPasswordHash = calcHash(anwContext.getAnmeldename() + oldPW);
-    String newPasswordHash = calcHash(anwContext.getAnmeldename() + newPW);
     try {
-      getAnwenderHandling().changePassword(anwContext, oldPasswordHash, newPasswordHash);
+      getAnwenderHandling().changePassword(anwContext, oldPW, newPW);
       _confirmationMsg = Messages.getString(MessageKeys.Msg_PasswortErfolgreichGeaendert);
       anwContext.setChangePasswordForced(false);
     } catch (AnwenderException e) {
@@ -1180,6 +1196,17 @@ public class AdministrationBean extends RepositoryPropertyHandler
     return getAdminHandling().getGebiete(GEBIETSART_STIMMBEZIRK);
   }
 
+  public List<GebietModel> getStimmbezirkeSortedByNummer() {
+    List<GebietModel> stimmbezirke = new ArrayList<GebietModel>(getStimmbezirkeToAdmin());
+    Collections.sort(stimmbezirke, new Comparator<GebietModel>() {
+      @Override
+      public int compare(GebietModel g1, GebietModel g2) {
+        return Integer.signum(g1.getNummer() - g2.getNummer());
+      }
+    });
+    return stimmbezirke;
+  }
+
   private static class SerializableSoftDocumentReference implements Serializable {
     private static final long serialVersionUID = -8955549683272038865L;
     private final transient SoftReference<Document> _softReference;
@@ -1204,43 +1231,7 @@ public class AdministrationBean extends RepositoryPropertyHandler
    */
   @Override
   public String getProperty(String name) throws EJBException {
-    String propertyValue = super.getProperty(name);
-    return replaceWithDefaultValueIfNull(name, propertyValue);
+    return new PropertyWithDefaultValuesProvider(getPropertyHandling()).getProperty(name);
   }
 
-  /**
-   * Replaces the propertyValue with the default value, if propertyValue is null.
-   * 
-   * @param propertyName property name
-   * @param propertyValue property value
-   * @return value to use
-   */
-  private String replaceWithDefaultValueIfNull(String propertyName, String propertyValue) {
-    if (propertyValue != null) {
-      return propertyValue;
-    }
-    if (XMLTags.RG_PLACE_LETTER.equals(propertyName)
-        || XMLTags.RG_REJECTION_LOCATION.equals(propertyName)
-        || XMLTags.RG_ACCEPTANCE_LOCATION.equals(propertyName)) {
-      return getCityOfWurzelgebiet();
-    }
-    if (Konstanten.PROP_BACKGROUND_COLOR_RED.equals(propertyName)
-        || Konstanten.PROP_BACKGROUND_COLOR_GREEN.equals(propertyName)
-        || Konstanten.PROP_BACKGROUND_COLOR_BLUE.equals(propertyName)) {
-      return String.valueOf(Konstanten.DEFAULT_BACKGROUND_COLOR_GREY);
-    }
-    return propertyValue;
-  }
-
-  /**
-   * @return name of the city of the wurzelgebiet
-   */
-  private String getCityOfWurzelgebiet() {
-    Wahl wahl = WahlInfo.getWahlInfo().getWahl();
-    String wahlkategorie = wahl.getWahlkategorie();
-    if ("TK".equals(wahlkategorie) || "EK".equals(wahlkategorie) || "EP".equals(wahlkategorie)) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      return Messages.getString(MessageKeys.LocationOfDeKiesraad);
-    }
-    return getProperty(Konstanten.KEY_CSB_REGION_NAME);
-  }
 }

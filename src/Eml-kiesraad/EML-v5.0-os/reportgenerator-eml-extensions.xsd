@@ -1,0 +1,1142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2008 rel. 2 sp2 (http://www.altova.com) von Joachim Nottebaum (IVU) bearbeitet -->
+<xs:schema xmlns="http://www.kiesraad.nl/reportgenerator" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eml="urn:oasis:names:tc:evs:schema:eml" xmlns:xnl="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0" xmlns:kr="http://www.kiesraad.nl/extensions" targetNamespace="http://www.kiesraad.nl/reportgenerator" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn:oasis:names:tc:evs:schema:eml" schemaLocation="kiesraad-eml-restrictions.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:evs:schema:eml" schemaLocation="emlcore-kiesraad-strict.xsd"/>
+	<xs:import namespace="http://www.kiesraad.nl/extensions" schemaLocation="kiesraad-eml-extensions.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0" schemaLocation="xNL-kiesraad-strict.xsd"/>
+	<xs:element name="NominationMode">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">describes the mode in which the list has been submitted</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="centrale kandidaatstelling"/>
+				<xs:enumeration value="decentrale kandidaatstelling"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MunicipalityOfPrincipalElectoralCommittee" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Name of the municipality where the principal electoral committee is based.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProposerIsVoter" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">DEPRECATED, see OSV-1272: The proposer submitted declaration that he is a registered as a voter</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AuthorisationOfGroupNameAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted a declaration that the list is authorised to carry the name of a political grouping</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SupportStatementsAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted the required number of certificates of voters that they support the proposed candidate list.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AgreementStatementsAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted the certificates of the candidates that they agree with their nomination.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DepositReceiptAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted a receipt for his deposit.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IdentificationDocumentsAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted copies of identification documents of candidates.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PlannedSettlementStatementsAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted declarations of candidates living outside the municipality / province, that they plan to settle into the municipality or province, respectively.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="NoForeignNominationStatementsAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted declarations of candidates for EP elections that they are not nominated in another country of the EU.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="NotExcludedInOtherEUCountryStatementsAttached" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The proposer submitted declarations of candidates for EP elections that they are not excluded in another country of the EU.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AuthorisedAgentName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">one or more names of an authorised agent according to electoral law articles G 1, G 2 and G 3</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AuthorisedAgentParty" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">one or more names of political groupings that have authorised agents according to electoral law articles G 1, G 2 and G 3</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="AuthorisedAgent">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">one or more authorised agents according to electoral law articles G 1, G 2 and G 3</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AuthorisedAgentName"/>
+				<xs:element ref="AuthorisedAgentParty"/>
+			</xs:sequence>
+			<xs:attribute name="model" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="H3-1"/>
+						<xs:enumeration value="H3-2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AgentRequirement">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:CandidateIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IntendedSettlement">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:CandidateIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotExcludedInOtherEUCountry">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:CandidateIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RG210">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Additions to EML210 for Report Generator</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NominationMode"/>
+				<xs:element ref="eml:ContestIdentifier" minOccurs="0"/>
+				<xs:element ref="MunicipalityOfPrincipalElectoralCommittee"/>
+				<xs:element ref="ProposerIsVoter" minOccurs="0"/>
+				<xs:element ref="AuthorisationOfGroupNameAttached"/>
+				<xs:element ref="SupportStatementsAttached"/>
+				<xs:element ref="AgreementStatementsAttached"/>
+				<xs:element ref="DepositReceiptAttached"/>
+				<xs:element ref="IdentificationDocumentsAttached"/>
+				<xs:element ref="PlannedSettlementStatementsAttached"/>
+				<xs:element ref="NoForeignNominationStatementsAttached"/>
+				<xs:element ref="NotExcludedInOtherEUCountryStatementsAttached"/>
+				<xs:element ref="AuthorisedAgent" maxOccurs="unbounded"/>
+				<xs:element ref="AgentRequirement" minOccurs="0"/>
+				<xs:element ref="IntendedSettlement" minOccurs="0"/>
+				<xs:element ref="NotExcludedInOtherEUCountry" minOccurs="0"/>
+				<xs:element name="NominationDate" type="xs:date" minOccurs="0"/>
+				<xs:element name="NominationPlace" type="xs:string" minOccurs="0"/>
+				<xs:element name="NominationAcceptorName" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Gender">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="eml:GenderType">
+					<xs:attribute name="PublicationLanguage" type="kr:PublicationLanguageType" use="required">
+						<xs:annotation>
+							<xs:documentation>denotes if the language for publication, especially of the female gender: nl -> v, fy -> f</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="CandidateNameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Name of a candidate including the gender.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="xnl:PersonName"/>
+			<xs:element ref="Gender" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FirstCandidateName" type="CandidateNameType"/>
+	<xs:complexType name="CandidateListNameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Name of candidate list as submitted. This includes the AffiliationIdentifier and the FirstCandidateName.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="eml:AffiliationIdentifier">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Unless for blanko lists, this is the party name.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="eml:ContestIdentifier" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contest for which the candidate list is nominated. Needed for central submission only, if the electoral district of the list differs from the (central) HSB where it is submitted. Always needed for EK elections.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="kr:ListData" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Optional. Contains the information, if the candidate's gender or first name may be published.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="FirstCandidateName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains the name of the first candidate which may be used to display the name of the candidate list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CandidateListName" type="CandidateListNameType"/>
+	<xs:element name="SubmittedList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateListName"/>
+				<xs:element name="NumberOfCandidatesOnList" type="xs:integer"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OmissionKind" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The text describing the omission.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Reason" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Reason for deleting a candidate or declaring a list invalid.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Omission">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An omission of a candidate list.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OmissionKind"/>
+			</xs:sequence>
+			<xs:attribute name="rectified" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Omissions">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">All omissions of a candidate list.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateListName"/>
+				<xs:element ref="Omission" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OmissionLetter">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">All omissions reported to the same proposer in the same party or blanko list.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:Proposer"/>
+				<xs:element ref="Omissions" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InvalidCandidateList">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A candidate list that was declared invalid.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateListName"/>
+				<xs:element ref="Reason"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeletedCandidate">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">One or many candidates who were deleted from the candidate list for the same reason.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateListName"/>
+				<xs:element name="CandidateName" type="CandidateNameType" maxOccurs="unbounded"/>
+				<xs:element ref="Reason"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeletedCandidateListName">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A list whose name was deleted.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateListName"/>
+				<xs:element ref="Reason"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ChangedCandidateListName">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A list whose name was officially changed. The CandidateName is the first candidates name. The first CandidateListName is the name as submitted. The second CandidateListName is the officially changed name.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:ContestIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="FirstCandidateName" type="CandidateNameType"/>
+				<xs:element name="OldCandidateListName" type="xs:string"/>
+				<xs:element name="NewCandidateListName" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ChangedCandidate">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Changed data of a candidate (old and new values)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="OldCandidate">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Candidate" type="eml:CandidateStructureKR"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="NewCandidate">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Candidate" type="eml:CandidateStructureKR"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ObjectionsByVotersType">
+		<xs:sequence>
+			<xs:element name="Objections" type="xs:string">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Objections raised by voters during the meeting of a committee.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NotesOnObjections" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Notes of the committee in reaction to objections raised by voters during a meeting.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ObjectionsByVoters" type="ObjectionsByVotersType"/>
+	<xs:element name="LetterOfOmissionSignatures">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Names and titles of the people signing the letters of omission.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name1" type="xs:string"/>
+				<xs:element name="Title1" type="xs:string"/>
+				<xs:element name="Name2" type="xs:string"/>
+				<xs:element name="Title2" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NumberedCandidateList" type="NumberedCandidateListType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about a candidate list that has received a list number in program 3.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NumberedCandidateListType">
+		<xs:sequence>
+			<xs:element ref="CandidateListName"/>
+			<xs:element name="ArticleI14Subsection">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Denotes the subsection of article I 14 of the kieswet according to which the list number was assigned.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="3"/>
+						<xs:enumeration value="4"/>
+						<xs:enumeration value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NumberOfVotesInLastElection" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Mandatory if ArticleI14Subsection = 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberOfElectoralDistricts" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Mandatory if ArticleI14Subsection != 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="P3PublicationSignature">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information for the signature section of models I 15 and I 17.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Place" type="xs:string"/>
+				<xs:element name="Date" type="xs:date"/>
+				<xs:element name="Name" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="IdenticalListType">
+		<xs:sequence>
+			<xs:element name="Id" type="xs:integer" minOccurs="0"/>
+			<xs:element name="DistrictId" type="xs:integer" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OverviewOfIdenticalListsType">
+		<xs:sequence>
+			<xs:element name="IdenticalList" type="IdenticalListType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="OverviewOfListsAndDistricts">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information on which party has submitted a valid list in which electoral district</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateListName"/>
+				<xs:element name="Type" type="kr:AffiliationType"/>
+				<xs:element name="SubmittedInElectoralDistrict" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:boolean">
+								<xs:attribute name="id" type="xs:integer"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="OverviewOfIdenticalLists" type="OverviewOfIdenticalListsType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ContestIdentifiers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:ContestIdentifier" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RG230c">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Additions to EML230c for Report Generator on EML level</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:ContestIdentifier" minOccurs="0"/>
+				<xs:element ref="ContestIdentifiers" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Contains all districts.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DateOfMeetingI1" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The day of the meeting of the principal electoral committee according to article I 1 in the electoral law. This shall take place on the daz after the nomination day (default).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TimeOfMeetingI1" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The time of the meeting of the central electoral committee according to article I 1 in the electoral law.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PlaceOfMeetingI1" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The place (citiy) of the meeting of the central electoral committee according to article I 1 in the electoral law.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DateOfMeetingI4" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The day of the meeting according to article I 4 in the electoral law. This shall take place three days after nomination day (default).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TimeOfMeetingI4" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The time of the meeting of the central electoral committee according to article I 4 in the electoral law.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PlaceOfMeetingI4" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The place (citiy) of the meeting of the central electoral committee according to article I 4 in the electoral law.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SubmittedList" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="OmissionLetter" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="InvalidCandidateList" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DeletedCandidate" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ChangedCandidateListName" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DeletedCandidateListName" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ObjectionsByVoters" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Objections for the first meeting (I 1)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RectificationTime" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The part of the letter of omission stating when the omissions may be rectified.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="LetterOfOmissionSignatures"/>
+				<xs:element ref="NumberedCandidateList" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="ObjectionsByVotersPart2" type="ObjectionsByVotersType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Objections for the second meeting (I 4)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="P3PublicationSignature" minOccurs="0"/>
+				<xs:element ref="OverviewOfListsAndDistricts" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ElectoralDistrictsOverview" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RG230cCandidateList">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Additions to EML230c for Report Generator on candidate list level</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ChangedCandidate" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DeletedCandidate" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ChangedCandidateListName" minOccurs="0"/>
+				<xs:element ref="DeletedCandidateListName" minOccurs="0"/>
+				<xs:element name="CommonH10aAgent">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Data of the agent according to article H 10a agreed on by all candidates resident in the Netherlands.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="eml:Agent"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CombinedWithList" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The number of another list that is combined with the current one.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="AffiliationDisplayOrder"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Cast" type="xs:nonNegativeInteger"/>
+	<xs:element name="TotalCounted" type="xs:nonNegativeInteger"/>
+	<xs:element name="BlancVotes" type="xs:nonNegativeInteger"/>
+	<xs:element name="InvalidVotes" type="xs:nonNegativeInteger"/>
+	<xs:element name="AffiliationVotes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:AffiliationIdentifier"/>
+				<xs:element name="ValidVotes" type="xs:nonNegativeInteger"/>
+				<xs:element ref="CandidateVotes" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="PublicationLanguage" type="kr:PublicationLanguageType" use="required">
+				<xs:annotation>
+					<xs:documentation>denotes if the language for publication, especially of the female gender: nl -> v, fy -> f</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PostalVotes" type="VotesResultType"/>
+	<xs:element name="PresenceVotes" type="VotesResultType"/>
+	<xs:complexType name="VotesResultType">
+		<xs:sequence>
+			<xs:element ref="AffiliationVotes" maxOccurs="unbounded"/>
+			<xs:element ref="Cast"/>
+			<xs:element ref="TotalCounted"/>
+			<xs:element ref="InvalidVotes"/>
+			<xs:element ref="BlancVotes"/>
+			<xs:element name="VotersWithElectionNotice" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="ProxyVoters" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="VotersWithPollingCard" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="AdmittedVoters" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="MoreValidVotesThanAdmittedVoters" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="LessValidVotesThanAdmittedVoters" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="BallotPaperNotReturned" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="TooFewBallotPaperIssued" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="TooManyBallotPaperIssued" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="EmptyPostalVotes" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="PostalVotesWithMultipleBallotPapers" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="BallotPapersLost" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="NoExplanation" type="xs:nonNegativeInteger" minOccurs="0"/>
+			<xs:element name="OtherExplanations" type="xs:nonNegativeInteger" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CandidateVotes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:Candidate"/>
+				<xs:element name="ValidVotes" type="xs:nonNegativeInteger"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RG510">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Additions to EML510 for Report Generator</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ContestName" type="xs:string" minOccurs="0"/>
+				<xs:element name="OrganizingMunicipality" type="xs:string" minOccurs="0"/>
+				<xs:element name="DateOfMeeting" type="xs:date" minOccurs="0"/>
+				<xs:element name="TimeOfMeeting" type="xs:string" minOccurs="0"/>
+				<xs:element name="MemberOfElectoralCommittee" type="xs:string" minOccurs="0" maxOccurs="4"/>
+				<xs:element ref="PresenceVotes" minOccurs="0"/>
+				<xs:element ref="PostalVotes" minOccurs="0"/>
+				<xs:element ref="ObjectionsByVoters" minOccurs="0"/>
+				<xs:element name="ProposalName" type="xs:token" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Only for referendum. Contains the question of the referendum.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Fraction">
+		<xs:complexType>
+			<xs:attribute name="numerator" type="xs:integer" use="required"/>
+			<xs:attribute name="denominator" type="xs:integer" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VotesInElectoralDistrict">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="id" type="ListOrRegionIdType"/>
+					<xs:attribute name="weighted" type="xs:integer"/>
+				</xs:extension>
+				<!-- PROVISORIUM, should be xs:integer -->
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="OverviewOfListsAndDistrictsAndVotesType">
+		<xs:sequence>
+			<xs:element ref="VotesInElectoralDistrict" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="listNumber" type="ListOrRegionIdType" use="required"/>
+		<xs:attribute name="setNumber" type="xs:integer"/>
+	</xs:complexType>
+	<xs:element name="OverviewOfListsAndDistrictsAndVotes" type="OverviewOfListsAndDistrictsAndVotesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information on which party has received how many votes in which electoral district</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OverviewOfDistrictsVotes" type="OverviewOfListsAndDistrictsAndVotesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The sum of the valid votes for each electoral district</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OverviewOfBlancVotes" type="OverviewOfListsAndDistrictsAndVotesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The number of the blanc votes for each electoral district</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OverviewOfInvalidVotes" type="OverviewOfListsAndDistrictsAndVotesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The number of the empty votes for each electoral district</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CheckingCombinedListsLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information on the checking of combined lists. Very close to the representation on paper!!!</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CombinedListId" type="CombinationIdType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>list combination letter set by program 3 (only 230b and 230c)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NumberList" type="xs:integer" minOccurs="0"/>
+				<xs:element name="NumberOfVotesList" type="xs:integer" minOccurs="0"/>
+				<xs:element name="Regarded" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="NumberOfVotesCombinedList" type="xs:integer" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CheckingCombinedLists">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information on combined lists are as a whole or partially regarded.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CheckingCombinedListsLine" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ResultWithoutRegardingCombinedLists">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information on the potential election result if non of the combined lists were regarded.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ListAndSeats" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A CheckingCombinedListsLine either refers to a combined list or a list. If it refers to a combined list it must have a NumberCombinedList and NumberOfVotesCombinedList. If it refers to a list it must have a NumberList and NumberOfVotesList and Regarded.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="listNumber" type="xs:integer" use="required"/>
+						<xs:attribute name="setNumber" type="xs:integer"/>
+						<xs:attribute name="combinationId" type="CombinationIdType"/>
+						<xs:attribute name="seats" type="xs:integer" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ListOrCombinedList">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Common element for combined lists, P3-lists, canididate lists and sets of identical lists. In a combined lists, the lists that make up the combination must be included in child elements. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ListInCombination" type="xs:integer" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="combinationId" type="CombinationIdType"/>
+			<xs:attribute name="listNumber" type="xs:integer"/>
+			<xs:attribute name="setNumber" type="xs:integer"/>
+			<xs:attribute name="districtNumber" type="xs:integer"/>
+			<xs:attribute name="provinceName" type="xs:token"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FirstAssignmentLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about the first assignment for one list or combined list.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ListOrCombinedList"/>
+				<xs:element name="Votes" type="xs:integer"/>
+				<xs:element name="Seats" type="xs:integer"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FirstAssignment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FirstAssignmentLine" maxOccurs="unbounded"/>
+				<xs:element name="TotalSeatsAssigned" type="xs:integer"/>
+				<xs:element name="ResidualSeats" type="xs:integer"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NiemeyerAssignmentLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about the assignment of residual seats by greatest average for one list or combined list. PriorSeats is the number of seats from the first assignment. NewSeats is the number of residual seats assigned.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ListOrCombinedList"/>
+				<xs:element name="PriorSeats" type="xs:integer"/>
+				<xs:element name="NewSeats" type="xs:integer"/>
+				<xs:element name="Remainder">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Fraction"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NiemeyerAssignment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NiemeyerAssignmentLine" maxOccurs="unbounded"/>
+				<xs:element ref="Allotting" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DHondtAssignmentLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about the assignment of residual seats by greatest average for one list or combined list. PriorSeats is the number of seats from the first assignment. NewSeats is the number of residual seats assigned.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ListOrCombinedList"/>
+				<xs:element name="PriorSeats" type="xs:integer"/>
+				<xs:element name="NewSeats" type="xs:integer"/>
+				<xs:element name="DHondtFraction" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Fraction"/>
+						</xs:sequence>
+						<xs:attribute name="step" type="xs:integer" use="required"/>
+						<xs:attribute name="winner" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DHondtAssignment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DHondtAssignmentLine" maxOccurs="unbounded"/>
+				<xs:element ref="Allotting" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="article" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="P7"/>
+						<xs:enumeration value="P13"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="maxNumberOfAssignments" type="xs:positiveInteger" use="required"/>
+			<xs:attribute name="numberOfUnassignedSeatsBeforeDHondtAssignment" type="xs:integer" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Allotting">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Winner">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ListOrCombinedList"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Looser" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ListOrCombinedList"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="numberOfChoices" type="xs:integer" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AbsoluteMajority">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Winner">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ListOrCombinedList"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Looser">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ListOrCombinedList"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="Allotting" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExhaustedList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ListOrCombinedList"/>
+			</xs:sequence>
+			<xs:attribute name="lostSeats" type="xs:integer" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AssignmentWithinCombinedListsLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This is either the information of a combined list or the information of a list within a combined list.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ListOrCombinedList"/>
+				<xs:element ref="ElectoralQuota" minOccurs="0"/>
+				<xs:element name="Votes" type="xs:integer"/>
+				<xs:element name="PriorSeats" type="xs:integer" minOccurs="0"/>
+				<xs:element name="NewSeats" type="xs:integer" minOccurs="0"/>
+				<xs:element name="Remainder" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Fraction"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AssignmentWithinCombinedLists">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ElectoralQuota"/>
+				<xs:element ref="AssignmentWithinCombinedListsLine" maxOccurs="unbounded"/>
+				<xs:element ref="Allotting" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ExhaustedList" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DHondtAssignment" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="combinationId" type="CombinationIdType" use="required"/>
+			<xs:attribute name="PriorSeats" type="xs:integer" use="required"/>
+			<xs:attribute name="NewSeats" type="xs:integer" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AssignmentWithinListGroupsLine">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="VotesInElectoralDistrict" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Votes" type="xs:integer" minOccurs="0"/>
+				<xs:element name="PriorSeats" type="xs:integer" minOccurs="0"/>
+				<xs:element name="NewSeats" type="xs:integer" minOccurs="0"/>
+				<xs:element name="Remainder" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Fraction"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="setNumber" type="ListOrRegionIdType"/>
+			<xs:attribute name="districtNumber" type="ListOrRegionIdType"/>
+			<xs:attribute name="provinceName" type="xs:token"/>
+			<xs:attribute name="sortNumber" type="xs:integer" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AssignmentWithinListGroups">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:AffiliationIdentifier"/>
+				<xs:element ref="ElectoralQuota"/>
+				<xs:element ref="AssignmentWithinListGroupsLine" maxOccurs="unbounded"/>
+				<xs:element ref="Allotting" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ExhaustedList" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DHondtAssignment" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VotesInElectoralDistrictPart">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="VotesInElectoralDistrict" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CandidateAndResult">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:Candidate"/>
+				<xs:element ref="VotesInElectoralDistrictPart" maxOccurs="2"/>
+				<xs:element name="TotalVotes" type="xs:integer"/>
+				<xs:element name="AbovePreferencialBarrier" type="xs:boolean"/>
+				<xs:element name="Elected">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:boolean">
+								<xs:attribute name="byLot" type="xs:boolean"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ElectedOnListGroup" type="xs:boolean"/>
+				<xs:element name="Deceased" type="xs:boolean"/>
+				<xs:element name="NewPositionOnList" type="xs:integer"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Seats" type="xs:integer"/>
+	<xs:element name="Votes" type="xs:integer"/>
+	<xs:element name="Type" type="kr:AffiliationType"/>
+	<xs:element name="ListAndResults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:AffiliationIdentifier"/>
+				<xs:element ref="Type"/>
+				<xs:element ref="kr:ListData" minOccurs="0"/>
+				<xs:element ref="Seats"/>
+				<xs:element ref="Votes"/>
+				<xs:element name="PositionsOnListChanged" type="xs:boolean"/>
+				<xs:element ref="CandidateAndResult" maxOccurs="unbounded"/>
+				<xs:element ref="VotesInElectoralDistrictPart" maxOccurs="2"/>
+			</xs:sequence>
+			<xs:attribute name="districtNumber" type="ListOrRegionIdType"/>
+			<xs:attribute name="provinceName" type="xs:token"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ListGroupAndResults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:AffiliationIdentifier"/>
+				<xs:element ref="Type"/>
+				<xs:element ref="Seats"/>
+				<xs:element ref="Votes"/>
+				<xs:element ref="ListAndResults" maxOccurs="unbounded"/>
+				<xs:element ref="DeadCandidate" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="PriorityCandidate" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="CandidatesElectedByPositionOnList" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeadCandidate">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:Candidate"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PriorityCandidate">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:Candidate"/>
+				<xs:element ref="Votes"/>
+			</xs:sequence>
+			<xs:attribute name="setNumber" type="xs:integer"/>
+			<xs:attribute name="districtNumber" type="xs:integer"/>
+			<xs:attribute name="provinceName" type="xs:token"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CandidateElectedByPositionOnList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:Candidate"/>
+				<xs:element ref="Votes"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CandidatesElectedByPositionOnList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CandidateElectedByPositionOnList" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="setNumber" type="xs:integer"/>
+			<xs:attribute name="districtNumber" type="xs:integer"/>
+			<xs:attribute name="provinceName" type="xs:token"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OverviewOfCandidatesAndResults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AnomalyInSeatDistribution" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ListGroupAndResults" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ElectedCandidate">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eml:AffiliationIdentifier"/>
+				<xs:element ref="kr:ListData"/>
+				<xs:element ref="eml:Candidate"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OverviewOfElectedCandidates">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ElectedCandidate" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ElectoralDistrictsOverview">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Simple list of ids and names of the electoral districts.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ElectoralDistrictName" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+								<xs:attribute name="voteValue" type="xs:integer"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RG520">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Additions to EML520 for Report Generator on global level</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DateOfMeetingO1P20" type="xs:date">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The time of the meeting of the central electoral committee according to article O 1 or P 20 in the electoral law.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TimeOfMeetingP20" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The time of the meeting of the central electoral committee according to article P 20 in the electoral law.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PublicationVoteValuesDate" type="xs:string" minOccurs="0"/>
+				<xs:element name="PublicationVoteValuesNumber" type="xs:integer" minOccurs="0"/>
+				<xs:element ref="PresenceVotes"/>
+				<xs:element ref="ElectoralDistrictsOverview" minOccurs="0"/>
+				<xs:element ref="OverviewOfListsAndDistricts" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="OverviewOfListsAndDistrictsAndVotes" maxOccurs="unbounded"/>
+				<xs:element ref="OverviewOfDistrictsVotes"/>
+				<xs:element ref="OverviewOfBlancVotes"/>
+				<xs:element ref="OverviewOfInvalidVotes"/>
+				<xs:element ref="ElectoralQuota"/>
+				<xs:element ref="ResultWithoutRegardingCombinedLists" minOccurs="0"/>
+				<xs:element ref="CheckingCombinedLists"/>
+				<xs:element ref="FirstAssignment"/>
+				<xs:element ref="NiemeyerAssignment" minOccurs="0"/>
+				<xs:element ref="DHondtAssignment" minOccurs="0"/>
+				<xs:element ref="AbsoluteMajority" minOccurs="0"/>
+				<xs:element ref="ExhaustedList" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="AssignmentWithinCombinedLists" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="AssignmentWithinCombinedListsLine" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="AssignmentWithinListGroups" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="OverviewOfCandidatesAndResults"/>
+				<xs:element ref="OverviewOfElectedCandidates"/>
+				<xs:element ref="ObjectionsByVoters" minOccurs="0"/>
+				<xs:element name="CandidateLetter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Additional data for the letters to elected candidates</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DateLetter" type="xs:date" minOccurs="0"/>
+							<xs:element name="PlaceLetter" type="xs:string" minOccurs="0"/>
+							<xs:element name="DateFeedback" type="xs:date"/>
+							<xs:element name="Chairperson" type="xs:string"/>
+							<xs:element name="AddressLineForAcceptance" type="xs:string"/>
+							<xs:element name="LocationForAcceptance" type="xs:string"/>
+							<xs:element name="PostalCodeForAcceptance" type="xs:string"/>
+							<xs:element name="AddressLineForRejection" type="xs:string"/>
+							<xs:element name="LocationForRejection" type="xs:string"/>
+							<xs:element name="PostalCodeForRejection" type="xs:string"/>
+							<xs:element name="RepresentativeBody" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="ListOrRegionIdType">
+		<xs:annotation>
+			<xs:documentation>extends the basic integer type to include "geen" or "alle"</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:pattern value="[1-9]\d*|geen|alle"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CombinationIdType">
+		<xs:annotation>
+			<xs:documentation>list combination letter set by program 3 (only 230b and 230c)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="1"/>
+			<xs:pattern value="[a-z|A-Z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ElectoralQuotaType">
+		<xs:sequence>
+			<xs:element ref="Fraction"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ElectoralQuota" type="ElectoralQuotaType"/>
+</xs:schema>

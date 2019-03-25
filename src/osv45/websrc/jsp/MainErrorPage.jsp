@@ -8,6 +8,7 @@
 <%@ page import="de.ivu.wahl.client.LogoutException"%>
 <%@ page import="java.io.CharArrayWriter"%>
 <%@ page import="java.io.PrintWriter"%>
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <html>
     <head>
         <title><ivu:int key="MainErrorPage.1"/></title>

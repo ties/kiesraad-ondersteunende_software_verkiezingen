@@ -10,7 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * NavigationErgebnis.java NavigationErgebnis-Objekt stellt alle Gebiets-Informationen f�r den
  * Navigationsbaum zur Verf�gung.
  * 
- * @author bae@ivu.de 16.11.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author bae 16.11.2003 Copyright (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class NavigationErgebnis extends Ergebnis {

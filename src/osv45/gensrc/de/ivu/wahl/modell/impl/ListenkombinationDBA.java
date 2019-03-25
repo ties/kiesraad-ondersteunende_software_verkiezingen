@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Listenkombination.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListenkombinationDBA extends DBABase {
@@ -60,10 +60,19 @@ public class ListenkombinationDBA extends DBABase {
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_WAHL)) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(BEZEICHNUNG.toUpperCase())) != null) {
+         m._bezeichnung = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(BEZEICHNUNG)) != null) {
          m._bezeichnung = r.getString(idx.intValue());
       }
    }
@@ -79,10 +88,10 @@ public class ListenkombinationDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_WAHL.toUpperCase())) {
+      if (columns.containsKey(ID_WAHL.toUpperCase()) || columns.containsKey(ID_WAHL)) {
          p.setString(idx++, m._id_Wahl);
       }
-      if (columns.containsKey(BEZEICHNUNG.toUpperCase())) {
+      if (columns.containsKey(BEZEICHNUNG.toUpperCase()) || columns.containsKey(BEZEICHNUNG)) {
          p.setString(idx++, m._bezeichnung);
       }
       p.setString(idx++, m._id_Listenkombination);

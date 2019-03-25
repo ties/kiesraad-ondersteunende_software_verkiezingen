@@ -15,7 +15,7 @@ import de.ivu.wahl.result.CandidateList;
 import de.ivu.wahl.result.drawlots.DrawingLotsAlternative;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface P2List extends Comparable<P2List>, GeneralList, DrawingLotsAlternative {
   Comparator<? super P2List> SORT_BY_ELECTORAL_DISTRICT_NUMBER = new Comparator<P2List>() {

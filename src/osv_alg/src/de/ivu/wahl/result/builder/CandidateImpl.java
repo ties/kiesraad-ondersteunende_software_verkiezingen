@@ -11,7 +11,7 @@ import de.ivu.wahl.result.Candidate;
 /**
  * Immutable implementation of the Candidate interface.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 final class CandidateImpl implements Candidate {
   private final String candidateName;

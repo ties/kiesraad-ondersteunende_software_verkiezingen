@@ -22,14 +22,11 @@ import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.wus.reportgen.i18n.Messages;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class SystemInfo implements Serializable, Cloneable {
   private static final long serialVersionUID = -6961353557086785634L;
   private static final Category LOGGER = Log4J.configure(SystemInfo.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(SystemInfo.class, Log4J.extractVersion("$Revision: 1.24 $"))); //$NON-NLS-1$
-  }
 
   private final transient AuthorityLevel _wahlEbene;
   private final transient int _wahlModus;
@@ -93,16 +90,12 @@ public class SystemInfo implements Serializable, Cloneable {
     return WahlModel.WAHLMODUS_KLARTEXT.get(_wahlModus);
   }
 
-  public boolean isSingleInput() {
-    return _propHandling.getIntProperty(Konstanten.PROP_DOUBLE_INPUT) == Konstanten.INPUT_MODE_SINGLE;
-  }
-
-  public boolean isDoubleInput() {
-    return _propHandling.getIntProperty(Konstanten.PROP_DOUBLE_INPUT) == Konstanten.INPUT_MODE_DOUBLE;
+  public InputMode getInputMode() {
+    return InputMode.fromProperty(getPropertyHandling().getProperty(Konstanten.PROP_DOUBLE_INPUT));
   }
 
   public boolean isFileInputWithManualConfirmation() {
-    return _propHandling.getIntProperty(Konstanten.PROP_DOUBLE_INPUT) == Konstanten.INPUT_MODE_FILE_WITH_MANUAL_CONFIRMATION;
+    return getInputMode().isFileInputWithManualConfirmation();
   }
 
   static PropertyHandling _propHandling = null;
@@ -140,14 +133,18 @@ public class SystemInfo implements Serializable, Cloneable {
     if (isSingleInput()) {
       return Konstanten.SINGLE_INPUT;
     }
-    if (isDoubleInput()) {
+    if (getInputMode().isDoubleInput()) {
       return Konstanten.DOUBLE_INPUT;
     }
     if (isFileInputWithManualConfirmation()) {
       return Konstanten.FILE_INPUT_WITH_MANUAL_CONFIRMATION;
     }
     throw new IllegalStateException(Messages.bind(MessageKeys.Error_IllegalInputModus_0,
-        _propHandling.getIntProperty(Konstanten.PROP_DOUBLE_INPUT)));
+        getInputMode()));
+  }
+
+  public boolean isSingleInput() {
+    return getInputMode().isSingleInput();
   }
 
 }

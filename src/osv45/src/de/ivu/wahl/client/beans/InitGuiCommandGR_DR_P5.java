@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Common superclass of InitGuiCommandGemeente_P5 and InitGuiCommandDeelraad_P5.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public abstract class InitGuiCommandGR_DR_P5 extends InitGuiCommand_P5
     implements

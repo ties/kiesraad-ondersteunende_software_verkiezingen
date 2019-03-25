@@ -11,7 +11,7 @@ import static de.ivu.wahl.modell.GebietModel.GEBIETSART_ORTSTEIL;
 import java.util.Map;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class InitGuiCommandDeelraad_P4 extends InitGuiCommandGR_DR_P4
     implements

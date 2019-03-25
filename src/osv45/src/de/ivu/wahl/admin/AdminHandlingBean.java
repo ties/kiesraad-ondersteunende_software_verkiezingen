@@ -13,6 +13,8 @@ import static de.ivu.wahl.Konstanten.RECHTE_LAST_CHANGE;
 import static de.ivu.wahl.Konstanten.SYSTEM_ANWENDER;
 import static de.ivu.wahl.Konstanten.SYSTEM_ANWENDERID;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,13 +28,16 @@ import javax.ejb.FinderException;
 import javax.ejb.Local;
 import javax.ejb.RemoveException;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 
 import org.apache.log4j.Category;
 
+import de.ivu.ejb.EJBUtil;
 import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.WahlStatelessSessionBeanBase;
+import de.ivu.wahl.client.beans.PropertyWithDefaultValuesProvider;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.ErgebniseingangKonstanten;
@@ -54,7 +59,7 @@ import de.ivu.wahl.modell.ejb.WahlHome;
  * werden. Zus�tzlich finden sich weitere n�tzlichen Methoden, die kein "nat�rliches" Pl�tzchen
  * gefunden haben
  * 
- * @author cos@ivu.de klie@ivu.de hil@ivu.de
+ * @author D. Cosic P. Kliem hil
  */
 @Stateless
 @Local(AdminHandling.class)
@@ -70,11 +75,6 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
 
   @EJB
   private SchwellwertHandling _schwellwertHandling;
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(AdminHandlingBean.class, Log4J
-        .extractVersion("$Revision: 1.33 $"))); //$NON-NLS-1$
-  }
 
   public boolean isZuruecksetzenErlaubtAnwender(AnwContext c, int gebietsart, int nummer)
       throws EJBException {
@@ -226,15 +226,15 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
   }
 
   public String getProperty(String name) throws EJBException {
-    return _propertyHandling.getProperty(name);
+    return new PropertyWithDefaultValuesProvider(_propertyHandling).getProperty(name);
   }
 
   public Collection<RechtegruppeModel> getRechtegruppe() throws EJBException {
     try {
       return toModelList(RechtegruppeHome.HomeFinder.findHome(this).findAll());
     } catch (Exception ex) {
-      throw new EJBException(Messages
-          .getString(MessageKeys.Error_getRechtegruppeKonnteNichtAusgefuehrtWerden), ex);
+      throw new EJBException(
+          Messages.getString(MessageKeys.Error_getRechtegruppeKonnteNichtAusgefuehrtWerden), ex);
     }
   }
 
@@ -256,8 +256,8 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
       }
       return g;
     } catch (Exception ex) {
-      throw new EJBException(Messages
-          .getString(MessageKeys.Error_ErfassungseinheitKonnteNichtGefundenWerden), ex);
+      throw new EJBException(
+          Messages.getString(MessageKeys.Error_ErfassungseinheitKonnteNichtGefundenWerden), ex);
     }
   }
 
@@ -336,4 +336,47 @@ public class AdminHandlingBean extends WahlStatelessSessionBeanBase implements A
       throw new EJBException(e);
     }
   }
+
+  private static final String[] SQL_STATEMENTS = {
+      "DROP INDEX stimmergebnis_index_1", //$NON-NLS-1$
+      "DROP INDEX stimmergebnis_index_2", //$NON-NLS-1$
+      "DROP INDEX stimmergebnis_index_3", //$NON-NLS-1$
+      "DROP INDEX stimmergebnis_index_4", //$NON-NLS-1$
+      "CREATE INDEX stimmergebnis_index_1 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet, ID_GruppeGebietsspezifisch, ID_Listenkandidatur)", //$NON-NLS-1$
+      "CREATE INDEX stimmergebnis_index_2 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet, Stimmart, ID_Listenkandidatur)", //$NON-NLS-1$
+      "CREATE INDEX stimmergebnis_index_3 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet, Stimmart)", //$NON-NLS-1$
+      "CREATE INDEX stimmergebnis_index_4 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet)" //$NON-NLS-1$
+  };
+
+  @Override
+  public boolean reIndexStimmergebnis() {
+    boolean success = false;
+    try {
+      DataSource ds = (DataSource) EJBUtil.getInitialContext()
+          .lookup("java:/jdbc/wahlDB-" + EJBUtil.getInstallationSpecificAffix()); //$NON-NLS-1$
+      Connection connection = ds.getConnection();
+      try {
+        Statement statement = connection.createStatement();
+        try {
+          for (String line : SQL_STATEMENTS) {
+            LOGGER.info(line);
+            statement.execute(line);
+          }
+          success = true;
+          LOGGER.info("Database schema successfully re-indexed"); //$NON-NLS-1$
+        } finally {
+          statement.close();
+        }
+      } catch (Exception e) {
+        LOGGER.error(e, e);
+      } finally {
+        connection.close();
+      }
+    } catch (Exception e) {
+      LOGGER.fatal(e);
+    }
+
+    return success;
+  }
+
 }

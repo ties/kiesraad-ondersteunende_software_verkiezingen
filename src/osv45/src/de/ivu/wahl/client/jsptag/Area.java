@@ -10,16 +10,16 @@ import org.apache.log4j.Logger;
 import de.ivu.wahl.client.util.ClientHelper;
 
 /**
- * Erweitertes HTML-AREA-Tag, der selbständig für die Ziel-URL das URL-Rewriting im ClientHelper
- * aufruft. Außerdem werden sinnvolle Vorgaben gesetzt.
+ * Erweitertes HTML-AREA-Tag, der selbstï¿½ndig fï¿½r die Ziel-URL das URL-Rewriting im ClientHelper
+ * aufruft. Auï¿½erdem werden sinnvolle Vorgaben gesetzt.
  * 
- * @author Dr. Domagoj Cosic <cos@ivu.de>
+ * @author Dr. Domagoj Cosic <D. Cosic>
  */
 public class Area extends TagSupport {
   private static final long serialVersionUID = 276006408528394429L;
 
   /**
-   * Logger für diese Klasse
+   * Logger fï¿½r diese Klasse
    */
   private final static Logger LOGGER = Logger.getLogger(Area.class);
 
@@ -49,12 +49,12 @@ public class Area extends TagSupport {
   protected String alt;
 
   /**
-   * JavaScript für Maus über der Area
+   * JavaScript fï¿½r Maus ï¿½ber der Area
    */
   protected String onmouseover;
 
   /**
-   * JavaScript für Maus verlässt die Area
+   * JavaScript fï¿½r Maus verlï¿½sst die Area
    */
   protected String onmouseout;
 
@@ -104,18 +104,18 @@ public class Area extends TagSupport {
   }
 
   /**
-   * Setze JavaScript für Maus über der Area.
+   * Setze JavaScript fï¿½r Maus ï¿½ber der Area.
    * 
-   * @param value JavaScript für Maus über der Area
+   * @param value JavaScript fï¿½r Maus ï¿½ber der Area
    */
   public void setOnmouseover(String value) {
     onmouseover = value;
   }
 
   /**
-   * Setze JavaScript für Maus verlässt die Area.
+   * Setze JavaScript fï¿½r Maus verlï¿½sst die Area.
    * 
-   * @param value JavaScript für Maus verlässt die Area
+   * @param value JavaScript fï¿½r Maus verlï¿½sst die Area
    */
   public void setOnmouseout(String value) {
     onmouseout = value;
@@ -185,7 +185,7 @@ public class Area extends TagSupport {
   }
 
   /**
-   * End-Tag interpretieren. Schließt nur den AREA-Tag ab.
+   * End-Tag interpretieren. Schlieï¿½t nur den AREA-Tag ab.
    * 
    * @return EVAL_PAGE = setze die Seitenverarbeitung fort
    * @see javax.servlet.jsp.tagext.Tag#doEndTag()

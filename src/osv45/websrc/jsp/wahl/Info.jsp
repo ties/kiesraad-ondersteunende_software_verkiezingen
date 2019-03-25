@@ -2,6 +2,7 @@
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
     String arch = ""; //$NON-NLS-1$
     String val = appBean.getPropertyHandling().getProperty(Konstanten.PROP_SYSTEM_ARCHITECTURE_BITS);

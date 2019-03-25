@@ -30,7 +30,7 @@ public class SequentialReadWriteEJBLock extends SimpleReadWriteEJBLock {
   private static final Logger LOGGER = Logger.getLogger(BeanLock.class);
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   private static class WaitInfo {
     private boolean _waiting;

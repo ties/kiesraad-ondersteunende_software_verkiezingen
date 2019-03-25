@@ -30,7 +30,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Ergebniseingang as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicErgebniseingangBean extends BMPBeanBase implements EntityBean, ErgebniseingangModel {
@@ -132,13 +132,13 @@ public abstract class BasicErgebniseingangBean extends BMPBeanBase implements En
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Erfassungseinheit ID of the objects to be searched
+     * @param id_Wahl ID of the objects to be searched
      * @return  {@link Collection} of the found Ergebniseingang-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByErfassungseinheit(String id_Erfassungseinheit) throws IVUFinderException {
+   public Collection<String> ejbFindAllByWahl(String id_Wahl) throws IVUFinderException {
       try {
-         return ErgebniseingangDBA.retrieveIDsByID_Erfassungseinheit(id_Erfassungseinheit);
+         return ErgebniseingangDBA.retrieveIDsByID_Wahl(id_Wahl);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -148,13 +148,13 @@ public abstract class BasicErgebniseingangBean extends BMPBeanBase implements En
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Wahl ID of the objects to be searched
+     * @param id_Erfassungseinheit ID of the objects to be searched
      * @return  {@link Collection} of the found Ergebniseingang-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByWahl(String id_Wahl) throws IVUFinderException {
+   public Collection<String> ejbFindAllByErfassungseinheit(String id_Erfassungseinheit) throws IVUFinderException {
       try {
-         return ErgebniseingangDBA.retrieveIDsByID_Wahl(id_Wahl);
+         return ErgebniseingangDBA.retrieveIDsByID_Erfassungseinheit(id_Erfassungseinheit);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -395,24 +395,24 @@ public abstract class BasicErgebniseingangBean extends BMPBeanBase implements En
 
    @Override
    protected void checkRelations() {
-      if (null == _details.getID_Erfassungseinheit()) {
-         _erfassungseinheit = null;
-         _relchk_Erfassungseinheit = true;
-      } else {
-         _relchk_Erfassungseinheit = false;
-      }
       if (null == _details.getID_Wahl()) {
          _wahl = null;
          _relchk_Wahl = true;
       } else {
          _relchk_Wahl = false;
       }
+      if (null == _details.getID_Erfassungseinheit()) {
+         _erfassungseinheit = null;
+         _relchk_Erfassungseinheit = true;
+      } else {
+         _relchk_Erfassungseinheit = false;
+      }
    }
 
    @Override
    protected void resetRelations() {
-      _erfassungseinheit = null;
       _wahl = null;
+      _erfassungseinheit = null;
    }
 
    /**
@@ -631,51 +631,6 @@ public abstract class BasicErgebniseingangBean extends BMPBeanBase implements En
    }
 
    /**
-     * Relation zu Erfassungseinheit
-     */
-   protected Gebiet _erfassungseinheit;
-
-   /**
-     * Flag for the validity of the relation Erfassungseinheit
-     */
-   protected boolean _relchk_Erfassungseinheit = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Gebiet}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Gebiet getErfassungseinheit() throws EJBException {
-      if (!_relchk_Erfassungseinheit) {
-         if (null == _details.getID_Erfassungseinheit()) {
-            _erfassungseinheit = null;
-         } else if (null == _erfassungseinheit || !_erfassungseinheit.getPrimaryKey().equals(_details.getID_Erfassungseinheit())) {
-            try {
-               GebietHome home = GebietHome.HomeFinder.findHome(this);
-               _erfassungseinheit = home.findByPrimaryKey(_details.getID_Erfassungseinheit());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Erfassungseinheit", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Gebiet", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Erfassungseinheit = true;
-      }
-      return _erfassungseinheit;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Gebiet}
-     *
-     * @param erfassungseinheit the corresponding EJBObject
-     */
-   public void setErfassungseinheit(Gebiet erfassungseinheit) {
-      _erfassungseinheit = erfassungseinheit;
-      _details.setID_Erfassungseinheit(erfassungseinheit == null ? null : (String)erfassungseinheit.getPrimaryKey());
-   }
-
-   /**
      * Relation zu Wahl
      */
    protected Wahl _wahl;
@@ -718,6 +673,51 @@ public abstract class BasicErgebniseingangBean extends BMPBeanBase implements En
    public void setWahl(Wahl wahl) {
       _wahl = wahl;
       _details.setID_Wahl(wahl == null ? null : (String)wahl.getPrimaryKey());
+   }
+
+   /**
+     * Relation zu Erfassungseinheit
+     */
+   protected Gebiet _erfassungseinheit;
+
+   /**
+     * Flag for the validity of the relation Erfassungseinheit
+     */
+   protected boolean _relchk_Erfassungseinheit = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Gebiet}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Gebiet getErfassungseinheit() throws EJBException {
+      if (!_relchk_Erfassungseinheit) {
+         if (null == _details.getID_Erfassungseinheit()) {
+            _erfassungseinheit = null;
+         } else if (null == _erfassungseinheit || !_erfassungseinheit.getPrimaryKey().equals(_details.getID_Erfassungseinheit())) {
+            try {
+               GebietHome home = GebietHome.HomeFinder.findHome(this);
+               _erfassungseinheit = home.findByPrimaryKey(_details.getID_Erfassungseinheit());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Erfassungseinheit", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Gebiet", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Erfassungseinheit = true;
+      }
+      return _erfassungseinheit;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Gebiet}
+     *
+     * @param erfassungseinheit the corresponding EJBObject
+     */
+   public void setErfassungseinheit(Gebiet erfassungseinheit) {
+      _erfassungseinheit = erfassungseinheit;
+      _details.setID_Erfassungseinheit(erfassungseinheit == null ? null : (String)erfassungseinheit.getPrimaryKey());
    }
 
    /**

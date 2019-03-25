@@ -20,7 +20,7 @@ import de.ivu.wahl.result.determination.P3List;
  * <p>
  * Immutable.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ElectionAndCandidates extends Election {
   /**

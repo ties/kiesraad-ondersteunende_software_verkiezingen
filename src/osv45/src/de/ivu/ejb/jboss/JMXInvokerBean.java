@@ -26,7 +26,7 @@ import org.apache.log4j.Category;
 import de.ivu.util.debug.Log4J;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 @Stateless
 @Local(JMXInvoker.class)

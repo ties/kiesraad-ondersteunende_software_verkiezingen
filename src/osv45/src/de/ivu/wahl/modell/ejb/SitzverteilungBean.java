@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * SitzverteilungBean
  *
- * @author cos@ivu.de  (c) 2003-5 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-5 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import java.sql.SQLException;
@@ -11,21 +11,12 @@ import java.util.Collection;
 
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
 import de.ivu.ejb.fw.DBABase;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.impl.SitzverteilungDBA;
 
 public class SitzverteilungBean extends BasicSitzverteilungBean {
   private static final long serialVersionUID = -846334887870677969L;
-  private static final Category LOGGER = Log4J.configure(SitzverteilungBean.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(SitzverteilungBean.class, Log4J
-        .extractVersion("$Revision: 1.13 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Find seat distribution by result and list

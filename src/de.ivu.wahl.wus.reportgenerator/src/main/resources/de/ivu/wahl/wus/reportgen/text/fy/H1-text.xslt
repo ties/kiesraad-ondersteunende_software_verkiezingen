@@ -10,9 +10,6 @@
 
     <xsl:param name="H1_030_KandidatenOpDeLijst" select="'Kandidaten op de list'"/>
     <xsl:param name="H1_040_Vervangers" select="'Ferfanger(s) foar it ferhelpen fan fersommen'"/>
-    <xsl:param name="H1_050_GemachtigdeVoorLijstencombinatie" select="'Lêsthawwer foar it ferbinen fan de list ta in listkombinaasje'"/>
-    <xsl:param name="H1_060_nietEK" select="'(net by de Earste Keamerferkiezing)'"/>
-    <xsl:param name="H1_070_plaatsvervangerGemachtigdeLijstencombinatie" select="'Plakferfanger(s) fan de lêsthawwer:'"/>
 
     <xsl:param name="H1_100_InTeLeveren" select="'Yn te leverjen by de kandidatelist'"/>
     <xsl:param name="H1_110_IkBenVerplicht" select="'Ik bin ferplichte de neikommende taheakke by de kandidatelist yn te leverjen (oanfinke wat fan tapassing is):'"/>

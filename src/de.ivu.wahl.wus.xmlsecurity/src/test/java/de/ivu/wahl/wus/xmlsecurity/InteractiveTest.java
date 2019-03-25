@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
 import org.junit.Test;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  * @version $Id: InteractiveTest.java,v 1.1 2009/04/17 12:21:23 cos Exp $
  */
 public class InteractiveTest {

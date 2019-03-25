@@ -10,24 +10,16 @@ import java.util.Collection;
 import javax.ejb.EJBException;
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
 import de.ivu.ejb.fw.DBABase;
-import de.ivu.util.debug.Log4J;
 
 public class RechtBean extends BasicRechtBean {
   private static final long serialVersionUID = -6267557935915948832L;
 
-  private final static Category LOGGER = Log4J.configure(RechtBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(RechtBean.class, Log4J.extractVersion("$Revision: 1.3 $"))); //$NON-NLS-1$
-  }
-
   /**
    * Query um alle Rechte eines Anwenders zu ermitteln
    * <p>
-   * Dazu wird der join "nach unten" über die Rechtegruppe zu den Rechten gebildet
+   * Dazu wird der join "nach unten" ï¿½ber die Rechtegruppe zu den Rechten gebildet
    * </p>
    */
   private final static String ANW_RIGHT_QUERY = " select Recht.ID_Recht from Recht, Rechtegruppe_Recht, Rechtegruppe_Anwender " //$NON-NLS-1$

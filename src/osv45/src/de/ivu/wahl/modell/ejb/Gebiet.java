@@ -14,7 +14,7 @@ import javax.ejb.EJBException;
  * gebietsspezifische Logik zur Verarbeitung eines Ergebniseingangs auf der jeweiligen Instanz des
  * Gebiets.
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface Gebiet extends BasicGebiet {
 

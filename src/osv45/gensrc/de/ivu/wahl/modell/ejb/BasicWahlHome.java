@@ -23,7 +23,7 @@ import de.ivu.wahl.modell.WahlModel;
 /**
   * LocalHome interface for the entity Wahl as BMP Entity Bean.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicWahlHome extends EJBLocalHome {
@@ -79,22 +79,22 @@ public interface BasicWahlHome extends EJBLocalHome {
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Wahlgebiet ID of the objects to be searched
+     * @return  {@link Collection} of the found Wahl-entities
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   Collection<Wahl> findAllByWahlgebiet(String id_Wahlgebiet) throws FinderException;
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Wurzelgebiet ID of the objects to be searched
      * @return Key of the entity
      * @throws ObjectNotFoundException if the entity was not found.
      * @throws FinderException if an error occurred while searching (does NOT mean "not found".
      */
    Wahl findByWurzelgebiet(String id_Wurzelgebiet) throws FinderException, ObjectNotFoundException;
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Wahlgebiet ID of the objects to be searched
-     * @return  {@link Collection} of the found Wahl-entities
-     * @throws FinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   Collection<Wahl> findAllByWahlgebiet(String id_Wahlgebiet) throws FinderException;
 
    /**
      * Returns the set of entities of the type {@link Wahl}, filtered by wahlart.

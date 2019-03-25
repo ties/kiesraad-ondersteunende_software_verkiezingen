@@ -1,7 +1,7 @@
 /*
  * jQuery Autocomplete plugin 1.1
  *
- * Copyright (c) 2009 Jörn Zaefferer
+ * Copyright (c) 2009 Jï¿½rn Zaefferer
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -9,7 +9,7 @@
  *
  *
  * Adaptions for GBA support and case sensitive option by
- * tdu@ivu.de, IVU Traffic Technologies AG
+ * T. Ducke, IVU Traffic Technologies AG
  * 
  */
 

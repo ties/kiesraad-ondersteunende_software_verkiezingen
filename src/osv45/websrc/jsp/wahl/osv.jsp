@@ -9,10 +9,10 @@
  * weiter Sicht möglich
  * Bisher ist nur die Sicht auf das Basis-System vorgesehen.
  *
- * author:  mur@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
- * $Id: osv.jsp,v 1.2 2009/02/13 15:50:14 sma Exp $
+ * author:  M. Murdfield  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
       String newLocation = ClientHelper.getAllParameters(request);
 

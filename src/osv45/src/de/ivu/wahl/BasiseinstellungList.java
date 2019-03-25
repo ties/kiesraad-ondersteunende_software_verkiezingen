@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import de.ivu.wahl.Basiseinstellung.Typ;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class BasiseinstellungList extends ArrayList<Basiseinstellung> {
   private static final long serialVersionUID = 1L;
@@ -63,6 +63,21 @@ public class BasiseinstellungList extends ArrayList<Basiseinstellung> {
   public Basiseinstellung addString(String property, String beschreibungKey, String hinweisKey) {
     String hinweis = getBundleString(hinweisKey);
     Basiseinstellung result = new Basiseinstellung(property, beschreibungKey, Typ.String, false,
+        hinweis, true);
+    this.add(result);
+    return result;
+  }
+
+  public Basiseinstellung addOption(String property, String beschreibungKey) {
+    Basiseinstellung result = new Basiseinstellung(property, beschreibungKey, Typ.Option, false,
+        null, true);
+    this.add(result);
+    return result;
+  }
+
+  public Basiseinstellung addOption(String property, String beschreibungKey, String hinweisKey) {
+    String hinweis = getBundleString(hinweisKey);
+    Basiseinstellung result = new Basiseinstellung(property, beschreibungKey, Typ.Option, false,
         hinweis, true);
     this.add(result);
     return result;

@@ -1,6 +1,9 @@
 <jsp:directive.page import="de.ivu.wahl.client.beans.OutputCommand"/>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%response.setBufferSize(128); %>
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
+<%
+response.setBufferSize(128);
+%>
 <html>
  <head>
   <title><ivu:int key="WahlimportInDatenbank"/></title>
@@ -23,7 +26,7 @@
    window.scrollTo(0, y);
   }
   
-  var aktiv = window.setInterval("scrollDown()", 200);
+  var aktiv = window.setInterval( function() { scrollDown(); }, 200);
  </script>
  <body class="hghell">
   <h1><ivu:int key="WahlimportInDatenbank"/></h1><% 

@@ -23,7 +23,7 @@ import de.ivu.wahl.dataimport.XMLTags;
 /**
  * Helper class for creating xml result documents
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
 
  */
 public abstract class XMLHelper {

@@ -21,7 +21,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 /**
  * Handels import of sub region results in P4
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
 
  */
 public class ErgebnisImportHandlerMsg extends AbstractErgebnisImportHandler {

@@ -14,6 +14,7 @@ CREATE TABLE Anwender (
        Name                 VARCHAR(200),
        Anwendername         VARCHAR(200),
        PasswordHash         VARCHAR(200),
+       Salt                 VARCHAR(200),
        FehlversucheAnmeldung INTEGER,
        LetzterZugriff       TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

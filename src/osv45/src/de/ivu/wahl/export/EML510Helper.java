@@ -29,6 +29,7 @@ import de.ivu.wahl.dataimport.GruppeAllgemeinXmlAdapter;
 import de.ivu.wahl.dataimport.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
+import de.ivu.wahl.modell.AuthorityLevel;
 import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.modell.Gesamtstimmen;
 import de.ivu.wahl.modell.GesamtstimmenImpl;
@@ -49,7 +50,7 @@ import de.ivu.wahl.wus.reportgen.EMLMessageType;
 /**
  * Helper of ExportHandlingBean to create the core part of the EML 510 message.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class EML510Helper {
   private static final Logger LOGGER = Logger.getLogger(ExportHandlingBean.class);
@@ -62,7 +63,7 @@ public class EML510Helper {
   }
 
   Element createVotingResultElement(Gebiet region,
-      boolean create510d4PSB,
+      boolean create510d4PsbOrHsb,
       boolean emptyResults,
       EMLMessageType emlType) throws FinderException {
     ElectionSubcategory electionSubcategory = WahlInfo.getWahlInfo().getElectionSubcategory();
@@ -80,18 +81,22 @@ public class EML510Helper {
 
     // for root region find total results first, than subregion votes
     boolean isTotalResult = region.getUebergeordnetesGebiet() == null;
-    int targetLevel = SystemInfo.getSystemInfo().getWahlEbene() + 1;
+    int wahlEbene = SystemInfo.getSystemInfo().getWahlEbene();
+    int targetLevel = wahlEbene + 1;
+    if (create510d4PsbOrHsb && AuthorityLevel.EBENE_HSB.getId() == wahlEbene) {
+      targetLevel = wahlEbene;
+    }
 
     // Create <TotalVotes> and determine the regions for which a <ReportingUnitVotes> shall be
     // created
     List<Gebiet> subRegions = createTotalVotesAndGetSubRegions(region,
-        create510d4PSB,
+        create510d4PsbOrHsb,
         emptyResults,
         contest,
         emlType);
 
     for (Gebiet subRegion : subRegions) {
-      createReportingUnitVotes(create510d4PSB,
+      createReportingUnitVotes(create510d4PsbOrHsb,
           emptyResults,
           contest,
           isTotalResult,
@@ -108,7 +113,7 @@ public class EML510Helper {
     return ElectionCategory.AB.equals(ElectionCategory.fromWahlart(wahl.getWahlart()));
   }
 
-  private void createReportingUnitVotes(boolean create510d4PSB,
+  private void createReportingUnitVotes(boolean create510d4PsbOrHsb,
       boolean emptyResults,
       Element contest,
       boolean isTotalResult,
@@ -130,7 +135,7 @@ public class EML510Helper {
 
     Element regionResults = XMLHelper.createElement(XMLTags.EML_REPORTING_UNIT_VOTES, NS_EML);
     regionResults.appendChild(bean.createReportingUnitIdentifier(subRegion, isTotalResult
-        && !create510d4PSB, targetLevel));
+        && !create510d4PsbOrHsb, targetLevel));
     appendCandidateResults(id_Ergebniseingang, subRegion, regionResults, emptyResults, emlType);
     contest.appendChild(regionResults);
   }
@@ -142,7 +147,7 @@ public class EML510Helper {
    * @return list of regions for which a <ReportingUnitVotes> element has to be created
    */
   private List<Gebiet> createTotalVotesAndGetSubRegions(Gebiet region,
-      boolean create510d4PSB,
+      boolean create510d4PsbOrHsb,
       boolean emptyResults,
       Element contest,
       EMLMessageType emlType) throws FinderException {
@@ -154,8 +159,8 @@ public class EML510Helper {
     // create <TotalVotes> Element
     contest.appendChild(createTotalResult(region, emptyResults, emlType));
 
-    if (create510d4PSB) {
-      // Special case where 510d is created by the PSB (the municipality)
+    if (create510d4PsbOrHsb) {
+      // Special case where 510d is created by the PSB (the municipality) or HSB
       return Collections.singletonList(region);
     }
 

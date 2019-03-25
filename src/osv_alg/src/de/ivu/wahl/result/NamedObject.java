@@ -9,7 +9,7 @@ package de.ivu.wahl.result;
 /**
  * An object that may be displayed to the user by the getName() method.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface NamedObject {
   public String getName();

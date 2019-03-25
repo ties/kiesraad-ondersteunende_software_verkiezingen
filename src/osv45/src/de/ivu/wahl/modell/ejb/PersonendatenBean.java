@@ -7,7 +7,12 @@
 package de.ivu.wahl.modell.ejb;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.ejb.FinderException;
 
@@ -16,7 +21,7 @@ import de.ivu.ejb.fw.DBABase;
 import de.ivu.wahl.modell.impl.PersonendatenDBA;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class PersonendatenBean extends BasicPersonendatenBean {
 
@@ -50,4 +55,15 @@ public class PersonendatenBean extends BasicPersonendatenBean {
     return getListenkandidaturCol() != null && getListenkandidaturCol().size() > 0;
   }
 
+  @Override
+  public List<Integer> getListenkandidaturenGruppenSchluesselSortiert() {
+    if (hasListenkandidatur()) {
+      Set<Integer> listen = new TreeSet<Integer>();
+      for (Listenkandidatur lk : getListenkandidaturCol()) {
+        listen.add(lk.getGruppe().getSchluessel());
+      }
+      return new ArrayList<Integer>(listen);
+    }
+    return Collections.emptyList();
+  }
 }

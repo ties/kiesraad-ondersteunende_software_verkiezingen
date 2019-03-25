@@ -23,7 +23,7 @@ import de.ivu.wahl.modell.ejb.Gebiet;
 /**
  * Data object containing GUI input data and corresponding metadata
  * 
- * @author cos@ivu.de klie@ivu.de - IVU Traffic Technologies AG
+ * @author D. Cosic P. Kliem - IVU Traffic Technologies AG
  */
 
 public class GUIEingangMsg extends BasicEingangMsg implements EingangMsg, Serializable {
@@ -43,7 +43,7 @@ public class GUIEingangMsg extends BasicEingangMsg implements EingangMsg, Serial
   private int _serNr = -1;
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   public static class Gruppendaten implements Serializable {
     private static final long serialVersionUID = -8996828539690488150L;

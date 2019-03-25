@@ -4,7 +4,7 @@
  * Zeigt alle angemeldeten Anwender an
  *
  * Auf der Seite ist noch einmal ein rechteCheck, da die Seite ansonsten als Admin-Default durchgehen darf
- * author:  klie@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  P. Kliem  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.wahl.anwender.Anmeldung" %>
@@ -18,15 +18,13 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "admAngemeldeteAnw"; //$NON-NLS-1$
 
-   response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
-   response.setHeader("Pragma","no-cache"); //HTTP 1.0
-   response.setDateHeader ("Expires", 0); //prevents caching at the proxy server 
-   String breite = "100%";
-   %>
+String breite = "100%";
+%>
 <html>
 <head>
    <title><ivu:int key="Anwender_angemeldet"/></title>
@@ -92,7 +90,7 @@ String helpKey = "admAngemeldeteAnw"; //$NON-NLS-1$
                                           <%= ClientHelper.forHTML(str) %>
                                        </td>
                                        <td>
-                                          <%= wahlname %>
+                                          <%= ClientHelper.forHTML(wahlname) %>
                                        </td>
                                     </tr>
                                     <%

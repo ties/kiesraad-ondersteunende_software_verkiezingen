@@ -14,7 +14,7 @@ import java.util.Map;
  * A MultiReportConfiguration defines how multiple documents of the same template shall be generated
  * with the same EML file
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class MultiReportConfiguration {
   private final Map<String, String> namesAndParameters;

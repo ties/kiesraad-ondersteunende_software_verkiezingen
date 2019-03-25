@@ -28,8 +28,6 @@ public enum ReportTemplateEnum {
 
   H9("H 9", "Instemmingsverklaring"),
 
-  I10("I 10", "Verklaring lijstencombinatie"),
-
   Y13("Y 13", "Verklaring niet kandidaatstelling in andere lidstaat"),
 
   Y35("Y 35", "Verklaring van kiesgerechtigdheid"),
@@ -70,9 +68,17 @@ public enum ReportTemplateEnum {
 
   N10_1("N 10-1", "PV stembureau uitkomst stemming-leeg"), // document without numbers of votes
 
+  I("I", "PV stembureau uitkomst centrale stemopneming-leeg"),
+
   N11("N 11", "Vaststelling aantallen stemmen in gemeente"),
 
   N11_OL("N 11", "Vaststelling aantallen stemmen in openbaar lichaam"),
+
+  II("II", "PV gemeentelijk stembureau uitkomst centrale stemopneming"),
+
+  OSV4_7("osv 4-7", "Bijlage 1 PV gemeentelijk stembureau uitkomst centrale stemopneming"),
+
+  OSV4_8("osv 4-8", "Bijlage 2 PV gemeentelijk stembureau uitkomst centrale stemopneming"),
 
   O3("O 3", "PV hsb uitkomst stemming"),
 

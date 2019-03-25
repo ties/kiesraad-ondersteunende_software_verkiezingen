@@ -8,7 +8,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export control of form referendum
  * 
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class P4ExportStateReferendum extends DialogStateHolder {
   private static final long serialVersionUID = -2707559965515384489L;

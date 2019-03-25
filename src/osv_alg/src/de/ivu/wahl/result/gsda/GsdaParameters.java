@@ -7,15 +7,16 @@
 package de.ivu.wahl.result.gsda;
 
 import de.ivu.wahl.result.Fraction;
+import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
 
 /**
  * Parameters for the general seat distribution algorithm.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class GsdaParameters {
   private static final Fraction _75PERCENT = new Fraction(3L, 4L);
-  private static final Fraction _50PERCENT = new Fraction(1L, 2L);
+  private static final Fraction _25PERCENT = new Fraction(1L, 4L);
   private static final Fraction _ZERO = new Fraction(0L, 1L);
 
   private final boolean b1_fictitious;
@@ -42,7 +43,7 @@ public class GsdaParameters {
   }
 
   public static GsdaParameters forFictitiousDistributionBC() {
-    return new GsdaParameters(true, false, _50PERCENT, true, true, true, false);
+    return new GsdaParameters(true, false, _25PERCENT, true, true, true, false);
   }
 
   public static GsdaParameters forP42DistributionEpTk() {
@@ -68,7 +69,7 @@ public class GsdaParameters {
   }
 
   public static GsdaParameters forP42DistributionBC() {
-    return new GsdaParameters(false, false, _50PERCENT, true, true, true, false);
+    return new GsdaParameters(false, false, _25PERCENT, true, true, true, false);
   }
 
   /**
@@ -127,5 +128,27 @@ public class GsdaParameters {
 
   public boolean isB7_assignmentInListGroup() {
     return b7_assignmentInListGroup;
+  }
+
+  public static GsdaParameters getGsdaParameters(ElectionSubcategory electionSubcategory) {
+    if (ElectionSubcategory.EK.equals(electionSubcategory)) {
+      return GsdaParameters.forP42DistributionEK();
+    } else if (ElectionSubcategory.EP.equals(electionSubcategory)
+        || ElectionSubcategory.TK.equals(electionSubcategory)) {
+      return GsdaParameters.forP42DistributionEpTk();
+    } else if (ElectionSubcategory.GR1.equals(electionSubcategory)
+        || ElectionSubcategory.AB1.equals(electionSubcategory)
+        || ElectionSubcategory.ER1.equals(electionSubcategory)
+        || ElectionSubcategory.GC.equals(electionSubcategory)) {
+      return GsdaParameters.forP42DistributionGr1();
+    } else if (ElectionSubcategory.BC.equals(electionSubcategory)) {
+      return GsdaParameters.forP42DistributionBC();
+    } else {
+      return GsdaParameters.forP42DistributionPsAb2Gr2();
+    }
+  }
+
+  public static Fraction getB3_minimumForLargestRemainder(ElectionSubcategory electionSubcategory) {
+    return getGsdaParameters(electionSubcategory).getB3_minimumForLargestRemainder();
   }
 }

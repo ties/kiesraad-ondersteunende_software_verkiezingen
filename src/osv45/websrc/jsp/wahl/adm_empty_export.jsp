@@ -1,3 +1,4 @@
+<%@page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.Konstanten"%>
@@ -23,6 +24,7 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="expP4Bean" scope="session" class="de.ivu.wahl.client.beans.ExportP4Bean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%  
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ExpEmpty"; //$NON-NLS-1$
@@ -55,46 +57,11 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
    <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
    <title><ivu:int key="<%=i18nName%>"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
-     <script type="text/javascript">
-          function doit(i, j, msec)
-            {
-              //alert("doit");
-              var k = i;
-              var l = j;
-              if (k <= 50)
-              {
-                 //alert("doit");
-                eval("document.p" + k + ".src = '<%= request.getContextPath() %>/img/lila.gif'");
-                k++;
-                window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-              } else {
-                 eval("document.p" + l + ".src = '<%= request.getContextPath() %>/img/leer.gif'");
-                if (k == 101) {
-                    k = -1;
-                    l = -1;
-                 }
-                k++;
-                 l++;
-                 window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-              } 
-            }
-            
-            function transp() {
-            var divTag  = document.getElementById("content");
-                divTag.style.filter = "alpha(Opacity=60, FinishOpacity=0, Style=0, StartX=0, StartY=0, FinishX=1000, FinishY=1000)";
-                
-                var divTag  = document.getElementById("trans");
-                divTag.className = "trans";
-                
-                var statusbalken  = document.getElementById("statusbalken");
-                statusbalken.style.display = 'inline';
-                doit(0,0,100);          
-        
-            }
-            
-          
-         </script>
-    </head>
+   <script>
+     var contextPath = "<%=request.getContextPath()%>";
+   </script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
+</head>
 <body class="hghell">
     <div id="content">
         <div id="statusbalken" style="display:none;" class="status">
@@ -147,7 +114,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                             </fieldset>
                                         <% } else {
                                                 if (P4ExportStateEmptyEml.STATUS_P4_D1 == p4ES._modus){ 
-                                                    String urlExp = "/osv?cmd=expP4_exportP4_EmptyEml&" +ClientHelper.getAllParameters (request); //$NON-NLS-1$
+                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_EMPTY_EML + "&" +ClientHelper.getAllParameters (request); //$NON-NLS-1$//$NON-NLS-2$
                                                    %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
                                                  <tr>
@@ -155,12 +122,12 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                                       <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
                                                             <% if (expP4Bean._adminMsgExport != null && !expP4Bean._adminMsgExport.isEmpty() ){%>
-                                                                        <p style="color:red;"><b><%= expP4Bean._adminMsgExport %></b></p>
+                                                                        <p style="color:red;"><b><%= ClientHelper.forHTML(expP4Bean._adminMsgExport) %></b></p>
                                                                         <% 
                                                                         expP4Bean._adminMsgExport = null;
                                                             }
                                                             if (expP4Bean._adminMsgExportConfirmation != null && !expP4Bean._adminMsgExportConfirmation.isEmpty() ){%>
-                                                                        <p style="color:green;"><b><%= expP4Bean._adminMsgExportConfirmation %></b></p>
+                                                                        <p style="color:green;"><b><%= ClientHelper.forHTML(expP4Bean._adminMsgExportConfirmation) %></b></p>
                                                                         <% 
                                                                         expP4Bean._adminMsgExportConfirmation = null;
                                                             } %>
@@ -169,7 +136,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                                             <ivu:int key="<%=i18nText%>"/>
                                                              <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 1em;">
                                                                     <% if (expP4Bean._adminWarningOverride != null && !expP4Bean._adminWarningOverride.isEmpty() ){%>
-                                                                                <p class="warningMessage"><b><%= expP4Bean._adminWarningOverride %><br/>
+                                                                                <p class="warningMessage"><b><%= ClientHelper.forHTML(expP4Bean._adminWarningOverride) %><br/>
                                                                                 <ivu:int key="Datei_Ueberschreiben"/> </b></p>
                                                                                 <% expP4Bean._adminWarningOverride = null; %> 
                                                                                 <input type="hidden" value="1" name="<%=ApplicationBeanKonstanten.PREFIX%>force"/>
@@ -188,7 +155,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                                     // reset export status
                                                     expP4Bean.resetExportStateEmptyEml();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=expP4_exportP4_EmptyEml&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_EMPTY_EML + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                             %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
@@ -196,13 +163,13 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                                         <%
                                                           if (expP4Bean._adminMsgExport != null && !expP4Bean._adminMsgExport.isEmpty() ){
                                                         %>
-                                                            <p style="color:red;"><b><%=expP4Bean._adminMsgExport%></b></p>
+                                                            <p style="color:red;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExport)%></b></p>
                                                             <% expP4Bean._adminMsgExport = null;
                                                           
                                                           }
                                                           if (expP4Bean._adminMsgExportConfirmation != null && !expP4Bean._adminMsgExportConfirmation.isEmpty() ){
                                                         %>
-                                                            <p style="color:green;"><b><%=expP4Bean._adminMsgExportConfirmation%></b></p>
+                                                            <p style="color:green;"><b><%=ClientHelper.forHTML(expP4Bean._adminMsgExportConfirmation)%></b></p>
                                                             <% expP4Bean._adminMsgExportConfirmation = null;
                                                           
                                                           }

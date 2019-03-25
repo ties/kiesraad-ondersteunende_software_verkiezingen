@@ -20,7 +20,7 @@ import de.ivu.wahl.modell.ejb.Personendaten;
  * <p>
  * All information about a Listenkandidatur restricted to a given region.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class Candidateship {
   public static Comparator<Candidateship> SORT_BY_POSITION_IN_LIST = new Comparator<Candidateship>() {

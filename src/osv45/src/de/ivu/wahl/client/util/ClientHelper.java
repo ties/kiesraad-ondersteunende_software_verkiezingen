@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -52,7 +51,7 @@ import de.ivu.wahl.util.BundleHelper;
 /**
  * Statische Hilfsklassen für Client servlets und pages
  * 
- * @author klie@ivu.de, mur@ivu.de
+ * @author P. Kliem, M. Murdfield
  */
 
 public class ClientHelper {
@@ -664,7 +663,8 @@ public class ClientHelper {
   private static boolean isIgnorable(String paramName, boolean clearPrefix) {
     return paramName.startsWith("cmd") || paramName.equalsIgnoreCase("HMAC") //$NON-NLS-1$ //$NON-NLS-2$
         || paramName.equalsIgnoreCase(Step.DEFAULT_PARAMETER_NAME)
-        || paramName.equalsIgnoreCase("User") || paramName.equalsIgnoreCase("Password") //$NON-NLS-1$ //$NON-NLS-2$
+        || paramName.equalsIgnoreCase(ApplicationBean.USER_ATTRIBUTE)
+        || paramName.equalsIgnoreCase(ApplicationBean.PASSWORD_ATTRIBUTE)
         || paramName.equalsIgnoreCase("x") || paramName.equalsIgnoreCase("y") //$NON-NLS-1$ //$NON-NLS-2$
         || (clearPrefix && paramName.startsWith(ApplicationBeanKonstanten.PREFIX));
   }
@@ -997,7 +997,7 @@ public class ClientHelper {
    * @param pQueryString Description
    * @param request Description
    * @param session Description
-   * @return Description
+   * @return false if a manipulated URL is detected, true, if the URL is ok
    */
   public static boolean checkURLQueryString(String pQueryString,
       HttpServletRequest request,
@@ -1006,44 +1006,55 @@ public class ClientHelper {
     if (macKey == null) { // will not normally happen, but just in case
       return true;
     }
+
     String queryString = pQueryString;
     // check for target (maybe not necessary)
     int targetIdx = queryString.indexOf('#');
     if (targetIdx >= 0) {
-      queryString = queryString.substring(0, targetIdx);
+      // Do not shorten the URL in this case, because this may be used to hide the "&HMAC", see
+      // OSV-2098
+      // queryString = queryString.substring(0, targetIdx);
       LOGGER.info(Messages.getString(MessageKeys.Logger_ThereISaTargetInTheQueryString));
     }
 
     String hmac = request.getParameter("HMAC"); //$NON-NLS-1$
-    if (hmac != null) {
-      if (LOGGER.isDebugEnabled()) {
-        String key = new BigInteger(1, macKey.getEncoded()).toString(Character.MAX_RADIX);
-        LOGGER.debug("QueryString: " + queryString + " >>> macKey = " + key); //$NON-NLS-1$ //$NON-NLS-2$
-      }
-      int hmacIndex = queryString.indexOf("&HMAC"); //$NON-NLS-1$
-      if (hmacIndex >= 0) {
-        if (queryString.indexOf('&', hmacIndex + 1) > 0) {
-          LOGGER
-              .warn(Messages
-                  .getString(MessageKeys.Logger_NachDemHMACkommenWeitereParameterVorDieURLwurdeManipuliert)
-                  + request.getRequestURI() + '?' + queryString + "<"); //$NON-NLS-1$
-          return false;
-        }
-        queryString = queryString.substring(0, hmacIndex);
-        String hmacMsg = calculateHMAC(queryString, macKey);
-        return hmacMsg.equals(hmac);
-      } else {
-        LOGGER.warn(Messages.getString(MessageKeys.Logger_KeinHMACInDerURL)
-            + request.getRequestURI() + '?' + queryString);
-        return true;
-      }
+    if (hmac == null) {
+      // HMAC is missing -> URL is manipulated
+      return false;
     }
-    return false;
+
+    // Create Debug output of the macKey
+    if (LOGGER.isDebugEnabled()) {
+      String key = new BigInteger(1, macKey.getEncoded()).toString(Character.MAX_RADIX);
+      LOGGER.debug("QueryString: " + queryString + " >>> macKey = " + key); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    int hmacIndex = queryString.indexOf("&HMAC"); //$NON-NLS-1$
+    if (hmacIndex < 0) {
+      // There is a parameter HMAC in the URL but "&HMAC" is not part of the URL
+      // -> URL is probably manipulated, see OSV-2098
+      LOGGER.warn(Messages.getString(MessageKeys.Logger_KeinHMACInDerURL) + request.getRequestURI()
+          + '?' + queryString);
+      return false;
+    }
+
+    // There are further parameters in the URL after "&HMAC" -> URL is manipulated
+    if (queryString.indexOf('&', hmacIndex + 1) > 0) {
+      LOGGER.warn(Messages
+          .getString(MessageKeys.Logger_NachDemHMACkommenWeitereParameterVorDieURLwurdeManipuliert)
+          + request.getRequestURI() + '?' + queryString + "<"); //$NON-NLS-1$
+      return false;
+    }
+
+    // Check the part of the URL that comes before "&HMAC"
+    String relevantPartOfTheQueryString = queryString.substring(0, hmacIndex);
+    String hmacMsg = calculateHMAC(relevantPartOfTheQueryString, macKey);
+    return hmacMsg.equals(hmac);
   }
 
   private static String calculateHMAC(String plainText, Key key) {
     try {
-      // standard HMAC-MD5 algorithm as descirbed in RFC 2104:
+      // standard HMAC-MD5 algorithm as described in RFC 2104:
       Mac mac = Mac.getInstance("HMACMD5"); //$NON-NLS-1$
       mac.init(key);
       return new BigInteger(1, mac.doFinal(plainText.getBytes())).toString(Character.MAX_RADIX);
@@ -1259,7 +1270,7 @@ public class ClientHelper {
    * @param str der zu überprüfende String
    * @param laenge die Länge, auf welche der String gefüllt oder gestutzt wird
    * @return der notfalls gekürzte String
-   * @author apa@ivu.de
+   * @author apa
    */
   public static String cutStr(String str, int laenge) {
     if (str.length() > laenge) {
@@ -1706,17 +1717,19 @@ public class ClientHelper {
     return null;
   }
 
-  public static String intSetToString(Set<Integer> set) {
-    String ret = ""; //$NON-NLS-1$
-    Iterator<Integer> it = set.iterator();
-    while (it.hasNext()) {
-      ret += Integer.toString(it.next());
-      if (it.hasNext()) {
-        ret += ", "; //$NON-NLS-1$
+  public static String intsToString(Collection<Integer> col) {
+    boolean first = true;
+    String result = ""; //$NON-NLS-1$
+    for (Integer integer : col) {
+      if (first) {
+        first = false;
+      } else {
+        result += ", "; //$NON-NLS-1$
       }
+      result += Integer.toString(integer);
     }
 
-    return ret;
+    return result;
   }
 
   public static int changeSessionTimeout(HttpServletRequest request, int minuten) {

@@ -9,7 +9,7 @@ package de.ivu.wahl.modell.impl;
 import de.ivu.wahl.modell.ListenkandidaturErgebnisTmpModel;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
 
  */
 public class ListenkandidaturErgebnisTmpModelImpl extends ListenkandidaturErgebnisModelImpl

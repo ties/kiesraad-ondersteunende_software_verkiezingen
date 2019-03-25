@@ -1,4 +1,4 @@
-﻿AF   Afghanistan
+AF  Afghanistan
 AX  Åland
 AL  Albanië
 DZ  Algerije

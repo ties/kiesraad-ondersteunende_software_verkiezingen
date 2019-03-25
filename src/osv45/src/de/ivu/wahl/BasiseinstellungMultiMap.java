@@ -14,21 +14,25 @@ import java.util.List;
 import de.ivu.wahl.util.ConstantMap;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class BasiseinstellungMultiMap extends ConstantMap<String, List<Basiseinstellung>> {
+  private List<Basiseinstellung> basis;
+
   static BasiseinstellungMultiMap key(String key, List<Basiseinstellung> list) {
     BasiseinstellungMultiMap inst = new BasiseinstellungMultiMap();
-    inst.addKey(key, list);
+    inst.add(key, unmodifiableList(list));
+    inst.basis = list;
     return inst;
   }
 
-  BasiseinstellungMultiMap() {
+  private BasiseinstellungMultiMap() {
     super();
   }
 
   BasiseinstellungMultiMap(String key, List<Basiseinstellung> list) {
     super();
+    this.basis = list;
     addLocalize(key, list);
   }
 
@@ -36,7 +40,7 @@ public class BasiseinstellungMultiMap extends ConstantMap<String, List<Basiseins
     add(getBundleString(key), unmodifiableList(list));
   }
 
-  void addKey(String key, List<Basiseinstellung> list) {
-    add(key, unmodifiableList(list));
+  public List<Basiseinstellung> getBasis() {
+    return basis;
   }
 }

@@ -17,7 +17,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 /**
  * All eml exports are generated here
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public interface ExportHandling {
 
@@ -49,6 +49,12 @@ public interface ExportHandling {
    * @throws ImportException
    */
   public Document createEML510(Gebiet gebiet, boolean createRGNodes)
+      throws EJBException, ImportException;
+
+  /**
+   * Creates xml-document EML 510d in HSB containing voting results, see OSV-2080.
+   */
+  public Document createEML510dInHSB(Gebiet gebiet, boolean createRGNodes)
       throws EJBException, ImportException;
 
   /**
@@ -95,7 +101,7 @@ public interface ExportHandling {
    * folder.
    */
   public void updateBackupArchive();
-  
+
   /**
    * Creates or updates a zip file containing all election results of P4 and P5.
    */

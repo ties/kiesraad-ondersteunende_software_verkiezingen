@@ -40,7 +40,7 @@ import de.ivu.wahl.result.result.ElectionResult;
 import de.ivu.wahl.result.result.StepType;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class GeneralSeatDistributor<T extends GeneralList, P extends GeneralList> {
   private final FractionFactory<T> _dHondtFractionFactory = new FractionFactory<T>() {
@@ -458,7 +458,7 @@ public class GeneralSeatDistributor<T extends GeneralList, P extends GeneralList
 
   /**
    * @return all lists that take part in the step and that have no more seats than after the first
-   *         assignment. If b3 > 0, also check if the list attained 75% (50% for BC elections) of
+   *         assignment. If b3 > 0, also check if the list attained 75% (25% for BC elections) of
    *         the electoral quota.
    */
   private List<T> getListsWithoutResidualSeat() {

@@ -11,7 +11,7 @@ import static de.ivu.wahl.anwender.Rechte.R_ADM_VOTE_VALUES;
 import static de.ivu.wahl.anwender.Rechte.R_EXPORT;
 import static de.ivu.wahl.anwender.Rechte.R_FREIGABE;
 import static de.ivu.wahl.anwender.Rechte.R_IMPORT;
-import static de.ivu.wahl.anwender.Rechte.R_UPLOAD;
+import static de.ivu.wahl.anwender.Rechte.R_RE_INDEX_DATABASE;
 import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_WAHLKREIS;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 import de.ivu.wahl.client.util.GUICommand;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public abstract class InitGuiCommand_P5 extends InitGuiCommand implements ApplicationBeanKonstanten {
 
@@ -113,12 +113,6 @@ public abstract class InitGuiCommand_P5 extends InitGuiCommand implements Applic
     helper.addCommand(Command.AUSW_SITZVERTEILUNG_GEBIET,
         "Sitzverteilung", "Sitzverteilung_titel", "sitzverteilungErg.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    if (!isEKElection()) {
-      helper.setRights(null);
-      helper.addCommand(Command.AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION,
-          "SitzverteilungLK", "SitzverteilungLK_titel", "sitzverteilungErgLK.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-    }
-
     helper.setRights(null);
     cmd = helper
         .addCommand(Command.NLPA,
@@ -201,16 +195,9 @@ public abstract class InitGuiCommand_P5 extends InitGuiCommand implements Applic
     helper.addCommand(Command.ANWENDER_LOESCHEN,
         "Anwender_loeschen", "Anwender_loeschen_titel", "adm_anwender_select.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
-    helper.setRights(R_UPLOAD);
-    helper.addCommand(Command.UPLOAD_FILE, "Upload", "Upload_titel", "dateiUpload.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-
-    helper.setRights(R_UPLOAD);
-    helper.addCommand(Command.UPLOAD_RGTEXT,
-        "Upload_rgtext", "Upload_rgtext_titel", "rgtextUpload.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-
-    helper.setRights(R_UPLOAD);
-    helper
-        .addCommand(Command.RESET_RGTEXT, "Reset_rgtext", "Reset_rgtext_titel", "rgtextReset.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+    helper.setRights(R_RE_INDEX_DATABASE);
+    helper.addCommand(Command.ADM_RE_INDEX_DATABASE,
+        "re_index_database", "re_index_database_titel", "adm_re_index_database.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**

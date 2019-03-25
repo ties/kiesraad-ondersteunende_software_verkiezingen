@@ -13,7 +13,7 @@ import java.util.Map;
  * views (not necessarily vice versa), the user can return to whatever he used to see in the past,
  * as long as it is within the same session. A Session Step is uniquely identified by an ID.
  * 
- * @author Dr. Domagoj Cosic (cos@ivu.de)
+ * @author Dr. Domagoj Cosic (D. Cosic)
  * @created 23. Mai 2001
  */
 public interface Step extends Map<String, Object>, Serializable {

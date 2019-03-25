@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Gruppe as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean, GruppeModel {
@@ -115,13 +115,13 @@ public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean,
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Wahl ID of the objects to be searched
+     * @param id_Listenkombination ID of the objects to be searched
      * @return  {@link Collection} of the found Gruppe-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByWahl(String id_Wahl) throws IVUFinderException {
+   public Collection<String> ejbFindAllByListenkombination(String id_Listenkombination) throws IVUFinderException {
       try {
-         return GruppeDBA.retrieveIDsByID_Wahl(id_Wahl);
+         return GruppeDBA.retrieveIDsByID_Listenkombination(id_Listenkombination);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -131,13 +131,13 @@ public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean,
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Listenkombination ID of the objects to be searched
+     * @param id_Wahl ID of the objects to be searched
      * @return  {@link Collection} of the found Gruppe-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByListenkombination(String id_Listenkombination) throws IVUFinderException {
+   public Collection<String> ejbFindAllByWahl(String id_Wahl) throws IVUFinderException {
       try {
-         return GruppeDBA.retrieveIDsByID_Listenkombination(id_Listenkombination);
+         return GruppeDBA.retrieveIDsByID_Wahl(id_Wahl);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -346,24 +346,24 @@ public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean,
 
    @Override
    protected void checkRelations() {
-      if (null == _details.getID_Wahl()) {
-         _wahl = null;
-         _relchk_Wahl = true;
-      } else {
-         _relchk_Wahl = false;
-      }
       if (null == _details.getID_Listenkombination()) {
          _listenkombination = null;
          _relchk_Listenkombination = true;
       } else {
          _relchk_Listenkombination = false;
       }
+      if (null == _details.getID_Wahl()) {
+         _wahl = null;
+         _relchk_Wahl = true;
+      } else {
+         _relchk_Wahl = false;
+      }
    }
 
    @Override
    protected void resetRelations() {
-      _wahl = null;
       _listenkombination = null;
+      _wahl = null;
    }
 
    /**
@@ -546,51 +546,6 @@ public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean,
    }
 
    /**
-     * Relation zu Wahl
-     */
-   protected Wahl _wahl;
-
-   /**
-     * Flag for the validity of the relation Wahl
-     */
-   protected boolean _relchk_Wahl = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Wahl}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Wahl getWahl() throws EJBException {
-      if (!_relchk_Wahl) {
-         if (null == _details.getID_Wahl()) {
-            _wahl = null;
-         } else if (null == _wahl || !_wahl.getPrimaryKey().equals(_details.getID_Wahl())) {
-            try {
-               WahlHome home = WahlHome.HomeFinder.findHome(this);
-               _wahl = home.findByPrimaryKey(_details.getID_Wahl());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Wahl", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Wahl", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Wahl = true;
-      }
-      return _wahl;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Wahl}
-     *
-     * @param wahl the corresponding EJBObject
-     */
-   public void setWahl(Wahl wahl) {
-      _wahl = wahl;
-      _details.setID_Wahl(wahl == null ? null : (String)wahl.getPrimaryKey());
-   }
-
-   /**
      * Relation zu Listenkombination
      */
    protected Listenkombination _listenkombination;
@@ -633,6 +588,51 @@ public abstract class BasicGruppeBean extends BMPBeanBase implements EntityBean,
    public void setListenkombination(Listenkombination listenkombination) {
       _listenkombination = listenkombination;
       _details.setID_Listenkombination(listenkombination == null ? null : (String)listenkombination.getPrimaryKey());
+   }
+
+   /**
+     * Relation zu Wahl
+     */
+   protected Wahl _wahl;
+
+   /**
+     * Flag for the validity of the relation Wahl
+     */
+   protected boolean _relchk_Wahl = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Wahl}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Wahl getWahl() throws EJBException {
+      if (!_relchk_Wahl) {
+         if (null == _details.getID_Wahl()) {
+            _wahl = null;
+         } else if (null == _wahl || !_wahl.getPrimaryKey().equals(_details.getID_Wahl())) {
+            try {
+               WahlHome home = WahlHome.HomeFinder.findHome(this);
+               _wahl = home.findByPrimaryKey(_details.getID_Wahl());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Wahl", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Wahl", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Wahl = true;
+      }
+      return _wahl;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Wahl}
+     *
+     * @param wahl the corresponding EJBObject
+     */
+   public void setWahl(Wahl wahl) {
+      _wahl = wahl;
+      _details.setID_Wahl(wahl == null ? null : (String)wahl.getPrimaryKey());
    }
 
    /**

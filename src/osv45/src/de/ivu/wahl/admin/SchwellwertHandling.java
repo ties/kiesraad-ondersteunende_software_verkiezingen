@@ -13,7 +13,7 @@ import de.ivu.wahl.AnwContext;
 /**
  * Manipulation der Schwellwerte
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface SchwellwertHandling {
   /**

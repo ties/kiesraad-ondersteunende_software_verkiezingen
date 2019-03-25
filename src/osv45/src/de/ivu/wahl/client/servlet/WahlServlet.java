@@ -4,13 +4,13 @@ import static de.ivu.wahl.client.beans.Command.ADM_ANW_LISTE;
 import static de.ivu.wahl.client.beans.Command.ADM_EMPTY_EML_EXPORT;
 import static de.ivu.wahl.client.beans.Command.ADM_N10_1_EXPORT;
 import static de.ivu.wahl.client.beans.Command.ADM_PROPS;
+import static de.ivu.wahl.client.beans.Command.ADM_RE_INDEX_DATABASE;
 import static de.ivu.wahl.client.beans.Command.ANWENDER_ANLEGEN;
 import static de.ivu.wahl.client.beans.Command.ANWENDER_ANZEIGEN;
 import static de.ivu.wahl.client.beans.Command.ANWENDER_LOESCHEN;
 import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_1_AUSWAHLEN;
 import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_2_EDIT;
 import static de.ivu.wahl.client.beans.Command.ANWENDER_VERAENDERN_PASSWORT;
-import static de.ivu.wahl.client.beans.Command.AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION;
 import static de.ivu.wahl.client.beans.Command.EXPORT_VERZEICHNIS;
 import static de.ivu.wahl.client.beans.Command.GEBE;
 import static de.ivu.wahl.client.beans.Command.GEW_BEN;
@@ -88,6 +88,7 @@ public class WahlServlet extends AbstractWahlServlet {
   protected String _uriBase = "/src/"; //$NON-NLS-1$
 
   protected boolean _secure = true;
+  private final boolean ignorestepid = "true".equals(System.getProperty("ignorestepid")); //$NON-NLS-1$ //$NON-NLS-2$
 
   /**
    * Returns information about the servlet, such as author, version, and copyright.
@@ -109,10 +110,10 @@ public class WahlServlet extends AbstractWahlServlet {
     if (tmpURIBase != null) {
       _uriBase = tmpURIBase;
     }
-    String tempSecure = config.getInitParameter("secure"); //$NON-NLS-1$
-    if (tempSecure != null) {
-      _log.info(Messages.getString(MessageKeys.Logger_GotSecure) + ':' + tempSecure);
-      _secure = "true".equalsIgnoreCase(tempSecure) || "on".equalsIgnoreCase(tempSecure); //$NON-NLS-1$ //$NON-NLS-2$
+    if (ignorestepid) {
+      _log.info(Messages.getString(MessageKeys.Logger_GotSecure) + ':'
+          + System.getProperty("ignorestepid")); //$NON-NLS-1$
+      _secure = !ignorestepid;
     }
   }
 
@@ -234,7 +235,7 @@ public class WahlServlet extends AbstractWahlServlet {
         STATUS_GEB,
         STATUS,
         EXPORT_VERZEICHNIS,
-        AUSW_SITZVERTEILUNG_GEBIET_LISTENKOMBIANTION);
+        ADM_RE_INDEX_DATABASE);
     Set<Integer> noCachedWorks = new HashSet<Integer>();
     for (Command command : noCachedWorksCommands) {
       noCachedWorks.add(command.getId());
@@ -425,7 +426,9 @@ public class WahlServlet extends AbstractWahlServlet {
         forwardRequest(request, response, _uriBase + "jsp/UserManipulatedURL.jsp"); //$NON-NLS-1$
       }
     } else {
-      dispatchRequest(request, response);
+      // No parameters -> URL was manipulated
+      _log.warn(Messages.getString(MessageKeys.Logger_UserProbablyManipulatedTheQueryString) + qs);
+      forwardRequest(request, response, _uriBase + "jsp/UserManipulatedURL.jsp"); //$NON-NLS-1$
     }
   }
 
@@ -471,10 +474,19 @@ public class WahlServlet extends AbstractWahlServlet {
       setZeitstempelLetzteAenderungClient(session, zs);
       calculateLastValidURL(request, response, step);
     } else {
-      step = sstate.getStep(stepID);
+      if (_secure || stepID != null) {
+        step = sstate.getStep(stepID);
+      } else {
+        step = null;
+      }
       if (step == null) {
-        throw new SessionStateException(
-            Messages.getString(MessageKeys.Error_SessionStepWasAlreadyDiscardedOrDidNotExistAtAll));
+        if (_secure) {
+          throw new SessionStateException(
+              Messages
+                  .getString(MessageKeys.Error_SessionStepWasAlreadyDiscardedOrDidNotExistAtAll));
+        } else {
+          step = sstate.createNextStep(stepID);
+        }
       }
     }
     request.setAttribute(ClientHelper.CURRENT_STEP, step);

@@ -7,7 +7,7 @@
 package de.ivu.wahl.modell;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
 
  */
 public interface ListenkandidaturErgebnisTmpModel extends ListenkandidaturErgebnisModel {

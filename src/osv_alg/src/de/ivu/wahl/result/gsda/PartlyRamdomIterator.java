@@ -24,7 +24,7 @@ import de.ivu.wahl.result.drawlots.DrawingLotsCallback;
  * be subject to a decision by drawing lots. This is only performed if this is required by a
  * request.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class PartlyRamdomIterator<T> implements Iterator<T> {
   protected final List<Set<T>> _listOfSets;

@@ -1,14 +1,17 @@
+<%@ page import="de.ivu.wahl.AnwContext"%>
+<%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.i18n.Messages"%>
+<%@ page import="de.ivu.wahl.i18n.MessageKeys"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.AnwContext"%>
 
 <%--
  *******************************************************************************
  * Passwort ändern
  * Ändert das Passwort des angemeldeten Benutzers
  *
- * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  T. Stach, M. Murdfield, D. Cosic  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_anwender_change_pw.jsp,v 1.15 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -16,13 +19,11 @@
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
 
-   response.setHeader("Cache-Control","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ //HTTP 1.1
-   response.setHeader("Pragma","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ //HTTP 1.0
-   response.setDateHeader ("Expires", 0); //$NON-NLS-1$ //prevents caching at the proxy server 
    String prefix = ApplicationBeanKonstanten.PREFIX;
    String urlChange    = "/osv?cmd=adm_change_pw&" + ClientHelper.getParametersDoNotStartWith(request, prefix); //$NON-NLS-1$
    String breite = "100%"; //$NON-NLS-1$
@@ -42,7 +43,7 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
    <title><ivu:int key="Passwort_veraendern_titel"/> </title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery-entropizer.css">
-   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.12.4.js"></script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.3.1.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/capslock.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/entropizer.js"></script>
@@ -59,15 +60,25 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
          }
       <%-- checke Name--%>
       <%-- ein neues Passwort muss eingegeben werden--%>
-         if (document.Anwender.<%=prefix%>anw_new_pw1.value == "") {
+         if (document.Anwender.<%=prefix%>anw_new_pw_1.value == "") {
             alert("<%= BundleHelper.getBundleString("Passwort_veraendern_error_Passwort_neu")%>");
             return false;
          }
+      <%-- checke Mindestlänge--%>
+         if (document.Anwender.<%=prefix%>anw_new_pw_1.value.length < <%= Konstanten.MIN_PASSWORD_LENGTH %>) {
+            alert("<%= Messages.bind(MessageKeys.Msg_Passwort_veraendern_error_Passwort_zu_kurz, Konstanten.MIN_PASSWORD_LENGTH) %>");
+            return false;
+         }
+      <%-- checke enthält EURO-Zeichen--%>
+         if (document.Anwender.<%=prefix%>anw_new_pw_1.value.includes('\u20ac')) {
+            alert("<%= BundleHelper.getBundleString("Passwort_veraendern_error_Passwort_contains_EURO")%>");
+            return false;
+         }
       <%-- checke Passwortgleichheit--%>
-      if (document.Anwender.<%=prefix%>anw_new_pw1.value != document.Anwender.<%=prefix%>anw_new_pw2.value) {
-         alert("<%= BundleHelper.getBundleString("Passwort_veraendern_error_Passwoerter_identisch")%>");
-         return false;
-      }
+         if (document.Anwender.<%=prefix%>anw_new_pw_1.value != document.Anwender.<%=prefix%>anw_new_pw_2.value) {
+            alert("<%= BundleHelper.getBundleString("Passwort_veraendern_error_Passwoerter_identisch")%>");
+            return false;
+         }
       return true;
   }
 </script>
@@ -100,10 +111,10 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                             <ivu:int key="Passwort_veraendern_info"/>
                            </p>
                            <% if (errorMsg != null){%>
-                                        <p style="color:red;"><b><%= errorMsg %></b></p>
+                                        <p style="color:red;"><b><%= ClientHelper.forHTML(errorMsg) %></b></p>
                            <% } %> 
                            <% if (confirmationMsg != null){%>
-                                        <p style="color:green;"><b><%= confirmationMsg %></b></p>
+                                        <p style="color:green;"><b><%= ClientHelper.forHTML(confirmationMsg) %></b></p>
                            <% } %> 
                            <ivu:form name="Anwender" action="<%= urlChange %>" onsubmit="return check()" autocomplete="off">
                               <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0">
@@ -127,7 +138,7 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                                                     <ivu:int key="Passwort_veraendern_neues_Passwort"/>
                                              </td>
                                              <td>
-                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_new_pw1" value="" id="newOne1"/ onkeypress="capsLock(event)">
+                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_new_pw_1" value="" id="newOne1"/ onkeypress="capsLock(event)" autocomplete="off">
                                                 <div id="meter2"></div>
                                              </td>
                                           </tr>
@@ -136,7 +147,7 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                                                     <ivu:int key="Passwort_veraendern_neues_Passwort_wiederholung"/>
                                              </td>
                                              <td>
-                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_new_pw2" value="" id="newOne2"/ onkeypress="capsLock(event)">
+                                                <input type="password" style="font-size: 1em;width:148px" name="<%=prefix%>anw_new_pw_2" value="" id="newOne2"/ onkeypress="capsLock(event)" autocomplete="off">
                                                 <span id="capsLock" style="visibility:hidden"><%= BundleHelper.getBundleString("Caps_Lock_Hint") %></span>
                                              </td>
                                           </tr>

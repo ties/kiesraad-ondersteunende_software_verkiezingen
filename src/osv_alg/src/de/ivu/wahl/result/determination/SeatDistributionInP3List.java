@@ -25,7 +25,7 @@ import de.ivu.wahl.result.i18n.Messages;
 /**
  * Helper class for determining the P2List on which elected candidates are assigned their seat.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class SeatDistributionInP3List {
   private final P3List p3List;

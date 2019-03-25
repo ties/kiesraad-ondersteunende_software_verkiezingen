@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <html>
     <head>
         <title><ivu:int key="Navigation" />

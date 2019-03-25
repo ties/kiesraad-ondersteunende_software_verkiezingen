@@ -10,7 +10,7 @@ package de.ivu.wahl.wus.electioncategory;
  * This abstract class provides an alternative to a case statement that makes sure you cover all
  * possible cases.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public abstract class ElectionSubcategoryStrategy<T, C> {
   public T process(ElectionSubcategory electionSubcategory, C context) {

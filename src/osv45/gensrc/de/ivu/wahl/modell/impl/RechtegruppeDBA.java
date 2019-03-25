@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Rechtegruppe.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class RechtegruppeDBA extends DBABase {
@@ -60,10 +60,19 @@ public class RechtegruppeDBA extends DBABase {
       if ((idx = columns.get(ID_RECHTEGRUPPE.toUpperCase())) != null) {
          m._id_Rechtegruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_RECHTEGRUPPE)) != null) {
+         m._id_Rechtegruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(NAME.toUpperCase())) != null) {
          m._name = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(NAME)) != null) {
+         m._name = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(BESCHREIBUNG.toUpperCase())) != null) {
+         m._beschreibung = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(BESCHREIBUNG)) != null) {
          m._beschreibung = r.getString(idx.intValue());
       }
    }
@@ -79,10 +88,10 @@ public class RechtegruppeDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(NAME.toUpperCase())) {
+      if (columns.containsKey(NAME.toUpperCase()) || columns.containsKey(NAME)) {
          p.setString(idx++, m._name);
       }
-      if (columns.containsKey(BESCHREIBUNG.toUpperCase())) {
+      if (columns.containsKey(BESCHREIBUNG.toUpperCase()) || columns.containsKey(BESCHREIBUNG)) {
          p.setString(idx++, m._beschreibung);
       }
       p.setString(idx++, m._id_Rechtegruppe);

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Utility class that helps to generate CSV files.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CsvGenerator {
   private static final char SEMICOLON = ';';

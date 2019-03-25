@@ -10,7 +10,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * WahlModel. Defines constants for the election.
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface WahlModel extends BasicWahlModel {

@@ -3,6 +3,7 @@
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.client.beans.OutputCommand"%>
 <%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
+<%@ page import="de.ivu.wahl.dataimport.HashCodeSplitter"%>
 <%@ page import="de.ivu.wahl.dataimport.ImportEML510"%>
 <%@ page import="de.ivu.wahl.dataimport.SecurityLevel"%>
 <%@ page import="de.ivu.wahl.client.beans.ErgebnisImportBean"%>
@@ -17,6 +18,7 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="ergImpBean" scope="session" class="de.ivu.wahl.client.beans.ErgebnisImportBean" />
 
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ergImp"; //$NON-NLS-1$
@@ -53,17 +55,14 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
    <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
     <head>
         <title>${titel}</title>
+        <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
         <script>
             var contextPath = "<%=request.getContextPath()%>";
         </script>
-        <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
         <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
         <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
         <%
             response.setDateHeader("Last-Modified", -1);
-            response.setDateHeader("Expires", 0); // prevents caching at the proxy server
-            response.setHeader("Cache-Control", "no-cache"); // HTTP 1.1
-            response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         %>
         <style type="text/css">
         td { line-height: 15px }
@@ -239,24 +238,26 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
                                 <br/>
                                 <br/>
                                 <% if (SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel())) {
-                                    String hashCode = impDef.getHashWert510();
-                                    String[] hashCodeParts = hashCode.split(" ");
-                                    if (hashCodeParts.length < 1) { %>
-                                        <%= BundleHelper.getBundleString("Error_Illegal_HashCode_Format") %>
-                                    <% } else { %>
-                                        <%= BundleHelper.getBundleString("Ergebnisse_importieren_HashWert_Confirm_" + shortMessageKeySuffix) %>:<br/><br/>
-                                        <%= hashCode %>
-                                        <input type="hidden" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>" value="<%= hashCodeParts[0] %>" />&nbsp;
-                                    <% } %>
+                                    String hashCode = impDef.getHashWert510(); %>
+                                    <!-- Only confirmation of complete hashcode, no user entry: Show complete hashcode, add hidden field with the (unneccessary) user input --> 
+                                    <%= BundleHelper.getBundleString("Ergebnisse_importieren_HashWert_Confirm_" + shortMessageKeySuffix) %><br/><br/>
+                                    <%= hashCode %>
+                                    <input type="hidden" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510_INPUT_0 %>" value="<%= HashCodeSplitter.HIDDEN_INPUT %>" />&nbsp;
+                                    <input type="hidden" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510_INPUT_1 %>" value="<%= HashCodeSplitter.HIDDEN_INPUT %>" />&nbsp;
                                 <% } else { %>
-                                    <%= BundleHelper.getBundleString("Ergebnisse_importieren_HashWert_" + shortMessageKeySuffix) %>:<br/><br/>
-                                    <input type="text" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510 %>" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.myform.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
-                                    <%=impDef.getTeilHashWert510() %>
+                                    <%= BundleHelper.getBundleString("Ergebnisse_importieren_HashWert_" + shortMessageKeySuffix) %><br/><br/>
+                                    <%= impDef.getHashWert510ToConfirm(0) %>
+                                    <input type="text" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510_INPUT_0 %>" 
+                                        onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.myform.<%=ErgebnisImportBean.FELD_HASHCODE_510_INPUT_1 %>.focus();" autocomplete="off" />&nbsp;
+                                    <%= impDef.getHashWert510ToConfirm(1) %>
+                                    <input type="text" size="4" maxlength="4" name="<%=ErgebnisImportBean.FELD_HASHCODE_510_INPUT_1 %>" 
+                                        onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.myform.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
+                                    <%= impDef.getHashWert510ToConfirm(2) %>
                                 <% } %>
                             </div>
                             <div style="padding: 0.5em; text-align: center;">
-                              <input id="box2" style="cursor:pointer" type="submit" name="<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>" value="<%= SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel()) ? BundleHelper.getBundleString("Neue_Wahl_importieren_confirm_button") : BundleHelper.getBundleString("Neue_Wahl_importieren_button") %>">
-                              <input id="box2" style="cursor:pointer" type="submit" name="<%=ErgebnisImportBean.FELD_RESET%>" value="<%= SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel()) ? BundleHelper.getBundleString("Neue_Wahl_importieren_confirm_reset_button") : BundleHelper.getBundleString("Neue_Wahl_importieren_reset_button") %>">
+                              <input id="box2" style="cursor:pointer" type="submit" name="<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>" value="<%= BundleHelper.getBundleString("Hashcode_bestaetigen_button") %>">
+                              <input id="box2" style="cursor:pointer" type="submit" name="<%=ErgebnisImportBean.FELD_RESET%>"                    value="<%= BundleHelper.getBundleString("Hashcode_ablehnen_button") %>">
                             </div>
                         </ivu:form>
               <% } else if (AbstractImportEML.STATUS_KOMPLETT == impDef.getStatus()) { %>
@@ -282,12 +283,6 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
                      <% } %>
                        <c:if test="${isShowButtonToGebietEingang}">
                          <div style="padding: 0.5em;">
-                            <c:if test="${gebietInfo.vollstaendig}">
-                               <ivu:int key="NeueErsteingabeAbgeschlossen"/>
-                            </c:if>
-                            <c:if test="${!gebietInfo.vollstaendig}">
-                               <ivu:int key="ErsteingabeAbgeschlossen"/>
-                            </c:if>
                             <ivu:a href="<%= urlToGebietEingang %>" id="box2a" style="cursor:pointer" target="_top"><%= BundleHelper.getBundleString("Zweiteingabe") %></ivu:a>
                          </div>
                        </c:if>

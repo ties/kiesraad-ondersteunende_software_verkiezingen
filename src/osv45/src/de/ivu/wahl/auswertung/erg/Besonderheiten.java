@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Contains conflicts and loting results for a given result. Used by sitzverteilungErg.jsp.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class Besonderheiten {
 

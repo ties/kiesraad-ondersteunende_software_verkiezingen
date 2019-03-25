@@ -24,7 +24,7 @@ import de.ivu.wahl.result.i18n.Messages;
 /**
  * Creates pieces of information about exceptional events and passes them to the ElectionResult.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class AnomalyFactory {
   private final ElectionResult _electionResult;

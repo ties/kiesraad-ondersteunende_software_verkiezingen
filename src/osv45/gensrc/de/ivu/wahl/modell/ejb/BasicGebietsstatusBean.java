@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Gebietsstatus as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGebietsstatusBean extends BMPBeanBase implements EntityBean, GebietsstatusModel {
@@ -112,13 +112,13 @@ public abstract class BasicGebietsstatusBean extends BMPBeanBase implements Enti
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Gebiet ID of the objects to be searched
+     * @param id_Ergebniseingang ID of the objects to be searched
      * @return  {@link Collection} of the found Gebietsstatus-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByGebiet(String id_Gebiet) throws IVUFinderException {
+   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
       try {
-         return GebietsstatusDBA.retrieveIDsByID_Gebiet(id_Gebiet);
+         return GebietsstatusDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -128,13 +128,13 @@ public abstract class BasicGebietsstatusBean extends BMPBeanBase implements Enti
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Ergebniseingang ID of the objects to be searched
+     * @param id_Gebiet ID of the objects to be searched
      * @return  {@link Collection} of the found Gebietsstatus-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
+   public Collection<String> ejbFindAllByGebiet(String id_Gebiet) throws IVUFinderException {
       try {
-         return GebietsstatusDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
+         return GebietsstatusDBA.retrieveIDsByID_Gebiet(id_Gebiet);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -266,24 +266,24 @@ public abstract class BasicGebietsstatusBean extends BMPBeanBase implements Enti
 
    @Override
    protected void checkRelations() {
-      if (null == _details.getID_Gebiet()) {
-         _gebiet = null;
-         _relchk_Gebiet = true;
-      } else {
-         _relchk_Gebiet = false;
-      }
       if (null == _details.getID_Ergebniseingang()) {
          _ergebniseingang = null;
          _relchk_Ergebniseingang = true;
       } else {
          _relchk_Ergebniseingang = false;
       }
+      if (null == _details.getID_Gebiet()) {
+         _gebiet = null;
+         _relchk_Gebiet = true;
+      } else {
+         _relchk_Gebiet = false;
+      }
    }
 
    @Override
    protected void resetRelations() {
-      _gebiet = null;
       _ergebniseingang = null;
+      _gebiet = null;
    }
 
    /**
@@ -430,51 +430,6 @@ public abstract class BasicGebietsstatusBean extends BMPBeanBase implements Enti
    }
 
    /**
-     * Relation zu Gebiet
-     */
-   protected Gebiet _gebiet;
-
-   /**
-     * Flag for the validity of the relation Gebiet
-     */
-   protected boolean _relchk_Gebiet = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Gebiet}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Gebiet getGebiet() throws EJBException {
-      if (!_relchk_Gebiet) {
-         if (null == _details.getID_Gebiet()) {
-            _gebiet = null;
-         } else if (null == _gebiet || !_gebiet.getPrimaryKey().equals(_details.getID_Gebiet())) {
-            try {
-               GebietHome home = GebietHome.HomeFinder.findHome(this);
-               _gebiet = home.findByPrimaryKey(_details.getID_Gebiet());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Gebiet", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Gebiet", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Gebiet = true;
-      }
-      return _gebiet;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Gebiet}
-     *
-     * @param gebiet the corresponding EJBObject
-     */
-   public void setGebiet(Gebiet gebiet) {
-      _gebiet = gebiet;
-      _details.setID_Gebiet(gebiet == null ? null : (String)gebiet.getPrimaryKey());
-   }
-
-   /**
      * Relation zu Ergebniseingang
      */
    protected Ergebniseingang _ergebniseingang;
@@ -517,6 +472,51 @@ public abstract class BasicGebietsstatusBean extends BMPBeanBase implements Enti
    public void setErgebniseingang(Ergebniseingang ergebniseingang) {
       _ergebniseingang = ergebniseingang;
       _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
+   }
+
+   /**
+     * Relation zu Gebiet
+     */
+   protected Gebiet _gebiet;
+
+   /**
+     * Flag for the validity of the relation Gebiet
+     */
+   protected boolean _relchk_Gebiet = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Gebiet}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Gebiet getGebiet() throws EJBException {
+      if (!_relchk_Gebiet) {
+         if (null == _details.getID_Gebiet()) {
+            _gebiet = null;
+         } else if (null == _gebiet || !_gebiet.getPrimaryKey().equals(_details.getID_Gebiet())) {
+            try {
+               GebietHome home = GebietHome.HomeFinder.findHome(this);
+               _gebiet = home.findByPrimaryKey(_details.getID_Gebiet());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Gebiet", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Gebiet", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Gebiet = true;
+      }
+      return _gebiet;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Gebiet}
+     *
+     * @param gebiet the corresponding EJBObject
+     */
+   public void setGebiet(Gebiet gebiet) {
+      _gebiet = gebiet;
+      _details.setID_Gebiet(gebiet == null ? null : (String)gebiet.getPrimaryKey());
    }
 
    /**

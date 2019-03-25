@@ -46,7 +46,7 @@ import de.ivu.wahl.modell.impl.Gebiet_GebietDBA;
  * Implementation of the entity region, that is part of the meta data of the election. Also contains
  * region specific logic to process the entry of the result on the particular instance of the region
  * 
- * @author SMA@ivu.de, IVU Traffic Technologies AG
+ * @author SMA, IVU Traffic Technologies AG
  */
 public class GebietBean extends BasicGebietBean {
   private static final long serialVersionUID = 2939166112529421837L;
@@ -58,7 +58,6 @@ public class GebietBean extends BasicGebietBean {
   private static final NumberFormat NF_GER = NumberFormat.getNumberInstance(Locale.GERMANY);
 
   static {
-    LOGGER.info(Log4J.dumpVersion(GebietBean.class, Log4J.extractVersion("$Revision: 1.40 $"))); //$NON-NLS-1$
     // Anzahl der Nachkommastellen f�r Ausgabe der Kannfehler
     NF_GER.setMaximumFractionDigits(4);
     NF_GER.setMinimumFractionDigits(4);

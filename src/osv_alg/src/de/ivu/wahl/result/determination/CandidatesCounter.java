@@ -23,7 +23,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * The CandidatesCounter keeps track of the number of candidates of a list, that may receive a seat.
  * "List" stand for either of candidate list, P3-list or P42-list.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 class CandidatesCounter {
   private final Map<CandidateList, Long> _candidatesPerList;

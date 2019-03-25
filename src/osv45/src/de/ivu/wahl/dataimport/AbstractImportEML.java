@@ -2,7 +2,7 @@
  * AbstractImportEML
  * 
  * Created on 02.10.2009
- * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * Copyright (c) 2009-2017 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -58,7 +58,7 @@ import de.ivu.wahl.wus.xmlsecurity.IXmlDigestCreator;
 import de.ivu.wahl.wus.xmlsecurity.SHAXmlDigestCreator;
 
 /**
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public abstract class AbstractImportEML implements IImportEML {
 
@@ -73,9 +73,15 @@ public abstract class AbstractImportEML implements IImportEML {
   protected static final Category APP_LOGGER = Log4J.configure(Konstanten.APPLOG);
   protected static IXmlDigestCreator _hashWertErmittlung = new SHAXmlDigestCreator();
 
+  /** This is program P4 */
   public final static int MODE_DB_P4 = 0;
+
+  /** This is program P5 */
   public final static int MODE_DB_P5 = 1;
+
+  /** The software is running test cases */
   public final static int MODE_STANDALONE = 2;
+
   public final static int STATUS_INIT = 0;
   public final static int STATUS_URL_KOMPLETT = 1;
   public final static int STATUS_ELECTIONDEFINITION_ACCEPTED = 2;
@@ -117,12 +123,10 @@ public abstract class AbstractImportEML implements IImportEML {
   protected String _hashWertDefinition = null;
 
   protected URL _EML230 = null;
-  protected String _hashWert230 = null;
-  protected String _hashWertTeil230 = null; // die ersten 4 Ziffern
+  protected HashCodeSplitter _hashCodeSplitter230 = new HashCodeSplitter();
 
   protected URL _EML510 = null;
-  protected String _hashWert510 = null;
-  protected String _hashWertTeil510 = null; // die ersten 4 Ziffern
+  protected HashCodeSplitter _hashCodeSplitter510 = new HashCodeSplitter();
 
   protected WahlModel _electionDetails = null;
 
@@ -257,16 +261,25 @@ public abstract class AbstractImportEML implements IImportEML {
    */
   @Override
   public String getHashWert230() {
-    return _hashWert230;
+    return _hashCodeSplitter230.getHashCode();
   }
 
   /*
    * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#setHashWert230(java.lang.String)
+   * @see de.ivu.wahl.dataimport.IImportEML#getHashWert230ToConfirm(int)
    */
   @Override
-  public void setHashWert230(String hashWert) {
-    _hashWert230 = hashWert;
+  public String getHashWert230ToConfirm(int index) {
+    return _hashCodeSplitter230.getPartToConfirm(index);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see de.ivu.wahl.dataimport.IImportEML#setHashWert230Input(java.lang.String, int)
+   */
+  @Override
+  public void setHashWert230Input(int index, String part) {
+    _hashCodeSplitter230.setInput(index, calcTeilHashWert(part));
   }
 
   /*
@@ -275,61 +288,25 @@ public abstract class AbstractImportEML implements IImportEML {
    */
   @Override
   public String getHashWert510() {
-    return _hashWert510;
+    return _hashCodeSplitter510.getHashCode();
   }
 
   /*
    * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#setHashWert510(java.lang.String)
+   * @see de.ivu.wahl.dataimport.IImportEML#getHashWert510ToConfirm(int)
    */
   @Override
-  public void setHashWert510(String hashWert) {
-    _hashWert510 = hashWert;
+  public String getHashWert510ToConfirm(int index) {
+    return _hashCodeSplitter510.getPartToConfirm(index);
   }
 
   /*
    * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#getTeilHashWertWahldefinition()
+   * @see de.ivu.wahl.dataimport.IImportEML#setHashWert510Input(java.lang.String, int)
    */
   @Override
-  public String getTeilHashWertWahldefinition() {
-    return _hashWertDefinition.substring(TEILINDEX);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#getTeilHashWert230()
-   */
-  @Override
-  public String getTeilHashWert230() {
-    return _hashWert230.substring(TEILINDEX);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#setTeilHashWert230(java.lang.String, java.lang.String)
-   */
-  @Override
-  public void setTeilHashWert230(String teil1) {
-    _hashWertTeil230 = calcTeilHashWert(teil1);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#getTeilHashWert510()
-   */
-  @Override
-  public String getTeilHashWert510() {
-    return _hashWert510.substring(TEILINDEX);
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see de.ivu.wahl.dataimport.IImportEML#setTeilHashWert510(java.lang.String, java.lang.String)
-   */
-  @Override
-  public void setTeilHashWert510(String teil1) {
-    _hashWertTeil510 = calcTeilHashWert(teil1);
+  public void setHashWert510Input(int index, String part) {
+    _hashCodeSplitter510.setInput(index, calcTeilHashWert(part));
   }
 
   /*
@@ -506,11 +483,9 @@ public abstract class AbstractImportEML implements IImportEML {
     _definitionAccepted = false;
     _hashWertDefinition = null;
     _EML230 = null;
-    _hashWert230 = null;
-    _hashWertTeil230 = null;
+    _hashCodeSplitter230 = new HashCodeSplitter();
     _EML510 = null;
-    _hashWert510 = null;
-    _hashWertTeil510 = null;
+    _hashCodeSplitter510 = new HashCodeSplitter();
     _electionCategory = ElectionCategory.NONE;
     _gebietsauswahl = null;
     _status = STATUS_INIT;
@@ -551,7 +526,11 @@ public abstract class AbstractImportEML implements IImportEML {
     WahlModel electionDetails = new WahlModelImpl(idWahl);
 
     // election name
-    electionDetails.setName(getText(electionIdentifier, EML_WAHL_NAME, NS_EML));
+    String electionName = getText(electionIdentifier, EML_WAHL_NAME, NS_EML);
+    if (electionName != null && electionName.contains("<")) { //$NON-NLS-1$
+      throw new ImportException(Messages.bind(MessageKeys.Error_UngueltigerWahlName, electionName));
+    }
+    electionDetails.setName(electionName);
 
     // election category
     Element art = electionIdentifier.getFirstChildElement(WAHL_ART, NS_EML);
@@ -561,6 +540,10 @@ public abstract class AbstractImportEML implements IImportEML {
 
     // election domain
     String electionDomain = readElectionDomain(electionIdentifier);
+    if (electionDomain != null && electionDomain.contains("<")) { //$NON-NLS-1$
+      throw new ImportException(
+          Messages.bind(MessageKeys.Error_UngueltigerWahlName, electionDomain));
+    }
     electionDetails.setElectionDomain(electionDomain);
 
     // election domainId

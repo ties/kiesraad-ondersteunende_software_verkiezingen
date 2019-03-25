@@ -14,7 +14,7 @@ package de.ivu.wahl.result;
  * <p>
  * compareTo() sorts candidates by name.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface Candidate extends NamedObject, Comparable<Candidate> {
   public Object getExternalKey();

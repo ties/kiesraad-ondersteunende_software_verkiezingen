@@ -2,7 +2,7 @@
  * ImportElectionMetadata
  * 
  * Created on 27.04.2007
- * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * Copyright (c) 2007-2017 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -56,7 +56,7 @@ import de.ivu.wahl.wus.xmlsecurity.XmlParseException;
 /**
  * Java-Entsprechung der Konfigurationsdatei für den Import der Metadaten einer Wahl
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class ImportElectionMetadata extends AbstractImportMetadata {
 
@@ -117,7 +117,7 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
           _hashWertDefinition));
       APP_LOGGER.info(Messages.bind(MessageKeys.Logger_ImportFile_0_WithHash_1,
           EMLFilenameCheck.reduceFilenameFromSlashAsPrefix(_EML230.getFile()),
-          _hashWert230));
+          getHashWert230()));
     } catch (ImportException e) {
       LOGGER.error(e, e);
       _fehlermeldung = e.getMessage();
@@ -177,9 +177,8 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
     if (SecurityLevel.NO_HASH_CODE.equals(_securityLevel)) {
       return true;
     }
-    if (_hashWertTeil230 != null) {
-      if (_hashWert230.trim().equals(_hashWertTeil230.trim() + SINGLE_SPACE
-          + getTeilHashWert230().trim())) {
+    if (_hashCodeSplitter230.isInputComplete()) {
+      if (_hashCodeSplitter230.checkInput(_securityLevel)) {
         return true;
       } else {
         _fehlermeldung += Messages.bind(MessageKeys.Error_FalscherHashWerte);
@@ -210,7 +209,8 @@ public class ImportElectionMetadata extends AbstractImportMetadata {
 
       try {
         _hashWertDefinition = _hashWertErmittlung.createDigest(_definition.openStream());
-        _hashWert230 = _hashWertErmittlung.createDigest(_EML230.openStream());
+        _hashCodeSplitter230 = new HashCodeSplitter(_hashWertErmittlung.createDigest(_EML230
+            .openStream()));
         return true;
       } catch (XmlParseException e) {
         _fehlermeldung += Messages.bind(MessageKeys.Error_FalschesDateiFormat);

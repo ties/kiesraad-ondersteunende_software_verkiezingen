@@ -14,7 +14,7 @@ import java.util.Map;
 import de.ivu.wahl.auswertung.erg.Ergebnis;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class GewinnerErgebnis extends Ergebnis {
   private static final long serialVersionUID = 7787425521014968593L;

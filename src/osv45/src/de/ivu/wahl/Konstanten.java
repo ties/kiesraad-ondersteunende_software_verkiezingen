@@ -15,16 +15,16 @@ import de.ivu.wahl.util.BundleHelper;
 /**
  * Konstanten, die ueberall im System Verwendung finden
  * 
- * @author klie@ivu.de cos@ivu.de IVU Traffic Technologies AG
+ * @author P. Kliem D. Cosic IVU Traffic Technologies AG
  */
 
 public interface Konstanten {
   /** Version des Wahlabwicklungssystems */
-  String VERSION_P4 = "2.19.2"; //$NON-NLS-1$
-  String VERSION_P5 = "2.19.2"; //$NON-NLS-1$
+  String VERSION_P4 = "2.23.5"; //$NON-NLS-1$
+  String VERSION_P5 = "2.23.5"; //$NON-NLS-1$
 
   /** Datum aus dem CVS (beim Einchecken vergeben) */
-  String CVS_DATUM = "$Date: 2017-01-18 15:18:01 +0100 (Mi, 18. Jan 2017) $"; //$NON-NLS-1$
+  String CVS_DATUM = "$Date: 2019-02-12 15:15:21 +0100 (Di, 12. Feb 2019) $"; //$NON-NLS-1$
 
   /** Aus CVS_DATUM automatisch gebildetes Datum in normaler Schreibweise */
   String DATUM = CVS_DATUM.substring(15, 17) + '.' + CVS_DATUM.substring(12, 14) + '.'
@@ -106,6 +106,11 @@ public interface Konstanten {
   /** Property for last choice of export format */
   String PROP_LAST_EXPORT_FORMAT = "LAST_EXPORT_FORMAT"; //$NON-NLS-1$
 
+  /** Property for last choice of central counting */
+  String PROP_EXPORTS_FOR_CENTRAL_COUNTING = "EXPORTS_FOR_CENTRAL_COUNTING"; //$NON-NLS-1$
+  public String OPTION_CENTRAL_COUNTING = "central_counting"; //$NON-NLS-1$
+  public String OPTION_NO_CENTRAL_COUNTING = "no_central_counting"; //$NON-NLS-1$
+
   // Verlinkung einer externen URL 1
   /** Name der Property, welche die URL 1 enthaelt */
   String PROP_EXT_LINK_1 = "externlink_1"; //$NON-NLS-1$
@@ -142,11 +147,8 @@ public interface Konstanten {
   /** The red part of the background color **/
   public static final String PROP_BACKGROUND_COLOR_BLUE = "BackgroundColorBlue"; //$NON-NLS-1$
 
-  /** double input required **/
+  /** double input required, see de.ivu.wahl.InputMode **/
   public static final String PROP_DOUBLE_INPUT = "DOUBLE_INPUT"; //$NON-NLS-1$
-  public static final int INPUT_MODE_SINGLE = 1;
-  public static final int INPUT_MODE_DOUBLE = 2;
-  public static final int INPUT_MODE_FILE_WITH_MANUAL_CONFIRMATION = 3;
 
   /** Repositorykey for the Referendum text **/
   public static final String KEY_REFERENDUM_TEXT = "REFERENDUM_TEXT"; //$NON-NLS-1$
@@ -173,18 +175,22 @@ public interface Konstanten {
   BasiseinstellungList PROP_ALLG_BASIS = new BasiseinstellungList() {
     private static final long serialVersionUID = -6161543905739882482L;
     {
+      // Only for PSB
+      if (psb && !referendum) {
+        addBool(Konstanten.PROP_IS_INPUT_MODE_COMPLETE, "Input_Modus_info", //$NON-NLS-1$ 
+            "Input_Modus_info2"); //$NON-NLS-1$
+      }
+
       Basiseinstellung inputModeSetting = addInteger(Konstanten.PROP_DOUBLE_INPUT,
           "DOUBLE_INPUT_info", //$NON-NLS-1$
           "DOUBLE_INPUT_info2"); //$NON-NLS-1$
       inputModeSetting.setRegex("[123]"); //$NON-NLS-1$
       inputModeSetting.setRegexErrorMsgKey(MessageKeys.Error_IllegalInputModus_0);
+
       // Only for PSB
       if (psb && !referendum) {
         // Regular expression for the numbers 0 to 255
         String regex = "([1-9]?\\d|1\\d\\d|2[0-4]\\d)|25[0-5]"; //$NON-NLS-1$
-
-        addBool(Konstanten.PROP_IS_INPUT_MODE_COMPLETE, "Input_Modus_info", //$NON-NLS-1$ 
-            "Input_Modus_info2"); //$NON-NLS-1$
         Basiseinstellung field = addInteger(Konstanten.PROP_BACKGROUND_COLOR_RED,
             "BackgroundColorRed_info", //$NON-NLS-1$ 
             "BackgroundColorRed_info2"); //$NON-NLS-1$
@@ -219,6 +225,7 @@ public interface Konstanten {
     {
       addDate(XMLTags.RG_DATE_OF_MEETING_O1P20, "Export_P22_1_D1_Datum"); //$NON-NLS-1$
       addTime(XMLTags.RG_TIME_OF_MEETINGP20, "Export_P22_1_D1_Uhrzeit"); //$NON-NLS-1$
+      addString(XMLTags.RG_PLACE_LETTER, "Export_P22_1_D1_Ort"); //$NON-NLS-1$
     }
   };
   BasiseinstellungMultiMap PROP_P22_2 = new BasiseinstellungMultiMap(
@@ -273,6 +280,7 @@ public interface Konstanten {
           "Export_Gew_Ben_Adresse_bei_Ablehnung", "Export_Gew_Ben_Ablehnung"); //$NON-NLS-1$ //$NON-NLS-2$
       addZip(XMLTags.RG_REJECTION_POSTALCODE, "Export_Gew_Ben_PLZ_bei_Ablehnung").optional(); //$NON-NLS-1$
       addString(XMLTags.RG_REJECTION_LOCATION, "Export_Gew_Ben_Ort_bei_Ablehnung"); //$NON-NLS-1$
+      addString(XMLTags.RG_REPRESENTATIVE_BODY, "Export_Gew_Ben_representative_body"); //$NON-NLS-1$
       addString(XMLTags.RG_ACCEPTANCE_ADDRESS,
           "Export_Gew_Ben_Adresse_bei_Annahme", "Export_Gew_Ben_Annahme").optional(); //$NON-NLS-1$ //$NON-NLS-2$
       addZip(XMLTags.RG_ACCEPTANCE_POSTALCODE, "Export_Gew_Ben_PLZ_bei_Annahme").optional(); //$NON-NLS-1$
@@ -282,6 +290,16 @@ public interface Konstanten {
 
   BasiseinstellungMultiMap PROP_BENACHRICHTIGUNG_GEWAEHLTE = new BasiseinstellungMultiMap(
       "Export_Gew_Ben", PROP_BENACHRICHTIGUNG_GEWAEHLTE_BASIS); //$NON-NLS-1$
+
+  BasiseinstellungList PROP_N11_D1_BASIS = new BasiseinstellungList() {
+    private static final long serialVersionUID = -7774903510662017516L;
+    {
+      addString(XMLTags.RG_ORGANIZING_MUNICIPALITY, "Export_P4_N11_D1_organizing_municipality"); //$NON-NLS-1$
+      addOption(PROP_EXPORTS_FOR_CENTRAL_COUNTING, "Export_for_central_counting_N11"); //$NON-NLS-1$
+    }
+  };
+  BasiseinstellungMultiMap PROP_N11_D1 = new BasiseinstellungMultiMap(
+      "Export_P4_N11", PROP_N11_D1_BASIS); //$NON-NLS-1$
 
   BasiseinstellungList PROP_O3_D1_BASIS = new BasiseinstellungList() {
     private static final long serialVersionUID = -7774900510662017516L;
@@ -391,4 +409,5 @@ public interface Konstanten {
 
   public final static String DEFAULT_USER_ID = "ADM"; //$NON-NLS-1$
 
+  public final static int MIN_PASSWORD_LENGTH = 9;
 }

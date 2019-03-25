@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.ejb.service.VoteValues;
  * Helper for access to the numbers of votes of candiates, lists and groups for program P5. All
  * votes must come from a single {@link Ergebniseingang}.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class RG520VotesHelper {
   private final boolean isEK = WahlInfo.getWahlInfo().isEK();

@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity SitzberechnungErgebnis.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicSitzberechnungErgebnisDBA extends DBABase {
@@ -86,49 +86,97 @@ public abstract class BasicSitzberechnungErgebnisDBA extends DBABase {
       if ((idx = columns.get(ID_SITZBERECHNUNGERGEBNIS.toUpperCase())) != null) {
          m._id_SitzberechnungErgebnis = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_SITZBERECHNUNGERGEBNIS)) != null) {
+         m._id_SitzberechnungErgebnis = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTE)) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(VERTEILUNG.toUpperCase())) != null) {
+         m._verteilung = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(VERTEILUNG)) != null) {
          m._verteilung = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(SCHRITTNUMMER.toUpperCase())) != null) {
          m._schrittnummer = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(SCHRITTNUMMER)) != null) {
+         m._schrittnummer = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(SCHRITTTYP.toUpperCase())) != null) {
+         m._schritttyp = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(SCHRITTTYP)) != null) {
          m._schritttyp = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(SITZE.toUpperCase())) != null) {
          m._sitze = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(SITZE)) != null) {
+         m._sitze = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ZAEHLER.toUpperCase())) != null) {
+         m._zaehler = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(ZAEHLER)) != null) {
          m._zaehler = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(NENNER.toUpperCase())) != null) {
          m._nenner = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(NENNER)) != null) {
+         m._nenner = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ZAEHLERVOMNENNER.toUpperCase())) != null) {
+         m._zaehlerVomNenner = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(ZAEHLERVOMNENNER)) != null) {
          m._zaehlerVomNenner = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(NENNERVOMNENNER.toUpperCase())) != null) {
          m._nennerVomNenner = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(NENNERVOMNENNER)) != null) {
+         m._nennerVomNenner = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ZAEHLERVOMREST.toUpperCase())) != null) {
+         m._zaehlerVomRest = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(ZAEHLERVOMREST)) != null) {
          m._zaehlerVomRest = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(NENNERVOMREST.toUpperCase())) != null) {
          m._nennerVomRest = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(NENNERVOMREST)) != null) {
+         m._nennerVomRest = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(LOSENTSCHEID.toUpperCase())) != null) {
+         m._losentscheid = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(LOSENTSCHEID)) != null) {
          m._losentscheid = r.getBoolean(idx.intValue());
       }
    }
@@ -144,49 +192,49 @@ public abstract class BasicSitzberechnungErgebnisDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_LISTE.toUpperCase())) {
+      if (columns.containsKey(ID_LISTE.toUpperCase()) || columns.containsKey(ID_LISTE)) {
          p.setString(idx++, m._id_Liste);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase()) || columns.containsKey(ID_LISTENKOMBINATION)) {
          p.setString(idx++, m._id_Listenkombination);
       }
-      if (columns.containsKey(VERTEILUNG.toUpperCase())) {
+      if (columns.containsKey(VERTEILUNG.toUpperCase()) || columns.containsKey(VERTEILUNG)) {
          p.setInt(idx++, m._verteilung);
       }
-      if (columns.containsKey(SCHRITTNUMMER.toUpperCase())) {
+      if (columns.containsKey(SCHRITTNUMMER.toUpperCase()) || columns.containsKey(SCHRITTNUMMER)) {
          p.setInt(idx++, m._schrittnummer);
       }
-      if (columns.containsKey(SCHRITTTYP.toUpperCase())) {
+      if (columns.containsKey(SCHRITTTYP.toUpperCase()) || columns.containsKey(SCHRITTTYP)) {
          p.setInt(idx++, m._schritttyp);
       }
-      if (columns.containsKey(SITZE.toUpperCase())) {
+      if (columns.containsKey(SITZE.toUpperCase()) || columns.containsKey(SITZE)) {
          p.setInt(idx++, m._sitze);
       }
-      if (columns.containsKey(ZAEHLER.toUpperCase())) {
+      if (columns.containsKey(ZAEHLER.toUpperCase()) || columns.containsKey(ZAEHLER)) {
          p.setInt(idx++, m._zaehler);
       }
-      if (columns.containsKey(NENNER.toUpperCase())) {
+      if (columns.containsKey(NENNER.toUpperCase()) || columns.containsKey(NENNER)) {
          p.setInt(idx++, m._nenner);
       }
-      if (columns.containsKey(ZAEHLERVOMNENNER.toUpperCase())) {
+      if (columns.containsKey(ZAEHLERVOMNENNER.toUpperCase()) || columns.containsKey(ZAEHLERVOMNENNER)) {
          p.setInt(idx++, m._zaehlerVomNenner);
       }
-      if (columns.containsKey(NENNERVOMNENNER.toUpperCase())) {
+      if (columns.containsKey(NENNERVOMNENNER.toUpperCase()) || columns.containsKey(NENNERVOMNENNER)) {
          p.setInt(idx++, m._nennerVomNenner);
       }
-      if (columns.containsKey(ZAEHLERVOMREST.toUpperCase())) {
+      if (columns.containsKey(ZAEHLERVOMREST.toUpperCase()) || columns.containsKey(ZAEHLERVOMREST)) {
          p.setInt(idx++, m._zaehlerVomRest);
       }
-      if (columns.containsKey(NENNERVOMREST.toUpperCase())) {
+      if (columns.containsKey(NENNERVOMREST.toUpperCase()) || columns.containsKey(NENNERVOMREST)) {
          p.setInt(idx++, m._nennerVomRest);
       }
-      if (columns.containsKey(LOSENTSCHEID.toUpperCase())) {
+      if (columns.containsKey(LOSENTSCHEID.toUpperCase()) || columns.containsKey(LOSENTSCHEID)) {
          p.setBoolean(idx++, m._losentscheid);
       }
       p.setString(idx++, m._id_SitzberechnungErgebnis);
@@ -407,6 +455,23 @@ public abstract class BasicSitzberechnungErgebnisDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of SitzberechnungErgebnis IDs
+     *
+     * @param id_Listenkombination searching condition
+
+     * @return a {@link Collection} of SitzberechnungErgebnis IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Listenkombination(String id_Listenkombination)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_SitzberechnungErgebnis from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Listenkombination});
+   }
+
+   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of SitzberechnungErgebnis IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -451,23 +516,6 @@ public abstract class BasicSitzberechnungErgebnisDBA extends DBABase {
          "select ID_SitzberechnungErgebnis from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Gruppe});
-   }
-
-   /**
-     * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of SitzberechnungErgebnis IDs
-     *
-     * @param id_Listenkombination searching condition
-
-     * @return a {@link Collection} of SitzberechnungErgebnis IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Listenkombination(String id_Listenkombination)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_SitzberechnungErgebnis from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Listenkombination});
    }
 
    /**

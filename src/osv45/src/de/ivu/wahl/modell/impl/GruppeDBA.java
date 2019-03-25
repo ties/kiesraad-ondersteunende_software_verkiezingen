@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * GruppeDBA
  *
- * @author cos@ivu.de  (c) 2003-4 IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-4 IVU Traffic Technologies AG
  */
 
 

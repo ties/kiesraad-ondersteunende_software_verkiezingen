@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- The Derby embedded database JCA connection factory config $Id: derby-ds.xml,v 1.1 2009/04/05 15:25:12 cos Exp $ -->
+<!-- The Derby embedded database JCA connection factory config -->
 
 
 <datasources>
@@ -22,7 +22,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -56,7 +56,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -90,7 +90,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -124,7 +124,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -158,7 +158,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -192,7 +192,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -226,7 +226,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>
@@ -260,7 +260,7 @@
 
       <!-- The login and password -->
       <user-name>APP</user-name>
-      <password></password>
+      <password>LKjox4m8yGa4Zbc4cyyC</password>
 
       <!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
       <min-pool-size>5</min-pool-size>

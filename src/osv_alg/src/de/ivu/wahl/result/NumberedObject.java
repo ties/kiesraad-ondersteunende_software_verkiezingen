@@ -11,7 +11,7 @@ import java.util.Comparator;
 /**
  * An object that has an integer number. This is mainly used for sorting purpose.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface NumberedObject {
   final static Comparator<NumberedObject> SORT_BY_NUMBER = new Comparator<NumberedObject>() {

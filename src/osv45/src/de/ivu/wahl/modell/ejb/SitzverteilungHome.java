@@ -12,7 +12,7 @@ import javax.ejb.FinderException;
 /**
  * SitzverteilungHome
  * 
- * @author cos@ivu.de (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface SitzverteilungHome extends BasicSitzverteilungHome {

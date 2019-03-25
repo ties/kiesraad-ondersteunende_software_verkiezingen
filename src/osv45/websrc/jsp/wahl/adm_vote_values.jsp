@@ -2,10 +2,6 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Locale" %>
-<%@ page import="java.util.Map"%>
-<%@ page import="java.util.Set"%>
-<%@ page import="java.util.TreeMap"%>
-<%@ page import="java.util.TreeSet"%>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="de.ivu.wahl.WahlInfo" %>
 <%@ page import="de.ivu.wahl.AnwContext" %>
@@ -23,13 +19,14 @@
  *******************************************************************************
  * List of all provinces with the correspondig vote values
  *
- * author:  jon@ivu.de  Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  J. Nottebaum  Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <% 
  String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
  String helpKey = "admVoteValues"; //$NON-NLS-1$
@@ -72,6 +69,9 @@
                 color: #330000;
             }
         </style>
+        <script>
+            var contextPath = "<%=request.getContextPath()%>";
+        </script>
         <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
         <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
     </head>
@@ -180,7 +180,7 @@
                                                                                                     <ivu:nc value="<%= String.valueOf(gebiet.getNummer()) %>" />
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <ivu:nc value="<%= gebiet.getName() %>" />
+                                                                                                    <ivu:nc value="<%= ClientHelper.forHTML(gebiet.getName()) %>" />
                                                                                                 </td>
                                                                                                 <td align="center">
                                                                                                     <% if (WahlModel.STATE_CALCULATION_SUCCESSFUL == wahlInfo.getStatus()) { %>

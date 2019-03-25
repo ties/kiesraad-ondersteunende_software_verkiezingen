@@ -16,7 +16,7 @@ import de.ivu.wahl.wus.reportgen.i18n.Messages;
  * least one of the files with the requested names already exists. The Exception contains a message
  * that contains the names of all those filenames that already exist.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class GeneratedFileExistsException extends RuntimeException {
 

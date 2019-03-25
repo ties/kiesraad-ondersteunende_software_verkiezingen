@@ -14,7 +14,6 @@ import javax.ejb.FinderException;
 import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.auswertung.erg.ResultSummary;
 import de.ivu.wahl.auswertung.erg.sv.SitzverteilungErg;
-import de.ivu.wahl.auswertung.erg.sv.SitzverteilungListenkombinationErg;
 import de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatInfo;
 import de.ivu.wahl.export.VotesByRegionNumber;
 import de.ivu.wahl.export.WeightedVotesByGroup;
@@ -28,7 +27,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 /**
  * Provides Services with information about votes and elected candidates
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface VotesHandling {
   /**
@@ -97,9 +96,6 @@ public interface VotesHandling {
       String id_Gebiet) throws EJBException;
 
   public SitzverteilungErg getSitzverteilungErgebnis(String id_ergebniseingang) throws EJBException;
-
-  public SitzverteilungListenkombinationErg getSitzverteilungLKErgebnis(String id_ergebniseingang,
-      String id_gebiet) throws EJBException;
 
   /**
    * Get the total votes object. Needed if there are no lists at root region level

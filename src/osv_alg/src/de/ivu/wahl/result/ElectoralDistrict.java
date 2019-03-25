@@ -10,7 +10,7 @@ package de.ivu.wahl.result;
  * Electoral district with a name (for the user) and a number (for sorting).
  * ElectoralDistrict#compareTo() sorts by number.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ElectoralDistrict
     extends

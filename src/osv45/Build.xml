@@ -13,7 +13,8 @@
     <property name="xmlbinddir" value="../de.ivu.wahl.wus.javax.xml.bind" />
 
     <property name="db.dir" value="${basedir}/db" />
-    <property name="db.create" value="${basedir}/docs/db/create_db_derby.sql" />
+    <property name="db.create.derby" value="${basedir}/docs/db/create_db_derby.sql" />
+    <property name="db.create.mysql" value="${basedir}/docs/db/create_db_mysql.sql" />
 
     <property name="properties.dir" value="${basedir}/properties" />
     <property name="src.dir" value="${basedir}/src" />
@@ -46,7 +47,6 @@
 
     <!-- use tablegen.properties for initializing mysql db -->
     <property file="${src.dir}/de/ivu/wahl/tablegen.properties" />
-    <property name="db.create.mysql" value="${basedir}/docs/db/create_db_mysql.sql" />
     <condition property="jboss.dir" value="${basedir}">
         <isset property="jenkins.build" />
     </condition>
@@ -65,6 +65,8 @@
     <property name="jarfile3" value="${build.dir}/osv3.jar" />
     <property name="wahltaglib" value="${build.dir}/wahlTagLib.jar" />
     <property name="warfile" value="${build.dir}/osv.war" />
+
+    <property name="db.create.script" value="${jarfile}/create_db.sql" />
 
     <property name="genwebsrc.dir" value="${basedir}/genwebsrc" />
     <property name="jboss-web.deployer" value="${jboss.deploy.dir}/jboss-web.deployer" />
@@ -273,7 +275,8 @@
             </fileset>
             <fileset dir="${src.dir}/add.jar" />
         </copy>
-        <copy file="${db.create}" todir="${jarfile}" />
+        <copy file="${db.create.derby}" todir="${jarfile}" />
+        <copy file="${db.create.mysql}" todir="${jarfile}" />
         <xslt style="copyJBossXML.xslt" in="${src.dir}/add.jar/META-INF/jboss.xml" out="${jarfile}/META-INF/jboss.xml" force="true">
             <param name="program" expression="${program}" />
             <xmlcatalog>
@@ -531,7 +534,6 @@
                 <include name="FAVICON.ICO" />
                 <include name="ivu.gif" />
                 <include name="kiesraad.gif" />
-                <include name="logo-ivu.gif" />
             </fileset>
         </copy>
 
@@ -546,7 +548,6 @@
                 <include name="lib/**" />
                 <exclude name="lib/p6spy.jar" />
                 <exclude name="lib/derbyclient.jar" />
-                <exclude name="lib/mysql-connector-java-*.jar" />
                 <include name="deploy/**" />
                 <exclude name="deploy/derby-ds.xml" />
                 <exclude name="deploy/derby-extern-ds.xml" />

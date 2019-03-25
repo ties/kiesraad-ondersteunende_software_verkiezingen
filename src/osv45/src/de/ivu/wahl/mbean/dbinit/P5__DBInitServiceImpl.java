@@ -12,7 +12,7 @@ import org.jboss.annotation.ejb.Service;
 /**
  * Database Initialisation for P5
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 @Service(objectName = "osv:service=P5_DBInitService")
 @Management(DBInitService.class)

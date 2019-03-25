@@ -6,7 +6,7 @@
  * Copyright (c) 2014 Jonathan Rees
  * Licensed under the MIT License
  * 
- * Buckets changed by jon@ivu.de
+ * Buckets changed by J. Nottebaum, IVU Traffic Technologies AG
  */
 (function() {
     'use strict';
@@ -19,10 +19,10 @@
             on: 'keydown keyup',
             maximum: 100,
             buckets: [
-                { max: 28, strength: 'poor', color: '#e13' },
-                { min: 28, max: 35, strength: 'ok', color: '#f80' },
-                { min: 35, max: 60, strength: 'good', color: '#8c0' },
-                { min: 60, strength: 'excellent', color: '#0c8' }
+                { max: 40, strength: 'poor', color: '#e13' },
+                { min: 40, max: 53, strength: 'ok', color: '#f80' },
+                { min: 53, max: 65, strength: 'good', color: '#8c0' },
+                { min: 65, strength: 'excellent', color: '#0c8' }
             ],
             create: function(container) {
                 var track = $('<div>').addClass('entropizer-track').appendTo(container),

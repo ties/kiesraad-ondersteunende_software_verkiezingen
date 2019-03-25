@@ -8,3 +8,4 @@ Bundle-ClassPath: external-libs/xom-1.2.10.jar,
  .
 Export-Package: de.ivu.wahl.wus.xmlsecurity
 Bundle-Vendor: IVU Traffic Technologies AG
+Require-Bundle: com.springsource.org.apache.log4j;bundle-version="1.2.15"

@@ -22,10 +22,7 @@ import javax.ejb.EJBException;
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.StimmergebnisModel;
@@ -37,19 +34,13 @@ import de.ivu.wahl.modell.impl.StimmergebnisDBA;
 /**
  * StimmergebnisBean
  * 
- * @author cos@ivu.de IVU Traffic Technologies AG
+ * @author D. Cosic IVU Traffic Technologies AG
  */
 
 public class StimmergebnisBean extends BasicStimmergebnisBean {
   private static final long serialVersionUID = -1612977904001714067L;
 
   private static final String IS_NULL = " is null "; //$NON-NLS-1$
-
-  private static final Category LOGGER = Log4J.configure(StimmergebnisBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(StimmergebnisBean.class, Log4J
-        .extractVersion("$Revision: 1.22 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Find all voting results by region and result for parties
@@ -399,8 +390,8 @@ public class StimmergebnisBean extends BasicStimmergebnisBean {
   @Override
   public String toString() {
     if (_pendingLoad) {
-      return Messages.bind(MessageKeys.Msg_id_Stimmergebnis_0_BeanNochNichtGeladen, _ctx
-          .getPrimaryKey());
+      return Messages.bind(MessageKeys.Msg_id_Stimmergebnis_0_BeanNochNichtGeladen,
+          _ctx.getPrimaryKey());
     } else {
       return super.toString();
     }

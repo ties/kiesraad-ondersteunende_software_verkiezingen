@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * {@link Map} zum Vorhalten von konstanten Abbildungen
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  * @param <K> Datentyp f�r Key
  * @param <V> Datentyp f�r Value
  */

@@ -9,7 +9,7 @@ package de.ivu.wahl.result.result;
 /**
  * Enum for the different types of seat distributions.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum Distribution {
   P42(1), P3(2), P2(3), FICTITIOUS(4);

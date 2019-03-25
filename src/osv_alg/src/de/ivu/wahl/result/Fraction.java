@@ -16,7 +16,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * <p>
  * Caution, do not reuse. Designed for osv_alg only.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class Fraction extends Number implements Comparable<Fraction> {
   private static final long serialVersionUID = 1L;

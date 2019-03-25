@@ -23,7 +23,7 @@ import java.util.Set;
  * <li>displaying</li>
  * </ul>
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public final class Util {
   public static <T> Set<T> createUnmodifiableCopy(final Set<T> source) {

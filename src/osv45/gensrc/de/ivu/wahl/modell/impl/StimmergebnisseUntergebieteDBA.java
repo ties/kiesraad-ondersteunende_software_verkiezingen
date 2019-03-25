@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity StimmergebnisseUntergebiete.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class StimmergebnisseUntergebieteDBA extends DBABase {
@@ -62,13 +62,25 @@ public class StimmergebnisseUntergebieteDBA extends DBABase {
       if ((idx = columns.get(ID_STIMMERGEBNISSEUNTERGEBIETE.toUpperCase())) != null) {
          m._id_StimmergebnisseUntergebiete = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_STIMMERGEBNISSEUNTERGEBIETE)) != null) {
+         m._id_StimmergebnisseUntergebiete = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_GEBIET.toUpperCase())) != null) {
          m._id_Gebiet = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GEBIET)) != null) {
+         m._id_Gebiet = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ERGEBNISSEXML.toUpperCase())) != null) {
+         m._ergebnisseXML = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ERGEBNISSEXML)) != null) {
          m._ergebnisseXML = r.getString(idx.intValue());
       }
    }
@@ -84,13 +96,13 @@ public class StimmergebnisseUntergebieteDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_GEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_GEBIET.toUpperCase()) || columns.containsKey(ID_GEBIET)) {
          p.setString(idx++, m._id_Gebiet);
       }
-      if (columns.containsKey(ERGEBNISSEXML.toUpperCase())) {
+      if (columns.containsKey(ERGEBNISSEXML.toUpperCase()) || columns.containsKey(ERGEBNISSEXML)) {
          p.setString(idx++, m._ergebnisseXML);
       }
       p.setString(idx++, m._id_StimmergebnisseUntergebiete);
@@ -275,21 +287,6 @@ public class StimmergebnisseUntergebieteDBA extends DBABase {
    }
 
    /**
-     * Method retrieveIDsByID_Gebiet returns a {@link Collection} of StimmergebnisseUntergebiete IDs
-     *
-     * @param id_Gebiet searching condition
-
-     * @return a {@link Collection} of StimmergebnisseUntergebiete IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Gebiet(String id_Gebiet) throws SQLException {
-      return retrieveIDs(
-         "select ID_StimmergebnisseUntergebiete from " + TABLENAME + " where ID_Gebiet=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Gebiet});
-   }
-
-   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of StimmergebnisseUntergebiete IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -304,6 +301,21 @@ public class StimmergebnisseUntergebieteDBA extends DBABase {
          "select ID_StimmergebnisseUntergebiete from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Ergebniseingang});
+   }
+
+   /**
+     * Method retrieveIDsByID_Gebiet returns a {@link Collection} of StimmergebnisseUntergebiete IDs
+     *
+     * @param id_Gebiet searching condition
+
+     * @return a {@link Collection} of StimmergebnisseUntergebiete IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Gebiet(String id_Gebiet) throws SQLException {
+      return retrieveIDs(
+         "select ID_StimmergebnisseUntergebiete from " + TABLENAME + " where ID_Gebiet=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Gebiet});
    }
 
    /**

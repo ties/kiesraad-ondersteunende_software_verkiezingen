@@ -2,7 +2,7 @@
  * ErgebnisImportBean
  * 
  * Created on 19.01.2009
- * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * Copyright (c) 2009-2017 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.client.beans;
 
@@ -53,7 +53,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 /**
  * Importieren der Ergebnisse in die Datenbank aus hochgeladenen Metadaten.
  * 
- * @author SMA@ivu.de, IVU Traffic Technologies AG
+ * @author SMA, IVU Traffic Technologies AG
  */
 public class ErgebnisImportBean extends BasicUploadBean {
 
@@ -61,7 +61,9 @@ public class ErgebnisImportBean extends BasicUploadBean {
 
   protected final TwoKeyMap<Integer, Integer, ImportEML510> _importEML510s = new TwoKeyMap<Integer, Integer, ImportEML510>();
   public static final String FELD_EML510 = ApplicationBeanKonstanten.PREFIX + "eml510"; //$NON-NLS-1$
-  public static final String FELD_HASHCODE_510 = ApplicationBeanKonstanten.PREFIX + "hashCode510"; //$NON-NLS-1$
+  private static final String FELD_HASHCODE_510 = ApplicationBeanKonstanten.PREFIX + "hashCode510"; //$NON-NLS-1$
+  public static final String FELD_HASHCODE_510_INPUT_0 = FELD_HASHCODE_510 + "Input0"; //$NON-NLS-1$
+  public static final String FELD_HASHCODE_510_INPUT_1 = FELD_HASHCODE_510 + "Input1"; //$NON-NLS-1$
   public static final String FELD_RESET = ApplicationBeanKonstanten.PREFIX + "reset"; //$NON-NLS-1$
 
   static final class BRPrintWriter extends PrintWriter {
@@ -122,8 +124,10 @@ public class ErgebnisImportBean extends BasicUploadBean {
           if (request.getParameter(FELD_RESET) != null) {
             importEML510.reset();
             return;
-          } else if (request.getParameter(FELD_HASHCODE_510) != null) {
-            importEML510.setTeilHashWert510(request.getParameter(FELD_HASHCODE_510));
+          } else if (request.getParameter(FELD_HASHCODE_510_INPUT_0) != null
+              || request.getParameter(FELD_HASHCODE_510_INPUT_1) != null) {
+            importEML510.setHashWert510Input(0, request.getParameter(FELD_HASHCODE_510_INPUT_0));
+            importEML510.setHashWert510Input(1, request.getParameter(FELD_HASHCODE_510_INPUT_1));
           } else {
             String remoteHost = request.getRemoteHost();
             try {
@@ -139,7 +143,10 @@ public class ErgebnisImportBean extends BasicUploadBean {
                     importEML510.reset();
                   }
                   // START
+
+                  // Hier werden die Dateien ins Archiv geschrieben
                   writeFileIntoArchiveFolder(item, importEML510);
+
                   String fileName = item.getName();
                   fileName = new File(fileName.replace('\\', separatorChar)).getName();
                   String feldName = item.getFieldName();
@@ -297,27 +304,4 @@ public class ErgebnisImportBean extends BasicUploadBean {
     return msg;
   }
 
-  // /**
-  // * All result files but EML510a include subregion results which have to be stored in database
-  // *
-  // * @param msg
-  // */
-  // private void saveSubregionResults(EingangMsgXML msg, String id_Ergebniseingang, String
-  // id_Gebiet) {
-  // if (msg.getRootElement() == null) {
-  // return;
-  // }
-  // StimmergebnisseUntergebiete subResults;
-  // try {
-  // subResults = getStimmergebnisseUntergebieteHome().create(EJBUtil.getUniqueKey());
-  // subResults.setID_Ergebniseingang(id_Ergebniseingang);
-  // subResults.setID_Gebiet(id_Gebiet);
-  // subResults.setErgebnisseXML(msg.getRootElement().toXML());
-  // return;
-  // } catch (CreateException e) {
-  // throw new EJBException(Messages
-  // .getString(MessageKeys.Error_FehlerBeimSpeichernDerUnterergebnisse), e);
-  // }
-  // }
-  //
 }

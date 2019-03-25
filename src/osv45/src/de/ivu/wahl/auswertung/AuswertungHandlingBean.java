@@ -48,7 +48,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * Wahlabwicklungssystem, Methoden zur Auswertung der Daten und zur Zusammenstellung der Ergebnisse.
  * 
- * @author klie@ivu.de mur@ivu.de cos@ivu.de ugo@ivu.de
+ * @author P. Kliem M. Murdfield D. Cosic U. Müller
  */
 @Stateless
 @Local(AuswertungHandling.class)

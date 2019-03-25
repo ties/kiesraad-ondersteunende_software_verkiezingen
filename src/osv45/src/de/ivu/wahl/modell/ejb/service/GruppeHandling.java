@@ -12,7 +12,7 @@ import de.ivu.wahl.modell.ejb.Liste;
 /**
  * SessionBean interface for business services related to the entities {@link Gruppe}
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface GruppeHandling {
   /**

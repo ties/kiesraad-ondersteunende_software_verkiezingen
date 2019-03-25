@@ -9,7 +9,7 @@ package de.ivu.wahl.result.result;
 /**
  * Tagging interface
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface AssignmentSupplement {
   public AssignmentSupplement NULL = null;

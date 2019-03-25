@@ -11,7 +11,7 @@ import de.ivu.wahl.modell.GesamtstimmenImpl.Kandidatenergebnis;
 /**
  * Read-only interface of class {@link GesamtstimmenImpl}
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface Gesamtstimmen {
 

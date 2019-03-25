@@ -2,7 +2,7 @@
  * ImportEML510
  * 
  * Created on 27.04.2007
- * Copyright (c) 2007 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * Copyright (c) 2007-2017 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -31,7 +31,7 @@ import de.ivu.wahl.wus.xmlsecurity.XmlParseException;
 /**
  * Java-Entsprechung der Konfigurationsdatei f�r den Import der Metadaten einer Wahl
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class ImportEML510 extends AbstractImportEML {
 
@@ -70,7 +70,8 @@ public class ImportEML510 extends AbstractImportEML {
         return;
       }
       try {
-        _hashWert510 = _hashWertErmittlung.createDigest(_EML510.openStream());
+        _hashCodeSplitter510 = new HashCodeSplitter(_hashWertErmittlung.createDigest(_EML510
+            .openStream()));
       } catch (XmlParseException e) {
         _fehlermeldung += Messages.bind(MessageKeys.Error_FalschesDateiFormat);
         return;
@@ -102,7 +103,7 @@ public class ImportEML510 extends AbstractImportEML {
     // print log
     APP_LOGGER.info(Messages.bind(MessageKeys.Logger_ImportFile_0_WithHash_1,
         EMLFilenameCheck.reduceFilenameFromSlashAsPrefix(_EML510.getFile()),
-        _hashWert510));
+        getEML510()));
   }
 
   @Override
@@ -167,9 +168,8 @@ public class ImportEML510 extends AbstractImportEML {
     if (SecurityLevel.NO_HASH_CODE.equals(_securityLevel)) {
       return true;
     }
-    if (_hashWertTeil510 != null) {
-      if (_hashWert510.trim().equals(_hashWertTeil510.trim() + SINGLE_SPACE
-          + getTeilHashWert510().trim())) {
+    if (_hashCodeSplitter510.isInputComplete()) {
+      if (_hashCodeSplitter510.checkInput(_securityLevel)) {
         return true;
       } else {
         _fehlermeldung += Messages.bind(MessageKeys.Error_FalscherHashWerte);
@@ -352,8 +352,13 @@ public class ImportEML510 extends AbstractImportEML {
   @Override
   protected void updateSecurityLevel(Element eml510) {
 
-    if (_modus == MODE_DB_P5 || _modus == MODE_STANDALONE) {
+    if (_modus == MODE_STANDALONE) {
+      // No hashcode checking in test cases
       _securityLevel = SecurityLevel.NO_HASH_CODE;
+
+    } else if (_modus == MODE_DB_P5) {
+      // Hashcode confirmation in P5
+      _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
 
     } else {
       WahlInfo wahlInfo = WahlInfo.getWahlInfo();
@@ -366,7 +371,7 @@ public class ImportEML510 extends AbstractImportEML {
 
         case GebietModel.EBENE_HSB :
           if (isAuthoritySameRegion) {
-            _securityLevel = SecurityLevel.NO_HASH_CODE;
+            _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
           } else {
             _securityLevel = SecurityLevel.ASK_FOR_HASH_CODE;
           }
@@ -376,13 +381,13 @@ public class ImportEML510 extends AbstractImportEML {
           if (_electionCategory.isMunicipalityElection()
               || _electionCategory.equals(ElectionCategory.LR)
               || _electionCategory.equals(ElectionCategory.IR)) {
-            _securityLevel = SecurityLevel.NO_HASH_CODE;
+            _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
           } else if (wahlInfo.getElectionSubcategory().equals(ElectionSubcategory.PS1)
               || _electionCategory.equals(ElectionCategory.AB)) {
-            _securityLevel = SecurityLevel.NO_HASH_CODE;
+            _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
           } else if ((_electionCategory.equals(ElectionCategory.PS) || _electionCategory
               .equals(ElectionCategory.PR)) && isAuthoritySameRegion) {
-            _securityLevel = SecurityLevel.NO_HASH_CODE;
+            _securityLevel = SecurityLevel.CONFIRM_HASH_CODE;
           } else {
             _securityLevel = SecurityLevel.ASK_FOR_HASH_CODE;
           }

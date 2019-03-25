@@ -26,13 +26,12 @@ import de.ivu.wahl.modell.ejb.service.VoteValues;
  * them can be replaced by the other. To my (JON, 24-11-2009) knowledge, {@link GesamtstimmenImpl}
  * is better in performance.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class GesamtstimmenImpl implements Gesamtstimmen {
   private final TwoKeyMap<Integer, String, Kandidatenergebnis> _kandidatenergebnisse = new TwoKeyMap<Integer, String, Kandidatenergebnis>();
   private final Map<Integer, Integer> _gruppenergebnisse = new HashMap<Integer, Integer>();
   private final VoteValues _voteValues;
-  private int _gesamtstimmen; // is not used
 
   public GesamtstimmenImpl() {
     this(null);
@@ -43,10 +42,12 @@ public class GesamtstimmenImpl implements Gesamtstimmen {
     this._voteValues = voteValues;
   }
 
+  @Override
   public List<Kandidatenergebnis> getKandidatenergebnisse(int gruppenschluessel) {
     List<Kandidatenergebnis> candidateList = new ArrayList<Kandidatenergebnis>(
         _kandidatenergebnisse.getMap(gruppenschluessel).values());
     Collections.sort(candidateList, new Comparator<Kandidatenergebnis>() {
+      @Override
       public int compare(Kandidatenergebnis erg1, Kandidatenergebnis erg2) {
         return Integer.signum(erg1.listenplatz - erg2.listenplatz);
       }
@@ -66,8 +67,9 @@ public class GesamtstimmenImpl implements Gesamtstimmen {
       erg = new Kandidatenergebnis(listenplatz, shortCode);
       _kandidatenergebnisse.put(gruppenschluessel, key, erg);
     }
-    erg.addStimmen(stimmen * voteValue);
-    addGruppenstimmen(gruppenschluessel, stimmen * voteValue);
+    int votes = Plus.times(stimmen, voteValue, true);
+    erg.addStimmen(votes);
+    addGruppenstimmen(gruppenschluessel, votes);
   }
 
   private int getVoteValue(Integer regionNumber) {
@@ -85,6 +87,7 @@ public class GesamtstimmenImpl implements Gesamtstimmen {
    * (non-Javadoc)
    * @see de.ivu.wahl.modell.Gesamtstimmen#getStimmen(int, int, java.lang.String)
    */
+  @Override
   public int getStimmen(int gruppenschluessel, int listenplatz, String shortCode) {
     String kandidatenschluessel = getKandidatenschluessel(listenplatz, shortCode);
     Kandidatenergebnis kandidatenergebnis = _kandidatenergebnisse.get(Integer
@@ -95,25 +98,16 @@ public class GesamtstimmenImpl implements Gesamtstimmen {
     return 0;
   }
 
-  @Deprecated
-  // is not used
-  public void setGruppenstimmen(int gruppenschluessel, int stimmen) {
-    _gruppenergebnisse.put(gruppenschluessel, stimmen);
-  }
-
   public void addGruppenstimmen(int gruppenschluessel, int stimmen) {
     Integer oldValue = _gruppenergebnisse.get(gruppenschluessel);
-    if (oldValue == null) {
-      _gruppenergebnisse.put(gruppenschluessel, stimmen);
-    } else {
-      _gruppenergebnisse.put(gruppenschluessel, oldValue + stimmen);
-    }
+    _gruppenergebnisse.put(gruppenschluessel, Plus.plus(oldValue, stimmen, true));
   }
 
   /*
    * (non-Javadoc)
    * @see de.ivu.wahl.modell.Gesamtstimmen#getGruppenstimmen(int)
    */
+  @Override
   public int getGruppenstimmen(int gruppenschluessel) {
     Integer result = _gruppenergebnisse.get(new Integer(gruppenschluessel));
     if (result == null) {
@@ -122,26 +116,11 @@ public class GesamtstimmenImpl implements Gesamtstimmen {
     return result;
   }
 
-  @Deprecated
-  // is not used
-  public int getGesamtstimmen() {
-    return _gesamtstimmen;
-  }
-
-  @Deprecated
-  // is not used
-  public void setGesamtstimmen(int gesamtstimmen) {
-    this._gesamtstimmen = gesamtstimmen;
-  }
-
   public static class Kandidatenergebnis {
     final int listenplatz;
     String shortCode;
     int stimmenGesamt = 0;
 
-    /**
-     * Constructor
-     */
     @SuppressWarnings("hiding")
     public Kandidatenergebnis(int listenplatz, final String shortCode) {
       this.listenplatz = listenplatz;
@@ -153,7 +132,7 @@ public class GesamtstimmenImpl implements Gesamtstimmen {
     }
 
     public void addStimmen(int stimmen) {
-      this.stimmenGesamt += stimmen;
+      this.stimmenGesamt = Plus.plus(this.stimmenGesamt, stimmen, true);
     }
 
     public String getShortCode() {

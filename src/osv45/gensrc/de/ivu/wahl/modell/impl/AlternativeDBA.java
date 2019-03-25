@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Alternative.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class AlternativeDBA extends DBABase {
@@ -68,22 +68,43 @@ public class AlternativeDBA extends DBABase {
       if ((idx = columns.get(ID_ALTERNATIVE.toUpperCase())) != null) {
          m._id_Alternative = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_ALTERNATIVE)) != null) {
+         m._id_Alternative = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_KONFLIKT.toUpperCase())) != null) {
+         m._id_Konflikt = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_KONFLIKT)) != null) {
          m._id_Konflikt = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTE)) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_PERSONENDATEN.toUpperCase())) != null) {
          m._id_Personendaten = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_PERSONENDATEN)) != null) {
+         m._id_Personendaten = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(NUMMER.toUpperCase())) != null) {
+         m._nummer = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(NUMMER)) != null) {
          m._nummer = r.getInt(idx.intValue());
       }
    }
@@ -99,22 +120,22 @@ public class AlternativeDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_KONFLIKT.toUpperCase())) {
+      if (columns.containsKey(ID_KONFLIKT.toUpperCase()) || columns.containsKey(ID_KONFLIKT)) {
          p.setString(idx++, m._id_Konflikt);
       }
-      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase()) || columns.containsKey(ID_LISTENKOMBINATION)) {
          p.setString(idx++, m._id_Listenkombination);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(ID_LISTE.toUpperCase())) {
+      if (columns.containsKey(ID_LISTE.toUpperCase()) || columns.containsKey(ID_LISTE)) {
          p.setString(idx++, m._id_Liste);
       }
-      if (columns.containsKey(ID_PERSONENDATEN.toUpperCase())) {
+      if (columns.containsKey(ID_PERSONENDATEN.toUpperCase()) || columns.containsKey(ID_PERSONENDATEN)) {
          p.setString(idx++, m._id_Personendaten);
       }
-      if (columns.containsKey(NUMMER.toUpperCase())) {
+      if (columns.containsKey(NUMMER.toUpperCase()) || columns.containsKey(NUMMER)) {
          p.setInt(idx++, m._nummer);
       }
       p.setString(idx++, m._id_Alternative);
@@ -308,6 +329,23 @@ public class AlternativeDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Personendaten returns a {@link Collection} of Alternative IDs
+     *
+     * @param id_Personendaten searching condition
+
+     * @return a {@link Collection} of Alternative IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Personendaten(String id_Personendaten)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Alternative from " + TABLENAME + " where ID_Personendaten=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Personendaten});
+   }
+
+   /**
      * Method retrieveIDsByID_Konflikt returns a {@link Collection} of Alternative IDs
      *
      * @param id_Konflikt searching condition
@@ -367,23 +405,6 @@ public class AlternativeDBA extends DBABase {
          "select ID_Alternative from " + TABLENAME + " where ID_Liste=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Liste});
-   }
-
-   /**
-     * Method retrieveIDsByID_Personendaten returns a {@link Collection} of Alternative IDs
-     *
-     * @param id_Personendaten searching condition
-
-     * @return a {@link Collection} of Alternative IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Personendaten(String id_Personendaten)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Alternative from " + TABLENAME + " where ID_Personendaten=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Personendaten});
    }
 
    /**

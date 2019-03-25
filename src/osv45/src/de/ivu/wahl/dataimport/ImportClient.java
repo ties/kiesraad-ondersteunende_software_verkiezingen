@@ -16,7 +16,7 @@ import de.ivu.wahl.modell.exception.ImportException;
  * ImportClient implementation used for directly creating Wahldaten from EML files (bypassing the
  * database).
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ImportClient extends AbstractImportClient {
   private static final Category LOGGER = Log4J.configure(ImportClient.class);

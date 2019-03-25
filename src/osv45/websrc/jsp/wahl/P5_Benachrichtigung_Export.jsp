@@ -2,12 +2,13 @@
 <%@ page import="java.util.List"%>
 <%@ page import="de.ivu.wahl.Basiseinstellung"%>
 <%@ page import="de.ivu.wahl.Basiseinstellung.Typ"%>
+<%@ page import="de.ivu.wahl.BasiseinstellungMultiMap"%>
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.P5ExportStateKanBen"%>
-<%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
+<%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -20,63 +21,37 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
-<%  
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
+<%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "BenachrichigungExport"; //$NON-NLS-1$
 
-String breite = "100%";
+String breite = "100%"; //$NON-NLS-1$
 String prefix = ApplicationBeanKonstanten.PREFIX;
-int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0);
+int subwork = ClientHelper.getIntParameter(request.getParameter(prefix + "subwork"), 0); //$NON-NLS-1$
 DialogStateHolder p5ESKanBen = admBean.getP5ExportStateKanBen();
+BasiseinstellungMultiMap bmm = Konstanten.PROP_BENACHRICHTIGUNG_GEWAEHLTE;
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 boolean legende = false;
+
+String i18nName = "Export_Gew_Ben"; //$NON-NLS-1$
+String i18nTitle = "Export_Gew_Ben_titel"; //$NON-NLS-1$
+
 %>
 <html>
 <head>
    <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
-   <title>P22_1</title>
+   <title><ivu:int key="<%=i18nName%>"/></title>
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery.autocomplete.css">
-   <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.3.2.js"></script>
+   <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.3.1.js"></script>
    <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.autocomplete.js"></script>
    <script type="text/javascript" src="<%= request.getContextPath() %>/js/gbadata.js"></script>
+   <script>
+     var contextPath = "<%=request.getContextPath()%>";
+   </script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
    <script type="text/javascript">
-          function doit(i, j, msec)
-            {
-              //alert("doit");
-              var k = i;
-              var l = j;
-              if (k <= 50)
-              {
-                 //alert("doit");
-                eval("document.p" + k + ".src = '<%= request.getContextPath() %>/img/lila.gif'");
-                k++;
-                window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-              } else {
-                 eval("document.p" + l + ".src = '<%= request.getContextPath() %>/img/leer.gif'");
-                if (k == 101) {
-                    k = -1;
-                    l = -1;
-                 }
-                k++;
-                 l++;
-                 window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-              } 
-            }
-            
-            function transp() {
-            var divTag  = document.getElementById("content");
-                divTag.style.filter = "alpha(Opacity=60, FinishOpacity=0, Style=0, StartX=0, StartY=0, FinishX=1000, FinishY=1000)";
-                
-                var divTag  = document.getElementById("trans");
-                divTag.className = "trans";
-                
-                var statusbalken  = document.getElementById("statusbalken");
-                statusbalken.style.display = 'inline';
-                doit(0,0,100);          
-        
-            }
-            
             // GBA support
             $(document).ready(function(){
                 $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_CHAIRPERSON %>").autocomplete(gbaData);
@@ -84,8 +59,8 @@ boolean legende = false;
                 $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_ACCEPTANCE_LOCATION %>").autocomplete(gbaData);
                 $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_REJECTION_ADDRESS %>").autocomplete(gbaData);
                 $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_REJECTION_LOCATION %>").autocomplete(gbaData);
+                $("#<%= ApplicationBeanKonstanten.PREFIX + XMLTags.RG_REPRESENTATIVE_BODY %>").autocomplete(gbaData);
             });
-            
    </script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
 </head>
@@ -113,13 +88,13 @@ boolean legende = false;
         </div>
         <div id="trans">
             <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
-                <%@include file="/jsp/fragments/help_row.jspf"%>
+               <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                         <tr>
                            <td width="5" class="hggrau">&nbsp;</td>
-                           <td colspan="2" class="hggrau" height="20"><ivu:int key="Export_Gew_Ben_titel"/></td>
+                           <td colspan="2" class="hggrau" height="20"><ivu:int key="<%=i18nTitle%>"/></td>
                         </tr>
                         <tr>
                            <td colspan="3" class="hgschwarz"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
@@ -134,47 +109,47 @@ boolean legende = false;
                                <tr>
                                   <td valign="top">
                                     <%String exportVerz = admBean.getProperty(Konstanten.PROP_EXPORT_FORMULAR_DIR); 
-                                    if (exportVerz == null || exportVerz.isEmpty()){ %>
-                                        <fieldset style="border: 1px solid #093C69; padding: 15px">
-                                            <legend><b><ivu:int key="Export_Verzeichnis_titel"/></b></legend><br />
-                                          <ivu:int key="KeinZielverzeichnisAngegeben"></ivu:int>
-                                        </fieldset>
+                                     if (exportVerz == null || exportVerz.isEmpty()){ %>
+                                            <fieldset style="border: 1px solid #093C69; padding: 15px">
+                                                <legend><b><ivu:int key="Export_Verzeichnis_titel"/></b></legend><br />
+                                              <ivu:int key="KeinZielverzeichnisAngegeben"></ivu:int>
+                                            </fieldset>
                                     <% } else if (wahlInfo.getStatus() != WahlModel.STATE_CALCULATION_SUCCESSFUL){ %>
-                                        <table width="100%" cellspacing="0" cellpadding="1" border="0">
-                                                    <tbody>
-                                                        <tr class="hgrot">
-                                                            <td valign="top">
-                                                        <table class="hgweiss" border="0" cellpadding="0" cellspacing="0" width=100%">
-                                                            <tbody>
-                                                                <tr class="hgeeeeee">
-                                                                            <td height="20" width="5">
-                                                                                &nbsp;
-                                                                            </td>
-                                                                            <td>
-                                                                                <br/>
-                                                                                <b><ivu:int key="Export_Nicht_Moeglich"/></b>
-                                                                                <br/><br/>
-                                                                                <ivu:int key="Sitzverteilung_Nicht_erfolgt_info"/>
-                                                                                <br/><br/>
-                                                                            </td>
-                                                                            <td width="5">
-                                                                                &nbsp;
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>  
-                                    <% } else {
-                                       legende = true;
-                                        if (!wahlInfo.isFreigegeben()){ %>
-                                        <table width="100%" cellspacing="0" cellpadding="1" border="0">
+                                            <table width="100%" cellspacing="0" cellpadding="1" border="0">
                                                         <tbody>
                                                             <tr class="hgrot">
                                                                 <td valign="top">
                                                             <table class="hgweiss" border="0" cellpadding="0" cellspacing="0" width=100%">
+                                                                <tbody>
+                                                                    <tr class="hgeeeeee">
+                                                                                <td height="20" width="5">
+                                                                                    &nbsp;
+                                                                                </td>
+                                                                                <td>
+                                                                                    <br/>
+                                                                                    <b><ivu:int key="Export_Nicht_Moeglich"/></b>
+                                                                                    <br/><br/>
+                                                                                    <ivu:int key="Sitzverteilung_Nicht_erfolgt_info"/>
+                                                                                    <br/><br/>
+                                                                                </td>
+                                                                                <td width="5">
+                                                                                    &nbsp;
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>  
+                                        <% } else {
+                                        legende = true;
+                                            if (!wahlInfo.isFreigegeben()){ %>
+                                        <table width="100%" cellspacing="0" cellpadding="1" border="0">
+                                                        <tbody>
+                                                            <tr class="hgrot">
+                                                                <td valign="top">
+                                                            <table class="hgweiss" border="0" cellpadding="0" cellspacing="0" width="100%">
                                                                 <tbody>
                                                                     <tr class="hgeeeeee">
                                                                                 <td height="20" width="5">
@@ -200,18 +175,18 @@ boolean legende = false;
                                                     <br/>
                                                     <br/>
                                                     <br/>
-                                          <% }  
+                                          <% }
                                         if (P5ExportStateKanBen.STATUS_KanBen_D1 == p5ESKanBen._modus){  %>
-                                                 <fieldset style="border: 1px solid #093C69; padding: 15px">
-                                                 <legend><b><ivu:int key="Export_Gew_Ben"/></b></legend>
-                                                        <p><ivu:int key="Export_Gew_Ben_titel"/></p>
-                                                        <%
+                                                <fieldset style="border: 1px solid #093C69; padding: 15px">
+                                                <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
+                                                        <p><ivu:int key="<%=i18nTitle%>"/></p>
+                                                    <% 
                                                           if (admBean._adminMsgProps != null && !admBean._adminMsgProps.isEmpty() ){
                                                         %>
                                                             <p style="color:red;"><b><%=admBean._adminMsgProps%></b></p>
                                                             
                                                         <% 
-                                                            admBean._adminMsgProps = null;
+                                                        admBean._adminMsgProps = null;
                                                           }
                                                           if (admBean._adminMsgPropsConfirmation != null && !admBean._adminMsgPropsConfirmation.isEmpty() ){
                                                         %>
@@ -222,23 +197,22 @@ boolean legende = false;
                                                           }
                                                           if (admBean._adminMsgExport != null && !admBean._adminMsgExport.isEmpty() ){
                                                         %>
-                                                            <p style="color:red;"><b><%=admBean._adminMsgExport%></b></p>
+                                                            <p style="color:red;"><b><%=ClientHelper.forHTML(admBean._adminMsgExport)%></b></p>
                                                         <% admBean._adminMsgExport = null;
                                                           }
-                                                          if (admBean._adminMsgExportConfirmation != null && !admBean._adminMsgExportConfirmation.isEmpty() ){
-                                                        %>
-                                                            <p style="color:green;"><b><%=admBean._adminMsgExportConfirmation%></b></p>
-                                                        <% admBean._adminMsgExportConfirmation = null;
-                                                          }
-                                                        %>
-                                                        <br/>
-                                                        <br/>
+                                                          if (admBean._adminMsgExportConfirmation != null && !admBean._adminMsgExportConfirmation.isEmpty() ){%>
+                                                        <p style="color:green;"><b><%=ClientHelper.forHTML(admBean._adminMsgExportConfirmation)%></b></p>
+                                                    <%
+                                                        admBean._adminMsgExportConfirmation = null;
+                                                    } %>
+                                                    <br/>
+                                                    <br/>
                                                     <table border="0" cellspacing="0" cellpadding="0" width="<%= breite %>">
                                                        <tr>
                                                         <td height="20" valign="top" class="guiBefehle"><%
                                                          int buttonIdx = 0;
                                                          String selectedKey = null;
-                                                         for (String buttonName : Konstanten.PROP_BENACHRICHTIGUNG_GEWAEHLTE.keySet()) {
+                                                         for (String buttonName : bmm.keySet()) {
                                                            boolean selected = buttonIdx++ == subwork;
                                                            if (selected) {
                                                             selectedKey = buttonName;
@@ -251,13 +225,13 @@ boolean legende = false;
                                                          if (selectedKey != null) {
                                                            
                                                            String formurl = "/osv?cmd=adm_propEingabeGewBen&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
-                                                           + "&"+ClientHelper.getAllParameters(request, true); %>
+                                                           + "&" + ClientHelper.getAllParameters(request, true); %>
                                                           <tr>
                                                            <td style="border: 1px solid rgb(9, 60, 105); padding-left: 1em width: 100%;">
                                                           <ivu:form action="<%= formurl %>">
                                                             <table border="0" cellspacing="4" cellpadding="1" width="<%= breite %>" style="padding: 1em;">
                                                               <colgroup width="50%" span="2"></colgroup><%
-                                                             List<Basiseinstellung> basiseinstellungen = Konstanten.PROP_BENACHRICHTIGUNG_GEWAEHLTE.get(selectedKey);
+                                                             List<Basiseinstellung> basiseinstellungen = bmm.get(selectedKey);
                                                              for (Basiseinstellung basiseinstellung : basiseinstellungen) {
                                                               boolean restart = basiseinstellung.isRestart();
                                                               String styleClass = restart ? "frot" : "fgrau";
@@ -284,24 +258,29 @@ boolean legende = false;
                                                                    </tr>
                                                                   </table><%
                                                                   break;
-                                                                  
                                                                  case String:
-                                                                // Es können nicht gesetzte Werte als null kommen!
-                                                                      if (wert == null) {
-                                                                       wert = "";
-                                                                      }%>
-                                                                      <input type="text" class="feld <%=styleClass%>" size="64" id="<%=property%>" name="<%=property%>" value="<%=wert%>"><%
-                                                                      break;
-                                                                 case Date:
-                                                                 case Time:
-                                                                 case ZIP:
+                                                               // Es können nicht gesetzte Werte als null kommen!
+                                                               if (wert == null) {
+                                                                wert = "";
+                                                               }%>
+                                                               <input type="text" class="feld <%=styleClass%>" height="1" size="64" id="<%=property%>" name="<%=property%>" value="<%=wert%>"><%
+                                                               break;
+                                                           case Date:
+                                                           case Time:
+                                                           case ZIP:  
                                                                   // Es können nicht gesetzte Werte als null kommen!
                                                                   if (wert == null) {
                                                                    wert = "";
                                                                   }%>
                                                                   <input type="text" class="feld <%=styleClass%>" size="64" id="<%=property%>" name="<%=property%>" value="<%=wert%>"><%
                                                                   break;
-                                                                  
+                                                           case Textarea:
+                                                         // Es können nicht gesetzte Werte als null kommen!
+                                                         if (wert == null) {
+                                                          wert = "";
+                                                         }%>
+                                                         <textarea class="feld <%=styleClass%>" cols="64" rows="10" id="<%=property%>" name="<%=property%>"><%=wert%></textarea><%
+                                                         break;
                                                                  case Integer:
                                                                   // Es können nicht gesetzte Werte als null kommen!
                                                                   if (wert == null) {
@@ -309,13 +288,7 @@ boolean legende = false;
                                                                   }%>
                                                                   <input type="text" class="feld <%=styleClass%>" size="64" name="<%=property%>" value="<%=wert%>"><%
                                                                   break;
-                                                                 case Textarea:
-                                                         // Es können nicht gesetzte Werte als null kommen!
-                                                         if (wert == null) {
-                                                          wert = "";
-                                                         }%>
-                                                         <textarea class="feld <%=styleClass%>" cols="64" rows="10" id="<%=property%>" name="<%=property%>"><%=wert%></textarea><%
-                                                         break;  
+                                                                  
                                                                  case Boolean:
                                                                   boolean bWert = "true".equals(wert); %>
                                                                   <div class="<%=styleClassChb%>">
@@ -348,34 +321,35 @@ boolean legende = false;
                                                       <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="Export_Zusammenfassung"/></b></legend>
                                                             <% if (admBean._adminMsgExport != null && !admBean._adminMsgExport.isEmpty() ){%>
-                                                                        <p style="color:red;"><b><%= admBean._adminMsgExport %></b></p>
-                                                                    <% admBean._adminMsgExport = null; 
-                                                               }
+                                                                        <p style="color:red;"><b><%=ClientHelper.forHTML(admBean._adminMsgExport)%></b></p>
+                                                                        <% 
+                                                                    admBean._adminMsgExport = null; 
+                                                            }
                                                                if (admBean._adminMsgExportConfirmation != null && !admBean._adminMsgExportConfirmation.isEmpty() ){%>
-                                                                        <p style="color:green;"><b><%= admBean._adminMsgExportConfirmation %></b></p>
-                                                                    <% admBean._adminMsgExportConfirmation = null; 
-                                                                } %>
-                                                                    <br/>
+                                                                        <p style="color:green;"><b><%=ClientHelper.forHTML(admBean._adminMsgExportConfirmation)%></b></p>
+                                                                        <% 
+                                                                    admBean._adminMsgExportConfirmation = null; 
+                                                            } %>
+                                                            <br/>
                                                            <ivu:form action="<%=urlExp%>" onsubmit="transp();">
                                                             <table cellspacing="4" cellpadding="2" border="0">
                                                                <tr>
-                                                                   <td colspan="2"><b><ivu:int key="Export_Gew_Ben"/></b></td>
+                                                                   <td colspan="2"><b><ivu:int key="<%=i18nName%>"/></b></td>
                                                                 </tr>
-                                                                
-                                                                <%  for (Basiseinstellung basiseinstellung : Konstanten.PROP_BENACHRICHTIGUNG_GEWAEHLTE_BASIS) { 
+                                                               <%   for (Basiseinstellung basiseinstellung : bmm.getBasis()) { 
                                                                        String property = basiseinstellung.getProperty();
                                                                        String wert = admBean.getProperty(property); %>
                                                                      <tr title="<%= basiseinstellung.getHinweis() %>">
-                                                                           <td><%= basiseinstellung.getBeschreibung() %><%= basiseinstellung.isPflichtfeld() ? " *": XMLTags.RG_ACCEPTANCE_ADDRESS.equals(basiseinstellung.getProperty()) || XMLTags.RG_ACCEPTANCE_POSTALCODE.equals(basiseinstellung.getProperty()) || XMLTags.RG_ACCEPTANCE_LOCATION.equals(basiseinstellung.getProperty()) ? " **" : "" %></td>
-                                                                           <td><% if (basiseinstellung.getTyp() == Typ.Textarea){ %>
-                                                                                <textarea rows="5" cols="64" disabled="disabled"><%= ClientHelper.forHTML(ClientHelper.getEmptyStringIfBlank(wert, "-")) %></textarea>
+                                                                       <td><%= basiseinstellung.getBeschreibung() %><%= basiseinstellung.isPflichtfeld() ? " *": XMLTags.RG_ACCEPTANCE_ADDRESS.equals(basiseinstellung.getProperty()) || XMLTags.RG_ACCEPTANCE_POSTALCODE.equals(basiseinstellung.getProperty()) || XMLTags.RG_ACCEPTANCE_LOCATION.equals(basiseinstellung.getProperty()) ? " **" : "" %></td>
+                                                                       <td><% if (basiseinstellung.getTyp() == Typ.Textarea){ %>
+                                                                            <textarea rows="5" cols="64" disabled="disabled"><%= ClientHelper.forHTML(ClientHelper.getEmptyStringIfBlank(wert, "-")) %></textarea>
                                                                             <% } else { %>
                                                                                 <%= ClientHelper.forHTML(ClientHelper.getEmptyStringIfBlank(wert, "-")) %>
                                                                             <% } %>
-                                                                             </td>
+                                                                        </td>
                                                                       </tr>
                                                                     <% } %>
-                                                                 <tr>
+                                                               <tr>
                                                                    <td>&nbsp;</td>
                                                                    <td>&nbsp;</td>
                                                                 </tr>
@@ -387,7 +361,7 @@ boolean legende = false;
                                                              <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 1em;">
                                                                             <input id="box2" type="submit" value="<%=AdministrationBean.ZURUECK %>" name="<%=ApplicationBeanKonstanten.PREFIX%>uebernehmen"/>
                                                                     <% if (admBean._adminWarningOverride != null && !admBean._adminWarningOverride.isEmpty() ){%>
-                                                                                <p class="warningMessage"><b><%= admBean._adminWarningOverride %><br/>
+                                                                                <p class="warningMessage"><b><%= ClientHelper.forHTML(admBean._adminWarningOverride) %><br/>
                                                                                 <ivu:int key="Datei_Ueberschreiben"/> </b></p>
                                                                                 <% admBean._adminWarningOverride = null; %> 
                                                                                 <input type="hidden" value="1" name="<%=ApplicationBeanKonstanten.PREFIX%>force"/>
@@ -403,24 +377,24 @@ boolean legende = false;
                                                  </tr>
                                               </table>
                                       <% }  else if (P5ExportStateKanBen.STATUS_KanBen_D3 == p5ESKanBen._modus){
-                                            // reset export status
-                                            admBean.resetExportStateKanBen();
-                                            //forward to Werkmap
-                                            String urlExp = "/osv?cmd=adm_exportKanBen&"+ClientHelper.workIs(Command.EXPORT_VERZEICHNIS)+"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
-                                            %>
-                                            <fieldset style="border: 1px solid #093C69; padding: 15px">
-                                                        <legend><b><ivu:int key="Export_Gew_Ben"/></b></legend>
+                                                    // reset export status
+                                                    admBean.resetExportStateKanBen();
+                                                    //forward to Werkmap
+                                                    String urlExp = "/osv?cmd=adm_exportKanBen&"+ClientHelper.workIs(Command.EXPORT_VERZEICHNIS)+"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                        %>
+                                        <fieldset style="border: 1px solid #093C69; padding: 15px">
+                                                        <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
                                                         <p><ivu:int key="Export_erfolgreich"/></p>
                                                         <%
                                                           if (admBean._adminMsgExport != null && !admBean._adminMsgExport.isEmpty() ){
                                                         %>
-                                                            <p style="color:red;"><b><%=admBean._adminMsgExport%></b></p>
+                                                            <p style="color:red;"><b><%=ClientHelper.forHTML(admBean._adminMsgExport)%></b></p>
                                                             <% admBean._adminMsgExport = null;
                                                           
                                                           }
                                                           if (admBean._adminMsgExportConfirmation != null && !admBean._adminMsgExportConfirmation.isEmpty() ){
                                                         %>
-                                                            <p style="color:green;"><b><%=admBean._adminMsgExportConfirmation%></b></p>
+                                                            <p style="color:green;"><b><%=ClientHelper.forHTML(admBean._adminMsgExportConfirmation)%></b></p>
                                                             <% admBean._adminMsgExportConfirmation = null;
                                                           
                                                                if (!wahlInfo.getElectionCategory().equals(ElectionCategory.TK) && !wahlInfo.getElectionCategory().equals(ElectionCategory.EP) && !wahlInfo.getElectionCategory().equals(ElectionCategory.EK) && !ElectionCategory.BC.equals(wahlInfo.getElectionCategory()) && !ElectionCategory.GC.equals(wahlInfo.getElectionCategory()) && wahlInfo.isFreigegeben()) {
@@ -437,15 +411,16 @@ boolean legende = false;
                                                                 </div>
                                                                 <br />
                                                             <% }
-                                                          } %>
+                                                          }
+                                                        %>
                                                         <ivu:form action="<%=urlExp%>" onsubmit="transp();">
                                                      <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 1em;">
-                                                                <input id="box2" type="submit" value="<%=AdministrationBean.NEU %>" name="<%=ApplicationBeanKonstanten.PREFIX%>uebernehmen"/>
+                                                         <input id="box2" type="submit" value="<%=AdministrationBean.NEU%>" name="<%=ApplicationBeanKonstanten.PREFIX%>uebernehmen"/>
                                                        </div>
                                                         </ivu:form>
                                                     </fieldset>
                                          <% }
-                                      }%>
+                                            }%>
                                   </td>
                                </tr>
                             </table>
@@ -461,7 +436,7 @@ boolean legende = false;
                             <td></td>
                             <td>&nbsp;<% if (legende) { %>** = <ivu:int key="Export_Gew_Ben_DifferentAddressHint"/><% } %></td>
                             <td></td>
-                        </tr>
+                            </tr>
                      </table>
                   </td>
                </tr>

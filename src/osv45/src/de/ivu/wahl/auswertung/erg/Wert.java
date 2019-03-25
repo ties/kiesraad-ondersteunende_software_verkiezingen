@@ -15,7 +15,7 @@ import de.ivu.util.debug.Log4J;
  * Objekt, welches einen Integer und einen Vergleichswert h�lt und auch vergleichende Funktionen
  * anbietet
  * 
- * @author klie@ivu.de - IVU Traffic Technologies AG
+ * @author P. Kliem - IVU Traffic Technologies AG
  */
 
 public class Wert implements Serializable, Cloneable {

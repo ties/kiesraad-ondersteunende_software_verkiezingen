@@ -10,6 +10,7 @@ import static de.ivu.wahl.dataimport.XMLTags.NS_RG;
 import static de.ivu.wahl.export.XMLTags.RG_510_ELEMENT;
 import static de.ivu.wahl.export.XMLTags.RG_CONTEST_NAME;
 import static de.ivu.wahl.export.XMLTags.RG_DATE_OF_MEETING;
+import static de.ivu.wahl.export.XMLTags.RG_ORGANIZING_MUNICIPALITY;
 import static de.ivu.wahl.export.XMLTags.RG_PROPOSAL_NAME;
 import static de.ivu.wahl.export.XMLTags.RG_TIME_OF_MEETING;
 import static org.apache.commons.lang.StringUtils.isEmpty;
@@ -35,7 +36,7 @@ import de.ivu.wahl.modell.ejb.service.VotesHandling;
 import de.ivu.wahl.wus.reportgen.EMLMessageType;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class RG510Helper extends BasicRGHelper {
 
@@ -77,6 +78,16 @@ public class RG510Helper extends BasicRGHelper {
     }
     if (!isEmpty(contestName)) {
       rg510.appendChild(XMLHelper.createElementWithValue(RG_CONTEST_NAME, NS_RG, contestName));
+    }
+    String organizingMunicipalityName = bean.getAdminHandling()
+        .getProperty(RG_ORGANIZING_MUNICIPALITY);
+    if (StringUtils.isBlank(organizingMunicipalityName)) {
+      organizingMunicipalityName = contestName;
+    }
+    if (!isEmpty(organizingMunicipalityName)) {
+      rg510.appendChild(XMLHelper.createElementWithValue(RG_ORGANIZING_MUNICIPALITY,
+          NS_RG,
+          organizingMunicipalityName));
     }
 
     // meeting data

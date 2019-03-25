@@ -40,7 +40,7 @@ import de.ivu.wahl.modell.WahlModel;
  * Service code for finding EJB instances withing application. Used as a bridge between the EJB 2.1
  * and EJB 3.x world.
  * 
- * @author cos@ivu.de
+ * @author D. Cosic
  */
 public class EJBUtil {
   public static final String VERSION = Log4J.extractVersion("$Revision: 1.12 $"); //$NON-NLS-1$
@@ -51,10 +51,6 @@ public class EJBUtil {
   private static String __installationSuffix;
   private static final Map<String, Object> __homeCache = new HashMap<String, Object>();
   private static final String EJB_PROPS_NAME = "ivuejb.properties"; //$NON-NLS-1$
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(EJBUtil.class, VERSION));
-  }
 
   public static void resetContext() {
     __jndiContext = null;

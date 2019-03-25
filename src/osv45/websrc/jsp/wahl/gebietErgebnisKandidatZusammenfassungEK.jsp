@@ -38,6 +38,7 @@
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "gebietErgKand"; //$NON-NLS-1$
@@ -128,7 +129,7 @@ String helpKey = "gebietErgKand"; //$NON-NLS-1$
                             <td colspan="2">
                                 <% List<PartyWithCandidates> partysWithC = rs.getGruppenMitKandidaten();
                                    for(PartyWithCandidates partyWithCandidates : partysWithC){ %>
-                                    <a href="<%="#"+partyWithCandidates.getGruppenID() %>">[<%=partyWithCandidates.getGruppenName()%>]</a>
+                                    <a href="<%="#"+partyWithCandidates.getGruppenID() %>">[<%=ClientHelper.forHTML(partyWithCandidates.getGruppenName())%>]</a>
                                 <% }%>
                             </td>
                          </tr>
@@ -171,7 +172,7 @@ String helpKey = "gebietErgKand"; //$NON-NLS-1$
                                         </td>
                                         <td valign="top" rowspan="2" align="center"><strong><ivu:int key="Summe"/></strong></td>
                                       <%for(Gebiet gebiet : rs.getGebiete()){ %>
-                                        <td valign="top" colspan="2" align="center"><strong><%= gebiet.getName() %></strong></td>
+                                        <td valign="top" colspan="2" align="center"><strong><%= ClientHelper.forHTML(gebiet.getName()) %></strong></td>
                                       <% } %>
                                   </tr>
                                   <tr class="hgformular">
@@ -182,7 +183,7 @@ String helpKey = "gebietErgKand"; //$NON-NLS-1$
                                   </tr>
                                   <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>">
                                         <td><b><%= partyWithCandidates.getGruppenPosition() %></b></td>
-                                        <td><b><%= partyWithCandidates.getGruppenName() %></b></td>
+                                        <td><b><%= ClientHelper.forHTML(partyWithCandidates.getGruppenName()) %></b></td>
                                         <td><b><%= partyWithCandidates.getSummeGewichtet() %></b></td>
                                         <%for(Gebiet gebiet : rs.getGebiete()){ %>
                                             <td><b><%= partyWithCandidates.getGruppenstimmeProGebiet(gebiet) %></b></td>
@@ -196,7 +197,7 @@ String helpKey = "gebietErgKand"; //$NON-NLS-1$
                                         %>
                                         <tr >
                                             <td class="hgweiss" width="5%">&nbsp;</td>
-                                            <td class="<%= j>0 ?"hgweiss":"hgeeeeee" %>"><%= candidateVotesPerRegion.getPersonenName()%></td>
+                                            <td class="<%= j>0 ?"hgweiss":"hgeeeeee" %>"><%= ClientHelper.forHTML(candidateVotesPerRegion.getPersonenName())%></td>
                                             <td class="<%= j>0 ?"hgweiss":"hgeeeeee" %>"><b><%= candidateVotesPerRegion.getSummeGewichtet() %></b></td>
                                             <%for(Gebiet gebiet : rs.getGebiete()){ %>
                                                 <td class="<%= j>0 ?"hgweiss":"hgeeeeee" %>"><%= candidateVotesPerRegion.getKandidatenstimmeProGebiet(gebiet) %></td>

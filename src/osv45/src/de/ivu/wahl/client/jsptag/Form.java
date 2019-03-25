@@ -11,17 +11,17 @@ import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.client.util.ClientHelper;
 
 /**
- * Erweitertes HTML-FORM-Tag, der selbständig für die Action-URL das URL-Rewriting im ClientHelper
- * aufruft. Außerdem werden sinnvolle Vorgaben gesetzt.
+ * Erweitertes HTML-FORM-Tag, der selbstï¿½ndig fï¿½r die Action-URL das URL-Rewriting im ClientHelper
+ * aufruft. Auï¿½erdem werden sinnvolle Vorgaben gesetzt.
  * 
- * @author Dr. Domagoj Cosic <cos@ivu.de>
+ * @author Dr. Domagoj Cosic <D. Cosic>
  */
 
 public class Form extends TagSupport {
   private static final long serialVersionUID = -2634284041938856263L;
 
   /**
-   * Logger für diese Klasse
+   * Logger fï¿½r diese Klasse
    */
   private final static Logger LOGGER = Logger.getLogger(Form.class);
 
@@ -119,9 +119,9 @@ public class Form extends TagSupport {
   }
 
   /**
-   * Setzt den neuen Wert für accept_charset auf accept_charset.
+   * Setzt den neuen Wert fï¿½r accept_charset auf accept_charset.
    * 
-   * @param value neuer Wert für accept_charset
+   * @param value neuer Wert fï¿½r accept_charset
    */
   public void setAcceptcharset(String value) {
     this.acceptcharset = value;
@@ -230,7 +230,7 @@ public class Form extends TagSupport {
   }
 
   /**
-   * End-Tag interpretieren. Schließt nur den FORM-Tag ab.
+   * End-Tag interpretieren. Schlieï¿½t nur den FORM-Tag ab.
    * 
    * @return EVAL_PAGE = setze die Seitenverarbeitung fort
    * @see javax.servlet.jsp.tagext.Tag#doEndTag()

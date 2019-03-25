@@ -3,6 +3,7 @@
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
 <%@ page import="de.ivu.wahl.modell.Gebietsart"%>
 <%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
+<%@ page import="de.ivu.wahl.dataimport.HashCodeSplitter"%>
 <%@ page import="de.ivu.wahl.dataimport.IImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.ImportType"%>
 <%@ page import="de.ivu.wahl.dataimport.SecurityLevel"%>
@@ -20,6 +21,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="impBean" scope="session" class="de.ivu.wahl.client.beans.WahlImportBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "wahlImp";
@@ -35,10 +37,6 @@ String helpKey = "wahlImp";
    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
   <%
     response.setDateHeader("Last-Modified", -1);
-    response.setDateHeader ("Expires", 0); // prevents caching at the proxy server
-    response.setHeader("Cache-Control","no-cache"); // HTTP 1.1
-    response.setHeader("Pragma","no-cache"); // HTTP 1.0
-    
     
     IImportEML impDef = impBean.getImportMetadata();
     SystemInfo systemInfo =  SystemInfo.getSystemInfo();
@@ -120,7 +118,7 @@ String helpKey = "wahlImp";
     %>
     <% if (null != impDef.getFehlermeldung()) { %>
          <div style="padding: 0.5em; color: red;">
-          <%= impDef.getFehlermeldung() %>
+          <%= ClientHelper.forHTML(impDef.getFehlermeldung()) %>
          </div>
      <% } %>
      <% if (AbstractImportEML.STATUS_INIT == impDef.getStatus() && appBean.getWahlen().size() == 0) { %>
@@ -192,21 +190,21 @@ String helpKey = "wahlImp";
                                      %>
                                      <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>">
                                          <td><b><ivu:int key="ElectionID" />:</b></td>
-                                         <td><%= electionDetails.getID_Wahl() %></td>
+                                         <td><%= ClientHelper.forHTML(electionDetails.getID_Wahl()) %></td>
                                      </tr>
                                      <%
                                         j = -j;
                                      %>
                                      <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>">
                                          <td><b><ivu:int key="ElectionName" />:</b></td>
-                                         <td><%= electionDetails.getName() %></td>
+                                         <td><%= ClientHelper.forHTML(electionDetails.getName()) %></td>
                                      </tr>
                                      <%
                                         j = -j;
                                      %>
                                      <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>">
                                          <td><b><ivu:int key="ElectionCategory" />:</b></td>
-                                         <td><%= electionDetails.getWahlkategorie() %></td>
+                                         <td><%= ClientHelper.forHTML(electionDetails.getWahlkategorie()) %></td>
                                      </tr>
                                      <%
                                         j = -j;
@@ -215,7 +213,7 @@ String helpKey = "wahlImp";
                                      %>
                                      <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>">
                                          <td><b><ivu:int key="<%= "ElectionDomain" + electionDetails.getWahlkategorie().substring(0, 2) %>" />:</b></td>
-                                         <td><%= electionDomain %></td>
+                                         <td><%= ClientHelper.forHTML(electionDomain) %></td>
                                      </tr>
                                      <%
                                             j = -j;
@@ -284,24 +282,25 @@ String helpKey = "wahlImp";
             <div style="padding: 0.5em; padding-bottom: 2.5em;">
                 <br/>
                 <% if (SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel())) {
-                    String hashCode = impDef.getHashWert230();
-                    String[] hashCodeParts = hashCode.split(" ");
-                    if (hashCodeParts.length < 1) { %>
-                        <%= BundleHelper.getBundleString("Error_Illegal_HashCode_Format") %>
-                    <% } else { %>
-                        <%= BundleHelper.getBundleString("Neue_Wahl_HashWert_Confirm_230_" + systemInfo.getEbenenklartext()+"_"+systemInfo.getModusklartext()) %>:<br/><br/>
-                        <%= hashCode %>
-                        <input type="hidden" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230 %>" value="<%= hashCodeParts[0] %>" />&nbsp;
-                    <% } %>
+                    String hashCode = impDef.getHashWert230(); %>
+                    <!-- Only confirmation of complete hashcode, no user entry: Show complete hashcode, add hidden field with the (unneccessary) user input --> 
+                    <%= BundleHelper.getBundleString("Neue_Wahl_HashWert_Confirm_230_" + systemInfo.getEbenenklartext() + "_" + systemInfo.getModusklartext()) %><br/><br/>
+                    <%= hashCode %>
+                    <input type="hidden" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230_INPUT_0 %>" value="<%= HashCodeSplitter.HIDDEN_INPUT %>" />&nbsp;
+                    <input type="hidden" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230_INPUT_1 %>" value="<%= HashCodeSplitter.HIDDEN_INPUT %>" />&nbsp;
                 <% } else { %>
-                    <%= BundleHelper.getBundleString("Neue_Wahl_HashWert_230_" + systemInfo.getEbenenklartext()+"_"+systemInfo.getModusklartext()) %>:<br/><br/>
-                    <input type="text" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230 %>" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.wahlImport.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
-                    <%=impDef.getTeilHashWert230() %>
+                    <!-- Input of parts of the hashcode is required: Show parts of hashcode, add field for the user input --> 
+                    <%= BundleHelper.getBundleString("Neue_Wahl_HashWert_230_" + systemInfo.getEbenenklartext() + "_" + systemInfo.getModusklartext()) %><br/><br/>
+                    <%= impDef.getHashWert230ToConfirm(0) %>
+                    <input type="text" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230_INPUT_0 %>" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.wahlImport.<%=WahlImportBean.FELD_HASHCODE_230_INPUT_1 %>.focus();" autocomplete="off" />&nbsp;
+                    <%= impDef.getHashWert230ToConfirm(1) %>
+                    <input type="text" size="4" maxlength="4" name="<%=WahlImportBean.FELD_HASHCODE_230_INPUT_1 %>" onkeyup="this.value=this.value.toUpperCase(); if (this.value.length >= 4) document.wahlImport.<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>.focus();" autocomplete="off" />&nbsp;
+                    <%= impDef.getHashWert230ToConfirm(2) %>
                 <% } %>
             </div>
             <div style="padding: 0.5em; text-align: center;">
-              <input id="box2" style="cursor:pointer" type="submit" name="<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>" value="<%= SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel()) ? BundleHelper.getBundleString("Neue_Wahl_importieren_confirm_button") : BundleHelper.getBundleString("Neue_Wahl_importieren_button") %>">
-              <input id="box2" style="cursor:pointer" type="submit" name="<%=WahlImportBean.FELD_RESET%>" value="<%= SecurityLevel.CONFIRM_HASH_CODE.equals(impDef.getSecurityLevel()) ? BundleHelper.getBundleString("Neue_Wahl_importieren_confirm_reset_button") : BundleHelper.getBundleString("Neue_Wahl_importieren_reset_button") %>">
+              <input id="box2" style="cursor:pointer" type="submit" name="<%=ApplicationBeanKonstanten.PREFIX + "importieren"%>" value="<%= BundleHelper.getBundleString("Hashcode_bestaetigen_button") %>">
+              <input id="box2" style="cursor:pointer" type="submit" name="<%=WahlImportBean.FELD_RESET%>"                        value="<%= BundleHelper.getBundleString("Hashcode_ablehnen_button") %>">
             </div>
          </ivu:form>
          
@@ -311,7 +310,7 @@ String helpKey = "wahlImp";
             <ivu:int key="Neue_Wahl_Gebietsnummer_Label"/>:
             <select name="<%=WahlImportBean.FELD_GEBIETSNUMMER %>" style="font-size:11px; width: 300; left: 200px; position: absolute;">
                     <% for (GebietModel gebiet: impDef.getGebietsauswahl()) { %>
-                        <option value="<%=gebiet.getNummer()%>"><%= gebiet.getName() %> (<%=Gebietsart.getGebietsartKlartext(gebiet) %>)</option>
+                        <option value="<%=gebiet.getNummer()%>"><%= ClientHelper.forHTML(gebiet.getName()) %> (<%=Gebietsart.getGebietsartKlartext(gebiet) %>)</option>
                 <% }%>
                 </select>
         </div>
@@ -337,7 +336,7 @@ String helpKey = "wahlImp";
                 <% } else { %>
                 <ivu:form name="logout" action="/osv?cmd=app_logout">
                     <br/>
-                    <b><ivu:int key="Abmelden_von"/> <%=appBean.getAnwContext().getAnmeldename()%></b>
+                    <b><ivu:int key="Abmelden_von"/> <%=ClientHelper.forHTML(appBean.getAnwContext().getAnmeldename())%></b>
                 <div style="padding: 1em; text-align: center">
                     <input id="box2" style="cursor:pointer" type="submit" value="<%=BundleHelper.getBundleString("Abmelden_jetzt") %>" name="logout">
                     </div>

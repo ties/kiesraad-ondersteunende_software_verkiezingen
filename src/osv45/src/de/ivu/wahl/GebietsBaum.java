@@ -32,15 +32,12 @@ import de.ivu.wahl.modell.ejb.GebietHome;
 import de.ivu.wahl.modell.ejb.Wahl;
 
 /**
- * @author bae@ivu.de cos@ivu.de mur@ivu.de - IVU Traffic Technologies AG
+ * @author bae, D. Cosic, M. Murdfield - IVU Traffic Technologies AG
  */
 public class GebietsBaum implements Serializable {
   private static final long serialVersionUID = -3055801084585686392L;
   private static final String SEPARATOR = "_"; //$NON-NLS-1$
   private static final Category LOGGER = Log4J.configure(GebietsBaum.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(GebietsBaum.class, Log4J.extractVersion("$Revision: 1.15 $"))); //$NON-NLS-1$
-  }
 
   private static final Map<String, GebietsBaum> __gebietsBaeume = new HashMap<String, GebietsBaum>();
 

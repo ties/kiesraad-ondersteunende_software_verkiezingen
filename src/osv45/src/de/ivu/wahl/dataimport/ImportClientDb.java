@@ -33,7 +33,9 @@ import nu.xom.Elements;
 import de.ivu.ejb.EJBUtil;
 import de.ivu.ejb.bmp.Model;
 import de.ivu.util.debug.Log4J;
+import de.ivu.wahl.InputMode;
 import de.ivu.wahl.Konstanten;
+import de.ivu.wahl.SystemProperty;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.admin.PropertyHandling;
 import de.ivu.wahl.admin.PropertyHandlingBean;
@@ -58,7 +60,7 @@ import de.ivu.wahl.util.XMLImportHelper;
 /**
  * ImportClient implementation that imports the EML files into the database
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class ImportClientDb extends AbstractImportClient {
 
@@ -210,12 +212,20 @@ public class ImportClientDb extends AbstractImportClient {
   private void initProperties() {
     RepositoryModel prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
     prop.setName(Konstanten.PROP_DOUBLE_INPUT);
-    prop.setWert(String.valueOf(Konstanten.INPUT_MODE_DOUBLE));
+    prop.setWert(InputMode.INPUT_MODE_DOUBLE.getProperty());
     _models.add(prop);
     prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
     prop.setName(Konstanten.PROP_IS_INPUT_MODE_COMPLETE);
     prop.setWert(String.valueOf(Boolean.TRUE));
     _models.add(prop);
+
+    for (SystemProperty systemProperty : SystemProperty.values()) {
+      prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
+      prop.setName(systemProperty.getKey());
+      prop.setWert(systemProperty.getInitialValue());
+      _models.add(prop);
+    }
+
     if (isEK()) {
       prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
       prop.setName(de.ivu.wahl.export.XMLTags.RG_TIME_OF_MEETING);

@@ -15,7 +15,7 @@ import java.io.OutputStream;
 /**
  * Copies data from <tt>InputStream</tt> to <tt>OutputStream</tt> .
  * 
- * @author kie@ivu.de
+ * @author kie
  * @created 2001-06-27
  * @since 1.0
  */

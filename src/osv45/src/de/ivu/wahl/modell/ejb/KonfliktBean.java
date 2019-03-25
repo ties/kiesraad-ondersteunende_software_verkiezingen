@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * KonfliktBean
  *
- * @author cos@ivu.de  (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import java.sql.SQLException;
@@ -22,9 +22,6 @@ public class KonfliktBean extends BasicKonfliktBean {
   private static final long serialVersionUID = -968693252508300120L;
 
   private static final Category LOGGER = Log4J.configure(KonfliktBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(KonfliktBean.class, Log4J.extractVersion("$Revision: 1.6 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Find all actual conflicts of the election for the given kind of election result

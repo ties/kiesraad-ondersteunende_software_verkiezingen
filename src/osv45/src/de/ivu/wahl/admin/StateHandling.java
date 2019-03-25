@@ -15,7 +15,7 @@ import de.ivu.wahl.WahlInfo;
 /**
  * Manipulation des Applikations- und Wahlzustandes
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface StateHandling {
   /**

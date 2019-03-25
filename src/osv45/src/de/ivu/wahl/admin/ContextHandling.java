@@ -9,7 +9,7 @@ package de.ivu.wahl.admin;
 import java.net.URI;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface ContextHandling {
   URI getBaseURI();

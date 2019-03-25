@@ -11,7 +11,7 @@ import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.util.BundleHelper;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
 
  */
 public interface PersonendatenKonstanten {

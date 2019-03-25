@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.RechtegruppeModel;
 /**
  * SessionBean zum Verwalten der Anwender
  * 
- * @author cos@ivu.de klie@ivu.de
+ * @author D. Cosic P. Kliem
  */
 public interface AnwenderHandling {
 
@@ -27,13 +27,13 @@ public interface AnwenderHandling {
    * Passwort des angemeldeten Anwenders �ndern
    * 
    * @param anwContext Anwenderkontext
-   * @param oldPWHash alte Pr�fsumme aus Anmeldename und Passwort
-   * @param newPWHash neue Pr�fsumme aus Anmeldename und Passwort
+   * @param oldPW old password (entered by the user)
+   * @param newPW new password
    * @throws AnwenderException wenn die Parameter nicht stimmen (null, altes PW falsch oder PW
    *           unver�ndert)
    * @throws EJBException bei einem allgemeinen Problem
    */
-  void changePassword(AnwContext anwContext, String oldPWHash, String newPWHash)
+  void changePassword(AnwContext anwContext, String oldPW, String newPW)
       throws EJBException, AnwenderException;
 
   /**
@@ -154,6 +154,13 @@ public interface AnwenderHandling {
    */
   AnwContext login(String anwendername, String hash, String id_Wahl, String sessionID)
       throws EJBException, AnmeldeFehlversuchException;
+
+  /**
+   * @param anwendername user name
+   * @return In case the user is found in the database, return his/her password salt. Otherwise
+   *         return an empty string.
+   */
+  String getSalt(String anwendername) throws EJBException;
 
   /**
    * Abmelden des Anwenders: Entfernt einen Anwender aus der Liste der angemeldeten Anwender.

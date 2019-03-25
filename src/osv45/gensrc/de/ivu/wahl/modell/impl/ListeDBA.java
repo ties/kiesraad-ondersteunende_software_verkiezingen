@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Liste.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListeDBA extends DBABase {
@@ -70,25 +70,49 @@ public class ListeDBA extends DBABase {
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTE)) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_WAHL)) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(TYP.toUpperCase())) != null) {
+         m._typ = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(TYP)) != null) {
          m._typ = r.getString(idx.intValue());
       }
       if ((idx = columns.get(SATZ.toUpperCase())) != null) {
          m._satz = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(SATZ)) != null) {
+         m._satz = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(NAME.toUpperCase())) != null) {
+         m._name = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(NAME)) != null) {
          m._name = r.getString(idx.intValue());
       }
       if ((idx = columns.get(GESCHLECHTSICHTBAR.toUpperCase())) != null) {
          m._geschlechtSichtbar = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(GESCHLECHTSICHTBAR)) != null) {
+         m._geschlechtSichtbar = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(PUBLICATIONLANGUAGE.toUpperCase())) != null) {
+         m._publicationLanguage = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(PUBLICATIONLANGUAGE)) != null) {
          m._publicationLanguage = r.getString(idx.intValue());
       }
    }
@@ -104,25 +128,25 @@ public class ListeDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_WAHL.toUpperCase())) {
+      if (columns.containsKey(ID_WAHL.toUpperCase()) || columns.containsKey(ID_WAHL)) {
          p.setString(idx++, m._id_Wahl);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(TYP.toUpperCase())) {
+      if (columns.containsKey(TYP.toUpperCase()) || columns.containsKey(TYP)) {
          p.setString(idx++, m._typ);
       }
-      if (columns.containsKey(SATZ.toUpperCase())) {
+      if (columns.containsKey(SATZ.toUpperCase()) || columns.containsKey(SATZ)) {
          p.setInt(idx++, m._satz);
       }
-      if (columns.containsKey(NAME.toUpperCase())) {
+      if (columns.containsKey(NAME.toUpperCase()) || columns.containsKey(NAME)) {
          p.setString(idx++, m._name);
       }
-      if (columns.containsKey(GESCHLECHTSICHTBAR.toUpperCase())) {
+      if (columns.containsKey(GESCHLECHTSICHTBAR.toUpperCase()) || columns.containsKey(GESCHLECHTSICHTBAR)) {
          p.setBoolean(idx++, m._geschlechtSichtbar);
       }
-      if (columns.containsKey(PUBLICATIONLANGUAGE.toUpperCase())) {
+      if (columns.containsKey(PUBLICATIONLANGUAGE.toUpperCase()) || columns.containsKey(PUBLICATIONLANGUAGE)) {
          p.setString(idx++, m._publicationLanguage);
       }
       p.setString(idx++, m._id_Liste);
@@ -317,21 +341,6 @@ public class ListeDBA extends DBABase {
    }
 
    /**
-     * Method retrieveIDsByID_Wahl returns a {@link Collection} of Liste IDs
-     *
-     * @param id_Wahl searching condition
-
-     * @return a {@link Collection} of Liste IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Wahl(String id_Wahl) throws SQLException {
-      return retrieveIDs(
-         "select ID_Liste from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Wahl});
-   }
-
-   /**
      * Method retrieveIDsByID_Gruppe returns a {@link Collection} of Liste IDs
      *
      * @param id_Gruppe searching condition
@@ -344,6 +353,21 @@ public class ListeDBA extends DBABase {
          "select ID_Liste from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Gruppe});
+   }
+
+   /**
+     * Method retrieveIDsByID_Wahl returns a {@link Collection} of Liste IDs
+     *
+     * @param id_Wahl searching condition
+
+     * @return a {@link Collection} of Liste IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Wahl(String id_Wahl) throws SQLException {
+      return retrieveIDs(
+         "select ID_Liste from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Wahl});
    }
 
    /**

@@ -7,7 +7,7 @@ import javax.ejb.FinderException;
 /**
  * SitzberechnungErgebnisHome
  * 
- * @author cos@ivu.de (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface SitzberechnungErgebnisHome extends BasicSitzberechnungErgebnisHome {

@@ -14,7 +14,7 @@ import de.ivu.wahl.result.ElectionAndCandidatesAndVotes;
 import de.ivu.wahl.result.Util;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ElectionAndCandidatesAndVotesImpl extends ElectionAndCandidatesImpl
     implements

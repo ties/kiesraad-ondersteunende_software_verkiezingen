@@ -9,7 +9,7 @@ import java.net.URL;
  * Identifikation und evtl. ein Offset mit der Feldposition gehalten. Liegt eine andere Exception zu
  * Grunde, so kann auch diese gespeichert werden.
  * 
- * @author klie@ivu.de cos@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author P. Kliem D. Cosic Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class ImportException extends Exception {

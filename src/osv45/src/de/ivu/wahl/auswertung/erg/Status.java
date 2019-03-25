@@ -3,37 +3,37 @@ package de.ivu.wahl.auswertung.erg;
 /**
  * Ergebnisobjekt zur Statusanzeige
  *
- * @author mur@ivu.de
+ * @author M. Murdfield
  */
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class Status extends Ergebnis {
   private static final long serialVersionUID = -4551794791659733170L;
 
   /**
-   * Klartextbeschreibung der Wahl, nur zu Präsentationszwecken (z.B. Bundestagswahl 1998)
+   * Klartextbeschreibung der Wahl, nur zu Prï¿½sentationszwecken (z.B. Bundestagswahl 1998)
    */
   protected final String _wahl;
 
   /**
-   * Status des WahlABWICKLUNGSSYSTEMS, nur zu Präsentationszwecken mit Benutzung von
+   * Status des WahlABWICKLUNGSSYSTEMS, nur zu Prï¿½sentationszwecken mit Benutzung von
    * Konstanten.APPSTATE_KLARTEXT[i]
    */
   protected final int _statusWAS;
 
   /**
-   * Art der Wahl, kein default nur zu Präsentationszwecken mit Benutzung von
+   * Art der Wahl, kein default nur zu Prï¿½sentationszwecken mit Benutzung von
    * WahlModel..WAHLART_KLARTEXT[i]
    */
   protected final ElectionCategory _electionCategory;
 
   /**
-   * Aktuelle Wahlergebnisart nur zu Präsentationszwecken mit Benutzung von
+   * Aktuelle Wahlergebnisart nur zu Prï¿½sentationszwecken mit Benutzung von
    * WahlModel.WAHLERGEBNISART_KLARTEXT[i]
    */
   protected final int _wahlergebnisart;

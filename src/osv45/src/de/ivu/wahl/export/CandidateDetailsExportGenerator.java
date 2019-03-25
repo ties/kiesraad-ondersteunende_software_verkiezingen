@@ -26,7 +26,7 @@ import de.ivu.wahl.wus.reportgen.csv.CsvGenerator;
 /**
  * Generates the CSV String for the Export of the details of elected candidates (osv5-6)
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CandidateDetailsExportGenerator {
   private static final String EMPTY_STRING = ""; //$NON-NLS-1$

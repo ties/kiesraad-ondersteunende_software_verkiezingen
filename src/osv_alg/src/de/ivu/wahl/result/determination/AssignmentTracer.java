@@ -29,7 +29,7 @@ import de.ivu.wahl.result.result.ElectionResult;
  * An AssignmentTracer keeps track of the assignments of seats to lists. It also checks if lists are
  * exhausted.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class AssignmentTracer<T extends GeneralList, P extends GeneralList> {
 

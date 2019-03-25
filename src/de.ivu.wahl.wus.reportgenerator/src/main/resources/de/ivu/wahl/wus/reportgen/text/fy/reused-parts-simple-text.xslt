@@ -6,18 +6,13 @@
     <xsl:param name="RP_ChapterElection_HetGaatOmKandidatenlijst" select="'It giet om de kandidatelist foar de ferkiezing fan:'" />
     <xsl:param name="RP_ChapterElection_VoorDeProvincie" select="' voor de provincie '" />
 
-    <xsl:param name="RP_ChapterStemming_Stemming" select="'[FY]Stemming'" />
-    <xsl:param name="RP_ChapterStemming_deVerkiezingVan" select="'[FY]de verkiezing van '" />
-    <xsl:param name="RP_ChapterStemming_het" select="'[FY]het '" />
-    <xsl:param name="RP_ChapterStemming_referendum" select="'[FY]referendum '" />
-    <xsl:param name="RP_ChapterStemming_over" select="'[FY]over '" />
-    <xsl:param name="RP_ChapterStemming_DitProcesVerbaalHeeftBetrekkingOp" select="'[FY]Dit proces-verbaal heeft betrekking op:'" />
-    <xsl:param name="RP_ChapterStemming_HetGaatOmVerkiezingVanLeden" select="'[FY]Het gaat om de verkiezing van de leden van:'" />
-    <xsl:param name="RP_ChapterStemming_VoorDeProvincie" select="' voor de provincie '" />
-
-    <xsl:param name="RP_ChapterPartyName_AanduidingVan" select="'Oantsjutting fan de politike groepearring'" />
-    <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC" select="'Oantsjutting fan de (politike) groepearring'" />
-    <xsl:param name="RP_ChapterPartyName_AanduidingBoven" select="'Oantsjutting boppe de kandidatelist: '" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan" select="'De politike groepearring'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_H3" select="'Oantsjutting fan de politike groepearring'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_H3_2" select="'Oantsjutting fan de politike groepearrings'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC" select="'De (politike) groepearring'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC_H3" select="'Oantsjutting fan de (politike) groepearring'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingVan_BC_H3_2" select="'Oantsjutting fan de (politike) groepearrings'" />
+    <xsl:param name="RP_ChapterPartyName_AanduidingBoven" select="'De politike groepearring dêr’t jo de kandidatelist fan stypje '" />
     <xsl:param name="RP_ChapterPartyName_geregistreerdeAanduiding" select="'De registrearre oantsjutting fan de politike groepearring: '" />
     <xsl:param name="RP_ChapterPartyName_samengevoegdeAanduiding" select="'De gearfoege oantsjutting fan de politike groepearrings: '" />
     <xsl:param name="RP_ChapterPartyName_Kieskringen" select="'Kiesrûnten'" />
@@ -107,9 +102,6 @@
     <xsl:param name="RP_FooterWithHashcode_hashcode" select="'SHA-256-Hashcode: '" />
 
     <xsl:param name="RP_CombinedList_en" select="'en '" />
-
-    <xsl:param name="RP_CombinedListI17_lijst" select="'- List '" />
-    <xsl:param name="RP_CombinedListI17_enLijst" select="' en list '" />
 
     <xsl:param name="RP_CombinedList2_en" select="'en '" />
     <xsl:param name="RP_CombinedList2_lijst" select="' (list '" />

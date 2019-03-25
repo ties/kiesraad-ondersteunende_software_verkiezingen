@@ -6,7 +6,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export of the appendix to model P22_1 and U16
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class P5ExportStateP22_1Appendix extends DialogStateHolder {
   private static final long serialVersionUID = -2389493781548746302L;

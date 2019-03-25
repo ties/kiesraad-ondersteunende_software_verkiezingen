@@ -60,5 +60,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/de.ivu.wahl.wus.xmlsecurity"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.ivu.wahl.wus.electioncategory"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/de.ivu.wahl.wus.loggerinterface"/>
+	<classpathentry kind="lib" path="jboss/server/osv/lib/bcprov-ext-jdk15on-158.jar" sourcepath="libsrc/bcprov-src.zip"/>
 	<classpathentry kind="output" path="websrc/WEB-INF/classes"/>
 </classpath>

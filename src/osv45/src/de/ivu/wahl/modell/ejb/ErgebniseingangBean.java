@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.ejb;
 /**
  * ErgebniseingangBean
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import static de.ivu.ejb.fw.DBABase.count;
@@ -39,16 +39,12 @@ import de.ivu.wahl.modell.impl.ErgebniseingangDBA;
 import de.ivu.wahl.modell.impl.Gebiet_ErgebniseingangDBA;
 
 /**
- * @author SMA@ivu.de, IVU Traffic Technologies AG
+ * @author SMA, IVU Traffic Technologies AG
  */
 public class ErgebniseingangBean extends BasicErgebniseingangBean {
   private static final long serialVersionUID = -8264874589769938537L;
 
   private static final Category LOGGER = Log4J.configure(ErgebniseingangBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(ErgebniseingangBean.class, Log4J
-        .extractVersion("$Revision: 1.20 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Find by election and kind of election result
@@ -105,16 +101,19 @@ public class ErgebniseingangBean extends BasicErgebniseingangBean {
 
       int len = ids.size();
       if (len == 0) {
-        throw new ObjectNotFoundException(Messages
-            .bind(MessageKeys.Error_0_wurdeNichtGefunden_id_Gebiet_1_wahlergebnisart_2, getClass()
-                .getName(), id_Gebiet, wahlergebnisart));
-      }
-      if (len > 1) {
-        throw new FinderException(Messages
-            .bind(MessageKeys.Error_0_istNichtEindeutigBestimmt_id_Gebiet_1_wahlergebnisart_2,
+        throw new ObjectNotFoundException(
+            Messages.bind(MessageKeys.Error_0_wurdeNichtGefunden_id_Gebiet_1_wahlergebnisart_2,
                 getClass().getName(),
                 id_Gebiet,
                 wahlergebnisart));
+      }
+      if (len > 1) {
+        throw new FinderException(
+            Messages
+                .bind(MessageKeys.Error_0_istNichtEindeutigBestimmt_id_Gebiet_1_wahlergebnisart_2,
+                    getClass().getName(),
+                    id_Gebiet,
+                    wahlergebnisart));
       }
       return ids.iterator().next();
     } catch (SQLException se) {

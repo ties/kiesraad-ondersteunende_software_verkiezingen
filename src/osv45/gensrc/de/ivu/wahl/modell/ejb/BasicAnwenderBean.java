@@ -30,7 +30,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Anwender as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicAnwenderBean extends BMPBeanBase implements EntityBean, AnwenderModel {
@@ -81,6 +81,7 @@ public abstract class BasicAnwenderBean extends BMPBeanBase implements EntityBea
       _details.setName(""); //$NON-NLS-1$
       _details.setAnwendername(""); //$NON-NLS-1$
       _details.setPasswordHash(""); //$NON-NLS-1$
+      _details.setSalt(""); //$NON-NLS-1$
       create(_details);
       return id_Anwender;
    }
@@ -235,6 +236,36 @@ public abstract class BasicAnwenderBean extends BMPBeanBase implements EntityBea
    }
 
    /**
+     * Returns the set of entities of the type {@link Anwender}, filtered by salt.
+     *
+     * @param salt searching condition
+     * @return  {@link Collection} of primary keys of the entities Anwender
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   public Collection<String> ejbFindAllBySalt(String salt) throws IVUFinderException {
+      try {
+         return AnwenderDBA.retrieveIDsBySalt(salt);
+      } catch (SQLException se) {
+         throw new IVUFinderException(se.getMessage(), se);
+      }
+   }
+
+   /**
+     * Returns the set of entities of the type {@link Anwender}, filtered by salt.
+     *
+     * @param salt searching condition
+     * @return  {@link Collection} of primary keys of the entities Anwender
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found").
+     */
+   public Collection<String> ejbFindAllLikeSalt(String salt) throws IVUFinderException {
+      try {
+         return AnwenderDBA.retrieveIDsLikeSalt(salt);
+      } catch (SQLException se) {
+         throw new IVUFinderException(se.getMessage(), se);
+      }
+   }
+
+   /**
      * Returns the set of entities of the type {@link Anwender}, filtered by fehlversucheAnmeldung.
      *
      * @param fehlversucheAnmeldung searching condition
@@ -309,6 +340,7 @@ public abstract class BasicAnwenderBean extends BMPBeanBase implements EntityBea
          setName(details.getName());
          setAnwendername(details.getAnwendername());
          setPasswordHash(details.getPasswordHash());
+         setSalt(details.getSalt());
          setFehlversucheAnmeldung(details.getFehlversucheAnmeldung());
          setLetzterZugriff(details.getLetzterZugriff());
       }
@@ -439,6 +471,24 @@ public abstract class BasicAnwenderBean extends BMPBeanBase implements EntityBea
      */
    public String getPasswordHash() {
       return _details.getPasswordHash();
+   }
+
+   /**
+     * Sets the value of salt in the entity Anwender
+     *
+     * @param salt new value of the attribute salt
+     */
+   public void setSalt(String salt) {
+      _details.setSalt(salt);
+   }
+
+   /**
+     * Gets the value of salt in the entity Anwender
+     *
+     * @return value of the attribute salt
+     */
+   public String getSalt() {
+      return _details.getSalt();
    }
 
    /**
@@ -624,6 +674,9 @@ public abstract class BasicAnwenderBean extends BMPBeanBase implements EntityBea
          }
          if (_details.getPasswordHash() != null) {
             string +=  ", passwordHash = " + _details.getPasswordHash(); //$NON-NLS-1$
+         }
+         if (_details.getSalt() != null) {
+            string +=  ", salt = " + _details.getSalt(); //$NON-NLS-1$
          }
          string +=  ", fehlversucheAnmeldung = " + _details.getFehlversucheAnmeldung(); //$NON-NLS-1$
          if (_details.getLetzterZugriff() != null) {

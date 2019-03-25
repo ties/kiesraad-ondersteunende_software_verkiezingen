@@ -5,20 +5,20 @@ import javax.ejb.EJBException;
 /**
  * Wahl
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 
 public interface Wahl extends BasicWahl {
 
   /**
-   * Sperrt die ganze Wahl für den schreibenden und lesenden Zugriff
+   * Sperrt die ganze Wahl fï¿½r den schreibenden und lesenden Zugriff
    * 
    * @throws EJBException ein Fehler ist aufgetreten
    */
   void lock() throws EJBException;
 
   /**
-   * Sperrt die ganze Wahl für den schreibenden (ja, richtig!) Zugriff
+   * Sperrt die ganze Wahl fï¿½r den schreibenden (ja, richtig!) Zugriff
    * 
    * @throws EJBException ein Fehler ist aufgetreten
    */
@@ -37,24 +37,24 @@ public interface Wahl extends BasicWahl {
   String getNameKurz() throws EJBException;
 
   /**
-   * @return ob die Wahl für die aktuelle Wahlergebnisart freigegeben wurde
+   * @return ob die Wahl fï¿½r die aktuelle Wahlergebnisart freigegeben wurde
    * @throws EJBException ein Fehler ist aufgetreten
    */
   boolean isFreigegeben() throws EJBException;
 
   /**
-   * @param wahlergebnisart Art des Wahlergebnisses (vorläufig, endgültig, briefwahl; s.
+   * @param wahlergebnisart Art des Wahlergebnisses (vorlï¿½ufig, endgï¿½ltig, briefwahl; s.
    *          {@link de.ivu.wahl.modell.WahlModel}), der erfasst wurde
-   * @return Wahljahr der übergebenen Wahlergebnisart
+   * @return Wahljahr der ï¿½bergebenen Wahlergebnisart
    * @throws EJBException ein Fehler ist aufgetreten
    */
   int getWahljahr() throws EJBException;
 
   /**
-   * Liefert für die übergebene Periodenart für diese Wahl den Wahltermin
+   * Liefert fï¿½r die ï¿½bergebene Periodenart fï¿½r diese Wahl den Wahltermin
    * 
    * @param wahlperiodenart Periodenart
-   * @return Wahltermin der übergebenen Wahlperiodenart
+   * @return Wahltermin der ï¿½bergebenen Wahlperiodenart
    * @throws EJBException ein Fehler ist aufgetreten
    */
   String getWahltermin() throws EJBException;

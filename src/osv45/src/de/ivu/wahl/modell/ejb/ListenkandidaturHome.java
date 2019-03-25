@@ -7,7 +7,7 @@ import javax.ejb.FinderException;
 /**
  * LocalHome Interface f�r die Entit�t Listenkandidatur als BMP Entity Bean.
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public interface ListenkandidaturHome extends BasicListenkandidaturHome {
 

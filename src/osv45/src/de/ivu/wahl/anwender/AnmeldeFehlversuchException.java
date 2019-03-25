@@ -7,7 +7,7 @@
 package de.ivu.wahl.anwender;
 
 /**
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class AnmeldeFehlversuchException extends Exception {
 

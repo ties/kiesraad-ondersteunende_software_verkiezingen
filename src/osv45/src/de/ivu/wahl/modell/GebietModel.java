@@ -9,7 +9,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * GebietModel
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 
 public interface GebietModel extends BasicGebietModel {
@@ -135,7 +135,7 @@ public interface GebietModel extends BasicGebietModel {
   /**
    * Sorting regions by region number, but municipalities alphabetically
    * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   public class GebietsComparator implements Comparator<GebietModel> {
 

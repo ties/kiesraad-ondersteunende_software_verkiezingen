@@ -8,10 +8,12 @@ package de.ivu.wahl.dataimport;
 /**
  * Hilfsfunktionen zum Import
  * 
- * @author klie@ivu.de cos@ivu.de - IVU Traffic Technologies AG
+ * @author P. Kliem D. Cosic - IVU Traffic Technologies AG
  */
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +28,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 import org.apache.log4j.xml.SAXErrorHandler;
 import org.xml.sax.EntityResolver;
@@ -46,8 +50,12 @@ import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.exception.ImportException;
+import de.ivu.wahl.wus.xmlsecurity.SAXParserFactoryUtil;
+import de.ivu.wahl.wus.xmlsecurity.XmlParseException;
 
 public abstract class ImportUtil {
+  private static final String HTTP_APACHE_ORG_XML_FEATURES_VALIDATION_SCHEMA = "http://apache.org/xml/features/validation/schema"; //$NON-NLS-1$
+
   final static Category LOGGER = Log4J.configure(ImportUtil.class);
 
   static {
@@ -125,7 +133,7 @@ public abstract class ImportUtil {
 
   public static Element readXMLRoot(String docAsString) throws ImportException {
     try {
-      return new Builder().build(new StringReader(docAsString)).getRootElement();
+      return new Builder(getXMLReader()).build(new StringReader(docAsString)).getRootElement();
     } catch (Exception e) {
       LOGGER.error(e, e);
       throw new ImportException(
@@ -166,16 +174,65 @@ public abstract class ImportUtil {
    */
   private static Element getRootElement(InputStream inputStream)
       throws ValidityException, ParsingException, IOException {
-    Document doc = new Builder().build(inputStream);
+    XMLReader xmlReader;
+    try {
+      xmlReader = SAXParserFactoryUtil.getXMLReader();
+    } catch (XmlParseException e) {
+      throw new ParsingException("Error creating XMLReader", e); //$NON-NLS-1$
+    }
+    Document doc = new Builder(xmlReader).build(inputStream);
     // Wurzelelement
     return doc.getRootElement();
   }
 
   private static Element getRootElement(InputStream inputStream, String schema)
       throws ImportException {
-    SAXParserFactory factory = SAXParserFactory.newInstance();
-    factory.setValidating(true);
-    factory.setNamespaceAware(true);
+    XMLReader reader = createXmlReader();
+
+    Document doc = null;
+    try {
+      // We might have to read the input stream twice. SO copy it to a byte array
+      byte[] bytes = IOUtils.toByteArray(inputStream);
+
+      try {
+        ByteArrayInputStream firstStream = new ByteArrayInputStream(bytes);
+        doc = new Builder(reader, false).build(firstStream);
+        reader.setFeature(HTTP_APACHE_ORG_XML_FEATURES_VALIDATION_SCHEMA, true);
+        Document validatedDoc = new Builder(reader, true).build(getStreamWithSchema(doc, schema));
+        // return document root
+        return validatedDoc.getRootElement();
+      } catch (ValidityException e) {
+        LOGGER.error(e, e);
+        if (doc != null && e.getMessage().contains("kr:RegisteredParty") //$NON-NLS-1$
+            && e.getMessage().contains("xml:space")) { //$NON-NLS-1$
+          // "cvc-complex-type.3.2.2: Attribute 'xml:space' is not allowed to appear in element 'kr:RegisteredParty'"
+          // Remove >>xml:space="preserve"<< and repeat validation
+          if (isValidWithoutXmlSpace(bytes, schema)) {
+            return doc.getRootElement();
+          } else {
+            LOGGER.error(e, e);
+            throw new ImportException(e.getMessage(), e);
+          }
+        }
+        throw new ImportException(e.getMessage(), e);
+      } catch (ParsingException e) {
+        LOGGER.error(e, e);
+        throw new ImportException(e.getMessage(), e);
+      } catch (SAXNotRecognizedException e) {
+        LOGGER.error(e, e);
+        throw new ImportException(e.getMessage(), e);
+      } catch (SAXNotSupportedException e) {
+        LOGGER.error(e, e);
+        throw new ImportException(e.getMessage(), e);
+      }
+    } catch (IOException e) {
+      LOGGER.error(e, e);
+      throw new ImportException(e.getMessage(), e);
+    }
+  }
+
+  private static XMLReader createXmlReader() throws ImportException {
+    SAXParserFactory factory = getSAXParserFactory();
     XMLReader reader = null;
     try {
       SAXParser saxParser = factory.newSAXParser();
@@ -184,7 +241,7 @@ public abstract class ImportUtil {
       reader.setErrorHandler(new SAXErrorHandler());
       reader.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage", //$NON-NLS-1$
           "http://www.w3.org/2001/XMLSchema"); //$NON-NLS-1$
-      reader.setFeature("http://apache.org/xml/features/validation/schema", false); //$NON-NLS-1$
+      reader.setFeature(HTTP_APACHE_ORG_XML_FEATURES_VALIDATION_SCHEMA, false);
     } catch (ParserConfigurationException e) {
       LOGGER.error(e, e);
       throw new ImportException(Messages.getString(MessageKeys.Error_FehlerBeimParserBauen), e);
@@ -192,35 +249,118 @@ public abstract class ImportUtil {
       LOGGER.error(e, e);
       throw new ImportException(Messages.getString(MessageKeys.Error_FehlerBeimParserBauen), e);
     }
-    Document doc = null;
-    try {
-      doc = new Builder(reader, false).build(inputStream);
-      reader.setFeature("http://apache.org/xml/features/validation/schema", true); //$NON-NLS-1$
-      Document validatedDoc = new Builder(reader, true).build(getStreamWithSchema(doc, schema));
-      // return document root
-      return validatedDoc.getRootElement();
-    } catch (ValidityException e) {
-      LOGGER.error(e, e);
-      if (doc != null && e.getMessage().contains("kr:RegisteredParty") //$NON-NLS-1$
-          && e.getMessage().contains("xml:space")) { //$NON-NLS-1$
-        // Ignore error
-        // "cvc-complex-type.3.2.2: Attribute 'xml:space' is not allowed to appear in element 'kr:RegisteredParty'"
-        return doc.getRootElement();
-      }
-      throw new ImportException(e.getMessage(), e);
-    } catch (ParsingException e) {
-      LOGGER.error(e, e);
-      throw new ImportException(e.getMessage(), e);
-    } catch (IOException e) {
-      LOGGER.error(e, e);
-      throw new ImportException(e.getMessage(), e);
-    } catch (SAXNotRecognizedException e) {
-      LOGGER.error(e, e);
-      throw new ImportException(e.getMessage(), e);
-    } catch (SAXNotSupportedException e) {
-      LOGGER.error(e, e);
-      throw new ImportException(e.getMessage(), e);
+    return reader;
+  }
+
+  
+  /**
+   * After a ValidityException, remove all occurrences of "xml:space="preserve"" and validate the file once again.
+   */
+  private static boolean isValidWithoutXmlSpace(byte[] bytes, String schema) throws IOException {
+    ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    while (reader.ready()) {
+      String line = reader.readLine();
+      String lineWithoutXmlSpace = line.replaceAll("xml:space=\"preserve\"", StringUtils.EMPTY); //$NON-NLS-1$
+      bos.write(lineWithoutXmlSpace.getBytes());
+      bos.write("\n".getBytes()); //$NON-NLS-1$
     }
+    byte[] bytesWithoutXmlSpace = bos.toByteArray();
+    ByteArrayInputStream firstStream = new ByteArrayInputStream(bytesWithoutXmlSpace);
+    try {
+      XMLReader xmlReader = createXmlReader();
+      Document doc = new Builder(xmlReader, false).build(firstStream);
+      xmlReader.setFeature(HTTP_APACHE_ORG_XML_FEATURES_VALIDATION_SCHEMA, true);
+      Document validatedDoc = new Builder(xmlReader, true).build(getStreamWithSchema(doc, schema));
+      validatedDoc.getRootElement();
+
+      // This time validation succeeds
+      return true;
+
+    } catch (SAXNotRecognizedException e) {
+      return false;
+    } catch (SAXNotSupportedException e) {
+      return false;
+    } catch (ValidityException e) {
+      return false;
+    } catch (ParsingException e) {
+      return false;
+    } catch (ImportException e) {
+      return false;
+    }
+  }
+
+  public static XMLReader getXMLReader() throws ImportException {
+    XMLReader xmlReader = null;
+    try {
+      SAXParserFactory saxParserFactory = getSAXParserFactory();
+      SAXParser newSAXParser = saxParserFactory.newSAXParser();
+      xmlReader = newSAXParser.getXMLReader();
+    } catch (ParserConfigurationException e) {
+      throw new ImportException("Failed to parse xml", e); //$NON-NLS-1$
+    } catch (SAXException e) {
+      throw new ImportException("Failed to parse xml", e); //$NON-NLS-1$
+    }
+    return xmlReader;
+  }
+
+  private static SAXParserFactory getSAXParserFactory() throws ImportException {
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    factory.setValidating(true);
+    factory.setNamespaceAware(true);
+
+    // The following code is based on
+    // https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Prevention_Cheat_Sheet#JAXP_DocumentBuilderFactory.2C_SAXParserFactory_and_DOM4J
+    // to prevent XML External Entity (XXE) attacks
+    String feature = null;
+    try {
+      // This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all XML entity
+      // attacks are prevented
+      // Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl
+      feature = "http://apache.org/xml/features/disallow-doctype-decl"; //$NON-NLS-1$
+      factory.setFeature(feature, true);
+
+      // If you can't completely disable DTDs, then at least do the following:
+      // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
+      // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities
+      // JDK7+ - http://xml.org/sax/features/external-general-entities
+      feature = "http://xml.org/sax/features/external-general-entities"; //$NON-NLS-1$
+      factory.setFeature(feature, false);
+
+      // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities
+      // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities
+      // JDK7+ - http://xml.org/sax/features/external-parameter-entities
+      feature = "http://xml.org/sax/features/external-parameter-entities"; //$NON-NLS-1$
+      factory.setFeature(feature, false);
+
+      // Disable external DTDs as well
+      feature = "http://apache.org/xml/features/nonvalidating/load-external-dtd"; //$NON-NLS-1$
+      factory.setFeature(feature, false);
+
+      // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"
+      factory.setXIncludeAware(false);
+      // does not compile: factory.setExpandEntityReferences(false);
+
+      // And, per Timothy Morgan: "If for some reason support for inline DOCTYPEs are a requirement,
+      // then
+      // ensure the entity settings are disabled (as shown above) and beware that SSRF attacks
+      // (http://cwe.mitre.org/data/definitions/918.html) and denial
+      // of service attacks (such as billion laughs or decompression bombs via "jar:") are a risk."
+
+    } catch (ParserConfigurationException e) {
+      // This should catch a failed setFeature feature
+      LOGGER.info("ParserConfigurationException was thrown. The feature '" + feature //$NON-NLS-1$
+          + "' is probably not supported by your XML processor."); //$NON-NLS-1$
+      LOGGER.error(e, e);
+      throw new ImportException(e.getMessage(), e);
+    } catch (SAXException e) {
+      // On Apache, this should be thrown when disallowing DOCTYPE
+      LOGGER.warn("A DOCTYPE was passed into the XML document"); //$NON-NLS-1$
+      LOGGER.error(e, e);
+    }
+
+    return factory;
   }
 
   private static InputStream getStreamWithSchema(Document doc, String schema)
@@ -248,9 +388,13 @@ public abstract class ImportUtil {
       }
       if (schema != null) {
         // return a special input source
-        Reader reader;
-        reader = new InputStreamReader(this.getClass().getResourceAsStream(schema));
-        final InputSource inputSource = new InputSource(reader);
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(schema);
+        if (resourceAsStream == null) {
+          throw new RuntimeException(
+              "Schema file not found. EML schema files are copied to the <schema> folder using the ant task <compile>."); //$NON-NLS-1$
+        }
+        Reader reader = new InputStreamReader(resourceAsStream);
+        InputSource inputSource = new InputSource(reader);
         inputSource.setSystemId(schema);
         return inputSource;
       } else {

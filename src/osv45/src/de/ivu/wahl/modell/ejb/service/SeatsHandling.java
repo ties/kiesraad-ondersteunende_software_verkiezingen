@@ -12,7 +12,7 @@ import de.ivu.wahl.modell.ejb.Liste;
 /**
  * Provides Services with information about votes and elected candidates
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface SeatsHandling {
 

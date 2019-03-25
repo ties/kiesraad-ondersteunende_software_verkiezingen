@@ -14,7 +14,7 @@ import de.ivu.wahl.result.determination.P3List;
 /**
  * List of candidates admitted to an election in an electoral district
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface CandidateList extends NamedObject, Comparable<CandidateList> {
   /**

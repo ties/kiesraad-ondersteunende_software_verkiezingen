@@ -18,7 +18,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
  * replaced. Entering a letter proposes characters of the same letter class,
  * entering a blank " " proposes all gba characters
  * 
- * @author mike@ivu.de, IVU Traffic Technologies AG
+ * @author Mike Gro., IVU Traffic Technologies AG
  * 
  * @version $Id: GBAProposalProvider.java,v 1.1 2009/10/26 10:22:46 tdu Exp $
  */

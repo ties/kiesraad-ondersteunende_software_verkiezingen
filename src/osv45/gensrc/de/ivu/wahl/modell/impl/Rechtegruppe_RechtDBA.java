@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Rechtegruppe_Recht.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class Rechtegruppe_RechtDBA extends DBABase {
@@ -58,7 +58,13 @@ public class Rechtegruppe_RechtDBA extends DBABase {
       if ((idx = columns.get(ID_RECHTEGRUPPE.toUpperCase())) != null) {
          m._id_Rechtegruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_RECHTEGRUPPE)) != null) {
+         m._id_Rechtegruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_RECHT.toUpperCase())) != null) {
+         m._id_Recht = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_RECHT)) != null) {
          m._id_Recht = r.getString(idx.intValue());
       }
    }
@@ -239,6 +245,22 @@ public class Rechtegruppe_RechtDBA extends DBABase {
    }
 
    /**
+     * Gets a {@link Collection} of IDs from Rechtegruppe-entities, which is described by
+     * N:M relation Rechtegruppe_Recht and ID_Recht.
+     *
+     * @param id_Recht searching condition
+
+     * @return a {@link Collection} of Rechtegruppe IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Recht(String id_Recht) throws SQLException {
+      return retrieveIDs(
+         "select ID_Rechtegruppe from " + TABLENAME + " where ID_Recht=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Recht});
+   }
+
+   /**
      * Gets a {@link Collection} of IDs from Recht-entities, which is described by
      * N:M relation Rechtegruppe_Recht and ID_Rechtegruppe.
      *
@@ -254,21 +276,5 @@ public class Rechtegruppe_RechtDBA extends DBABase {
          "select ID_Recht from " + TABLENAME + " where ID_Rechtegruppe=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Rechtegruppe});
-   }
-
-   /**
-     * Gets a {@link Collection} of IDs from Rechtegruppe-entities, which is described by
-     * N:M relation Rechtegruppe_Recht and ID_Recht.
-     *
-     * @param id_Recht searching condition
-
-     * @return a {@link Collection} of Rechtegruppe IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Recht(String id_Recht) throws SQLException {
-      return retrieveIDs(
-         "select ID_Rechtegruppe from " + TABLENAME + " where ID_Recht=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Recht});
    }
 }

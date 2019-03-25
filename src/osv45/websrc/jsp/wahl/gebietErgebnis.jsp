@@ -17,6 +17,7 @@
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Rechte"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.eingang.GUIEingangMsg"%>
@@ -44,15 +45,18 @@
  * Enthält die Prüfung, ob eine Wahleinheit zum Ausbleiben oder zur Nachwahl markiert ist.
  * Hat der Anwender nicht das entsprechende Recht, erhält er den entsprechenden Hinweis
  *
- * author:  mur@ivu.de bae@ivu.de cos@ivu.de Copyright (c) 2004-10 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield, bae, D. Cosic Copyright (c) 2004-10 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+   String breite ="100%"; //$NON-NLS-1$
    String helpKey = "gebietErg"; //$NON-NLS-1$
    
+   SystemInfo systemInfo = SystemInfo.getSystemInfo();
    WahlInfo wahlInfo = appBean.getWahlInfo();
    Logger log = Logger.getLogger("jsp.gebietErgebnis"); //$NON-NLS-1$
 
@@ -60,7 +64,6 @@
    GebietInfo rootInfo = (GebietInfo)gebietsBaum.getWurzel().getUserObject();
    int gebietsArt = ClientHelper.getLevel(request, rootInfo.getGebietsart());
    int nr = ClientHelper.getGebietNr(request, rootInfo.getNummer());  
-   String breite ="100%"; //$NON-NLS-1$
 
    // Ergebnis abholen
    DefaultMutableTreeNode node = gebietsBaum.getGebietsNode(gebietsArt, nr);
@@ -84,13 +87,23 @@
    if (gebietInfo.getStatusLetzterEingang() == ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK) {
       isFirstInput = true;
    }
+   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
    String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKonstanten.GEBE, true);
    %>
 
+<c:set var="systemInfo" value="<%= systemInfo %>" scope="page"/>
 <c:set var="gebietInfo" value="<%= gebietInfo %>" scope="page"/>
 <c:set var="infoText" value="<%= infoText %>" scope="page"/>
 <c:set var="confirmationText" value="<%= confirmationText %>" scope="page"/>
-<c:set var="isShowButtonToGebietEingang" value="<%= isErfassungseinheit && isFirstInput %>" scope="page"/>
+
+<c:set var="ersterErfasser" value="${gebietInfo.ersterErfasser}" scope="page"/>
+<c:set var="aktuellerErfasser" value="${appBean.anwContext.anmeldename}" scope="page"/>
+<c:set var="isDoubleInput" value="${not systemInfo.singleInput}" scope="page"/>
+<c:set var="isZweiterErfasserGleichErsterErfasser" value="${isDoubleInput && ersterErfasser == aktuellerErfasser}" scope="page"/>
+<c:set var="isErfassungseinheit" value="<%= isErfassungseinheit %>" scope="page"/>
+<c:set var="isFirstInput" value="<%= isFirstInput %>" scope="page"/>
+<c:set var="hatRechtFuerErfassung" value="<%= hatRechtFuerErfassung %>" scope="page"/>
+<c:set var="isShowButtonToGebietEingang" value="${isErfassungseinheit && isFirstInput && hatRechtFuerErfassung && not isZweiterErfasserGleichErsterErfasser}" scope="page"/>
 
 <html>
 <head>
@@ -134,12 +147,6 @@
       <tr>
          <td></td>
          <td style="padding-top: 20px; padding-bottom: 30px;">
-            <c:if test="${gebietInfo.vollstaendig}">
-               <ivu:int key="NeueErsteingabeAbgeschlossen"/>
-            </c:if>
-            <c:if test="${!gebietInfo.vollstaendig}">
-               <ivu:int key="ErsteingabeAbgeschlossen"/>
-            </c:if>
             <ivu:a href="<%= urlToGebietEingang %>" id="box2a" style="cursor:pointer" target="_top"><%= BundleHelper.getBundleString("Zweiteingabe") %></ivu:a>
          </td>
          <td></td>
@@ -155,7 +162,7 @@
                      <tr class="hgeeeeee">
                         <td width="5" height="18">&nbsp;</td>
                         <td><b><%=ClientHelper.forHTML(gebietInfo.getCompleteDisplay(", "))%></b></td>
-                        <td align="right"><b><%= wahlInfo.getWahlName() %></b></td>
+                        <td align="right"><b><%= ClientHelper.forHTML(wahlInfo.getWahlName()) %></b></td>
                         <td width="5" height="18">&nbsp;</td>
                      </tr>
                      <tr>
@@ -210,7 +217,7 @@
                                                     <img src="<%= request.getContextPath() %>/img/icon/warnung.gif" width="20" height="20" alt="<%= BundleHelper.getBundleString("Warnung")%>" align="middle">
                                                  </td>
                                                  <td>
-                                                    <font color="red"><%= gruppefehler %></font>
+                                                    <font color="red"><%= ClientHelper.forHTML(gruppefehler) %></font>
                                                  </td>
                                              </tr>
                                            </table>
@@ -221,10 +228,10 @@
                                           <tr class="<%= j>0 ?"hgweiss":"hgeeeeee" %>"<%= isVisible ? "" : " style=\"display:none\"" %>>
                                             <td colspan="3"><b><%= isSmallFontSize ? "<small>":"" %><%= gErg.getName() %><%= isSmallFontSize ? "</small>":"" %></b></td>
                                             <td class="einrue"><div class="einrue"><b><%=ClientHelper.getStimmanzahlString(msg.getGruppenstimmen(gruppenposition), ClientHelper.DF)%></b></div></td>
-                                          <td width="35px" align="right"><b><%=ClientHelper.getStimmProzentString(gErg.getStimmenprozent(), nf )%></b></td>
-                                          <td><%=gErg.getHelptext()%></td>
+                                            <td width="35px" align="right"><b><%=ClientHelper.getStimmProzentString(gErg.getStimmenprozent(), nf )%></b></td>
+                                            <td><%=gErg.getHelptext()%></td>
                                           </tr> <% 
-                                       } else {
+                                     } else {
                                         if (first){ %>
                                             <tr class="hgweiss">
                                                 <td colspan="6" height="20"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" ></td>

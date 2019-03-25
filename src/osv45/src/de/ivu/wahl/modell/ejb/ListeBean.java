@@ -22,19 +22,12 @@ import de.ivu.wahl.modell.impl.ListeDBA;
 /**
  * ListeBean
  * 
- * @author cos@ivu.de IVU Traffic Technologies AG
+ * @author D. Cosic IVU Traffic Technologies AG
  */
 public class ListeBean extends BasicListeBean {
   private static final long serialVersionUID = -463469871914822049L;
 
   private static final Category LOGGER = Log4J.configure(ListeBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(ListeBean.class, Log4J.extractVersion("$Revision: 1.13 $"))); //$NON-NLS-1$
-  }
-
-  public Listenkombination getListenkombination() throws EJBException {
-    return getGruppe().getListenkombination();
-  }
 
   /**
    * Query to find all lists nominated for this region

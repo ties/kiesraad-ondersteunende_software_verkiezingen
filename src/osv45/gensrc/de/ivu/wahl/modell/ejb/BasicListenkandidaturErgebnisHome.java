@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.ListenkandidaturErgebnisModel;
 /**
   * LocalHome interface for the entity ListenkandidaturErgebnis as BMP Entity Bean.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicListenkandidaturErgebnisHome extends EJBLocalHome {
@@ -78,21 +78,21 @@ public interface BasicListenkandidaturErgebnisHome extends EJBLocalHome {
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Ergebniseingang ID of the objects to be searched
-     * @return  {@link Collection} of the found ListenkandidaturErgebnis-entities
-     * @throws FinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   Collection<ListenkandidaturErgebnis> findAllByErgebniseingang(String id_Ergebniseingang) throws FinderException;
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
      * @param id_Listenkandidatur ID of the objects to be searched
      * @return  {@link Collection} of the found ListenkandidaturErgebnis-entities
      * @throws FinderException if an error occurred while searching (does NOT mean "not found".
      */
    Collection<ListenkandidaturErgebnis> findAllByListenkandidatur(String id_Listenkandidatur) throws FinderException;
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
+     * @param id_Ergebniseingang ID of the objects to be searched
+     * @return  {@link Collection} of the found ListenkandidaturErgebnis-entities
+     * @throws FinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   Collection<ListenkandidaturErgebnis> findAllByErgebniseingang(String id_Ergebniseingang) throws FinderException;
 
    /**
      * Returns the set of entities of the type {@link ListenkandidaturErgebnis}, filtered by listenplatz.

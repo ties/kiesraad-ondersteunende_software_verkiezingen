@@ -13,7 +13,7 @@ import java.util.Set;
  * The three result types of the General Seat Distribution Algorithm including the roll back
  * sequence and the roll forware sequence.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class GsdaResult<T> {
   public GsdaResult(Map<T, Long> result, PartlyRamdomIterator<T> rbs, PartlyRamdomIterator<T> rfs) {

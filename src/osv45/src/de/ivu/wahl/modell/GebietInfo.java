@@ -4,11 +4,13 @@ import java.sql.Timestamp;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.auswertung.erg.Ergebnis;
+import de.ivu.wahl.modell.ejb.Ergebniseingang;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.Gebietsstatus;
 import de.ivu.wahl.modell.ejb.Wahl;
@@ -16,7 +18,7 @@ import de.ivu.wahl.modell.ejb.Wahl;
 /**
  * Zusammenfassung mit Gebietsinformationen f�r die Clientseite.
  * 
- * @author mur@ivu.de Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author M. Murdfield Copyright (c) 2004 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class GebietInfo extends Ergebnis {
@@ -46,6 +48,8 @@ public class GebietInfo extends Ergebnis {
   private final boolean _isAuswertungseinheitOderTiefer;
 
   private final int _korrekturnummer;
+
+  private final String _ersterErfasser;
 
   private int _anzahlGesamt = 0;
 
@@ -85,6 +89,10 @@ public class GebietInfo extends Ergebnis {
       _anzahlGesamt = 1;
     }
 
+    Ergebniseingang lastValidFirstInput = gebiet.getLastValidFirstInput(WahlInfo.getWahlInfo()
+        .getAktuelleWahlergebnisart());
+    _ersterErfasser = lastValidFirstInput == null ? StringUtils.EMPTY : lastValidFirstInput.getAnwenderName();
+
     Gebietsstatus currentGebietsstatus = gebiet.getCurrentGebietsstatus(wahl
         .getAktuelleWahlergebnisart());
     if (currentGebietsstatus != null) {
@@ -120,6 +128,10 @@ public class GebietInfo extends Ergebnis {
 
   public boolean hatLetztenEingang() {
     return _letzterEingang != null;
+  }
+
+  public String getErsterErfasser() {
+    return _ersterErfasser;
   }
 
   public int getStatusLetzterEingang() {

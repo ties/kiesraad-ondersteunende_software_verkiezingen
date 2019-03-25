@@ -37,7 +37,7 @@ import de.ivu.wahl.modell.ejb.RepositoryHome;
 /**
  * Zugriff auf Properties in Property-Dateien und der Datenbank
  * 
- * @author cos@ivu.de, klie@ivu.de
+ * @author D. Cosic, P. Kliem
  */
 @Stateless
 @Local(PropertyHandling.class)
@@ -46,11 +46,6 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
   private static final long serialVersionUID = -3648554800254103319L;
 
   static final Category LOGGER = Log4J.configure(PropertyHandlingBean.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(PropertyHandlingBean.class, Log4J
-        .extractVersion("$Revision: 1.10 $"))); //$NON-NLS-1$
-  }
 
   private Properties _props;
 
@@ -408,8 +403,9 @@ public class PropertyHandlingBean extends SessionBeanBase implements PropertyHan
       }
       for (Repository eintrag : rep) {
         if (LOGGER.isDebugEnabled()) {
-          LOGGER.debug(Messages.bind(MessageKeys.Logger_SetzeRepositoryEintrag_0_auf_1, eintrag
-              .getName(), val));
+          LOGGER.debug(Messages.bind(MessageKeys.Logger_SetzeRepositoryEintrag_0_auf_1,
+              eintrag.getName(),
+              val));
         }
         eintrag.setWert(val);
       }

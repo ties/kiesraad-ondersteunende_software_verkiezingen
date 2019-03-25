@@ -6,7 +6,7 @@
  * ArbeitsJSP. Die konkreten Namen der JSPs sind mit den Befehlen kodiert,
  * so dass sie beim ApplicationBean nachgefragt werden können.
  *
- * author:  mur@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: arbeit.jsp,v 1.6 2010/11/19 09:45:17 jon Exp $
  *******************************************************************************
  --%>
@@ -16,6 +16,7 @@
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
    int   work  = ApplicationBeanKonstanten.WORK_INITIAL;
    if (request.getParameter(ApplicationBeanKonstanten.WORK) != null){

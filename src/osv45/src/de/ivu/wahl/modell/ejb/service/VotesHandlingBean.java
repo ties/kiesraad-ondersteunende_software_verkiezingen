@@ -31,9 +31,7 @@ import de.ivu.wahl.admin.PropertyHandling;
 import de.ivu.wahl.admin.PropertyHandlingBean;
 import de.ivu.wahl.auswertung.erg.ResultSummary;
 import de.ivu.wahl.auswertung.erg.sv.Gruppenzeile;
-import de.ivu.wahl.auswertung.erg.sv.ListenkombinationInfo;
 import de.ivu.wahl.auswertung.erg.sv.SitzverteilungErg;
-import de.ivu.wahl.auswertung.erg.sv.SitzverteilungListenkombinationErg;
 import de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatInfo;
 import de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatInfoToolkit;
 import de.ivu.wahl.export.RG520VotesHelper;
@@ -47,7 +45,6 @@ import de.ivu.wahl.modell.GesamtstimmenImpl;
 import de.ivu.wahl.modell.GruppeGebietsspezifischModel;
 import de.ivu.wahl.modell.GruppeKonstanten;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
-import de.ivu.wahl.modell.GruppeModel;
 import de.ivu.wahl.modell.ListsInRegionsModel;
 import de.ivu.wahl.modell.StimmergebnisModel;
 import de.ivu.wahl.modell.ejb.Ergebniseingang;
@@ -59,7 +56,6 @@ import de.ivu.wahl.modell.ejb.Liste;
 import de.ivu.wahl.modell.ejb.Listenkandidatur;
 import de.ivu.wahl.modell.ejb.ListenkandidaturErgebnis;
 import de.ivu.wahl.modell.ejb.ListenkandidaturErgebnisHome;
-import de.ivu.wahl.modell.ejb.ListenkombinationZulassung;
 import de.ivu.wahl.modell.ejb.SitzberechnungErgebnis;
 import de.ivu.wahl.modell.ejb.Stimmergebnis;
 import de.ivu.wahl.modell.etc.GeneralVotingResults;
@@ -71,7 +67,7 @@ import de.ivu.wahl.result.result.Distribution;
 /**
  * Business services with respect to votes
  * 
- * @author jon@ivu.de
+ * @author J. Nottebaum
  */
 @Stateless
 @Local(VotesHandling.class)
@@ -318,90 +314,6 @@ public class VotesHandlingBean extends WahlStatelessSessionBeanBase implements V
         .findAllByGebiet(id_Gebiet));
   }
 
-  @Override
-  public SitzverteilungListenkombinationErg getSitzverteilungLKErgebnis(String id_Ergebniseingang,
-      String id_Gebiet) {
-    try {
-      SitzverteilungListenkombinationErg lkErg = new SitzverteilungListenkombinationErg("egal"); //$NON-NLS-1$
-      Map<GruppeModel, Integer> stimmenProGruppe = getGesamtstimmenForGruppen(id_Ergebniseingang);
-      Map<String, Integer> stimmenProLK = new HashMap<String, Integer>();
-      Map<String, Integer> sitzeProLK = getListenkombinationenAndSitze(id_Ergebniseingang);
-      Map<String, Integer> sitzeProGruppe = getGruppenAndSitze(id_Ergebniseingang);
-
-      final Collection<ListenkombinationZulassung> findAllByErgebniseingang = getListenkombinationZulassungHome()
-          .findAllByErgebniseingang(id_Ergebniseingang);
-
-      for (ListenkombinationZulassung listenkombinationZulassung : findAllByErgebniseingang) {
-        final String idListenkombination = listenkombinationZulassung.getID_Listenkombination();
-        // than, find the Group
-        if (listenkombinationZulassung.getID_Gruppe() == null) {
-          // LK
-          int sitzeLK = getIntValue(sitzeProLK.get(listenkombinationZulassung
-              .getID_Listenkombination()));
-          ListenkombinationInfo lkInfo = new ListenkombinationInfo(
-              listenkombinationZulassung.getDetails(), listenkombinationZulassung
-                  .getListenkombination().getDetails(), null, 0, sitzeLK, 0);
-          lkErg.addListenkombinationModel(lkInfo);
-        } else {
-          final Gruppe gruppe = listenkombinationZulassung.getGruppe();
-          final int position = gruppe.getGruppeGebietsspezifischByGebiet(id_Gebiet).getPosition();
-          int anzahlSitze = getIntValue(sitzeProGruppe.get(gruppe.getID_Gruppe()));
-          int anzahlStimmen = getIntValue(stimmenProGruppe.get(gruppe.getDetails()));
-          if (listenkombinationZulassung.isZugelassen()) {
-            int stimmenGesamt = getIntValue(stimmenProLK.get(idListenkombination));
-            stimmenProLK.put(idListenkombination, stimmenGesamt + anzahlStimmen);
-          }
-          ListenkombinationInfo lkInfo = new ListenkombinationInfo(
-              listenkombinationZulassung.getDetails(), listenkombinationZulassung
-                  .getListenkombination().getDetails(), gruppe.getDetails(), position, anzahlSitze,
-              anzahlStimmen);
-          lkErg.addGruppeninfo(idListenkombination, lkInfo);
-        }
-      }
-      // Iterate all LK and put number of votes
-      for (ListenkombinationInfo listenkombination : lkErg.getListenkombinationInfoCol()) {
-        int stimmenLK = getIntValue(stimmenProLK.get(listenkombination.getID_Listenkombination()));
-        listenkombination.setAnzahlStimmen(stimmenLK);
-      }
-      return lkErg;
-    } catch (FinderException e) {
-      throw new EJBException(e);
-    }
-  }
-
-  private Map<GruppeModel, Integer> getGesamtstimmenForGruppen(String id_Ergebniseingang)
-      throws EJBException, FinderException {
-    Map<GruppeModel, Integer> stimmergebnisse = new HashMap<GruppeModel, Integer>();
-    Collection<Stimmergebnis> stimmergebnisseWurzelgebiet = getStimmergebnisHome()
-        .findAllByGebietAndErgebniseingangForGruppen(WahlInfo.getWahlInfo().getID_Wurzelgebiet(),
-            id_Ergebniseingang);
-
-    for (Stimmergebnis stimmergebnis : stimmergebnisseWurzelgebiet) {
-      if (stimmergebnis.getStimmart() == StimmergebnisModel.STIMMART_LISTENSTIMME) {
-        GruppeGebietsspezifisch gebietGruppe = stimmergebnis.getGruppeGebietsspezifisch();
-        Gruppe gruppe = gebietGruppe.getGruppe();
-        stimmergebnisse.put(gruppe.getDetails(), stimmergebnis.getStimmen());
-      }
-    }
-    return stimmergebnisse;
-  }
-
-  /**
-   * @param id_Ergebniseingang
-   * @return Map<id_Listenkombination,numberOfSeats>
-   * @throws FinderException
-   */
-  private Map<String, Integer> getListenkombinationenAndSitze(String id_Ergebniseingang)
-      throws FinderException {
-    Map<String, Integer> result = new HashMap<String, Integer>();
-    Collection<SitzberechnungErgebnis> sitzberechnungErgebnisseP42 = getSitzberechnungErgebnisHome()
-        .findAllByErgebniseingangAndVerteilung(id_Ergebniseingang, Distribution.P42.getId());
-    for (SitzberechnungErgebnis sbe : sitzberechnungErgebnisseP42) {
-      addSitzeListenkombination(result, sbe);
-    }
-    return result;
-  }
-
   /**
    * Sitzverteilung aus der Datenbank lesen, vornehmlich f�r Niemeyer-basierte Auswertungen
    * 
@@ -487,18 +399,6 @@ public class VotesHandlingBean extends WahlStatelessSessionBeanBase implements V
         result.put(id_gruppe, sbe.getSitze());
       } else {
         result.put(id_gruppe, oldSeats + sbe.getSitze());
-      }
-    }
-  }
-
-  private void addSitzeListenkombination(Map<String, Integer> result, SitzberechnungErgebnis sbe) {
-    String id_listenkombination = sbe.getID_Listenkombination();
-    if (id_listenkombination != null) {
-      Integer oldSeats = result.get(id_listenkombination);
-      if (oldSeats == null) {
-        result.put(id_listenkombination, sbe.getSitze());
-      } else {
-        result.put(id_listenkombination, oldSeats + sbe.getSitze());
       }
     }
   }
@@ -596,10 +496,6 @@ public class VotesHandlingBean extends WahlStatelessSessionBeanBase implements V
     } catch (FinderException fe) {
       throw new EJBException(fe);
     }
-  }
-
-  private int getIntValue(Integer value) {
-    return value == null ? 0 : value.intValue();
   }
 
   @Override

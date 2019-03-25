@@ -22,7 +22,7 @@ import de.ivu.wahl.result.result.Distribution;
 /**
  * Helps to get information from a list of SitzberechnungErgebnis.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class SitzberechnungErgebnisHelper {
   private final Map<String, SitzberechnungErgebnis> listAndFirstAssignment = new HashMap<String, SitzberechnungErgebnis>();
@@ -70,7 +70,7 @@ public class SitzberechnungErgebnisHelper {
    * Sort assignment lines: first combination results ordered by id, followed by its P3-lists
    * ordered by key
    * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   class P3DistributionComparator implements Comparator<SitzberechnungErgebnis> {
     public int compare(final SitzberechnungErgebnis sbe1, final SitzberechnungErgebnis sbe2) {

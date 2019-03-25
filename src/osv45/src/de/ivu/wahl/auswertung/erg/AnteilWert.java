@@ -14,17 +14,13 @@ import de.ivu.util.debug.Log4J;
 /**
  * Erweitert Wert um eine Bezugsgr��e f�r aktuell und Vergleich
  * 
- * @author klie@ivu.de - IVU Traffic Technologies AG
+ * @author P. Kliem - IVU Traffic Technologies AG
  */
 
 public class AnteilWert extends Wert implements Cloneable {
   private static final long serialVersionUID = -625789968737467316L;
 
   private static final Category LOGGER = Log4J.configure(AnteilWert.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(AnteilWert.class, Log4J.extractVersion("$Revision: 1.5 $"))); //$NON-NLS-1$
-  }
 
   private int _aktBase;
   private int _vglBase;

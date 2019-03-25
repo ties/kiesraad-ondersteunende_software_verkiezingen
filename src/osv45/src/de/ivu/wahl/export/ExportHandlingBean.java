@@ -80,7 +80,7 @@ import de.ivu.wahl.wus.reportgen.ReportGenerator;
 /**
  * Wahlabwicklungssystem, Methoden fuer das Exportieren.
  * 
- * @author klie@ivu.de mur@ivu.de cos@ivu.de ugo@ivu.de
+ * @author P. Kliem M. Murdfield D. Cosic U. Müller
  */
 @Stateless
 @Local(ExportHandling.class)
@@ -93,6 +93,8 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
   static final int ALL_VOTES = 0;
   static final int POSTAL_VOTES = 1;
   static final int NORMAL_VOTES = 2;
+
+  private static final int TRANSACTION_TIMEOUT_MINUTES = 24 * 60; // 24h
 
   /**
    * Creates the EML 110b document (list of polling stations)
@@ -107,6 +109,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
       Document emlDocument = createEMLDocument(XMLTags.ATTR_VAL_EML_ID_110b,
           XMLTags.SCHEMA_EML110B,
           region,
+          false,
           false);
       String createdByOsv = Messages.applyPattern(ReportGenerator.CREATED_BY_OSV_PROGRAM_VERSION,
           EJBUtil.getProgramSpecificAffix(),
@@ -197,7 +200,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
   }
 
   @Override
-  @TransactionTimeout(30 * 60)
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
   public Document createEML520(String id_Ergebniseingang,
       boolean forCandidateLetters,
       boolean forProtocolAppendix) throws EJBException, ImportException {
@@ -206,7 +209,8 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     Document emlDocument = createEMLDocument(XMLTags.ATTR_VAL_EML_ID_520,
         XMLTags.SCHEMA_EML520,
         region,
-        true);
+        true,
+        false);
     Element election = XMLHelper.createElement(XMLTags.EML_WAHL, NS_EML);
     election.appendChild(createElectionIdentifierElement());
 
@@ -230,7 +234,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
   }
 
   @Override
-  @TransactionTimeout(30 * 60)
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
   public Document createEML510(Gebiet gebiet, boolean createRGNodes)
       throws EJBException, ImportException {
     return createEML510(gebiet, createRGNodes, false, false);
@@ -238,27 +242,42 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
   }
 
   @Override
-  @TransactionTimeout(30 * 60)
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
+  public Document createEML510dInHSB(Gebiet gebiet, boolean createRGNodes)
+      throws EJBException, ImportException {
+    return createEML510(gebiet, createRGNodes, true, false);
+
+  }
+
+  @Override
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
   public Document createEmptyEML510(Gebiet gebiet) throws EJBException, ImportException {
     return createEML510(gebiet, false, false, true);
   }
 
   @Override
-  @TransactionTimeout(30 * 60)
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
   public Document createEML510(Gebiet gebiet,
       boolean createRGNodes,
-      boolean create510dForPSB,
+      boolean create510d4PsbOrHsb,
       boolean emptyResults) throws EJBException, ImportException {
-    String id = getIdForEml510(gebiet, create510dForPSB);
+
+    String id = getIdForEml510(gebiet, create510d4PsbOrHsb);
     EMLMessageType emlType = EMLMessageType.byId(id);
-    Document emlDocument = createEMLDocument(id, XMLTags.SCHEMA_EML510, gebiet, createRGNodes);
+    boolean useFakeRootRegion = create510d4PsbOrHsb
+        && SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_HSB;
+    Document emlDocument = createEMLDocument(id,
+        XMLTags.SCHEMA_EML510,
+        gebiet,
+        createRGNodes,
+        useFakeRootRegion);
 
     Element election = XMLHelper.createElement(XMLTags.EML_WAHL, NS_EML);
     election.appendChild(createElectionIdentifierElement());
 
     try {
       election.appendChild(new EML510Helper(this).createVotingResultElement(gebiet,
-          create510dForPSB,
+          create510d4PsbOrHsb,
           emptyResults,
           emlType));
     } catch (FinderException e) {
@@ -276,21 +295,25 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     return emlDocument;
   }
 
-  private String getIdForEml510(Gebiet gebiet, boolean create510dForPSB) {
+  private String getIdForEml510(Gebiet gebiet, boolean create510d4PsbOrHsb) {
     WahlInfo.getWahlInfo().getWahl().readLock();
     String id;
     boolean isWurzelGebiet = gebiet.getID_UebergeordnetesGebiet() == null;
     int level = SystemInfo.getSystemInfo().getWahlEbene();
     switch (level) {
       case GebietModel.EBENE_PSB :
-        if (create510dForPSB) {
+        if (create510d4PsbOrHsb) {
           id = isWurzelGebiet ? XMLTags.ATTR_VAL_EML_ID_510d : XMLTags.ATTR_VAL_EML_ID_510c;
         } else {
           id = isWurzelGebiet ? XMLTags.ATTR_VAL_EML_ID_510b : XMLTags.ATTR_VAL_EML_ID_510a;
         }
         break;
       case GebietModel.EBENE_HSB :
-        id = isWurzelGebiet ? XMLTags.ATTR_VAL_EML_ID_510c : XMLTags.ATTR_VAL_EML_ID_510b;
+        if (create510d4PsbOrHsb) {
+          id = XMLTags.ATTR_VAL_EML_ID_510d;
+        } else {
+          id = isWurzelGebiet ? XMLTags.ATTR_VAL_EML_ID_510c : XMLTags.ATTR_VAL_EML_ID_510b;
+        }
         break;
       case GebietModel.EBENE_CSB :
         id = isWurzelGebiet ? XMLTags.ATTR_VAL_EML_ID_510d : XMLTags.ATTR_VAL_EML_ID_510c;
@@ -308,10 +331,16 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
    * @param schema
    * @param gebiet
    * @param withRGNodes
+   * @param useFakeRootRegion
    * @param level
    * @return
    */
-  private Document createEMLDocument(String id, String schema, Gebiet gebiet, boolean withRGNodes) {
+  private Document createEMLDocument(String id,
+      String schema,
+      Gebiet gebiet,
+      boolean withRGNodes,
+      boolean useFakeRootRegion) {
+
     WahlInfo.getWahlInfo().getWahl().readLock();
     int level = SystemInfo.getSystemInfo().getWahlEbene();
     Element root = XMLHelper.createElement(XMLTags.EML, XMLTags.NS_EML);
@@ -324,7 +353,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     addNamespacesEML(root, id);
     // Fix value : 1
     root.appendChild(XMLHelper.createElementWithValue(XMLTags.EML_TRANSACTION, NS_EML, "1")); //$NON-NLS-1$
-    Element authority = createAuthorityElement(level, gebiet, id);
+    Element authority = createAuthorityElement(level, gebiet, id, useFakeRootRegion);
     root.appendChild(authority);
     // Creation time
     root.appendChild(XMLHelper.createElementWithValue(XMLTags.KR_CREATION_DATE,
@@ -344,9 +373,15 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
    * @param level
    * @param gebiet
    * @param emlId
+   * @param useFakeRootRegion For OSV-2080 create the managing autority element for a the CSB that
+   *          does not correspont to a region in the database
    * @return the xml element
    */
-  private Element createAuthorityElement(int level, Gebiet gebiet, String emlId) {
+  private Element createAuthorityElement(int level,
+      Gebiet gebiet,
+      String emlId,
+      boolean useFakeRootRegion) {
+
     WahlInfo wahlInfo = WahlInfo.getWahlInfo();
     // Authority
     Element authority = XMLHelper.createElement(XMLTags.EML_AUTHORITY, NS_EML);
@@ -357,12 +392,22 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
     } else {
       targetLevel = level;
     }
-    Element identifier = XMLHelper.createElementWithValue(XMLTags.EML_AUTHORITY_IDENTIFIER,
-        NS_EML,
-        getAuthorityName(targetLevel, gebiet));
-    identifier.addAttribute(new Attribute(ATTR_EML_ID, getRegionIdentifier(gebiet,
-        false,
-        targetLevel)));
+    Element identifier;
+    if (useFakeRootRegion) {
+      // Fake ManagingAuthority for OSV-2080
+      identifier = XMLHelper.createElementWithValue(XMLTags.EML_AUTHORITY_IDENTIFIER,
+          NS_EML,
+          WahlInfo.getWahlInfo().getWahl().getElectionDomain());
+      identifier.addAttribute(new Attribute(ATTR_EML_ID, AuthorityLevel.EBENE_CSB.getShortName()));
+    } else {
+      // Regular Managing Authority
+      identifier = XMLHelper.createElementWithValue(XMLTags.EML_AUTHORITY_IDENTIFIER,
+          NS_EML,
+          getAuthorityName(targetLevel, gebiet));
+      identifier.addAttribute(new Attribute(ATTR_EML_ID, getRegionIdentifier(gebiet,
+          false,
+          targetLevel)));
+    }
     authority.appendChild(identifier);
     authority.appendChild(XMLHelper.createElement(XMLTags.EML_AUTHORITY_ADDRESS, NS_EML));
     // if result is not for the rootregion, add createdBy

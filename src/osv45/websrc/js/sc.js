@@ -12,7 +12,7 @@ function sc(){
  */
 function scWithCount(countOfField) {
     // wait 250 ms before setting focus to prevent IE8 problem (OSV-941) 
-    window.setTimeout("doSetCursorWithCount("+countOfField+")", 250);
+    window.setTimeout( function() { doSetCursorWithCount(countOfField); }, 250);
 }
 
 function doSetCursorWithCount(countOfField) {

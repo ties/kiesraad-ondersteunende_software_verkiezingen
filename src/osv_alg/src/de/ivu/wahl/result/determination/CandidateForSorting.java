@@ -23,7 +23,7 @@ import de.ivu.wahl.result.result.CandidateResult.Elected;
  * <p>
  * ATTENTION: Not immutable: The result of drawing lots may be set.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CandidateForSorting implements NamedObject, DrawingLotsAlternative {
   private final Candidate candidate;

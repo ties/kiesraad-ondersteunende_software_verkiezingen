@@ -18,6 +18,7 @@ import de.ivu.wahl.modell.GruppeComposite;
 import de.ivu.wahl.modell.GruppeComposite.Liste;
 import de.ivu.wahl.modell.GruppeComposite.Listenkandidat;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
+import de.ivu.wahl.modell.Plus;
 import de.ivu.wahl.modell.Wahldaten;
 import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.modell.impl.GebietModelImpl;
@@ -26,7 +27,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * Import handler for test cases.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class ErgebnisImportHandlerTest implements ErgebnisImportHandler {
   private static final String NO_CANDIDATE_ID = "NO_CANDIDATE_ID"; //$NON-NLS-1$
@@ -149,11 +150,11 @@ public class ErgebnisImportHandlerTest implements ErgebnisImportHandler {
     GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
 
     // Determine the number of voters by adding valid, invalid and empty votes
-    int anzGueltige = adapter.getXml(resultNode, GruppeAllgemein.GUELTIGE);
-    int anzUngueltige = adapter.getXml(resultNode, GruppeAllgemein.UNGUELTIGE);
-    int anzLeere = adapter.getXml(resultNode, GruppeAllgemein.LEER);
-    int anzWaehler = anzGueltige + anzUngueltige + anzLeere;
-    int anzGueltigOderLeer = anzGueltige + anzLeere;
+    int anzGueltige = Plus.truncate(adapter.getXml(resultNode, GruppeAllgemein.GUELTIGE), true);
+    int anzUngueltige = Plus.truncate(adapter.getXml(resultNode, GruppeAllgemein.UNGUELTIGE), true);
+    int anzLeere = Plus.truncate(adapter.getXml(resultNode, GruppeAllgemein.LEER), true);
+    int anzWaehler = Plus.plus(anzGueltige, anzUngueltige, anzLeere, true);
+    int anzGueltigOderLeer = Plus.plus(anzGueltige, anzLeere, true);
 
     if (!isWurzelgebiet) {
       gesamtstimmen.addGruppenstimmen(GruppeAllgemein.WAEHLER.schluessel, anzWaehler);
@@ -166,7 +167,7 @@ public class ErgebnisImportHandlerTest implements ErgebnisImportHandler {
     // Explaining the difference between admitted voters and counted votes
     Iterable<GruppeAllgemein> gruppen = adapter.getGruppenAllgemein();
     for (GruppeAllgemein gruppeAllgemein : gruppen) {
-      int value = adapter.getFromEmlOr0(resultNode, gruppeAllgemein);
+      int value = Plus.truncate(adapter.getFromEmlOr0(resultNode, gruppeAllgemein), true);
       if (!isWurzelgebiet) {
         gesamtstimmen.addGruppenstimmen(gruppeAllgemein.schluessel, value);
       }

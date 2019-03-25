@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.ivu.wahl.modell.Plus;
 import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.service.VoteValues;
@@ -19,7 +20,7 @@ import de.ivu.wahl.modell.ejb.service.VoteValues;
  * Information about a party (political grouping) and the candidates that are nominated for the
  * list(s) of this party
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class PartyWithCandidates implements Comparable<PartyWithCandidates> {
   private static final String MINUS = "-"; //$NON-NLS-1$
@@ -101,25 +102,24 @@ public class PartyWithCandidates implements Comparable<PartyWithCandidates> {
   public void addGruppenstimmeProGebiet(Gebiet gebiet, int gruppenstimme) {
     // assert _gruppenstimmenProGebiet.containsKey(gebiet) :
     // "Sollte noch kein Ergebniss gespeichert sein";
-    _summe += gruppenstimme;
+    boolean throwException = false;
+    _summe = Plus.plus(_summe, gruppenstimme, throwException);
     addVotes(gebiet, gruppenstimme, _gruppenstimmenProGebiet);
 
     if (_voteValues != null) {
       Integer voteValue = _voteValues.get(gebiet.getNummer());
       if (voteValue != null) {
-        _summeGewichtet += gruppenstimme * voteValue;
-        addVotes(gebiet, gruppenstimme * voteValue, _gruppenstimmenGewichtetProGebiet);
+        int votes = Plus.times(gruppenstimme, voteValue, throwException);
+        _summeGewichtet = Plus.plus(_summeGewichtet, votes, throwException);
+        addVotes(gebiet, votes, _gruppenstimmenGewichtetProGebiet);
       }
     }
   }
 
   private void addVotes(Gebiet gebiet, int votes, Map<Gebiet, Integer> map) {
     Integer oldVotes = map.get(gebiet);
-    if (oldVotes == null) {
-      map.put(gebiet, votes);
-    } else {
-      map.put(gebiet, oldVotes + votes);
-    }
+    boolean throwException = false;
+    map.put(gebiet, Plus.plus(oldVotes, votes, throwException));
   }
 
   public int getSumme() {

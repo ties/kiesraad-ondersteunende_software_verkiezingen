@@ -12,7 +12,7 @@ import org.jboss.logging.Logger;
 /**
  * Management of the shadow export directory
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 @Depends({"jboss.j2ee:module=osv3.jar,service=EJB3", "jboss.web:service=WebServer"})
 public abstract class AbstractExportDirServiceImpl implements ExportDirService {

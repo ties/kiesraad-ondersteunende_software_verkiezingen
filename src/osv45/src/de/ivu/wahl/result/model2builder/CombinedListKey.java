@@ -9,7 +9,7 @@ package de.ivu.wahl.result.model2builder;
 /**
  * External key for combined lists in the determination of the election result.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CombinedListKey {
 

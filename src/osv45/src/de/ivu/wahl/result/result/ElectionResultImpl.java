@@ -46,7 +46,7 @@ import de.ivu.wahl.result.drawlots.DrawingLotsAlternative;
 /**
  * Receives the results of the seat calculation from the algorithm that performs the calculation.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class ElectionResultImpl implements ElectionResult {
 

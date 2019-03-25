@@ -6,7 +6,6 @@
 package de.ivu.wahl.anwender;
 
 import static de.ivu.wahl.AnwContext.ID_PWAHL_SUPER_ADMIN;
-import static de.ivu.wahl.AnwContext.calcHash;
 import static de.ivu.wahl.Konstanten.RECHTE_LAST_CHANGE;
 import static de.ivu.wahl.Konstanten.SYSTEM_ANWENDER;
 import static de.ivu.wahl.Konstanten.SYSTEM_ANWENDERID;
@@ -39,11 +38,13 @@ import javax.ejb.ObjectNotFoundException;
 import javax.ejb.RemoveException;
 import javax.ejb.Stateless;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.Konstanten;
+import de.ivu.wahl.PasswordService;
 import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.WahlStatelessSessionBeanBase;
 import de.ivu.wahl.admin.AdminHandling;
@@ -70,7 +71,7 @@ import de.ivu.wahl.modell.ejb.WahlHome;
  * notwendig ist. Als eine kleine Besonderheit h�lt es in statischem Code die Liste aller
  * angemeldeten Anwender.
  * 
- * @author cos@ivu.de klie@ivu.de mur@ivu.de
+ * @author D. Cosic P. Kliem M. Murdfield
  */
 @Stateless
 @Local(AnwenderHandling.class)
@@ -370,7 +371,6 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
       Collection<String> id_Rechtegruppen,
       String id_Gebiet) throws EJBException {
 
-    String passwortHash = calcHash(anmeldename + passwort);
     LOGGER.info(Messages.bind(MessageKeys.Logger_0_wirdAngelegtOderModifiziert, anmeldename));
     try {
       _anwenderHome.findByPrimaryKey(id_Anwender);
@@ -386,7 +386,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
         id_Anwender,
         anmeldename,
         name,
-        passwortHash,
+        passwort,
         id_Rechtegruppen,
         id_Gebiet,
         0);
@@ -398,10 +398,11 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * java.lang.String, java.lang.String, java.lang.String, java.util.Collection, java.lang.String,
    * int, boolean, boolean)
    */
+  @Override
   public void createOrModifyAnwender(AnwContext anwContext,
       String anmeldename,
       String name,
-      String passwortHash,
+      String passwort,
       Collection<String> id_Rechtegruppen,
       String id_Gebiet,
       int anzahlFehlversuche,
@@ -431,6 +432,13 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
     } catch (FinderException e) {
       throw new EJBException("" + anmeldename, e); //$NON-NLS-1$
     }
+
+    if (passwort.length() < Konstanten.MIN_PASSWORD_LENGTH) {
+      throw new AnwenderException(
+          Messages.bind(MessageKeys.Msg_Passwort_veraendern_error_Passwort_zu_kurz,
+              Konstanten.MIN_PASSWORD_LENGTH));
+    }
+
     AnwContext workAnwContext = anwContext;
     if (workAnwContext == null) {
       workAnwContext = loginSystem();
@@ -439,7 +447,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
         a.getID_Anwender(),
         anmeldename,
         name,
-        passwortHash,
+        passwort,
         id_Rechtegruppen,
         id_Gebiet,
         anzahlFehlversuche);
@@ -450,30 +458,44 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * @see de.ivu.wahl.anwender.AnwenderHandling#changePassword(de.ivu.wahl.AnwContext,
    * java.lang.String, java.lang.String)
    */
-  public void changePassword(AnwContext anwContext, String oldPWHash, String newPWHash)
+  @Override
+  public void changePassword(AnwContext anwContext, String oldPW, String newPW)
       throws AnwenderException, EJBException {
 
-    String id_Anwender = anwContext.getID_Anwender();
-    if (oldPWHash == null || newPWHash == null) {
+    if (oldPW == null || newPW == null) {
       // "Fehler in der Anwendung!"
       throw new AnwenderException(Messages.bind(MessageKeys.Error_Passwort_null));
     }
+
+    String id_Anwender = anwContext.getID_Anwender();
     try {
       Anwender anwender = _anwenderHome.findByPrimaryKey(id_Anwender);
+      String oldSalt = anwender.getSalt();
+      String oldPWHash = PasswordService.INSTANCE.calcHash(anwContext.getAnmeldename() + oldPW,
+          oldSalt);
       if (!anwender.getPasswordHash().equals(oldPWHash)) {
-        // "Fehler: Das Passwort konnte nicht ge�ndert werden, das angegebene alte Passwort war falsch!"
+        // "Fehler: Das Passwort konnte nicht geaendert werden, das angegebene alte Passwort war falsch!"
         throw new AnwenderException(Messages.bind(MessageKeys.Error_PasswortAltFalsch));
       }
-      if (oldPWHash.equals(newPWHash)) {
-        // "Fehler: Das Passwort konnte nicht ge�ndert werden, da es mit dem alten �berein stimmt!"
+      String newPWHashWithOldSalt = PasswordService.INSTANCE.calcHash(anwContext.getAnmeldename()
+          + newPW, oldSalt);
+
+      if (oldPWHash.equals(newPWHashWithOldSalt)) {
+        // "Fehler: Das Passwort konnte nicht geaendert werden, da es mit dem alten ueberein stimmt!"
         throw new AnwenderException(Messages.bind(MessageKeys.Error_PasswortAltUngleichNeu));
       }
+      if (newPW.length() < Konstanten.MIN_PASSWORD_LENGTH) {
+        throw new AnwenderException(
+            Messages.bind(MessageKeys.Msg_Passwort_veraendern_error_Passwort_zu_kurz,
+                Konstanten.MIN_PASSWORD_LENGTH));
+      }
+
       _adminHandling.writeAppLog(anwContext, "" + anwender.getAnwendername()); //$NON-NLS-1$
       modifyAnwender(anwContext,
           id_Anwender,
           anwender.getAnwendername(),
           anwender.getName(),
-          newPWHash,
+          newPW,
           null,
           anwender.getID_Gebiet(),
           0);
@@ -504,10 +526,13 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
       String id_Anwender,
       String anmeldename,
       String name,
-      String passwortHash,
+      String passwort,
       Collection<String> id_Rechtegruppen,
       String id_Gebiet,
       int anzahlFehlversuche) throws EJBException {
+
+    String salt = PasswordService.INSTANCE.getSalt();
+    String passwortHash = PasswordService.INSTANCE.calcHash(anmeldename + passwort, salt);
 
     // Administrator
     Anwender a = null;
@@ -523,6 +548,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
     a.setID_Gebiet(id_Gebiet);
     if (passwortHash != null) {
       a.setPasswordHash(passwortHash);
+      a.setSalt(salt);
     }
     if (id_Rechtegruppen != null) {
       // einmal alle Rechte zur�cksetzen
@@ -538,9 +564,29 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
 
   /*
    * (non-Javadoc)
+   * @see de.ivu.wahl.anwender.AnwenderHandling#getSalt(java.lang.String)
+   */
+  @Override
+  public String getSalt(String anwendername) throws EJBException {
+    try {
+      Anwender a = _anwenderHome.findByAnwendername(anwendername);
+      if (a != null) {
+        return a.getSalt();
+      }
+      return StringUtils.EMPTY;
+    } catch (ObjectNotFoundException e) {
+      return StringUtils.EMPTY;
+    } catch (FinderException fe) {
+      return StringUtils.EMPTY;
+    }
+  }
+
+  /*
+   * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#login(java.lang.String, java.lang.String,
    * java.lang.String, java.lang.String)
    */
+  @Override
   public AnwContext login(String anwendername, String hash, String id_Wahl, String sessionID)
       throws EJBException, AnmeldeFehlversuchException {
 
@@ -652,8 +698,9 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
   public boolean hasDefaultUserUnchangedPasswort() {
     try {
       Anwender defaultUser = _anwenderHome.findByAnwendername(Konstanten.DEFAULT_USER_LOGINNAME);
-      String defaultPasswortHash = AnwContext.calcHash(Konstanten.DEFAULT_USER_LOGINNAME
-          + Konstanten.DEFAULT_USER_PASSWORD);
+      String salt = defaultUser.getSalt();
+      String defaultPasswortHash = PasswordService.INSTANCE
+          .calcHash(Konstanten.DEFAULT_USER_LOGINNAME + Konstanten.DEFAULT_USER_PASSWORD, salt);
       return defaultPasswortHash.equals(defaultUser.getPasswordHash());
     } catch (FinderException e) {
       LOGGER.error(Messages.bind(MessageKeys.Logger_DefaultUserNotFound));

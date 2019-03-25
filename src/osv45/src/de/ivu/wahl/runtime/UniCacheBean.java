@@ -12,7 +12,7 @@ import javax.ejb.EntityContext;
 import javax.ejb.RemoveException;
 
 /**
- * @author COS@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  * @param <T> Typ der Objekte, die gehalten werden
  */
 public class UniCacheBean<T> implements EntityBean {

@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity FiktiveSitzverteilung.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class FiktiveSitzverteilungDBA extends DBABase {
@@ -62,13 +62,25 @@ public class FiktiveSitzverteilungDBA extends DBABase {
       if ((idx = columns.get(ID_FIKTIVESITZVERTEILUNG.toUpperCase())) != null) {
          m._id_FiktiveSitzverteilung = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_FIKTIVESITZVERTEILUNG)) != null) {
+         m._id_FiktiveSitzverteilung = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(SITZEGESAMTZAHL.toUpperCase())) != null) {
+         m._sitzeGesamtzahl = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(SITZEGESAMTZAHL)) != null) {
          m._sitzeGesamtzahl = r.getInt(idx.intValue());
       }
    }
@@ -84,13 +96,13 @@ public class FiktiveSitzverteilungDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(SITZEGESAMTZAHL.toUpperCase())) {
+      if (columns.containsKey(SITZEGESAMTZAHL.toUpperCase()) || columns.containsKey(SITZEGESAMTZAHL)) {
          p.setInt(idx++, m._sitzeGesamtzahl);
       }
       p.setString(idx++, m._id_FiktiveSitzverteilung);
@@ -275,6 +287,21 @@ public class FiktiveSitzverteilungDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Gruppe returns a {@link Collection} of FiktiveSitzverteilung IDs
+     *
+     * @param id_Gruppe searching condition
+
+     * @return a {@link Collection} of FiktiveSitzverteilung IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Gruppe(String id_Gruppe) throws SQLException {
+      return retrieveIDs(
+         "select ID_FiktiveSitzverteilung from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Gruppe});
+   }
+
+   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of FiktiveSitzverteilung IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -289,21 +316,6 @@ public class FiktiveSitzverteilungDBA extends DBABase {
          "select ID_FiktiveSitzverteilung from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Ergebniseingang});
-   }
-
-   /**
-     * Method retrieveIDsByID_Gruppe returns a {@link Collection} of FiktiveSitzverteilung IDs
-     *
-     * @param id_Gruppe searching condition
-
-     * @return a {@link Collection} of FiktiveSitzverteilung IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Gruppe(String id_Gruppe) throws SQLException {
-      return retrieveIDs(
-         "select ID_FiktiveSitzverteilung from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Gruppe});
    }
 
    /**

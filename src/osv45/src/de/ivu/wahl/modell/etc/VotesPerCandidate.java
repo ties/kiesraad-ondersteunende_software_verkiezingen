@@ -13,7 +13,7 @@ import de.ivu.wahl.result.Util;
 /**
  * Map that holds the votes of a candidate by id_Listenkandidatur.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class VotesPerCandidate {
   private final Map<String, Integer> votes;

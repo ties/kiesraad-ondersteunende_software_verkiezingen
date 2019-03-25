@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * GebietModelImpl
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 import org.apache.log4j.Category;
@@ -16,9 +16,6 @@ import de.ivu.wahl.modell.Gebietsart;
 public class GebietModelImpl extends BasicGebietModelImpl {
   private static final long serialVersionUID = -4920402909228361654L;
   private static final Category LOGGER = Log4J.configure(GebietModelImpl.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(GebietModelImpl.class, Log4J.extractVersion("$Revision: 1.5 $"))); //$NON-NLS-1$
-  }
 
   /**
    * @return technische, aber menschenlesbare zusammengesetzte Bezeichnung f�r das Gebiet

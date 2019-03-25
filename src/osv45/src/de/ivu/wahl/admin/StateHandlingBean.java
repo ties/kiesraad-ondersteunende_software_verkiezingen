@@ -40,11 +40,6 @@ public class StateHandlingBean extends WahlStatelessSessionBeanBase implements S
 
   private static final Category LOGGER = Log4J.configure(StateHandlingBean.class);
 
-  static {
-    LOGGER.info(Log4J.dumpVersion(StateHandlingBean.class, Log4J
-        .extractVersion("$Revision: 1.14 $"))); //$NON-NLS-1$
-  }
-
   @EJB
   private PropertyHandling _propertyHandling;
 
@@ -115,9 +110,10 @@ public class StateHandlingBean extends WahlStatelessSessionBeanBase implements S
 
       w.setFreigegeben(freigabe ? new Timestamp(currentTimeMillis()) : null);
 
-      writeAppLog(c, (freigabe ? Messages.getString(MessageKeys.Logger_Freigabe) : Messages
-          .getString(MessageKeys.Logger_ZuruecknehmenDerFreigabe))
-          + Messages.getString(MessageKeys.Logger__derWahl));
+      writeAppLog(c,
+          (freigabe ? Messages.getString(MessageKeys.Logger_Freigabe) : Messages
+              .getString(MessageKeys.Logger_ZuruecknehmenDerFreigabe))
+              + Messages.getString(MessageKeys.Logger__derWahl));
       setLastChangeNow(c);
       wahlInfo.synchronize();
       return freigabe;

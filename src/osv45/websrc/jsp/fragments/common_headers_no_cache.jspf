@@ -1,0 +1,8 @@
+<% 
+response.setHeader("Content-Security-Policy",   "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; frame-ancestors 'self'; frame-src 'self'; "); //$NON-NLS-1$ //$NON-NLS-2$ 
+response.setHeader("X-Content-Security-Policy", "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; frame-ancestors 'self'; frame-src 'self'; "); //$NON-NLS-1$ //$NON-NLS-2$
+response.setHeader("Strict-Transport-Security", "max-age=31536000"); //$NON-NLS-1$ //$NON-NLS-2$
+response.setHeader("Cache-Control", "no-cache, no-store, private"); //$NON-NLS-1$ //$NON-NLS-2$
+response.setHeader("Pragma","no-cache"); //HTTP 1.0 //$NON-NLS-1$ //$NON-NLS-2$
+response.setDateHeader("Expires", 0); //prevents caching at the proxy server //$NON-NLS-1$
+%>

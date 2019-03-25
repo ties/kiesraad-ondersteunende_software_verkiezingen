@@ -20,7 +20,7 @@ import de.ivu.wahl.result.drawlots.DrawingLotsAlternative;
  * <p>
  * compareTo() sorts candidates by name.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface P3List
     extends

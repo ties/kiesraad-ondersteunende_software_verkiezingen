@@ -63,7 +63,7 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
 /**
  * Organisiert die Eingabe von Gebietsergebnissen
  * 
- * @author cos@ivu.de mur@ivu.de klie@ivu.de tdu@ivu.de 
+ * @author D. Cosic M. Murdfield P. Kliem T. Ducke 
  * (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 

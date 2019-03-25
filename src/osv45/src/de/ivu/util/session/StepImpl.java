@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSessionBindingListener;
  * (not necessarily vice versa), the user can return to whatever he has seen in the past, as long as
  * it was within the same session. A Session Step is uniquely identified by an internal ID.
  * 
- * @author Dr. Domagoj Cosic (cos@ivu.de)
+ * @author Dr. Domagoj Cosic (D. Cosic)
  * @created 23. Mai 2001
  */
 public class StepImpl implements Step, HttpSessionBindingListener, Comparable<Step> {

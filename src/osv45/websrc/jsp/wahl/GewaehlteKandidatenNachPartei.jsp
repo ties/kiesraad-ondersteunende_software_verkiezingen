@@ -25,13 +25,14 @@
  *******************************************************************************
  * Namesliste alphabetisch geordnet
  *
- * author:  mur@ivu.de  Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <jsp:useBean id="appBean" scope="session"
     class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "gewKandPartei"; //$NON-NLS-1$
@@ -200,13 +201,13 @@ if   (appBean.isIE  ()) { //%> body {
                                                                                             anker = "";
                                                                                             firstTime = false;%>
                                                                                            <tr>
-                                                                                                <td colspan="4" height="20" align="left" style="vertical-align:bottom; font-weight: bold; font-style: italic;"><%=aktuellerParteiname%></td>
+                                                                                                <td colspan="4" height="20" align="left" style="vertical-align:bottom; font-weight: bold; font-style: italic;"><%=ClientHelper.forHTML(aktuellerParteiname)%></td>
                                                                                            </tr><%
                                                                                         } else {
                                                                                             anker = "<a style='text-decoration:none' href='#oben'>[<img src='"+request.getContextPath()+"/img/icon/pfeil_oben.gif' width='16' height='18' border='0' alt=''>" + BundleHelper.getBundleString("NachOben") + " ]</a>"; %>
                                                                                             <tr>
-                                                                                                <td colspan="3" height="45" align="left" style="vertical-align:bottom; font-weight: bold; font-style: italic";"><%=aktuellerParteiname%></td>
-                                                                                                <td colspan="1" height="45" align="right" style="vertical-align:bottom;"><a <%=name%> ><%=anker%></a></td>
+                                                                                                <td colspan="3" height="45" align="left" style="vertical-align:bottom; font-weight: bold; font-style: italic";"><%=ClientHelper.forHTML(aktuellerParteiname)%></td>
+                                                                                                <td colspan="1" height="45" align="right" style="vertical-align:bottom;"><a <%=ClientHelper.forHTML(name)%> ><%=anker%></a></td>
                                                                                             </tr><%
                                                                                         }%>
                                                                                         <tr class="hgeeeeee" style="font-weight: bold;">
@@ -231,10 +232,10 @@ if   (appBean.isIE  ()) { //%> body {
                                                                                             <%= kandidatInfo.getUrspruenglicherListenplatz() %>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%= kandidatInfo.getPraefix() %> <%= nachname %>, <%= kandidatInfo.getInitialen() %><%=kandidatInfo.displayGeschlecht()%><%= kandidatInfo.isBevorzugtGewaehlt() ?  "<b>&nbsp;*</b>" : ""%>
+                                                                                            <%= ClientHelper.forHTML(kandidatInfo.getPraefix()) %> <%= ClientHelper.forHTML(nachname) %>, <%= kandidatInfo.getInitialen() %><%=kandidatInfo.displayGeschlecht()%><%= kandidatInfo.isBevorzugtGewaehlt() ?  "<b>&nbsp;*</b>" : ""%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%= kandidatInfo.getWohnort() %> <%= kandidatInfo.getLand() %>
+                                                                                            <%= kandidatInfo.getWohnort() %> <%= ClientHelper.forHTML(kandidatInfo.getLand()) %>
                                                                                         </td>
                                                                                         <td style="vertical-align: top; text-align: right;">
                                                                                             <%= ClientHelper.getStimmanzahlString(kandidatInfo.getStimmenAnzahl(), ClientHelper.DF)  %>

@@ -12,30 +12,21 @@ import java.util.Calendar;
 
 import javax.ejb.EJBException;
 
-import org.apache.log4j.Category;
-
-import de.ivu.util.debug.Log4J;
-
 public class WahlBean extends BasicWahlBean {
   private static final long serialVersionUID = 1210830990581403362L;
-
-  private static final Category LOGGER = Log4J.configure(WahlBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(WahlBean.class, Log4J.extractVersion("$Revision: 1.7 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Lock the election for reading and writing access
    */
   public void lock() {
-    // tut nichts, außer dem AppServer zu sagen, dass Wahl in der TX gesperrt werden soll
+    // tut nichts, auï¿½er dem AppServer zu sagen, dass Wahl in der TX gesperrt werden soll
   }
 
   /**
    * Lock the election for writing access only
    */
   public void readLock() {
-    // tut nichts, außer dem AppServer zu sagen, dass für die Wahl nachfolgende Schreibzugriffe aus
+    // tut nichts, auï¿½er dem AppServer zu sagen, dass fï¿½r die Wahl nachfolgende Schreibzugriffe aus
     // anderer TX gesperrt werden sollen
   }
 

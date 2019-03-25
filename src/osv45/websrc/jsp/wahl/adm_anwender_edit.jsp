@@ -1,6 +1,7 @@
 <%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="javax.swing.tree.DefaultMutableTreeNode" %>
 <%@ page import="de.ivu.wahl.AnwContext" %>
+<%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.NavigationErgebnis" %>
 <%@ page import="de.ivu.wahl.anwender.AnwenderHandling" %>
 <%@ page import="de.ivu.wahl.anwender.Rechte" %>
@@ -8,6 +9,8 @@
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
+<%@ page import="de.ivu.wahl.i18n.Messages"%>
+<%@ page import="de.ivu.wahl.i18n.MessageKeys"%>
 <%@ page import="de.ivu.wahl.modell.AnwenderModel" %>
 <%@ page import="de.ivu.wahl.modell.GebietInfo" %>
 <%@ page import="de.ivu.wahl.modell.RechtegruppeModel" %>
@@ -25,7 +28,7 @@
  * Anwender anlegen / editieren
  * Anlegen / editieren eines neuen / vorhandenen Anwenders
  *
- * author:  tst@ivu.de mur@ivu.de cos@ivu.de  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  T. Stach, M. Murdfield, D. Cosic  Copyright (c) 2002-9 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
@@ -33,10 +36,8 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="navBean" scope="request" class="de.ivu.wahl.client.beans.NavigationBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
-   response.setHeader("Cache-Control","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ //HTTP 1.1
-   response.setHeader("Pragma","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ //HTTP 1.0
-   response.setDateHeader ("Expires", 0); //$NON-NLS-1$ //prevents caching at the proxy server 
    Logger log = Logger.getLogger(this.getClass());
    
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
@@ -97,7 +98,7 @@
       <% } %>
       <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
       <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery-entropizer.css">
-      <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.12.4.js"></script>
+      <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.3.1.js"></script>
       <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
       <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/entropizer.js"></script>
       <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-entropizer.js"></script>
@@ -123,14 +124,24 @@
    <%-- bei neuen Anwender muss ein Passwort eingegeben werden--%>
    <% if (newAnw){ %>
    if (document.edit_Anwender.<%=prefix%>anw_passwort1.value == "") {
-   alert("<%= BundleHelper.getBundleString("Anwender_bearbeiten_error_Passwort")%>");
-   return false;
+      alert("<%= BundleHelper.getBundleString("Anwender_bearbeiten_error_Passwort")%>");
+      return false;
    }
    <% } %>
+   <%-- checke Passwortlänge--%>
+   if (document.edit_Anwender.<%=prefix%>anw_passwort1.value.length < <%= Konstanten.MIN_PASSWORD_LENGTH %>) {
+      alert("<%= Messages.bind(MessageKeys.Msg_Passwort_veraendern_error_Passwort_zu_kurz, Konstanten.MIN_PASSWORD_LENGTH) %>");
+      return false;
+   }
+   <%-- checke enthält EURO-Zeichen--%>
+   if (document.edit_Anwender.<%=prefix%>anw_passwort1.value.includes('\u20ac')) {
+      alert("<%= BundleHelper.getBundleString("Anwender_bearbeiten_error_Passwort_contains_EURO")%>");
+      return false;
+   }
    <%-- checke Passwortgleichheit--%>
    if (document.edit_Anwender.<%=prefix%>anw_passwort1.value != document.edit_Anwender.<%=prefix%>anw_passwort2.value) {
-   alert("<%= BundleHelper.getBundleString("Anwender_bearbeiten_error_Passwort_wiederholung")%>");
-   return false;
+      alert("<%= BundleHelper.getBundleString("Anwender_bearbeiten_error_Passwort_wiederholung")%>");
+      return false;
    }
    
    return true;
@@ -212,15 +223,12 @@
                                                       <td><ivu:int key="Anwender_bearbeiten_Loginname"/></td>
                                                       <% if (newAnw) {
                                                             String anwname = "";
-                                                            //request.getParameter(prefix+"anw_anwendername");
-                                                            //anwname = anwname != null ? anwname : "";
                                                             %>
                                                       <td><input type="text" style="font-size:11px" name="<%=prefix%>anw_anwendername" value="<%= (newAnw)? anwname : ClientHelper.forHTML(model.getAnwendername()) %>" /></td>
                                                       <% } else { %>
                                                       <td>
                                                          <input type="hidden" name="<%=prefix%>anw_anwendername" value="<%= ClientHelper.forHTML(model.getAnwendername()) %>" />
                                                          <b><%= ClientHelper.forHTML(model.getAnwendername()) %></b>
-                                                         
                                                       </td>
                                                       <% } %>
                                                    </tr>

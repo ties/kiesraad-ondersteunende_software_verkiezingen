@@ -7,7 +7,7 @@ package de.ivu.wahl.wus.reportgen;
 /**
  * See also PublicationLanguageType.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum ReportLanguage {
   NL("nl", "Dutch"),

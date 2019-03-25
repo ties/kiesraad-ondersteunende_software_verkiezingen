@@ -28,7 +28,7 @@ import de.ivu.wahl.i18n.Messages;
 /**
  * Base class for an Enterprise Java Bean
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class IVUBeanBase implements EnterpriseBean {
   private static final long serialVersionUID = -753173590929345271L;
@@ -36,10 +36,6 @@ public abstract class IVUBeanBase implements EnterpriseBean {
   private static final Category APP_LOGGER = Log4J.configure(Konstanten.APPLOG);
   private static final Category LOGGER = Log4J.configure(IVUBeanBase.class);
   private static volatile InitialContext __jndiContext = null;
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(IVUBeanBase.class, VERSION));
-  }
 
   public static void resetContext() {
     __jndiContext = null;
@@ -65,8 +61,9 @@ public abstract class IVUBeanBase implements EnterpriseBean {
         logHint(ejbName, "local-home", "local", "ejb-local-ref"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       }
       LOGGER.warn(Messages
-          .bind(MessageKeys.LOGGER_Konnte_0_InternNichtFinden_1_VersucheEsUeberJNDI, ejbName, e
-              .getCausedByException()));
+          .bind(MessageKeys.LOGGER_Konnte_0_InternNichtFinden_1_VersucheEsUeberJNDI,
+              ejbName,
+              e.getCausedByException()));
       return (T) findLocalHomeNoCache(ejbName);
     }
   }
@@ -77,8 +74,8 @@ public abstract class IVUBeanBase implements EnterpriseBean {
       LOGGER.warn(Messages.bind(MessageKeys.LOGGER_SieHabenLeerzeichenImNamen_0, ejbName));
     } else {
       String className = getClass().getName();
-      String myEjbName = className.substring(className.lastIndexOf('.') + 1, className
-          .lastIndexOf("Bean")); //$NON-NLS-1$
+      String myEjbName = className.substring(className.lastIndexOf('.') + 1,
+          className.lastIndexOf("Bean")); //$NON-NLS-1$
       boolean iAmEntity = isEntity(myEjbName);
       boolean isEntity = isEntity(ejbName);
       String linkName;

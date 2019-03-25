@@ -2,7 +2,7 @@
  * IImportEML
  * 
  * Created on 02.10.2009
- * Copyright (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * Copyright (c) 2009-2017 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 package de.ivu.wahl.dataimport;
 
@@ -14,7 +14,7 @@ import de.ivu.wahl.modell.WahlModel;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public interface IImportEML {
 
@@ -45,23 +45,35 @@ public interface IImportEML {
 
   void setHashWertWahldefinition(String hashWert);
 
+  /**
+   * @return the complete EML230 file hashcode
+   */
   String getHashWert230();
 
-  void setHashWert230(String hashWert);
+  /**
+   * @return the respective part of the EML230 file hashcode that is shown to the user
+   */
+  String getHashWert230ToConfirm(int index);
 
+  /**
+   * @param part part of the EML230 file hashcode that has to be entered by the user
+   */
+  void setHashWert230Input(int index, String part);
+
+  /**
+   * @return the complete EML510 file hashcode
+   */
   String getHashWert510();
 
-  void setHashWert510(String hashWert);
+  /**
+   * @return the respective part of the EML510 file hashcode that is shown to the user
+   */
+  String getHashWert510ToConfirm(int index);
 
-  String getTeilHashWertWahldefinition();
-
-  String getTeilHashWert230();
-
-  void setTeilHashWert230(String teil1);
-
-  String getTeilHashWert510();
-
-  void setTeilHashWert510(String teil1);
+  /**
+   * @param part part of the EML510 file hashcode that has to be entered by the user
+   */
+  void setHashWert510Input(int index, String part);
 
   WahlModel getElectionDetails();
 

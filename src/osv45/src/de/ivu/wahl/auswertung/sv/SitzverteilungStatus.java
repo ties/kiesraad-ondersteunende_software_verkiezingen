@@ -13,7 +13,7 @@ import de.ivu.wahl.modell.AlternativeModel;
 import de.ivu.wahl.modell.KonfliktModel;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
 
  */
 public class SitzverteilungStatus {

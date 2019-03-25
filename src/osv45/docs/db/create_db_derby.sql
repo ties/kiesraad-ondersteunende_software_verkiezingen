@@ -14,6 +14,7 @@ CREATE TABLE Anwender (
        Name                 VARCHAR(200),
        Anwendername         VARCHAR(200),
        PasswordHash         VARCHAR(200),
+       Salt                 VARCHAR(200),
        FehlversucheAnmeldung INTEGER,
        LetzterZugriff       TIMESTAMP
 );
@@ -445,3 +446,8 @@ CREATE INDEX stimmergebnis_index_1 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebi
 CREATE INDEX stimmergebnis_index_2 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet, Stimmart, ID_Listenkandidatur);
 CREATE INDEX stimmergebnis_index_3 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet, Stimmart);
 CREATE INDEX stimmergebnis_index_4 ON Stimmergebnis (ID_Ergebniseingang, ID_Gebiet);
+
+CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.connection.requireAuthentication', 'true');
+CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.authentication.provider', 'BUILTIN');
+CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.user.APP', 'LKjox4m8yGa4Zbc4cyyC');
+CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.database.propertiesOnly', 'true');

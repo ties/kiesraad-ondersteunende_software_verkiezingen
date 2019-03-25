@@ -15,7 +15,7 @@ import static de.ivu.wahl.anwender.Rechte.R_ADM_PROPS;
 import static de.ivu.wahl.anwender.Rechte.R_ADM_STIMMBEZIRKE_EDIT;
 import static de.ivu.wahl.anwender.Rechte.R_EINGABE;
 import static de.ivu.wahl.anwender.Rechte.R_IMPORT;
-import static de.ivu.wahl.anwender.Rechte.R_UPLOAD;
+import static de.ivu.wahl.anwender.Rechte.R_RE_INDEX_DATABASE;
 import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_GEMEINDE;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_STIMMBEZIRK;
@@ -30,7 +30,7 @@ import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class InitGuiCommandReferendum_P4 extends InitGuiCommand
     implements
@@ -157,6 +157,10 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
     helper.addCommand(Command.ADM_PROPS,
         "Grundeinstellungen_aendern", "Grundeinstellungen_aendern_titel", "adm_props.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
+    helper.setRights(R_RE_INDEX_DATABASE);
+    helper.addCommand(Command.ADM_RE_INDEX_DATABASE,
+        "re_index_database", "re_index_database_titel", "adm_re_index_database.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+
     final String titleKey;
     final String nameKey;
     if (GebietModel.EBENE_CSB == _ebene) {
@@ -174,14 +178,6 @@ public class InitGuiCommandReferendum_P4 extends InitGuiCommand
       helper.addCommand(Command.ADM_N10_1_EXPORT,
           "Export_P4_N10_1", "Export_P4_titel_N10_1", "adm_n10_1_export.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
     }
-
-    helper.setRights(R_UPLOAD);
-    helper.addCommand(Command.UPLOAD_RGTEXT,
-        "Upload_rgtext", "Upload_rgtext_titel", "rgtextUpload.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-
-    helper.setRights(R_UPLOAD);
-    helper
-        .addCommand(Command.RESET_RGTEXT, "Reset_rgtext", "Reset_rgtext_titel", "rgtextReset.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**

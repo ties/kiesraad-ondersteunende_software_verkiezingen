@@ -9,7 +9,7 @@ package de.ivu.ejb.jboss;
 import javax.ejb.EJBException;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface JMXInvoker {
   Object get(String objectName, String attributeName) throws EJBException;

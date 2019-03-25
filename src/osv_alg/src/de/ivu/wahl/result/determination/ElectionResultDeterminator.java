@@ -152,21 +152,7 @@ public class ElectionResultDeterminator {
   }
 
   private GsdaParameters getGsdaParameters(ElectionSubcategory electionSubcategory) {
-    if (ElectionSubcategory.EK.equals(electionSubcategory)) {
-      return GsdaParameters.forP42DistributionEK();
-    } else if (ElectionSubcategory.EP.equals(electionSubcategory)
-        || ElectionSubcategory.TK.equals(electionSubcategory)) {
-      return GsdaParameters.forP42DistributionEpTk();
-    } else if (ElectionSubcategory.GR1.equals(electionSubcategory)
-        || ElectionSubcategory.AB1.equals(electionSubcategory)
-        || ElectionSubcategory.ER1.equals(electionSubcategory)
-        || ElectionSubcategory.GC.equals(electionSubcategory)) {
-      return GsdaParameters.forP42DistributionGr1();
-    } else if (ElectionSubcategory.BC.equals(electionSubcategory)) {
-      return GsdaParameters.forP42DistributionBC();
-    } else {
-      return GsdaParameters.forP42DistributionPsAb2Gr2();
-    }
+    return GsdaParameters.getGsdaParameters(electionSubcategory);
   }
 
   private Map<P3List, Long> assignSeatsWithinP42Lists(ElectionResult electionResult,

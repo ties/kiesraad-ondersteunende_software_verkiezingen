@@ -34,7 +34,7 @@ import de.ivu.wahl.modell.ejb.Stimmergebnis;
 /**
  * Helper class to create and fill a ResultSummary
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ResultSummaryHelper {
   private final VotesHandlingBean _bean;

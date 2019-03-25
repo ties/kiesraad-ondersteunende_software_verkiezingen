@@ -12,10 +12,11 @@
  *
  * Shows details of the election definition file loaded.
  *
- * author:  tdu@ivu.de Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  T. Ducke Copyright (c) 2010 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    String helpKey = "gebietErg"; //$NON-NLS-1$

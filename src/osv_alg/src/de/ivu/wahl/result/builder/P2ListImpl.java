@@ -23,7 +23,7 @@ import de.ivu.wahl.result.drawlots.DrawingLotsIdentifier;
  * Default implementation of the P2List interface. _candidateLists may be changed (by adding
  * candidate lists) during construction.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class P2ListImpl implements P2List {
   public static final String P2LIST_KEY_SEPARATOR = "_"; //$NON-NLS-1$

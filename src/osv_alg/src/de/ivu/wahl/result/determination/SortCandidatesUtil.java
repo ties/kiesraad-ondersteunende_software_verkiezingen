@@ -15,7 +15,7 @@ import de.ivu.wahl.result.Util;
 /**
  * Utility class that provides Comparators to sort CandidateForSorting
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public final class SortCandidatesUtil {
   private SortCandidatesUtil() {
@@ -58,7 +58,7 @@ public final class SortCandidatesUtil {
   /**
    * Comparator to determine the new list order on a P2List.
    * 
-   * @author jon@ivu.de, IVU Traffic Technologies AG
+   * @author J. Nottebaum, IVU Traffic Technologies AG
    */
   public final static class NewOrderOnP2ListComparator implements Comparator<CandidateForSorting> {
     private final P2List _p2List;

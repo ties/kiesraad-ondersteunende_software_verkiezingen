@@ -13,7 +13,7 @@ import javax.ejb.FinderException;
 /**
  * Home interface of the entity "Gebiet" (region), that is part of the meta data of the election
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface GebietHome extends BasicGebietHome {
 

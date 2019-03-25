@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.xml.sax.XMLReader;
+
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -26,18 +28,20 @@ import de.ivu.wahl.modell.ejb.Wahl;
 import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.util.XMLImportHelper;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
+import de.ivu.wahl.wus.xmlsecurity.SAXParserFactoryUtil;
+import de.ivu.wahl.wus.xmlsecurity.XmlParseException;
 
 /**
  * Implementierung der Message f�r den Eingang einer Erfassungseinheit basierend auf dem Import
  * einer Nachricht im XML-Format
  * 
- * @author cos@ivu.de klie@ivu.de ugo@ivu.de IVU Traffic Technologies AG
+ * @author D. Cosic P. Kliem U. Müller IVU Traffic Technologies AG
  */
 
 public abstract class EingangMsgXMLFactory {
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   private static class FactoryHelper {
     private static final long serialVersionUID = -5572325655334778136L;
@@ -58,11 +62,14 @@ public abstract class EingangMsgXMLFactory {
         InputStream is = _url.openStream();
         Document doc;
         try {
-          doc = new Builder().build(is);
+          XMLReader xmlReader = SAXParserFactoryUtil.getXMLReader();
+          doc = new Builder(xmlReader).build(is);
         } finally {
           is.close();
         }
         _rootElement = doc.getRootElement();
+      } catch (XmlParseException xpe) {
+        throw new RuntimeException("Error!", xpe); //$NON-NLS-1$
       } catch (ParsingException pe) {
         throw new RuntimeException("Error!", pe); //$NON-NLS-1$
       } catch (IOException ioe) {

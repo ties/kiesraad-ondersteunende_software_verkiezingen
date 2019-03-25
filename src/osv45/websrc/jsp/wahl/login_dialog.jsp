@@ -8,28 +8,36 @@ Als Fehlermeldung wird ein Text aus der Session (LOGIN_ERROR) angezeigt, wenn vo
 --%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
-<%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean" %>
-<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
+<%@ page import="de.ivu.wahl.AnwContext" %>
+<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
-<% 
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
+<%
 String arch = ""; //$NON-NLS-1$
 String val = appBean.getPropertyHandling().getProperty(Konstanten.PROP_SYSTEM_ARCHITECTURE_BITS);
-if (val != null) {
-    arch = " (" + val + BundleHelper.getBundleString("SystemArchitectureBits") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+boolean ignorestepid = "true".equals(System.getProperty("ignorestepid")); //$NON-NLS-1$ //$NON-NLS-2$
+if (val != null || ignorestepid) {
+    arch = " ("; //$NON-NLS-1$ 
+    if (val != null) {
+        arch = arch + val + BundleHelper.getBundleString("SystemArchitectureBits"); //$NON-NLS-1$
+        if (ignorestepid) {
+          arch = arch + ", "; //$NON-NLS-1$
+        }
+    }
+    if (ignorestepid) {
+      arch = arch + BundleHelper.getBundleString("IgnoreStepId"); //$NON-NLS-1$
+    }
+    arch = arch + ")"; //$NON-NLS-1$
 }
 
 String breite = "100%";  //$NON-NLS-1$
-
-response.setHeader("Cache-Control","no-cache"); //HTTP 1.1 //$NON-NLS-1$ //$NON-NLS-2$
-response.setHeader("Pragma","no-cache"); //HTTP 1.0 //$NON-NLS-1$ //$NON-NLS-2$
-response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  //$NON-NLS-1$
 %>
 
 <html>
@@ -97,7 +105,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  /
       <td>
          <% String actionUrl = ClientHelper.rewriteURL("/jsp/wahl/login_dialog.jsp", request, response); //$NON-NLS-1$
          %>
-         <form name="Login" action="<%=actionUrl%>" method="POST" enctype="application/x-www-form-urlencoded">
+         <form name="Login" action="<%=actionUrl%>" method="POST" enctype="application/x-www-form-urlencoded" autocomplete="off">
             <table width="<%=breite%>" height="100%" style="background-image:url(<%= request.getContextPath() %>/img/logo/<%= BundleHelper.getBundleString("Background")%>); background-repeat:no-repeat; background-position:center">
                <tr>
                   <td align="center">
@@ -112,7 +120,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  /
                            <td width="10%"><ivu:int key="Anwender" />:</td>
                            <td width="8">&nbsp;</td>
                            <td align="left">
-                              <input style="background-color:#FFFFFF;" type="text" name="User" title="<%=BundleHelper.getBundleString("Anwender_titel") %>" value="" autocomplete="off"/>
+                              <input style="background-color:#FFFFFF;" type="text" name="User2017" title="<%=BundleHelper.getBundleString("Anwender_titel") %>" value="" autocomplete="off"/>
                            </td>
                         </tr>
                         <tr align="left">
@@ -120,7 +128,7 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  /
                            <td><ivu:int key="Passwort" />:</td>
                            <td>&nbsp;</td>
                            <td align="left">
-                              <input style="background-color:#FFFFFF;" type="password" name="Password" title="<%=BundleHelper.getBundleString("Passwort_titel") %>" value="" onkeypress="capsLock(event)">
+                              <input style="background-color:#FFFFFF;" type="password" name="Password2017" title="<%=BundleHelper.getBundleString("Passwort_titel") %>" value="" autocomplete="off" onkeypress="capsLock(event)">
                               <span id="capsLock" style="visibility:hidden"><%= BundleHelper.getBundleString("Caps_Lock_Hint") %></span>
                            </td>
                         </tr>

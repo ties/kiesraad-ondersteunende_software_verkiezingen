@@ -5,7 +5,7 @@
 package de.ivu.wahl.client.beans;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ExportP5Commands {
   public static final String CMD_ADM_EXPORT_P22_1 = "adm_exportP22_1"; //$NON-NLS-1$

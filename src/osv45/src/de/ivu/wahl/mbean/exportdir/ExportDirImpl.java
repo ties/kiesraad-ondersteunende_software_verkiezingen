@@ -27,7 +27,7 @@ import de.ivu.wahl.admin.PropertyHandlingBean;
 /**
  * Management of the shadow export directory
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class ExportDirImpl implements Runnable {
 

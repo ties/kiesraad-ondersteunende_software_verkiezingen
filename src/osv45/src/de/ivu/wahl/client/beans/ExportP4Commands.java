@@ -5,20 +5,9 @@
 package de.ivu.wahl.client.beans;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ExportP4Commands {
-  public static final String EXP_P4_EXPORT_P4_BACK_EML510C = "expP4_exportP4Back_EML510c"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_N10_1 = "expP4_exportP4Back_N10_1"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_N11 = "expP4_exportP4Back_N11"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_O3 = "expP4_exportP4Back_O3"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_OSV4_1 = "expP4_exportP4Back_OSV4_1"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_OSV4_4 = "expP4_exportP4Back_OSV4_4"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_OSV4_5 = "expP4_exportP4Back_OSV4_5"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_T11 = "expP4_exportP4Back_T11"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_WRR83 = "expP4_exportP4Back_Wrr83"; //$NON-NLS-1$
-  public static final String EXP_P4_EXPORT_P4_BACK_OSV4_6 = "expP4_exportP4Back_OSV4_6"; //$NON-NLS-1$
-
   public static final String EXP_P4_EXPORT_P4_EML510C = "expP4_exportP4_EML510c"; //$NON-NLS-1$
   public static final String EXP_P4_EXPORT_P4_EMPTY_EML = "expP4_exportP4_EmptyEml"; //$NON-NLS-1$
   public static final String EXP_P4_EXPORT_P4_N10_1 = "expP4_exportP4_N10_1"; //$NON-NLS-1$
@@ -33,6 +22,7 @@ public interface ExportP4Commands {
   public static final String EXP_P4_EXPORT_P4_WRR83 = "expP4_exportP4_WRR83"; //$NON-NLS-1$
   public static final String EXP_P4_EXPORT_P4_OSV4_6 = "expP4_exportP4_OSV4_6"; //$NON-NLS-1$
 
+  public static final String EXP_P4_PROP_EINGABE_N11 = "expP4_propEingabeN11"; //$NON-NLS-1$
   public static final String EXP_P4_PROP_EINGABE_O3 = "expP4_propEingabeO3"; //$NON-NLS-1$
   public static final String EXP_P4_PROP_EINGABE_OSV4_4 = "expP4_propEingabeOSV4_4"; //$NON-NLS-1$
   public static final String EXP_P4_PROP_EINGABE_OSV4_5 = "expP4_propEingabeOSV4_5"; //$NON-NLS-1$

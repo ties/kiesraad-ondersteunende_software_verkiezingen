@@ -8,9 +8,6 @@ package de.ivu.wahl;
 import static de.ivu.ejb.EJBUtil.lookupLocal;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Category;
 
@@ -24,7 +21,7 @@ import de.ivu.wahl.i18n.Messages;
  * Tr�gt die Identit�t und die wichtigsten Session-Daten des Anwenders. Dient insbesondere der
  * Kommunikation zwischen dem Client und dem Server.
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class AnwContext implements Serializable {
   private static final long serialVersionUID = 307267054192640768L;
@@ -34,7 +31,7 @@ public class AnwContext implements Serializable {
    */
   private final static Category LOGGER = Log4J.configure(AnwContext.class);
 
-  private final static String TRENNER = "#_#_#_#_#_#";//$NON-NLS-1$
+  public final static String TRENNER = "#_#_#_#_#_#";//$NON-NLS-1$
 
   /**
    * Invalid user context if the same user is already logged in
@@ -171,25 +168,6 @@ public class AnwContext implements Serializable {
    */
   private static int hc(String s) {
     return s == null ? 0 : s.hashCode();
-  }
-
-  /**
-   * Ausrechnen des MD5-Hash
-   * 
-   * @param plainText Klartext-Eingabe
-   * @return MD5-Hash als String-Repr�sentation der Nummer in Basis 36
-   */
-  public static String calcHash(String plainText) {
-    try {
-      MessageDigest md5 = MessageDigest.getInstance("MD5"); //$NON-NLS-1$
-      md5.reset();
-      byte[] digest = md5.digest(plainText.getBytes());
-      return new BigInteger(1, digest).toString(Character.MAX_RADIX);
-    } catch (NoSuchAlgorithmException nsae) {
-      // should REALLY NEVER happen
-      LOGGER.error(nsae);
-      return ""; //$NON-NLS-1$
-    }
   }
 
   /**

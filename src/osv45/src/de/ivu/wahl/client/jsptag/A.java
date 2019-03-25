@@ -9,17 +9,17 @@ import org.apache.log4j.Logger;
 import de.ivu.wahl.client.util.ClientHelper;
 
 /**
- * Erweitertes HTML-A-Tag, der selbständig für die Ziel-URL das URL-Rewriting im ClientHelper
- * aufruft. Außerdem werden sinnvolle Vorgaben gesetzt.
+ * Erweitertes HTML-A-Tag, der selbstï¿½ndig fï¿½r die Ziel-URL das URL-Rewriting im ClientHelper
+ * aufruft. Auï¿½erdem werden sinnvolle Vorgaben gesetzt.
  * 
- * @author Dr. Domagoj Cosic <cos@ivu.de>
+ * @author Dr. Domagoj Cosic <D. Cosic>
  */
 
 public class A extends TagSupport {
   private static final long serialVersionUID = 4535084324725749179L;
 
   /**
-   * Logger für diese Klasse
+   * Logger fï¿½r diese Klasse
    */
   private final static Logger LOGGER = Logger.getLogger(A.class);
 
@@ -54,17 +54,17 @@ public class A extends TagSupport {
   protected String _title;
 
   /**
-   * Encoding für das Hyperlink-Ziel
+   * Encoding fï¿½r das Hyperlink-Ziel
    */
   protected String _enctype;
 
   /**
-   * Style für das Hyperlink-Ziel
+   * Style fï¿½r das Hyperlink-Ziel
    */
   protected String _style;
 
   /**
-   * javascript-event für das Hyperlink-Ziel
+   * javascript-event fï¿½r das Hyperlink-Ziel
    */
   protected String _onclick;
 
@@ -123,27 +123,27 @@ public class A extends TagSupport {
   }
 
   /**
-   * Setze Encoding für das Hyperlink-Ziel
+   * Setze Encoding fï¿½r das Hyperlink-Ziel
    * 
-   * @param value Encoding für das Hyperlink-Ziel
+   * @param value Encoding fï¿½r das Hyperlink-Ziel
    */
   public void setEnctype(String value) {
     _enctype = value;
   }
 
   /**
-   * Setze Style für das Hyperlink-Ziel
+   * Setze Style fï¿½r das Hyperlink-Ziel
    * 
-   * @param value Style für das Hyperlink-Ziel
+   * @param value Style fï¿½r das Hyperlink-Ziel
    */
   public void setStyle(String value) {
     _style = value;
   }
 
   /**
-   * Setze javascript-event onclick für das Hyperlink-Ziel
+   * Setze javascript-event onclick fï¿½r das Hyperlink-Ziel
    * 
-   * @param onclick Style für das Hyperlink-Ziel
+   * @param onclick Style fï¿½r das Hyperlink-Ziel
    */
   public void setOnclick(String onclick) {
     _onclick = onclick;
@@ -200,7 +200,7 @@ public class A extends TagSupport {
   }
 
   /**
-   * End-Tag interpretieren. Schließt nur den A-Tag ab.
+   * End-Tag interpretieren. Schlieï¿½t nur den A-Tag ab.
    * 
    * @return EVAL_PAGE = setze die Seitenverarbeitung fort
    * @see javax.servlet.jsp.tagext.Tag#doEndTag()

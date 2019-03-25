@@ -41,14 +41,10 @@ import de.ivu.ejb.EJBUtil;
 import de.ivu.util.debug.UserActionLogger;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.SystemInfo;
+import de.ivu.wahl.SystemProperty;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.admin.DialogStateHolder;
-import de.ivu.wahl.admin.P4ExportStateO3;
-import de.ivu.wahl.admin.P4ExportStateOSV4_4;
-import de.ivu.wahl.admin.P4ExportStateOSV4_5;
-import de.ivu.wahl.admin.P4ExportStateOSV4_6;
-import de.ivu.wahl.admin.P4ExportStateT11;
-import de.ivu.wahl.admin.P4ExportStateWrr83;
+import de.ivu.wahl.admin.ExportWithParametersState;
 import de.ivu.wahl.auswertung.erg.ResultSummary;
 import de.ivu.wahl.client.util.ClientHelper;
 import de.ivu.wahl.i18n.MessageKeys;
@@ -73,7 +69,7 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
  * Funktionen f�r Administrative Zwecke auf der Client-Seite. Dies sind fast ausschlie�lich
  * Durchgriffe auf Sessionbeans.
  * 
- * @author mur@ivu.de, klie@ivu.de
+ * @author M. Murdfield, P. Kliem
  */
 
 public class ExportP4Bean extends RepositoryPropertyHandler implements Executer, Serializable {
@@ -88,14 +84,12 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
     private static final long serialVersionUID = 1L;
     {
       for (ExportP4Type type : ExportP4Type.values()) {
-        put(type, new DialogStateHolder());
+        if (type.isWithParameters()) {
+          put(type, new DialogStateHolder());
+        } else {
+          put(type, new ExportWithParametersState());
+        }
       }
-      put(O3, new P4ExportStateO3());
-      put(OSV4_4, new P4ExportStateOSV4_4());
-      put(OSV4_5, new P4ExportStateOSV4_5());
-      put(T11, new P4ExportStateT11());
-      put(WRR83, new P4ExportStateWrr83());
-      put(OSV4_6, new P4ExportStateOSV4_6());
     }
   };
 
@@ -118,41 +112,13 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       if (cmd.equals(config.getExportCommand())) {
         exportP4(request, config);
         return;
-      } else if (cmd.equals(config.getBackCommand())) {
+      }
+      if (cmd.equals(config.getPropertiesCommand())) {
+        // Eingabe von Properties
         DialogStateHolder state = getState(config);
-        state._modus = setNewMode(request, state._modus);
+        state._modus = handlePropEingabeAllg(request, config.getPropertiesMap(), state._modus);
         return;
       }
-    }
-    if (ExportP4Commands.EXP_P4_PROP_EINGABE_O3.equals(cmd)) {
-      // Eingabe von Properties
-      DialogStateHolder state = getP4ExportStateO3();
-      state._modus = handlePropEingabeAllg(request, Konstanten.PROP_O3_D1, state._modus);
-      return;
-    }
-    if (ExportP4Commands.EXP_P4_PROP_EINGABE_OSV4_4.equals(cmd)) {
-      // Eingabe von Properties
-      DialogStateHolder state = getP4ExportStateOSV4_4();
-      state._modus = handlePropEingabeAllg(request, Konstanten.PROP_OSV4_4_D1, state._modus);
-      return;
-    }
-    if (ExportP4Commands.EXP_P4_PROP_EINGABE_OSV4_5.equals(cmd)) {
-      // Eingabe von Properties
-      DialogStateHolder state = getP4ExportStateOSV4_5();
-      state._modus = handlePropEingabeAllg(request, Konstanten.PROP_OSV4_5_D1, state._modus);
-      return;
-    }
-    if (ExportP4Commands.EXP_P4_PROP_EINGABE_T11.equals(cmd)) {
-      // Eingabe von Properties
-      DialogStateHolder state = getP4ExportStateT11();
-      state._modus = handlePropEingabeAllg(request, Konstanten.PROP_T11_D1, state._modus);
-      return;
-    }
-    if (ExportP4Commands.EXP_P4_PROP_EINGABE_WRR83.equals(cmd)) {
-      // Eingabe von Properties
-      DialogStateHolder state = getP4ExportStateWrr83();
-      state._modus = handlePropEingabeAllg(request, Konstanten.PROP_WRR83_D1, state._modus);
-      return;
     }
     throw new RuntimeException(Messages.bind(MessageKeys.Error_Command_0_Unknown, cmd));
   }
@@ -192,7 +158,7 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       // Prepare an error message just in case an Exception occurs
       errorMsg = config.getErrorMsgKey();
 
-      errorMsg = createExportP4File(request, config, errorMsg, filedef);
+      errorMsg = createExportP4File(request, config, filedef);
     } catch (Exception e) {
       _adminMsgExport = (errorMsg.isEmpty() ? EMPTY_STRING : Messages.bind(errorMsg)
           + Konstanten.BR)
@@ -203,19 +169,19 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
     }
   }
 
-  private String createExportP4File(HttpServletRequest request,
-      ExportP4Type config,
-      String errorMsg,
-      File filedef) throws ImportException, IOException, ParserConfigurationException, Exception {
-
-    String result = errorMsg;
+  private String createExportP4File(HttpServletRequest request, ExportP4Type config, File filedef)
+      throws ImportException, IOException, ParserConfigurationException, Exception {
+    // Prepare an error message just in case an Exception occurs
+    String result = config.getErrorMsgKey();
 
     HttpSession session = request.getSession(false);
     boolean forceOverwrite = ClientHelper.getBooleanParameter(request.getParameter(PARAM_FORCE),
         false);
+    boolean isCreateEml510dInHSB = SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_HSB
+        && ExportP4Type.OSV4_1.equals(config); // See OSV-2080
 
     long start = new Date().getTime();
-    Document eml510 = createEML510(config, forceOverwrite, session);
+    Document eml510 = createEML510(config, forceOverwrite, session, isCreateEml510dInHSB);
     LOGGER.info("Created eml510 in ms: " + (new Date().getTime() - start)); //$NON-NLS-1$
 
     ReportGenerator generator = new ReportGeneratorImpl(APP_LOGGER);
@@ -225,7 +191,8 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
     boolean draft = !WahlInfo.getWahlInfo().isFreigegeben()
         && !Arrays.asList(N10_1, EMPTY_EML, T11).contains(config);
     final ReportOutputFormatEnum outputFormat = determineOutputFormat(request, config);
-    boolean isCSB = (SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_CSB);
+    boolean isCSB = (SystemInfo.getSystemInfo().getWahlEbene() == GebietModel.EBENE_CSB)
+        || isCreateEml510dInHSB;
     ExportEml exportEml = draft || Arrays.asList(N10_1, OSV4_4, T11, OSV4_6).contains(config)
         ? ExportEml.NO
         : ExportEml.OVERWRITE;
@@ -260,15 +227,64 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
           configurer.setCSB(isCSB);
 
           rc = configurer.getReportConfiguration();
-          generator.createReport(rc, eml510);
 
           if (N11.equals(config)) {
-            result = MessageKeys.Error_OSV4_1_KonnteNichtExportiertWerden;
-            createAdditionalOSV4_1InMunicipality(forceOverwrite,
-                filedef,
-                generator,
-                draft,
-                outputFormat);
+            boolean exportForCentralCounting = isExportForCentralCounting();
+            if (exportForCentralCounting) {
+              // Generate model II
+              result = MessageKeys.Error_Model_II_KonnteNichtExportiertWerden;
+              configurer.setDocument(ReportTemplateEnum.II, outputFormat);
+              rc = configurer.getReportConfiguration();
+              generator.createReport(rc, eml510);
+
+              // Generate EML 510a (Totaaltelling)
+              createAdditionalOSV4_1InMunicipality(forceOverwrite,
+                  filedef,
+                  generator,
+                  draft,
+                  outputFormat);
+
+              // Generate Appendix 1 of Model II, but not another EML file
+              result = MessageKeys.Error_Model_II_Appendix1_KonnteNichtExportiertWerden;
+              configurer.setDocument(ReportTemplateEnum.OSV4_7, outputFormat);
+              configurer.configureWhichFiles(ExportEml.NO, forceOverwrite);
+              rc = configurer.getReportConfiguration();
+              generator.createReport(rc, eml510);
+
+            } else {
+              // Generate model N11
+              generator.createReport(rc, eml510);
+
+              // Generate EML 510a (Totaaltelling)
+              result = MessageKeys.Error_OSV4_1_KonnteNichtExportiertWerden;
+              createAdditionalOSV4_1InMunicipality(forceOverwrite,
+                  filedef,
+                  generator,
+                  draft,
+                  outputFormat);
+            }
+          } else if (N10_1.equals(config)) {
+            boolean exportForCentralCounting = isExportForCentralCounting(request);
+            if (exportForCentralCounting) {
+              // Generate empty Model I
+              result = MessageKeys.Error_Model_I_KonnteNichtExportiertWerden;
+              configurer.setDocument(ReportTemplateEnum.I, outputFormat);
+              rc = configurer.getReportConfiguration();
+              generator.createReport(rc, eml510);
+
+              // Generate Appendix 2 of Model II
+              result = MessageKeys.Error_Model_II_Appendix2_KonnteNichtExportiertWerden;
+              configurer.setDocument(ReportTemplateEnum.OSV4_8, outputFormat);
+              rc = configurer.getReportConfiguration();
+              generator.createReport(rc, eml510);
+            } else {
+              // Generate model N10-1
+              generator.createReport(rc, eml510);
+            }
+          } else {
+
+            // The normal case (not model N11, not model N10-1)
+            generator.createReport(rc, eml510);
           }
           break;
 
@@ -298,6 +314,10 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       }
     }
     return result;
+  }
+
+  public boolean isDocumentSelected(SystemProperty systemProperty) {
+    return getPropertyHandling().getBooleanProperty(systemProperty.getKey());
   }
 
   private ReportOutputFormatEnum determineOutputFormat(HttpServletRequest request,
@@ -349,8 +369,11 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
     }
   }
 
-  private Document createEML510(ExportP4Type exportType, boolean forceOverwrite, HttpSession session)
-      throws ImportException {
+  private Document createEML510(ExportP4Type exportType,
+      boolean forceOverwrite,
+      HttpSession session,
+      boolean isCreateElm510dInHSB) throws ImportException {
+    
     // Try to use the stored EML510 document
     Document result = null;
     if (forceOverwrite) {
@@ -370,6 +393,9 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       return getExportHandling().createEML510(wurzelgebiet, true, false, true);
     } else {
       boolean createRGNodes = !exportType.equals(OSV4_1);
+      if (isCreateElm510dInHSB) {
+        return getExportHandling().createEML510dInHSB(wurzelgebiet, createRGNodes);
+      }
       return getExportHandling().createEML510(wurzelgebiet, createRGNodes);
     }
   }

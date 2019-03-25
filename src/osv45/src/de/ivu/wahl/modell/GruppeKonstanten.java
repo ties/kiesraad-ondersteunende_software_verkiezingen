@@ -24,7 +24,7 @@ import de.ivu.wahl.util.BundleHelper;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class GruppeKonstanten {
   /**
@@ -105,7 +105,7 @@ public class GruppeKonstanten {
 
     POSTAL_VOTES_WITH_MULTIPLE_BALLOT_PAPERS(1700, KAT_EXPLANATIONS, LETTER, COLLAPSIBLE),
 
-    BALLOT_PAPERS_LOST(1800, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE),
+    BALLOT_PAPERS_LOST(1800, KAT_EXPLANATIONS, LETTER, COLLAPSIBLE),
 
     NO_EXPLANATION(1900, KAT_EXPLANATIONS, BALLOT_AND_LETTER, COLLAPSIBLE),
 
@@ -254,20 +254,40 @@ public class GruppeKonstanten {
       if (gruppeAllgemein == null) {
         return null;
       }
-      switch (gruppeAllgemein) {
-        case WAEHLER :
-          if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB
-              || WahlInfo.getWahlInfo().isEK()) {
-            return "B"; //$NON-NLS-1$
-          }
-          break;
 
-        case ADMITTED_VOTERS :
-          if (GruppeAllgemeinEbeneProvider.getWahlEbene() == GebietModel.EBENE_PSB
-              || WahlInfo.getWahlInfo().isEK()) {
+      if (WahlInfo.getWahlInfo().isEK()) {
+        switch (gruppeAllgemein) {
+          case WAEHLER :
+            return "B"; //$NON-NLS-1$
+          case ADMITTED_VOTERS :
             return "A"; //$NON-NLS-1$
-          }
-          break;
+        }
+        return null;
+      }
+
+      if (GruppeAllgemeinEbeneProvider.getWahlEbene() != GebietModel.EBENE_PSB) {
+        return null;
+      }
+
+      // P4_PSB
+      boolean isReferendum = WahlInfo.getWahlInfo().isReferendum();
+      switch (gruppeAllgemein) {
+        case ELECTION_NOTICES :
+          return "A"; //$NON-NLS-1$
+        case PROXY_VOTERS :
+          return "B"; //$NON-NLS-1$
+        case POLLING_CARDS :
+          return "C"; //$NON-NLS-1$
+        case ADMITTED_VOTERS :
+          return "D"; //$NON-NLS-1$
+        case GUELTIGE :
+          return "E"; //$NON-NLS-1$
+        case LEER :
+          return isReferendum ? "G" : "F"; //$NON-NLS-1$ //$NON-NLS-2$
+        case UNGUELTIGE :
+          return isReferendum ? "H" : "G"; //$NON-NLS-1$ //$NON-NLS-2$
+        case WAEHLER :
+          return isReferendum ? "J" : "H"; //$NON-NLS-1$ //$NON-NLS-2$
       }
       return null;
     }
@@ -366,14 +386,18 @@ public class GruppeKonstanten {
       // The following Groups shall be invisible in HSB and CSB:
       if (GruppeAllgemeinEbeneProvider.getWahlEbene() != GebietModel.EBENE_PSB) {
         switch (gruppeAllgemein) {
-          case GUELTIGE : // Hinweis: Die Gültigen werden dem EML-Export nun immer hinzugefügt
-                          // (siehe EML510Helper.appendGeneralVotingResults()) OSV-1462
           case WAEHLER :
           case ELECTION_NOTICES :
-          case POLLING_CARDS :
           case ADMITTED_VOTERS :
             return false;
         }
+      }
+
+      // The group POLLING_CARDS shall be invisible in CSB:
+      if (GruppeAllgemeinEbeneProvider.getWahlEbene() != GebietModel.EBENE_PSB
+          && GruppeAllgemeinEbeneProvider.getWahlEbene() != GebietModel.EBENE_HSB
+          && POLLING_CARDS.equals(gruppeAllgemein)) {
+        return false;
       }
 
       if (gebiet.isPostalvote()) {

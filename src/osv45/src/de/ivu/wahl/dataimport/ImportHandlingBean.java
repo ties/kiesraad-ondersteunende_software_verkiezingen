@@ -61,7 +61,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * SessionBean f�r die Unterst�tzung des ImportClient
  * 
- * @author cos@ivu.de
+ * @author D. Cosic
  */
 @Stateless
 @Local(ImportHandling.class)

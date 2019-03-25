@@ -9,7 +9,7 @@ package de.ivu.wahl.runtime;
 import javax.ejb.EJBLocalObject;
 
 /**
- * @author COS@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  * @param <T> Typ der Objekte, die gehalten werden
  */
 public interface UniCache<T> extends EJBLocalObject {

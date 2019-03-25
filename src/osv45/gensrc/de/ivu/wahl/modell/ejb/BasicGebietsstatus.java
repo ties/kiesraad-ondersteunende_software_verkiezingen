@@ -18,7 +18,7 @@ import de.ivu.wahl.modell.GebietsstatusModel;
   * Interface for the entity Gebietsstatus as Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface BasicGebietsstatus extends EJBLocalObject, GebietsstatusModel {
@@ -40,21 +40,6 @@ public interface BasicGebietsstatus extends EJBLocalObject, GebietsstatusModel {
 
 
    /**
-     * Navigation to the associated entity of the type {@link Gebiet}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   Gebiet getGebiet() throws EJBException;
-
-   /**
-     * Setting of the associated entity of the type {@link Gebiet}
-     *
-     * @param gebiet the corresponding EJBObject
-     */
-   void setGebiet(Gebiet gebiet);
-
-   /**
      * Navigation to the associated entity of the type {@link Ergebniseingang}
      *
      * @return the corresponding EJBObject
@@ -68,4 +53,19 @@ public interface BasicGebietsstatus extends EJBLocalObject, GebietsstatusModel {
      * @param ergebniseingang the corresponding EJBObject
      */
    void setErgebniseingang(Ergebniseingang ergebniseingang);
+
+   /**
+     * Navigation to the associated entity of the type {@link Gebiet}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   Gebiet getGebiet() throws EJBException;
+
+   /**
+     * Setting of the associated entity of the type {@link Gebiet}
+     *
+     * @param gebiet the corresponding EJBObject
+     */
+   void setGebiet(Gebiet gebiet);
 }

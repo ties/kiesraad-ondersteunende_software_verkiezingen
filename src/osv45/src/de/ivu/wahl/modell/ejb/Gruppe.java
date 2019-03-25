@@ -15,7 +15,7 @@ import javax.ejb.EJBException;
  * <li>an independen list.</li>
  * </ul>
  * 
- * @author cos@ivu.de IVU Traffic Technologies AG
+ * @author D. Cosic IVU Traffic Technologies AG
  */
 public interface Gruppe extends BasicGruppe {
 

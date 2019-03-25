@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity ListenkandidaturErgebnis.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListenkandidaturErgebnisDBA extends DBABase {
@@ -72,28 +72,55 @@ public class ListenkandidaturErgebnisDBA extends DBABase {
       if ((idx = columns.get(ID_LISTENKANDIDATURERGEBNIS.toUpperCase())) != null) {
          m._id_ListenkandidaturErgebnis = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKANDIDATURERGEBNIS)) != null) {
+         m._id_ListenkandidaturErgebnis = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_LISTENKANDIDATUR.toUpperCase())) != null) {
+         m._id_Listenkandidatur = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_LISTENKANDIDATUR)) != null) {
          m._id_Listenkandidatur = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(LISTENPLATZ.toUpperCase())) != null) {
+         m._listenplatz = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(LISTENPLATZ)) != null) {
          m._listenplatz = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(GEWAEHLT.toUpperCase())) != null) {
          m._gewaehlt = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(GEWAEHLT)) != null) {
+         m._gewaehlt = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(GEWAEHLTINGRUPPE.toUpperCase())) != null) {
+         m._gewaehltInGruppe = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(GEWAEHLTINGRUPPE)) != null) {
          m._gewaehltInGruppe = r.getBoolean(idx.intValue());
       }
       if ((idx = columns.get(BEVORZUGTGEWAEHLT.toUpperCase())) != null) {
          m._bevorzugtGewaehlt = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(BEVORZUGTGEWAEHLT)) != null) {
+         m._bevorzugtGewaehlt = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(LOSTEILNEHMER.toUpperCase())) != null) {
          m._losteilnehmer = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(LOSTEILNEHMER)) != null) {
+         m._losteilnehmer = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(LOSGEWINNER.toUpperCase())) != null) {
+         m._losgewinner = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(LOSGEWINNER)) != null) {
          m._losgewinner = r.getBoolean(idx.intValue());
       }
    }
@@ -109,28 +136,28 @@ public class ListenkandidaturErgebnisDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_LISTENKANDIDATUR.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKANDIDATUR.toUpperCase()) || columns.containsKey(ID_LISTENKANDIDATUR)) {
          p.setString(idx++, m._id_Listenkandidatur);
       }
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(LISTENPLATZ.toUpperCase())) {
+      if (columns.containsKey(LISTENPLATZ.toUpperCase()) || columns.containsKey(LISTENPLATZ)) {
          p.setInt(idx++, m._listenplatz);
       }
-      if (columns.containsKey(GEWAEHLT.toUpperCase())) {
+      if (columns.containsKey(GEWAEHLT.toUpperCase()) || columns.containsKey(GEWAEHLT)) {
          p.setBoolean(idx++, m._gewaehlt);
       }
-      if (columns.containsKey(GEWAEHLTINGRUPPE.toUpperCase())) {
+      if (columns.containsKey(GEWAEHLTINGRUPPE.toUpperCase()) || columns.containsKey(GEWAEHLTINGRUPPE)) {
          p.setBoolean(idx++, m._gewaehltInGruppe);
       }
-      if (columns.containsKey(BEVORZUGTGEWAEHLT.toUpperCase())) {
+      if (columns.containsKey(BEVORZUGTGEWAEHLT.toUpperCase()) || columns.containsKey(BEVORZUGTGEWAEHLT)) {
          p.setBoolean(idx++, m._bevorzugtGewaehlt);
       }
-      if (columns.containsKey(LOSTEILNEHMER.toUpperCase())) {
+      if (columns.containsKey(LOSTEILNEHMER.toUpperCase()) || columns.containsKey(LOSTEILNEHMER)) {
          p.setBoolean(idx++, m._losteilnehmer);
       }
-      if (columns.containsKey(LOSGEWINNER.toUpperCase())) {
+      if (columns.containsKey(LOSGEWINNER.toUpperCase()) || columns.containsKey(LOSGEWINNER)) {
          p.setBoolean(idx++, m._losgewinner);
       }
       p.setString(idx++, m._id_ListenkandidaturErgebnis);
@@ -330,23 +357,6 @@ public class ListenkandidaturErgebnisDBA extends DBABase {
    }
 
    /**
-     * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of ListenkandidaturErgebnis IDs
-     *
-     * @param id_Ergebniseingang searching condition
-
-     * @return a {@link Collection} of ListenkandidaturErgebnis IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Ergebniseingang(String id_Ergebniseingang)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_ListenkandidaturErgebnis from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Ergebniseingang});
-   }
-
-   /**
      * Method retrieveIDsByID_Listenkandidatur returns a {@link Collection} of ListenkandidaturErgebnis IDs
      *
      * @param id_Listenkandidatur searching condition
@@ -361,6 +371,23 @@ public class ListenkandidaturErgebnisDBA extends DBABase {
          "select ID_ListenkandidaturErgebnis from " + TABLENAME + " where ID_Listenkandidatur=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Listenkandidatur});
+   }
+
+   /**
+     * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of ListenkandidaturErgebnis IDs
+     *
+     * @param id_Ergebniseingang searching condition
+
+     * @return a {@link Collection} of ListenkandidaturErgebnis IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Ergebniseingang(String id_Ergebniseingang)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_ListenkandidaturErgebnis from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Ergebniseingang});
    }
 
    /**

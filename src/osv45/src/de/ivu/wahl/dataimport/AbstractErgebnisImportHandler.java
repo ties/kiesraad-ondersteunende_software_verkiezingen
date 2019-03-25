@@ -24,6 +24,7 @@ import de.ivu.wahl.modell.GebietModel;
 import de.ivu.wahl.modell.GesamtstimmenImpl;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
 import de.ivu.wahl.modell.ListenkandidaturModel;
+import de.ivu.wahl.modell.Plus;
 import de.ivu.wahl.modell.ejb.Ergebniseingang;
 import de.ivu.wahl.modell.ejb.GebietHome;
 import de.ivu.wahl.modell.ejb.GruppeGebietsspezifischHome;
@@ -35,16 +36,11 @@ import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public abstract class AbstractErgebnisImportHandler implements ErgebnisImportHandler {
 
   private static final Category LOGGER = Log4J.configure(AbstractErgebnisImportHandler.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(AbstractErgebnisImportHandler.class,
-        Log4J.extractVersion("$Revision$"))); //$NON-NLS-1$
-  }
 
   ImportHandling _impHandling = null;
 
@@ -177,11 +173,11 @@ public abstract class AbstractErgebnisImportHandler implements ErgebnisImportHan
     // Determine the number of voters by adding valid, invalid and empty votes
     // Similarly determine the number of valid or empty votes
     GruppeAllgemeinXmlAdapter adapter = new GruppeAllgemeinXmlAdapter();
-    int anzGueltige = adapter.getXml(resultNode, GruppeAllgemein.GUELTIGE);
-    int anzUngueltige = adapter.getXml(resultNode, GruppeAllgemein.UNGUELTIGE);
-    int anzLeere = adapter.getXml(resultNode, GruppeAllgemein.LEER);
-    int anzWaehler = anzGueltige + anzUngueltige + anzLeere;
-    int anzGueltigOderLeer = anzGueltige + anzLeere;
+    int anzGueltige = Plus.truncate(adapter.getXml(resultNode, GruppeAllgemein.GUELTIGE), true);
+    int anzUngueltige = Plus.truncate(adapter.getXml(resultNode, GruppeAllgemein.UNGUELTIGE), true);
+    int anzLeere = Plus.truncate(adapter.getXml(resultNode, GruppeAllgemein.LEER), true);
+    int anzWaehler = Plus.plus(anzGueltige, anzUngueltige, anzLeere, true);
+    int anzGueltigOderLeer = Plus.plus(anzGueltige, anzLeere, true);
     saveStimmergebnisAllgemein(gebiet,
         GruppeAllgemein.WAEHLER.getPosition(),
         _id_Ergebniseingang,
@@ -200,7 +196,7 @@ public abstract class AbstractErgebnisImportHandler implements ErgebnisImportHan
     // Explaining the difference between admitted voters and counted votes
     Iterable<GruppeAllgemein> gruppen = adapter.getGruppenAllgemein();
     for (GruppeAllgemein gruppeAllgemein : gruppen) {
-      int value = adapter.getFromEmlOr0(resultNode, gruppeAllgemein);
+      int value = Plus.truncate(adapter.getFromEmlOr0(resultNode, gruppeAllgemein), true);
       saveStimmergebnisAllgemein(gebiet, gruppeAllgemein.getPosition(), _id_Ergebniseingang, value);
       if (!isWurzelgebiet) {
         gesamtstimmen.addGruppenstimmen(gruppeAllgemein.schluessel, value);

@@ -1,0 +1,74 @@
+    /* place a border around the delta file and indent on left to allow for +/- button */ 
+        div#deltafile { 
+          border: 0px solid black;
+          padding: 5px 5px 5px 25px;
+        }
+        /* styling for different data types */
+        div.delete, span.delete, span.old-PCDATA {
+          color: red;
+          text-decoration: line-through;
+          font-style: normal;
+        }
+        div.add, span.add, span.new-PCDATA {
+          color: green;
+          text-decoration: underline;
+          font-style: normal;
+        }
+        span.comment {
+          color: black; 
+        }
+        span.modify, span.modify-PCDATA {
+          color: blue; 
+          font-style: italic;
+        }
+        div.unchanged, span.unchanged{ 
+          color: black; 
+          font-style: normal;
+        }
+        /* styling and positioning for +/- buttons */
+        a.fold { 
+          position: relative;
+          top: 3px; /* added to align the button with the element */
+          float: left;
+          color: black;
+          font-family: monospace;
+          font-weight: bold;
+          font-style: normal;
+          font-size: small;
+          vertical-align: top;
+          background: #ddd;
+          width: 1em;
+          height: 1em;
+          border: 1px outset black;
+          text-align: center;
+          line-height: 9px;
+          margin-left: -20px;
+  cursor: pointer;
+        }
+        /* gives 'pressed button' effect */
+        a.fold:active {
+          border-style: inset;
+        }
+        a.foldall {
+          background: #ddd;
+          border: 1px outset black;
+          padding: 2px;
+        }
+        a.foldall:hover {
+          cursor: pointer;
+        }
+        a.foldall:active {
+          border-style: inset;
+        }
+        
+        /* hides collapsed(folded children) and hidden(unchanged atts/children) */
+        .collapsed, .hidden { 
+          display:none; 
+        }
+        div.anchor-parent div.anchor-parent{
+          margin-left: 20px;
+        }
+        /* provides vertical spacing between lines */
+        div#deltafile span {
+          line-height: 1.5em;
+        }

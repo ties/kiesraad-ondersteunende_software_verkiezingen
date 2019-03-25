@@ -20,7 +20,7 @@ import de.ivu.wahl.result.Util;
  * sortAndGroup() creates sets of elements that are equivalent with respect to the order, and sorts
  * these equivalence classes.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class OrderUtil {
   public static <T> List<Set<T>> sortAndGroup(Collection<T> base, Comparator<T> comparator) {

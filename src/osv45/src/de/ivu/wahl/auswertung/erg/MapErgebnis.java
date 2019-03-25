@@ -11,7 +11,7 @@ import java.util.Map;
 import de.ivu.wahl.modell.GebietModel;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class MapErgebnis extends Ergebnis {
   private static final long serialVersionUID = -6721098513787211631L;

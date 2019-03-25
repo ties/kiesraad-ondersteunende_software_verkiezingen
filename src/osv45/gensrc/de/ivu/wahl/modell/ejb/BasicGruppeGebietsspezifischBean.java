@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity GruppeGebietsspezifisch as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase implements EntityBean, GruppeGebietsspezifischModel {
@@ -112,6 +112,22 @@ public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase imple
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Liste ID of the objects to be searched
+     * @return  {@link Collection} of the found GruppeGebietsspezifisch-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
+      try {
+         return GruppeGebietsspezifischDBA.retrieveIDsByID_Liste(id_Liste);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_UebergeordneteGG ID of the objects to be searched
      * @return  {@link Collection} of the found GruppeGebietsspezifisch-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -151,22 +167,6 @@ public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase imple
    public Collection<String> ejbFindAllByGruppe(String id_Gruppe) throws IVUFinderException {
       try {
          return GruppeGebietsspezifischDBA.retrieveIDsByID_Gruppe(id_Gruppe);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Liste ID of the objects to be searched
-     * @return  {@link Collection} of the found GruppeGebietsspezifisch-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
-      try {
-         return GruppeGebietsspezifischDBA.retrieveIDsByID_Liste(id_Liste);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -268,6 +268,12 @@ public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase imple
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_Liste()) {
+         _liste = null;
+         _relchk_Liste = true;
+      } else {
+         _relchk_Liste = false;
+      }
       if (null == _details.getID_UebergeordneteGG()) {
          _uebergeordneteGG = null;
          _relchk_UebergeordneteGG = true;
@@ -286,20 +292,14 @@ public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase imple
       } else {
          _relchk_Gruppe = false;
       }
-      if (null == _details.getID_Liste()) {
-         _liste = null;
-         _relchk_Liste = true;
-      } else {
-         _relchk_Liste = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _liste = null;
       _uebergeordneteGG = null;
       _gebiet = null;
       _gruppe = null;
-      _liste = null;
    }
 
    /**
@@ -464,6 +464,51 @@ public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase imple
    }
 
    /**
+     * Relation zu Liste
+     */
+   protected Liste _liste;
+
+   /**
+     * Flag for the validity of the relation Liste
+     */
+   protected boolean _relchk_Liste = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Liste}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Liste getListe() throws EJBException {
+      if (!_relchk_Liste) {
+         if (null == _details.getID_Liste()) {
+            _liste = null;
+         } else if (null == _liste || !_liste.getPrimaryKey().equals(_details.getID_Liste())) {
+            try {
+               ListeHome home = ListeHome.HomeFinder.findHome(this);
+               _liste = home.findByPrimaryKey(_details.getID_Liste());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Liste", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Liste", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Liste = true;
+      }
+      return _liste;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Liste}
+     *
+     * @param liste the corresponding EJBObject
+     */
+   public void setListe(Liste liste) {
+      _liste = liste;
+      _details.setID_Liste(liste == null ? null : (String)liste.getPrimaryKey());
+   }
+
+   /**
      * Relation zu UebergeordneteGG
      */
    protected GruppeGebietsspezifisch _uebergeordneteGG;
@@ -596,51 +641,6 @@ public abstract class BasicGruppeGebietsspezifischBean extends BMPBeanBase imple
    public void setGruppe(Gruppe gruppe) {
       _gruppe = gruppe;
       _details.setID_Gruppe(gruppe == null ? null : (String)gruppe.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu Liste
-     */
-   protected Liste _liste;
-
-   /**
-     * Flag for the validity of the relation Liste
-     */
-   protected boolean _relchk_Liste = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Liste}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Liste getListe() throws EJBException {
-      if (!_relchk_Liste) {
-         if (null == _details.getID_Liste()) {
-            _liste = null;
-         } else if (null == _liste || !_liste.getPrimaryKey().equals(_details.getID_Liste())) {
-            try {
-               ListeHome home = ListeHome.HomeFinder.findHome(this);
-               _liste = home.findByPrimaryKey(_details.getID_Liste());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Liste", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Liste", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Liste = true;
-      }
-      return _liste;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Liste}
-     *
-     * @param liste the corresponding EJBObject
-     */
-   public void setListe(Liste liste) {
-      _liste = liste;
-      _details.setID_Liste(liste == null ? null : (String)liste.getPrimaryKey());
    }
 
    /**

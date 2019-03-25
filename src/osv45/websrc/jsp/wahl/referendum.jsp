@@ -2,7 +2,7 @@
  *******************************************************************************
  * Eingabe des Ergebnisses einer Erfassungseinheit
  *
- * author:  cos@ivu.de  Copyright (c) 2005-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  D. Cosic  Copyright (c) 2005-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: referendum.jsp,v 1.4 2010/11/19 09:45:31 jon Exp $
  *******************************************************************************
  --%>
@@ -56,6 +56,7 @@
 <c:set target="${map}" property="gebietInfo" value="${gebietInfo}"/>
 
 <c:set var="gebietName" value="${gebietInfo.name}" scope="page"/>
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "referendum"; //$NON-NLS-1$

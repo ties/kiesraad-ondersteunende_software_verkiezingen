@@ -49,7 +49,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 import de.ivu.wahl.wus.xmlsecurity.XmlParseException;
 
 /**
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class ImportReferendumMetadata extends AbstractImportMetadata {
 

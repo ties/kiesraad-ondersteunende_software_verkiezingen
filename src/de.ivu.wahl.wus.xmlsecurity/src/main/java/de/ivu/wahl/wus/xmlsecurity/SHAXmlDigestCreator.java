@@ -20,6 +20,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 
+import org.xml.sax.XMLReader;
+
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -177,7 +179,8 @@ public class SHAXmlDigestCreator implements IXmlDigestCreator {
   private Document parseXml(InputStream origXml) throws IOException, XmlParseException {
     Document doc;
     final boolean validate = false;
-    Builder parser = new Builder(validate);
+    XMLReader xmlReader = SAXParserFactoryUtil.getXMLReader();
+    Builder parser = new Builder(xmlReader, validate);
     try {
       doc = parser.build(origXml);
     } catch (ValidityException ex) {

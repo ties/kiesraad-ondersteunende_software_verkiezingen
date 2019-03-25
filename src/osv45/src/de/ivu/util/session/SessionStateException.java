@@ -3,7 +3,7 @@ package de.ivu.util.session;
 /**
  * Copyright (c) 2001 Statistisches Bundesamt und IVU Traffic Technologies AG
  * 
- * @author Dr. Domagoj Cosic (cos@ivu.de)
+ * @author Dr. Domagoj Cosic (D. Cosic)
  * @created 29. Mai 2001
  */
 

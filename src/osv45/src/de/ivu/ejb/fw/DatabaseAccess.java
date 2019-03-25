@@ -15,15 +15,11 @@ import de.ivu.util.debug.Log4J;
  * Provides a set of common database functions.<BR>
  * These include making connections and running queries.
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class DatabaseAccess implements Serializable {
   private static final long serialVersionUID = 5135443026095726837L;
   private static final Category LOGGER = Log4J.configure(DatabaseAccess.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(DatabaseAccess.class, Log4J.extractVersion("$Revision: 1.6 $"))); //$NON-NLS-1$
-  }
 
   /**
    * The name, that is used to connect to database. This name is referenced in ejb.xml, and then
@@ -61,7 +57,7 @@ public class DatabaseAccess implements Serializable {
   /**
    * Gets a valid connection to the database via JNDI
    * 
-   * @return Datenbankverbindung über die eingestellte Datenquelle
+   * @return Datenbankverbindung ï¿½ber die eingestellte Datenquelle
    */
   public static Connection connect() {
     try {

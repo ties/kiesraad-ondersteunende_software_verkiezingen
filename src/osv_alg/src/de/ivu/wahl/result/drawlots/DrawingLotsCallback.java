@@ -12,7 +12,7 @@ import java.util.List;
  * Interface that must be implemented by an instance that makes the decision to the algorithm in the
  * event that a decision has to be made by drawing lots.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface DrawingLotsCallback {
 

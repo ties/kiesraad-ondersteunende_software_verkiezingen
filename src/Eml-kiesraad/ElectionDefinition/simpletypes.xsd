@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="RegionCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEELGEMEENTE"/>
+			<xs:enumeration value="EILANDSGEMEENTE"/>
+			<xs:enumeration value="GEMEENTE"/>
+			<xs:enumeration value="KIESKRING"/>
+			<xs:enumeration value="PROVINCIE"/>
+			<xs:enumeration value="PROVINCIAAL_KIESKRING"/>
+			<xs:enumeration value="PROVINCIAAL_STEMBUREAU"/>
+			<xs:enumeration value="STAAT"/>
+			<xs:enumeration value="STEMBUREAU"/>
+			<xs:enumeration value="WATERSCHAP"/>
+			<xs:enumeration value="WATERSCHAP_KIESKRING"/>
+			<xs:enumeration value="WATERSCHAP_GEMEENTE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ElectionCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BC"/>
+			<xs:enumeration value="GC"/>
+			<xs:enumeration value="EK"/>
+			<xs:enumeration value="EP"/>
+			<xs:enumeration value="ER"/>
+			<xs:enumeration value="GR"/>
+			<xs:enumeration value="AB"/>
+			<xs:enumeration value="PS"/>
+			<xs:enumeration value="TK"/>
+			<xs:enumeration value="NR"/>
+			<xs:enumeration value="PR"/>
+			<xs:enumeration value="LR"/>
+			<xs:enumeration value="IR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ElectionSubcategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BC"/>
+			<xs:enumeration value="GC"/>
+			<xs:enumeration value="EK"/>
+			<xs:enumeration value="EP"/>
+			<xs:enumeration value="ER1"/>
+			<xs:enumeration value="GR1"/>
+			<xs:enumeration value="GR2"/>
+			<xs:enumeration value="PS1"/>
+			<xs:enumeration value="PS2"/>
+			<xs:enumeration value="AB1"/>
+			<xs:enumeration value="AB2"/>
+			<xs:enumeration value="TK"/>
+			<xs:enumeration value="NR"/>
+			<xs:enumeration value="PR"/>
+			<xs:enumeration value="LR"/>
+			<xs:enumeration value="IR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CommitteeCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CSB"/>
+			<xs:enumeration value="HSB"/>
+			<xs:enumeration value="PROV_SB"/>
+			<xs:enumeration value="PSB"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TokenType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+</xs:schema>

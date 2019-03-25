@@ -7,7 +7,7 @@
 package de.ivu.wahl.modell;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  * @version $Id: org.eclipse.jdt.ui.prefs,v 1.4 2007-12-13 16:18:06 cos Exp $
  */
 public interface BesonderheitConstants {

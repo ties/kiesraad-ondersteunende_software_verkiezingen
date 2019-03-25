@@ -8,7 +8,7 @@ import javax.ejb.FinderException;
 /**
  * ListeHome
  * 
- * @author cos@ivu.de (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003-7 Statistisches Bundesamt und IVU Traffic Technologies AG
 
  */
 

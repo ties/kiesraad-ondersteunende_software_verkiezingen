@@ -12,7 +12,7 @@ import de.ivu.wahl.wus.reportgen.extension.IPDFOpener;
 /**
  * Parameter object for calling {@link ReportGenerator#createReport()}. This class is immutable.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReportConfigurationMTP implements ReportConfiguration {
   private final File exportSelection;

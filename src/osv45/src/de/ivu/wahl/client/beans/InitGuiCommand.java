@@ -15,7 +15,7 @@ import de.ivu.wahl.client.util.GUICommand;
 import de.ivu.wahl.util.BundleHelper;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public abstract class InitGuiCommand {
 

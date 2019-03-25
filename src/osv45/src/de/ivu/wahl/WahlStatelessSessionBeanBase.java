@@ -27,7 +27,6 @@ import de.ivu.wahl.modell.ejb.GebietsstatusHome;
 import de.ivu.wahl.modell.ejb.ListeHome;
 import de.ivu.wahl.modell.ejb.ListenkandidaturErgebnisHome;
 import de.ivu.wahl.modell.ejb.ListenkandidaturHome;
-import de.ivu.wahl.modell.ejb.ListenkombinationZulassungHome;
 import de.ivu.wahl.modell.ejb.ListenplatzNeuHome;
 import de.ivu.wahl.modell.ejb.PersonendatenHome;
 import de.ivu.wahl.modell.ejb.RestsitzverteilungHome;
@@ -47,15 +46,15 @@ import de.ivu.wahl.modell.ejb.service.VotesHandlingBean;
 /**
  * Basisklasse f�r ein Stateless Session Enterprise Java Bean mit wahlspezifischen Methoden
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class WahlStatelessSessionBeanBase extends SessionBeanBase {
 
   private static final long serialVersionUID = 5536112318504005093L;
   private final static Category LOGGER = Log4J.configure(WahlStatelessSessionBeanBase.class);
   static {
-    LOGGER.info(Log4J.dumpVersion(WahlStatelessSessionBeanBase.class, Log4J
-        .extractVersion("$Revision: 1.14 $"))); //$NON-NLS-1$
+    LOGGER.info(Log4J.dumpVersion(WahlStatelessSessionBeanBase.class,
+        Log4J.extractVersion("$Revision: 1.14 $"))); //$NON-NLS-1$
   }
 
   private transient AdminHandling _adminHandling;
@@ -176,15 +175,6 @@ public abstract class WahlStatelessSessionBeanBase extends SessionBeanBase {
       _lkeHome = ListenkandidaturErgebnisHome.HomeFinder.findHome(this);
     }
     return _lkeHome;
-  }
-
-  private transient ListenkombinationZulassungHome _lkzHome = null;
-
-  public ListenkombinationZulassungHome getListenkombinationZulassungHome() {
-    if (_lkzHome == null) {
-      _lkzHome = ListenkombinationZulassungHome.HomeFinder.findHome(this);
-    }
-    return _lkzHome;
   }
 
   private transient ListenplatzNeuHome _lpNeuHome = null;

@@ -13,10 +13,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.ejb.CreateException;
 import javax.ejb.EJB;
@@ -31,7 +29,6 @@ import org.apache.log4j.Logger;
 
 import de.ivu.ejb.EJBUtil;
 import de.ivu.ejb.IVUBeanBase;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.WahlStatelessSessionBeanBase;
 import de.ivu.wahl.auswertung.erg.Besonderheiten;
@@ -81,7 +78,7 @@ import de.ivu.wahl.runtime.UniCachePK;
 /**
  * Session Bean which calculates the seat distribution
  * 
- * @author cos@ivu.de IVU Traffic Technologies AG
+ * @author D. Cosic IVU Traffic Technologies AG
  */
 @Stateless
 @Local(SitzverteilungHandling.class)
@@ -93,11 +90,6 @@ public class SitzverteilungHandlingBean extends WahlStatelessSessionBeanBase
   private static final long serialVersionUID = 7167333797777195535L;
 
   static final Logger LOGGER = Logger.getLogger(SitzverteilungHandlingBean.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(SitzverteilungHandlingBean.class,
-        Log4J.extractVersion("$Revision: 1.87 $"))); //$NON-NLS-1$
-  }
 
   /*
    * (non-Javadoc) Distribute seats according to the latest valid voting results
@@ -330,8 +322,6 @@ public class SitzverteilungHandlingBean extends WahlStatelessSessionBeanBase
   private void deleteResults() throws RemoveException, FinderException {
     removeBesonderheiten(getBesonderheitHome().findAll());
     removeListenkandidaturErgebnisCol(getListenkandidaturErgebnisHome().findAll());
-    removeFiktiveSitzverteilungen(getFiktiveSitzverteilungHome().findAll());
-    removeListenkombinationZulassungCol(getListenkombinationZulassungHome().findAll());
     removeListenplatzNeuCol(getListenplatzNeuHome().findAll());
     removeRestsitzverteilungen(getRestsitzverteilungHome().findAll());
     removeSitzberechnungErgebnisCol(getSitzberechnungErgebnisHome().findAll());
@@ -352,23 +342,9 @@ public class SitzverteilungHandlingBean extends WahlStatelessSessionBeanBase
     }
   }
 
-  private void removeListenkombinationZulassungCol(Collection<ListenkombinationZulassung> lkZCol)
-      throws RemoveException {
-    for (ListenkombinationZulassung lkZ : lkZCol) {
-      lkZ.remove();
-    }
-  }
-
   private void removeListenplatzNeuCol(Collection<ListenplatzNeu> lPlNeuCol) throws RemoveException {
     for (ListenplatzNeu lPlNeu : lPlNeuCol) {
       lPlNeu.remove();
-    }
-  }
-
-  private void removeFiktiveSitzverteilungen(Collection<FiktiveSitzverteilung> fSvCol)
-      throws RemoveException {
-    for (FiktiveSitzverteilung fiktiveSitzverteilung : fSvCol) {
-      fiktiveSitzverteilung.remove();
     }
   }
 
@@ -650,7 +626,7 @@ public class SitzverteilungHandlingBean extends WahlStatelessSessionBeanBase
   private String getAlternativenText(final AlternativeModel alternative, String id_Ergebniseingang) {
     try {
       if (alternative.getID_Listenkombination() != null) {
-        return getTextForAlternativeCombinedList(alternative, id_Ergebniseingang);
+        return "Error alternative.getID_Listenkombination() must always be null"; //$NON-NLS-1$
       } else if (alternative.getID_Personendaten() != null) {
         Personendaten person = getPersonendatenHome()
             .findByPrimaryKey(alternative.getID_Personendaten());
@@ -686,28 +662,6 @@ public class SitzverteilungHandlingBean extends WahlStatelessSessionBeanBase
       alternativtext += BLANK + Gebietsart.getGebietsartKlartext(gebiet) + BLANK
           + gebiet.getNumber4Display();
     }
-    return alternativtext;
-  }
-
-  private String getTextForAlternativeCombinedList(final AlternativeModel alternative,
-      String id_Ergebniseingang) throws ObjectNotFoundException, FinderException {
-    String alternativtext;
-    Listenkombination listenkombination = getListenkombinationHome()
-        .findByPrimaryKey(alternative.getID_Listenkombination());
-    Collection<Gruppe> gruppeCol = listenkombination.getGruppeCol();
-    Collection<ListenkombinationZulassung> lkZulassungCol = getListenkombinationZulassungHome()
-        .findAllByErgebniseingangAndZugelassen(id_Ergebniseingang, false);
-    Set<String> gruppenNichtZugelassen = new HashSet<String>();
-    for (ListenkombinationZulassung lkZ : lkZulassungCol) {
-      gruppenNichtZugelassen.add(lkZ.getGruppe().getID_Gruppe());
-    }
-    alternativtext = listenkombination.getID_Listenkombination() + " ("; //$NON-NLS-1$
-    for (Gruppe gruppe : gruppeCol) {
-      if (!gruppenNichtZugelassen.contains(gruppe.getID_Gruppe())) {
-        alternativtext = alternativtext + gruppe.getNameKurz() + ", "; //$NON-NLS-1$
-      }
-    }
-    alternativtext = alternativtext.substring(0, alternativtext.length() - 2) + ")"; //$NON-NLS-1$
     return alternativtext;
   }
 

@@ -38,7 +38,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
  * reach the electoral quota. Validates if the remaining combined lists have at least 2 elements.
  * Creates P4.2-lists from the valid combined lists and the remaining P3-lists.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CombinedListValidator {
   private final ElectionAndCandidatesAndVotes ecv;

@@ -15,7 +15,7 @@ package de.ivu.wahl.result.result;
  * </ul>
  * For one exceptional event usually more than one Anomaly object will be created.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class Anomaly {
   private final String _text;

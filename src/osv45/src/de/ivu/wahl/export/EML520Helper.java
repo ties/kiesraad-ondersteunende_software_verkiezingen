@@ -36,7 +36,7 @@ import de.ivu.wahl.wus.reportgen.EMLMessageType;
 /**
  * Helper of ExportHandlingBean to create the core part of the EML 520 message.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 class EML520Helper {
   private static final Logger LOGGER = Logger.getLogger(EML520Helper.class);

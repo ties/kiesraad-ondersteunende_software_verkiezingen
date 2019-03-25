@@ -5,17 +5,17 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.log4j.Logger;
 
 /**
- * HTML-Tag, der selbständig den Value auf null überprüft und ggf durch einen Leerstring oder
+ * HTML-Tag, der selbstï¿½ndig den Value auf null ï¿½berprï¿½ft und ggf durch einen Leerstring oder
  * Defaultwert ersetzt.
  * 
- * @author Michael Murdfield <mur@ivu.de>
+ * @author Michael Murdfield <M. Murdfield>
  */
 
 public class NullCheck extends TagSupport {
   private static final long serialVersionUID = 2249437336421732232L;
 
   /**
-   * Logger für diese Klasse
+   * Logger fï¿½r diese Klasse
    */
   private final static Logger LOGGER = Logger.getLogger(NullCheck.class);
 

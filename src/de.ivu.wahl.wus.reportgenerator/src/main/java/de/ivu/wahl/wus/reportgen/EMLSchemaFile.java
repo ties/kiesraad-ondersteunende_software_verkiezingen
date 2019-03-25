@@ -7,7 +7,7 @@ package de.ivu.wahl.wus.reportgen;
 /**
  * All possible values for EML Schema files
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum EMLSchemaFile {
   EMLSchema210("210-nomination-v5-0.xsd"), //$NON-NLS-1$

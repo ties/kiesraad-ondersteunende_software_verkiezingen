@@ -13,7 +13,7 @@ import de.ivu.wahl.wus.utils.ui.ReadFileUtil;
 /**
  * Helper class to check if a city is in the non-European part of the Netherlands
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class NonEuropeanDutchCitiesUtil {
   private static final Map<String, String> CITIES = ReadFileUtil.readMapFromFile("nonEuropeanCities.txt");

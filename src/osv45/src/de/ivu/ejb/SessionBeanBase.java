@@ -29,7 +29,7 @@ import de.ivu.wahl.i18n.Messages;
 /**
  * Base class for a Session Enterprise Java Bean
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class SessionBeanBase extends IVUBeanBase {
   private static final long serialVersionUID = -5590534380467919179L;
@@ -37,10 +37,6 @@ public abstract class SessionBeanBase extends IVUBeanBase {
   private static final Object[] EMPTY_PARAMETERS = new Object[0];
   private static final Class<?>[] EMPTY_SIGNATURE = new Class<?>[0];
   static final Category LOGGER = Log4J.configure(SessionBeanBase.class);
-
-  static {
-    LOGGER.info(Log4J.dumpVersion(SessionBeanBase.class, Log4J.extractVersion("$Revision: 1.7 $"))); //$NON-NLS-1$
-  }
 
   @Resource
   protected SessionContext _ctx;
@@ -73,18 +69,18 @@ public abstract class SessionBeanBase extends IVUBeanBase {
       throw new EJBException(Messages.getString(MessageKeys.Logger_MethodeGetDetailsNichtGefunden),
           e);
     } catch (IllegalAccessException e) {
-      throw new EJBException(Messages
-          .getString(MessageKeys.Logger_DarfMethodeGetDetailsNichtAufrufen), e);
+      throw new EJBException(
+          Messages.getString(MessageKeys.Logger_DarfMethodeGetDetailsNichtAufrufen), e);
     } catch (InvocationTargetException e) {
       Throwable cause = e.getCause();
       if (cause instanceof Exception) {
-        throw new EJBException(Messages
-            .getString(MessageKeys.Logger_KonnteMethodeGetDetailsNichtAusfuehren),
+        throw new EJBException(
+            Messages.getString(MessageKeys.Logger_KonnteMethodeGetDetailsNichtAusfuehren),
             (Exception) cause);
       } else {
-        throw new EJBException(Messages
-            .getString(MessageKeys.Logger_KonnteMethodeGetDetailsNichtAusfuehren)
-            + ": " + cause); //$NON-NLS-1$
+        throw new EJBException(
+            Messages.getString(MessageKeys.Logger_KonnteMethodeGetDetailsNichtAusfuehren)
+                + ": " + cause); //$NON-NLS-1$
       }
     }
   }

@@ -44,7 +44,7 @@ import de.ivu.wahl.util.XMLImportHelper;
  * Can be used to read or write values for special groups from / to an EML XML structure or write it
  * to an report generator extension XML structure.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class GruppeAllgemeinXmlAdapter {
   private final Map<GruppeAllgemein, ValueAccess> gruppeAllgemeinToReasonCode = new LinkedHashMap<GruppeAllgemein, ValueAccess>();

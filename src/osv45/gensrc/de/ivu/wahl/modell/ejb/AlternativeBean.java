@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Alternative as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class AlternativeBean extends BMPBeanBase implements EntityBean, AlternativeModel {
@@ -110,6 +110,22 @@ public class AlternativeBean extends BMPBeanBase implements EntityBean, Alternat
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Personendaten ID of the objects to be searched
+     * @return  {@link Collection} of the found Alternative-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByPersonendaten(String id_Personendaten) throws IVUFinderException {
+      try {
+         return AlternativeDBA.retrieveIDsByID_Personendaten(id_Personendaten);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Konflikt ID of the objects to be searched
      * @return  {@link Collection} of the found Alternative-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -165,22 +181,6 @@ public class AlternativeBean extends BMPBeanBase implements EntityBean, Alternat
    public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
       try {
          return AlternativeDBA.retrieveIDsByID_Liste(id_Liste);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Personendaten ID of the objects to be searched
-     * @return  {@link Collection} of the found Alternative-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByPersonendaten(String id_Personendaten) throws IVUFinderException {
-      try {
-         return AlternativeDBA.retrieveIDsByID_Personendaten(id_Personendaten);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -269,6 +269,12 @@ public class AlternativeBean extends BMPBeanBase implements EntityBean, Alternat
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_Personendaten()) {
+         _personendaten = null;
+         _relchk_Personendaten = true;
+      } else {
+         _relchk_Personendaten = false;
+      }
       if (null == _details.getID_Konflikt()) {
          _konflikt = null;
          _relchk_Konflikt = true;
@@ -293,21 +299,15 @@ public class AlternativeBean extends BMPBeanBase implements EntityBean, Alternat
       } else {
          _relchk_Liste = false;
       }
-      if (null == _details.getID_Personendaten()) {
-         _personendaten = null;
-         _relchk_Personendaten = true;
-      } else {
-         _relchk_Personendaten = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _personendaten = null;
       _konflikt = null;
       _listenkombination = null;
       _gruppe = null;
       _liste = null;
-      _personendaten = null;
    }
 
    /**
@@ -484,6 +484,52 @@ public class AlternativeBean extends BMPBeanBase implements EntityBean, Alternat
      */
    public int getNummer() {
       return _details.getNummer();
+   }
+
+   /**
+     * Relation zu Personendaten
+     */
+   protected Personendaten _personendaten;
+
+   /**
+     * Flag for the validity of the relation Personendaten
+     */
+   protected boolean _relchk_Personendaten = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Personendaten}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Personendaten getPersonendaten() throws EJBException {
+      if (!_relchk_Personendaten) {
+         if (null == _details.getID_Personendaten()) {
+            _personendaten = null;
+         } else if (null == _personendaten || !_personendaten.getPrimaryKey().equals(_details.getID_Personendaten())) {
+            try {
+               PersonendatenHome home = PersonendatenHome.HomeFinder.findHome(this);
+               _personendaten = home.findByPrimaryKey(_details.getID_Personendaten());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Personendaten", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Personendaten", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Personendaten = true;
+      }
+      return _personendaten;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Personendaten}
+     *
+     * @param personendaten the corresponding EJBObject
+     */
+   public void setPersonendaten(Personendaten personendaten) {
+      if (_readOnly) { throw new EJBException("AlternativeBean is in read-only mode");} //$NON-NLS-1$
+      _personendaten = personendaten;
+      _details.setID_Personendaten(personendaten == null ? null : (String)personendaten.getPrimaryKey());
    }
 
    /**
@@ -668,52 +714,6 @@ public class AlternativeBean extends BMPBeanBase implements EntityBean, Alternat
       if (_readOnly) { throw new EJBException("AlternativeBean is in read-only mode");} //$NON-NLS-1$
       _liste = liste;
       _details.setID_Liste(liste == null ? null : (String)liste.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu Personendaten
-     */
-   protected Personendaten _personendaten;
-
-   /**
-     * Flag for the validity of the relation Personendaten
-     */
-   protected boolean _relchk_Personendaten = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Personendaten}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Personendaten getPersonendaten() throws EJBException {
-      if (!_relchk_Personendaten) {
-         if (null == _details.getID_Personendaten()) {
-            _personendaten = null;
-         } else if (null == _personendaten || !_personendaten.getPrimaryKey().equals(_details.getID_Personendaten())) {
-            try {
-               PersonendatenHome home = PersonendatenHome.HomeFinder.findHome(this);
-               _personendaten = home.findByPrimaryKey(_details.getID_Personendaten());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Personendaten", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Personendaten", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Personendaten = true;
-      }
-      return _personendaten;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Personendaten}
-     *
-     * @param personendaten the corresponding EJBObject
-     */
-   public void setPersonendaten(Personendaten personendaten) {
-      if (_readOnly) { throw new EJBException("AlternativeBean is in read-only mode");} //$NON-NLS-1$
-      _personendaten = personendaten;
-      _details.setID_Personendaten(personendaten == null ? null : (String)personendaten.getPrimaryKey());
    }
 
    /**

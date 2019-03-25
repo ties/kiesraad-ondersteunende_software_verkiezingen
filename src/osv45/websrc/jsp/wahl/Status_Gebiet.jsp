@@ -11,7 +11,7 @@
  *
  * Die Unterscheidung erfolgt durch den LEVEL
  *
- * author:  mur@ivu.de  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: Status_Gebiet.jsp,v 1.17 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -29,6 +29,7 @@
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "statusGebiet"; //$NON-NLS-1$
@@ -100,7 +101,7 @@ String helpKey = "statusGebiet"; //$NON-NLS-1$
     </div>
     <div class="hggrau"
         style="height: 20px; width: 100%; text-indent: 5px; line-height: 18px;">
-        <%=erg.getErgBezeichnung()%> <%= wahlInfo.isReferendum() || StringUtils.isEmpty(SystemInfo.getSystemInfo().getInputmodusCompleteKlartext()) ? "" : "(" + SystemInfo.getSystemInfo().getInputmodusCompleteKlartext() + ")" %>
+        <%=ClientHelper.forHTML(erg.getErgBezeichnung())%> <%= wahlInfo.isReferendum() || StringUtils.isEmpty(SystemInfo.getSystemInfo().getInputmodusCompleteKlartext()) ? "" : "(" + SystemInfo.getSystemInfo().getInputmodusCompleteKlartext() + ")" %>
     </div>
     <div class="hgschwarz"
         style="height: 1px; line-height: 1px; width: 100%;">

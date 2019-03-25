@@ -43,16 +43,11 @@ import de.ivu.wahl.modell.impl.GebietsstatusModelImpl;
 import de.ivu.wahl.modell.impl.StimmergebnisModelImpl;
 
 /**
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
 
   private static final Category LOGGER = Log4J.configure(ErgebnisImportHandlerDb.class);
-
-  static {
-    LOGGER.info(Log4J
-        .dumpVersion(ErgebnisImportHandlerDb.class, Log4J.extractVersion("$Revision$"))); //$NON-NLS-1$
-  }
 
   final static List<Model> _models = new ArrayList<Model>();
 
@@ -62,6 +57,7 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
     initErgebnisimport(id_Wahl);
   }
 
+  @Override
   public boolean checkConsistency() {
     return true;
   }
@@ -75,8 +71,8 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
     try {
       return _gebietHome.findByPrimaryKey(_wahlInfo.getID_Wurzelgebiet());
     } catch (Exception e) {
-      throw new ImportException(Messages
-          .getString(MessageKeys.Error_FehlerBeimHolenDesWurzelgebietes));
+      throw new ImportException(
+          Messages.getString(MessageKeys.Error_FehlerBeimHolenDesWurzelgebietes));
     }
   }
 
@@ -96,7 +92,9 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
       ErgebniseingangModel model = erg.getDetails();
       model.setZeitstempel(new Timestamp(System.currentTimeMillis()));
       model.setID_Wahl(id_Wahl);
-      model.setUnterschiedeVorhanden(ErgebniseingangKonstanten.UnterschiedeVorhandenTyp.UNTERSCHIEDE_UNBEKANNT.getValue());
+      model
+          .setUnterschiedeVorhanden(ErgebniseingangKonstanten.UnterschiedeVorhandenTyp.UNTERSCHIEDE_UNBEKANNT
+              .getValue());
       model.setStatus(ErgebniseingangKonstanten.STATE_ERROR);
 
       int herkunft = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT;
@@ -104,14 +102,14 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
         herkunft = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT_AS_FIRST_INPUT;
       }
       model.setHerkunft(herkunft);
-      
+
       model.setID_Erfassungseinheit(_wahlInfo.getID_Wurzelgebiet());
       model.setWahlergebnisart(_wahlInfo.getAktuelleWahlergebnisart());
       erg.setDetails(model);
       return erg;
     } catch (Exception e) {
-      throw new ImportException(Messages
-          .getString(MessageKeys.Error_FehlerBeimAnlegenDesErgebniseingangs), e);
+      throw new ImportException(
+          Messages.getString(MessageKeys.Error_FehlerBeimAnlegenDesErgebniseingangs), e);
     }
   }
 
@@ -154,9 +152,10 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
         || gebiet.getGebietCol().size() == anzEingegangen;
     // Check if we have results for all subregions!!!
     if (!isVollstaendig) {
-      throw new ImportException(Messages
-          .bind(MessageKeys.Error_Nur_0_von_1_GebietsergebnissenGefunden, anzEingegangen, gebiet
-              .getGebietCol().size()));
+      throw new ImportException(
+          Messages.bind(MessageKeys.Error_Nur_0_von_1_GebietsergebnissenGefunden,
+              anzEingegangen,
+              gebiet.getGebietCol().size()));
     }
     model.setVollstaendig(isVollstaendig);
     int korrekturnummer = 0;
@@ -176,27 +175,6 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
     } catch (Exception e) {
       throw new ImportException(e);
     }
-  }
-
-  /**
-   * Create StimmergebnisModel object for general results
-   * 
-   * @param id_Gebiet id of Region object
-   * @param gruppeAllgemein kind of vote
-   * @param stimmen number of votes
-   * @throws ImportException
-   */
-  static void addStimmergebnisAllgemein(String id_Gebiet,
-      String id_GruppeGebietsspezifisch,
-      String id_Ergebniseingang,
-      int stimmen) throws ImportException {
-    StimmergebnisModel stimmergebnis = new StimmergebnisModelImpl(getUniqueKey());
-    stimmergebnis.setID_Gebiet(id_Gebiet);
-    stimmergebnis.setID_GruppeGebietsspezifisch(id_GruppeGebietsspezifisch);
-    stimmergebnis.setID_Ergebniseingang(id_Ergebniseingang);
-    stimmergebnis.setStimmart(StimmergebnisModel.STIMMART_KEINE);
-    stimmergebnis.setStimmen(stimmen);
-    _models.add(stimmergebnis);
   }
 
   /*
@@ -248,8 +226,8 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
     try {
       gg = _ggHome.findByGebietAndGruppenschluessel(gebiet.getID_Gebiet(), schluessel);
     } catch (FinderException e) {
-      throw new ImportException(Messages
-          .bind(MessageKeys.Error_In_0_KeineGruppeMitSchluessel_1_Angelegt,
+      throw new ImportException(
+          Messages.bind(MessageKeys.Error_In_0_KeineGruppeMitSchluessel_1_Angelegt,
               gebiet.getName(),
               schluessel));
     }
@@ -295,8 +273,8 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
       try {
         ggCollection = _ggHome.findAllByGebiet(id_Gebiet);
       } catch (FinderException e) {
-        throw new ImportException(Messages
-            .getString(MessageKeys.Error_FehlerBeimHolenDerGruppeGebietsspezifisch));
+        throw new ImportException(
+            Messages.getString(MessageKeys.Error_FehlerBeimHolenDerGruppeGebietsspezifisch));
       }
       for (GruppeGebietsspezifisch gg : ggCollection) {
         if (gg.getPosition() < 0) {

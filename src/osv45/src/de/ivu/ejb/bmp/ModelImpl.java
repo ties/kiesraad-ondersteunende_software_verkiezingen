@@ -3,7 +3,7 @@ package de.ivu.ejb.bmp;
 /**
  * Base implementation of a data container
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class ModelImpl implements Model, Cloneable {
   private static final long serialVersionUID = -2697777817753612742L;

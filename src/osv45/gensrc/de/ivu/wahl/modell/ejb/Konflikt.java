@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.KonfliktModel;
   * Interface for the entity Konflikt as Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface Konflikt extends EJBLocalObject, KonfliktModel {
@@ -41,21 +41,6 @@ public interface Konflikt extends EJBLocalObject, KonfliktModel {
 
 
    /**
-     * Navigation to the associated entity of the type {@link Ergebniseingang}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   Ergebniseingang getErgebniseingang() throws EJBException;
-
-   /**
-     * Setting of the associated entity of the type {@link Ergebniseingang}
-     *
-     * @param ergebniseingang the corresponding EJBObject
-     */
-   void setErgebniseingang(Ergebniseingang ergebniseingang);
-
-   /**
      * Navigation to the associated entity of the type {@link Alternative}
      *
      * @return the corresponding EJBObject
@@ -69,6 +54,21 @@ public interface Konflikt extends EJBLocalObject, KonfliktModel {
      * @param losAlternative the corresponding EJBObject
      */
    void setLosAlternative(Alternative losAlternative);
+
+   /**
+     * Navigation to the associated entity of the type {@link Ergebniseingang}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   Ergebniseingang getErgebniseingang() throws EJBException;
+
+   /**
+     * Setting of the associated entity of the type {@link Ergebniseingang}
+     *
+     * @param ergebniseingang the corresponding EJBObject
+     */
+   void setErgebniseingang(Ergebniseingang ergebniseingang);
 
    /**
      * Returns the set of entities of the type {@link Alternative}.

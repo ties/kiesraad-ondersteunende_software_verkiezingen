@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Unterverteilung.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class UnterverteilungDBA extends DBABase {
@@ -66,19 +66,37 @@ public class UnterverteilungDBA extends DBABase {
       if ((idx = columns.get(ID_UNTERVERTEILUNG.toUpperCase())) != null) {
          m._id_Unterverteilung = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_UNTERVERTEILUNG)) != null) {
+         m._id_Unterverteilung = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
       if ((idx = columns.get(STIMMEN.toUpperCase())) != null) {
          m._stimmen = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(STIMMEN)) != null) {
+         m._stimmen = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(SITZE.toUpperCase())) != null) {
+         m._sitze = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(SITZE)) != null) {
          m._sitze = r.getInt(idx.intValue());
       }
    }
@@ -94,19 +112,19 @@ public class UnterverteilungDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase()) || columns.containsKey(ID_LISTENKOMBINATION)) {
          p.setString(idx++, m._id_Listenkombination);
       }
-      if (columns.containsKey(STIMMEN.toUpperCase())) {
+      if (columns.containsKey(STIMMEN.toUpperCase()) || columns.containsKey(STIMMEN)) {
          p.setInt(idx++, m._stimmen);
       }
-      if (columns.containsKey(SITZE.toUpperCase())) {
+      if (columns.containsKey(SITZE.toUpperCase()) || columns.containsKey(SITZE)) {
          p.setInt(idx++, m._sitze);
       }
       p.setString(idx++, m._id_Unterverteilung);
@@ -297,6 +315,23 @@ public class UnterverteilungDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of Unterverteilung IDs
+     *
+     * @param id_Listenkombination searching condition
+
+     * @return a {@link Collection} of Unterverteilung IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Listenkombination(String id_Listenkombination)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Unterverteilung from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Listenkombination});
+   }
+
+   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of Unterverteilung IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -326,23 +361,6 @@ public class UnterverteilungDBA extends DBABase {
          "select ID_Unterverteilung from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Gruppe});
-   }
-
-   /**
-     * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of Unterverteilung IDs
-     *
-     * @param id_Listenkombination searching condition
-
-     * @return a {@link Collection} of Unterverteilung IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Listenkombination(String id_Listenkombination)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Unterverteilung from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Listenkombination});
    }
 
    /**

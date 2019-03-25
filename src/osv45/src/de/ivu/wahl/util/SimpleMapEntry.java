@@ -8,7 +8,7 @@ package de.ivu.wahl.util;
 import java.util.Map;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  * @param <K> Datentyp f�r Key
  * @param <V> Datentyp f�r Value
  */

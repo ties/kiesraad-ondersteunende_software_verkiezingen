@@ -7,7 +7,7 @@
 package de.ivu.wahl.anwender;
 
 /**
- * @author mur@ivu.de
+ * @author M. Murdfield
  */
 public class AnwenderException extends Exception {
   private static final long serialVersionUID = -3808908721254272713L;

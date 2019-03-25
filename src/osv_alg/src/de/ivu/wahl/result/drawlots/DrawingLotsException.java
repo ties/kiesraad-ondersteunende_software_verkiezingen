@@ -12,7 +12,7 @@ import java.util.List;
  * Unchecked exception thrown in the algorithm when a drawing lots is required but the
  * DrawingLotsCallback cannot decide which one shall be chosen.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class DrawingLotsException extends RuntimeException {
   private static final long serialVersionUID = 1L;

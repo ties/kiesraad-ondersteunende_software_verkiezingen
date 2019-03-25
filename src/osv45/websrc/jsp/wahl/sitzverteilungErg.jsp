@@ -2,7 +2,7 @@
  *******************************************************************************
  * Sitzverteilung
  *
- * author:  mur@ivu.de  Copyright (c) 2002-10 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  M. Murdfield  Copyright (c) 2002-10 Statistisches Bundesamt und IVU Traffic Technologies AG
 
  *******************************************************************************
  --%>
@@ -23,8 +23,6 @@
 <%@ page import="de.ivu.wahl.auswertung.sv.SitzverteilungStatus"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.Besonderheiten"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.Besonderheiten.KonfliktAnzeige"%>
-<%@ page import="de.ivu.wahl.auswertung.erg.sv.SitzverteilungListenkombinationErg"%>
-<%@ page import="de.ivu.wahl.auswertung.erg.sv.ListenkombinationInfo"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
 <%@ page import="de.ivu.wahl.modell.AlternativeModel"%>
@@ -42,7 +40,8 @@
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
-<% 
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
+<%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "sitzverErg"; //$NON-NLS-1$
 
@@ -365,7 +364,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                                                                         <% if (wahlInfo.getWahl().getWurzelgebiet().getGebietsart() == GebietModel.GEBIETSART_BUND) { %>
                                                                             <ivu:int key="EndergebnisNiederlande"/>
                                                                         <% } else { %> 
-                                                                            <ivu:int key="Endergebnis"/> <%= wahlInfo.getWahl().getWurzelgebiet().getBezeichnung() %>
+                                                                            <ivu:int key="Endergebnis"/> <%= ClientHelper.forHTML(wahlInfo.getWahl().getWurzelgebiet().getBezeichnung()) %>
                                                                         <% } %>
                                                                       </td>
                                                                       <td style="width: 154px; text-align: right;">
@@ -413,91 +412,6 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                             
                                                               </td>
                                                             </tr>
-                                                            <% if (wahlInfo.getStatus() == WahlModel.STATE_CALCULATION_CONFLICT){ 
-                                                                i = 1; 
-                                                                SitzverteilungListenkombinationErg ergLK = appBean.getSitzverteilungLKErgebnis(id_ergebniseingang, id_gebiet);
-                                                                if (ergLK.isEineListenkombinationZugelassen()){%> 
-                                                                    <tr>
-                                                                        <td class="hgrot" colspan="3"><img width="1" height="1" src="/P5/img/icon/blind.gif" alt=""/></td>
-                                                                    </tr>
-                                                                    <tr class="hgeeeeee">
-                                                                      <td height="20" width="5">
-                                                                        &nbsp;
-                                                                      </td>
-                                                                      <td><ivu:int key="SitzverteilungLK_titel"/></td>
-                                                                      <td width="5">&nbsp;</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                                <td colspan="3" class="hgrot"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
-                                                                        </tr>
-                                                                    <tr>
-                                                                      <td colspan="3"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" height="10" width="1"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <td width="10"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" height="1" width="1" /></td>
-                                    
-                                                                      <td valign="top">
-                                                                        <table class="hgweiss" border="0" cellpadding="4" cellspacing="2" width="<%= breite %>">
-                                                                          <tbody>
-                                                                            <tr class="hgformular">
-                                                                              <td style="width: 154px;">
-                                                                                <ivu:int key="SitzverteilungLK_Listenkombination"/>
-                                                                              </td>
-                                                                              <td style="width: 497px;">
-                                                                                <ivu:int key="SitzverteilungLK_Parteiname"/>
-                                                                              </td>
-                                                                              <td style="width: 80px; text-align: right;">
-                                                                                &sum; <ivu:int key="SitzverteilungLK_Sitze"/>
-                                                                              </td>
-                                                                              <td style="text-align: right;">
-                                                                                <ivu:int key="SitzverteilungLK_Anzahl_Stimmen"/>
-                                                                              </td>
-                                                                            </tr>
-                                                                            <%
-                                                                                Collection<ListenkombinationInfo> listenkombInfoCol = ergLK.getListenkombinationInfoCol();
-                                                                                i = 1;
-                                                                                for (ListenkombinationInfo listenkombInfo : listenkombInfoCol){ 
-                                                                                    if (ergLK.isListenkombinationZugelassen(listenkombInfo.getID_Listenkombination())){%>
-                                                                                       <tr class="<%= i > 0 ? "hgweiss":"hgeeeeee" %>" style="font-weight:bold;">
-                                                                                            <td>
-                                                                                                <%= ClientHelper.forHTML(listenkombInfo.getBezeichnung()) %>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                               (<%= ClientHelper.forHTML(ergLK.getGruppeninfoBezeichnungszusatz(listenkombInfo.getID_Listenkombination())) %>)
-                                                                                            </td>
-                                                                                            <td style="text-align: right;">
-                                                                                                <%= listenkombInfo.isBeruecksichtigt() ? listenkombInfo.getAnzahlSitze() : ""%>         
-                                                                                            </td>
-                                                                                            <td style="text-align: right;">
-                                                                                                <%= listenkombInfo.isBeruecksichtigt() ? ClientHelper.getStimmanzahlString(listenkombInfo.getAnzahlStimmen(), ClientHelper.DF) : ""%>           
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    <%} 
-                                                                                 }
-                                                                            %>
-                                                                          </tbody>
-                                                                        </table>
-                                                                      </td>
-                                                                      <td width="10">
-                                                                        &nbsp;
-                                    
-                                                                      </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <td colspan="3"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" height="10" width="1" /></td>
-                                                                    </tr>
-                                                            
-                                                            
-                                                            
-                                                            <% } 
-                                                            } %>
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
                                                             <tr>
                                                               <td colspan="3"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" height="10" width="1" /></td>
                                                             </tr>
@@ -545,7 +459,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                                                         } %>
                                                     </ol>
                                                     <br/>
-                                                    <%=DecisionType.byId(ka.getArt()).getMessage() %>
+                                                    <%=ClientHelper.forHTML(DecisionType.byId(ka.getArt()).getMessage()) %>
                                                 </li>
                                         <% } %>
                                            </ol>
@@ -610,7 +524,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                                                                 <ivu:nc value="<%= String.valueOf(province.getNummer()) %>" />
                                                             </td>
                                                             <td style="width: 250px;">
-                                                                <ivu:nc value="<%= province.getName() %>" />
+                                                                <ivu:nc value="<%= ClientHelper.forHTML(province.getName()) %>" />
                                                             </td>
                                                             <td style="text-align: center;">
                                                                 <div style="width: 60px; text-align: right;">

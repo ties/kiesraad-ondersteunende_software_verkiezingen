@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Personendaten.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class PersonendatenDBA extends DBABase {
@@ -86,49 +86,97 @@ public class PersonendatenDBA extends DBABase {
       if ((idx = columns.get(ID_PERSONENDATEN.toUpperCase())) != null) {
          m._id_Personendaten = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_PERSONENDATEN)) != null) {
+         m._id_Personendaten = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_PERSONENDATENAGENT.toUpperCase())) != null) {
+         m._id_PersonendatenAgent = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_PERSONENDATENAGENT)) != null) {
          m._id_PersonendatenAgent = r.getString(idx.intValue());
       }
       if ((idx = columns.get(NACHNAME.toUpperCase())) != null) {
          m._nachname = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(NACHNAME)) != null) {
+         m._nachname = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(VORNAME.toUpperCase())) != null) {
+         m._vorname = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(VORNAME)) != null) {
          m._vorname = r.getString(idx.intValue());
       }
       if ((idx = columns.get(PRAEFIX.toUpperCase())) != null) {
          m._praefix = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(PRAEFIX)) != null) {
+         m._praefix = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(INITIALEN.toUpperCase())) != null) {
+         m._initialen = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(INITIALEN)) != null) {
          m._initialen = r.getString(idx.intValue());
       }
       if ((idx = columns.get(TITEL.toUpperCase())) != null) {
          m._titel = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(TITEL)) != null) {
+         m._titel = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(GESCHLECHT.toUpperCase())) != null) {
+         m._geschlecht = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(GESCHLECHT)) != null) {
          m._geschlecht = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(GENERATION.toUpperCase())) != null) {
          m._generation = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(GENERATION)) != null) {
+         m._generation = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(LAND.toUpperCase())) != null) {
+         m._land = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(LAND)) != null) {
          m._land = r.getString(idx.intValue());
       }
       if ((idx = columns.get(WOHNORT.toUpperCase())) != null) {
          m._wohnort = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(WOHNORT)) != null) {
+         m._wohnort = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(KONTAKT_LAND.toUpperCase())) != null) {
+         m._kontakt_Land = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(KONTAKT_LAND)) != null) {
          m._kontakt_Land = r.getString(idx.intValue());
       }
       if ((idx = columns.get(KONTAKT_WOHNORT.toUpperCase())) != null) {
          m._kontakt_Wohnort = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(KONTAKT_WOHNORT)) != null) {
+         m._kontakt_Wohnort = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(KONTAKT_PLZ.toUpperCase())) != null) {
+         m._kontakt_PLZ = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(KONTAKT_PLZ)) != null) {
          m._kontakt_PLZ = r.getString(idx.intValue());
       }
       if ((idx = columns.get(KONTAKT_STRASSE.toUpperCase())) != null) {
          m._kontakt_Strasse = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(KONTAKT_STRASSE)) != null) {
+         m._kontakt_Strasse = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(BENENNBAR.toUpperCase())) != null) {
+         m._benennbar = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(BENENNBAR)) != null) {
          m._benennbar = r.getBoolean(idx.intValue());
       }
    }
@@ -144,49 +192,49 @@ public class PersonendatenDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_PERSONENDATENAGENT.toUpperCase())) {
+      if (columns.containsKey(ID_PERSONENDATENAGENT.toUpperCase()) || columns.containsKey(ID_PERSONENDATENAGENT)) {
          p.setString(idx++, m._id_PersonendatenAgent);
       }
-      if (columns.containsKey(NACHNAME.toUpperCase())) {
+      if (columns.containsKey(NACHNAME.toUpperCase()) || columns.containsKey(NACHNAME)) {
          p.setString(idx++, m._nachname);
       }
-      if (columns.containsKey(VORNAME.toUpperCase())) {
+      if (columns.containsKey(VORNAME.toUpperCase()) || columns.containsKey(VORNAME)) {
          p.setString(idx++, m._vorname);
       }
-      if (columns.containsKey(PRAEFIX.toUpperCase())) {
+      if (columns.containsKey(PRAEFIX.toUpperCase()) || columns.containsKey(PRAEFIX)) {
          p.setString(idx++, m._praefix);
       }
-      if (columns.containsKey(INITIALEN.toUpperCase())) {
+      if (columns.containsKey(INITIALEN.toUpperCase()) || columns.containsKey(INITIALEN)) {
          p.setString(idx++, m._initialen);
       }
-      if (columns.containsKey(TITEL.toUpperCase())) {
+      if (columns.containsKey(TITEL.toUpperCase()) || columns.containsKey(TITEL)) {
          p.setString(idx++, m._titel);
       }
-      if (columns.containsKey(GESCHLECHT.toUpperCase())) {
+      if (columns.containsKey(GESCHLECHT.toUpperCase()) || columns.containsKey(GESCHLECHT)) {
          p.setInt(idx++, m._geschlecht);
       }
-      if (columns.containsKey(GENERATION.toUpperCase())) {
+      if (columns.containsKey(GENERATION.toUpperCase()) || columns.containsKey(GENERATION)) {
          p.setString(idx++, m._generation);
       }
-      if (columns.containsKey(LAND.toUpperCase())) {
+      if (columns.containsKey(LAND.toUpperCase()) || columns.containsKey(LAND)) {
          p.setString(idx++, m._land);
       }
-      if (columns.containsKey(WOHNORT.toUpperCase())) {
+      if (columns.containsKey(WOHNORT.toUpperCase()) || columns.containsKey(WOHNORT)) {
          p.setString(idx++, m._wohnort);
       }
-      if (columns.containsKey(KONTAKT_LAND.toUpperCase())) {
+      if (columns.containsKey(KONTAKT_LAND.toUpperCase()) || columns.containsKey(KONTAKT_LAND)) {
          p.setString(idx++, m._kontakt_Land);
       }
-      if (columns.containsKey(KONTAKT_WOHNORT.toUpperCase())) {
+      if (columns.containsKey(KONTAKT_WOHNORT.toUpperCase()) || columns.containsKey(KONTAKT_WOHNORT)) {
          p.setString(idx++, m._kontakt_Wohnort);
       }
-      if (columns.containsKey(KONTAKT_PLZ.toUpperCase())) {
+      if (columns.containsKey(KONTAKT_PLZ.toUpperCase()) || columns.containsKey(KONTAKT_PLZ)) {
          p.setString(idx++, m._kontakt_PLZ);
       }
-      if (columns.containsKey(KONTAKT_STRASSE.toUpperCase())) {
+      if (columns.containsKey(KONTAKT_STRASSE.toUpperCase()) || columns.containsKey(KONTAKT_STRASSE)) {
          p.setString(idx++, m._kontakt_Strasse);
       }
-      if (columns.containsKey(BENENNBAR.toUpperCase())) {
+      if (columns.containsKey(BENENNBAR.toUpperCase()) || columns.containsKey(BENENNBAR)) {
          p.setBoolean(idx++, m._benennbar);
       }
       p.setString(idx++, m._id_Personendaten);

@@ -19,7 +19,7 @@ import de.ivu.wahl.result.i18n.Messages;
 /**
  * Immutable implementation of the CandidateList interface.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 final class CandidateListImpl implements CandidateList {
   private final ElectoralDistrict electoralDistrict;

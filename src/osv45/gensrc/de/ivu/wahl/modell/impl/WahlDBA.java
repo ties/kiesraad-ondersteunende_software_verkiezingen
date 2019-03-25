@@ -28,7 +28,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Wahl.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class WahlDBA extends DBABase {
@@ -97,64 +97,127 @@ public class WahlDBA extends DBABase {
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_WAHL)) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_WURZELGEBIET.toUpperCase())) != null) {
+         m._id_Wurzelgebiet = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_WURZELGEBIET)) != null) {
          m._id_Wurzelgebiet = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_WAHLGEBIET.toUpperCase())) != null) {
          m._id_Wahlgebiet = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_WAHLGEBIET)) != null) {
+         m._id_Wahlgebiet = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(WAHLART.toUpperCase())) != null) {
+         m._wahlart = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(WAHLART)) != null) {
          m._wahlart = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(WAHLEBENE.toUpperCase())) != null) {
          m._wahlebene = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(WAHLEBENE)) != null) {
+         m._wahlebene = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(WAHLKATEGORIE.toUpperCase())) != null) {
+         m._wahlkategorie = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(WAHLKATEGORIE)) != null) {
          m._wahlkategorie = r.getString(idx.intValue());
       }
       if ((idx = columns.get(NAME.toUpperCase())) != null) {
          m._name = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(NAME)) != null) {
+         m._name = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ELECTIONDOMAIN.toUpperCase())) != null) {
+         m._electionDomain = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ELECTIONDOMAIN)) != null) {
          m._electionDomain = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ELECTIONDOMAINID.toUpperCase())) != null) {
          m._electionDomainId = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ELECTIONDOMAINID)) != null) {
+         m._electionDomainId = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(TERMIN.toUpperCase())) != null) {
+         m._termin = r.getTimestamp(idx.intValue());
+      }
+      if ((idx = columns.get(TERMIN)) != null) {
          m._termin = r.getTimestamp(idx.intValue());
       }
       if ((idx = columns.get(VORRANGSCHWELLE.toUpperCase())) != null) {
          m._vorrangschwelle = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(VORRANGSCHWELLE)) != null) {
+         m._vorrangschwelle = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ANZAHLSITZE.toUpperCase())) != null) {
+         m._anzahlSitze = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(ANZAHLSITZE)) != null) {
          m._anzahlSitze = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(GEBIETSARTAUSWERTUNGSEINHEIT.toUpperCase())) != null) {
          m._gebietsartAuswertungseinheit = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(GEBIETSARTAUSWERTUNGSEINHEIT)) != null) {
+         m._gebietsartAuswertungseinheit = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(GEBIETSARTERFASSUNGSEINHEIT.toUpperCase())) != null) {
+         m._gebietsartErfassungseinheit = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(GEBIETSARTERFASSUNGSEINHEIT)) != null) {
          m._gebietsartErfassungseinheit = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(AKTUELLEWAHLERGEBNISART.toUpperCase())) != null) {
          m._aktuelleWahlergebnisart = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(AKTUELLEWAHLERGEBNISART)) != null) {
+         m._aktuelleWahlergebnisart = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(DATUMNOMINIERUNG.toUpperCase())) != null) {
+         m._datumNominierung = r.getTimestamp(idx.intValue());
+      }
+      if ((idx = columns.get(DATUMNOMINIERUNG)) != null) {
          m._datumNominierung = r.getTimestamp(idx.intValue());
       }
       if ((idx = columns.get(STANDMETADATEN.toUpperCase())) != null) {
          m._standMetadaten = r.getTimestamp(idx.intValue());
       }
+      if ((idx = columns.get(STANDMETADATEN)) != null) {
+         m._standMetadaten = r.getTimestamp(idx.intValue());
+      }
       if ((idx = columns.get(GESCHLOSSENMETADATEN.toUpperCase())) != null) {
+         m._geschlossenMetadaten = r.getTimestamp(idx.intValue());
+      }
+      if ((idx = columns.get(GESCHLOSSENMETADATEN)) != null) {
          m._geschlossenMetadaten = r.getTimestamp(idx.intValue());
       }
       if ((idx = columns.get(STATUS.toUpperCase())) != null) {
          m._status = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(STATUS)) != null) {
+         m._status = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(FREIGEGEBEN.toUpperCase())) != null) {
          m._freigegeben = r.getTimestamp(idx.intValue());
       }
+      if ((idx = columns.get(FREIGEGEBEN)) != null) {
+         m._freigegeben = r.getTimestamp(idx.intValue());
+      }
       if ((idx = columns.get(LETZTEAENDERUNG.toUpperCase())) != null) {
+         m._letzteAenderung = r.getTimestamp(idx.intValue());
+      }
+      if ((idx = columns.get(LETZTEAENDERUNG)) != null) {
          m._letzteAenderung = r.getTimestamp(idx.intValue());
       }
    }
@@ -170,64 +233,64 @@ public class WahlDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_WURZELGEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_WURZELGEBIET.toUpperCase()) || columns.containsKey(ID_WURZELGEBIET)) {
          p.setString(idx++, m._id_Wurzelgebiet);
       }
-      if (columns.containsKey(ID_WAHLGEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_WAHLGEBIET.toUpperCase()) || columns.containsKey(ID_WAHLGEBIET)) {
          p.setString(idx++, m._id_Wahlgebiet);
       }
-      if (columns.containsKey(WAHLART.toUpperCase())) {
+      if (columns.containsKey(WAHLART.toUpperCase()) || columns.containsKey(WAHLART)) {
          p.setInt(idx++, m._wahlart);
       }
-      if (columns.containsKey(WAHLEBENE.toUpperCase())) {
+      if (columns.containsKey(WAHLEBENE.toUpperCase()) || columns.containsKey(WAHLEBENE)) {
          p.setInt(idx++, m._wahlebene);
       }
-      if (columns.containsKey(WAHLKATEGORIE.toUpperCase())) {
+      if (columns.containsKey(WAHLKATEGORIE.toUpperCase()) || columns.containsKey(WAHLKATEGORIE)) {
          p.setString(idx++, m._wahlkategorie);
       }
-      if (columns.containsKey(NAME.toUpperCase())) {
+      if (columns.containsKey(NAME.toUpperCase()) || columns.containsKey(NAME)) {
          p.setString(idx++, m._name);
       }
-      if (columns.containsKey(ELECTIONDOMAIN.toUpperCase())) {
+      if (columns.containsKey(ELECTIONDOMAIN.toUpperCase()) || columns.containsKey(ELECTIONDOMAIN)) {
          p.setString(idx++, m._electionDomain);
       }
-      if (columns.containsKey(ELECTIONDOMAINID.toUpperCase())) {
+      if (columns.containsKey(ELECTIONDOMAINID.toUpperCase()) || columns.containsKey(ELECTIONDOMAINID)) {
          p.setString(idx++, m._electionDomainId);
       }
-      if (columns.containsKey(TERMIN.toUpperCase())) {
+      if (columns.containsKey(TERMIN.toUpperCase()) || columns.containsKey(TERMIN)) {
          p.setTimestamp(idx++, m._termin);
       }
-      if (columns.containsKey(VORRANGSCHWELLE.toUpperCase())) {
+      if (columns.containsKey(VORRANGSCHWELLE.toUpperCase()) || columns.containsKey(VORRANGSCHWELLE)) {
          p.setInt(idx++, m._vorrangschwelle);
       }
-      if (columns.containsKey(ANZAHLSITZE.toUpperCase())) {
+      if (columns.containsKey(ANZAHLSITZE.toUpperCase()) || columns.containsKey(ANZAHLSITZE)) {
          p.setInt(idx++, m._anzahlSitze);
       }
-      if (columns.containsKey(GEBIETSARTAUSWERTUNGSEINHEIT.toUpperCase())) {
+      if (columns.containsKey(GEBIETSARTAUSWERTUNGSEINHEIT.toUpperCase()) || columns.containsKey(GEBIETSARTAUSWERTUNGSEINHEIT)) {
          p.setInt(idx++, m._gebietsartAuswertungseinheit);
       }
-      if (columns.containsKey(GEBIETSARTERFASSUNGSEINHEIT.toUpperCase())) {
+      if (columns.containsKey(GEBIETSARTERFASSUNGSEINHEIT.toUpperCase()) || columns.containsKey(GEBIETSARTERFASSUNGSEINHEIT)) {
          p.setInt(idx++, m._gebietsartErfassungseinheit);
       }
-      if (columns.containsKey(AKTUELLEWAHLERGEBNISART.toUpperCase())) {
+      if (columns.containsKey(AKTUELLEWAHLERGEBNISART.toUpperCase()) || columns.containsKey(AKTUELLEWAHLERGEBNISART)) {
          p.setInt(idx++, m._aktuelleWahlergebnisart);
       }
-      if (columns.containsKey(DATUMNOMINIERUNG.toUpperCase())) {
+      if (columns.containsKey(DATUMNOMINIERUNG.toUpperCase()) || columns.containsKey(DATUMNOMINIERUNG)) {
          p.setTimestamp(idx++, m._datumNominierung);
       }
-      if (columns.containsKey(STANDMETADATEN.toUpperCase())) {
+      if (columns.containsKey(STANDMETADATEN.toUpperCase()) || columns.containsKey(STANDMETADATEN)) {
          p.setTimestamp(idx++, m._standMetadaten);
       }
-      if (columns.containsKey(GESCHLOSSENMETADATEN.toUpperCase())) {
+      if (columns.containsKey(GESCHLOSSENMETADATEN.toUpperCase()) || columns.containsKey(GESCHLOSSENMETADATEN)) {
          p.setTimestamp(idx++, m._geschlossenMetadaten);
       }
-      if (columns.containsKey(STATUS.toUpperCase())) {
+      if (columns.containsKey(STATUS.toUpperCase()) || columns.containsKey(STATUS)) {
          p.setInt(idx++, m._status);
       }
-      if (columns.containsKey(FREIGEGEBEN.toUpperCase())) {
+      if (columns.containsKey(FREIGEGEBEN.toUpperCase()) || columns.containsKey(FREIGEGEBEN)) {
          p.setTimestamp(idx++, m._freigegeben);
       }
-      if (columns.containsKey(LETZTEAENDERUNG.toUpperCase())) {
+      if (columns.containsKey(LETZTEAENDERUNG.toUpperCase()) || columns.containsKey(LETZTEAENDERUNG)) {
          p.setTimestamp(idx++, m._letzteAenderung);
       }
       p.setString(idx++, m._id_Wahl);
@@ -461,23 +524,6 @@ public class WahlDBA extends DBABase {
    }
 
    /**
-     * Method retrieveIDsByID_Wurzelgebiet returns a {@link Collection} of Wahl IDs
-     *
-     * @param id_Wurzelgebiet searching condition
-
-     * @return a {@link Collection} of Wahl IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Wurzelgebiet(String id_Wurzelgebiet)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Wahl from " + TABLENAME + " where ID_Wurzelgebiet=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Wurzelgebiet});
-   }
-
-   /**
      * Method retrieveIDsByID_Wahlgebiet returns a {@link Collection} of Wahl IDs
      *
      * @param id_Wahlgebiet searching condition
@@ -492,6 +538,23 @@ public class WahlDBA extends DBABase {
          "select ID_Wahl from " + TABLENAME + " where ID_Wahlgebiet=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Wahlgebiet});
+   }
+
+   /**
+     * Method retrieveIDsByID_Wurzelgebiet returns a {@link Collection} of Wahl IDs
+     *
+     * @param id_Wurzelgebiet searching condition
+
+     * @return a {@link Collection} of Wahl IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Wurzelgebiet(String id_Wurzelgebiet)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Wahl from " + TABLENAME + " where ID_Wurzelgebiet=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Wurzelgebiet});
    }
 
    /**

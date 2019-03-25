@@ -12,7 +12,7 @@ import org.jboss.annotation.ejb.Service;
 /**
  * Database Initialisation for P4_CSB
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 @Service(objectName = "osv:service=P4_CSB_DBInitService")
 @Management(DBInitService.class)

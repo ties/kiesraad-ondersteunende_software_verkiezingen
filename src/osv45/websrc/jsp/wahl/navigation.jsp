@@ -3,7 +3,7 @@
  * Navigation
  * Teil der Navigation zu Gebieten
  *
- * author:  mur@ivu.de, bae@ivu.de, cos@ivu.de  
+ * author:  M. Murdfield, bae, D. Cosic  
  * Copyright (c) 2002-2007 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: navigation.jsp,v 1.25 2010/12/09 10:40:14 jon Exp $
  *******************************************************************************
@@ -20,6 +20,7 @@
 <%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Rechte"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.NavigationErgebnis" %>
 <%@ page import="de.ivu.wahl.client.beans.InitGuiCommand"%>
 <%@ page import="de.ivu.wahl.modell.ErgebniseingangModel" %>
@@ -35,6 +36,7 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="navBean" scope="request" class="de.ivu.wahl.client.beans.NavigationBean" />
 <jsp:useBean id="ergImpBean" scope="session" class="de.ivu.wahl.client.beans.ErgebnisImportBean" />
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
  AnwContext context = appBean.getAnwContext();
  if (context == null) {//
@@ -205,14 +207,18 @@
       if (treeNode.getUserObject() instanceof GebietInfo) {
         gebietInfo = (GebietInfo)treeNode.getUserObject();
         isErfassungseinheit = gebietInfo.isErfassungseinheit();
-        anzahlText = !isErfassungseinheit ? "("+gebietInfo.getAnzahlEingegangen()+" "+BundleHelper.getBundleString("Navigation_n_von_m")+" "+gebietInfo.getAnzahlGesamt()+")" : null;
+        anzahlText = !isErfassungseinheit ? "(" + gebietInfo.getAnzahlEingegangen() + " " + BundleHelper.getBundleString("Navigation_n_von_m") + " " + gebietInfo.getAnzahlGesamt() + ")" : null;
         naviAnker = counterTree + "_" + gebietInfo.getNodePath();
 
-        Command newWork = ApplicationBeanKonstanten.INITIAL_COMMAND;
+        Command newWork = ApplicationBeanKonstanten.INITIAL_COMMAND; // View results
         if (isErfassungseinheit && gebietInfo.getStatusLetzterEingang() != ErgebniseingangKonstanten.STATE_OK) {
           newWork = gui.getErfassungseinheitUnvollstaendigWork(gebietInfo.getStatusLetzterEingang());
+          boolean hatRecht = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
+          if (!hatRecht) {
+            newWork = ApplicationBeanKonstanten.INITIAL_COMMAND;
+          }
         } else if (gebietInfo.isWahleinheit()) {
-          newWork = Command.GEB_ERG;
+          newWork = Command.GEB_ERG; // View results
         }
 
         newLocation = ClientHelper.getSuffixLevel(request, gebietInfo.getGebietsart())

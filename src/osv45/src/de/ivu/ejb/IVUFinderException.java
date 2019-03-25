@@ -16,7 +16,7 @@ package de.ivu.ejb;
  * This version is enhanced by passing the cause exception to the superclass using the newly
  * established Java 1.4 mechanism.
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class IVUFinderException extends javax.ejb.FinderException {
 

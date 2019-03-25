@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Gebiet as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean, GebietModel {
@@ -131,6 +131,22 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Untergebiet ID of the objects to be searched
+     * @return  {@link Collection} of the found Gebiet-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByUntergebiet(String id_Untergebiet) throws IVUFinderException {
+      try {
+         return Gebiet_GebietDBA.retrieveIDsByID_Untergebiet(id_Untergebiet);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Elterngebiet ID of the objects to be searched
      * @return  {@link Collection} of the found Gebiet-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -147,13 +163,13 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Untergebiet ID of the objects to be searched
+     * @param id_LetzterEingang ID of the objects to be searched
      * @return  {@link Collection} of the found Gebiet-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByUntergebiet(String id_Untergebiet) throws IVUFinderException {
+   public Collection<String> ejbFindAllByLetzterEingang(String id_LetzterEingang) throws IVUFinderException {
       try {
-         return Gebiet_GebietDBA.retrieveIDsByID_Untergebiet(id_Untergebiet);
+         return GebietDBA.retrieveIDsByID_LetzterEingang(id_LetzterEingang);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -186,22 +202,6 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
    public Collection<String> ejbFindAllByWahl(String id_Wahl) throws IVUFinderException {
       try {
          return GebietDBA.retrieveIDsByID_Wahl(id_Wahl);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_LetzterEingang ID of the objects to be searched
-     * @return  {@link Collection} of the found Gebiet-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByLetzterEingang(String id_LetzterEingang) throws IVUFinderException {
-      try {
-         return GebietDBA.retrieveIDsByID_LetzterEingang(id_LetzterEingang);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -523,6 +523,12 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_LetzterEingang()) {
+         _letzterEingang = null;
+         _relchk_LetzterEingang = true;
+      } else {
+         _relchk_LetzterEingang = false;
+      }
       if (null == _details.getID_UebergeordnetesGebiet()) {
          _uebergeordnetesGebiet = null;
          _relchk_UebergeordnetesGebiet = true;
@@ -535,19 +541,13 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
       } else {
          _relchk_Wahl = false;
       }
-      if (null == _details.getID_LetzterEingang()) {
-         _letzterEingang = null;
-         _relchk_LetzterEingang = true;
-      } else {
-         _relchk_LetzterEingang = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _letzterEingang = null;
       _uebergeordnetesGebiet = null;
       _wahl = null;
-      _letzterEingang = null;
    }
 
    /**
@@ -883,6 +883,51 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
    }
 
    /**
+     * Relation zu LetzterEingang
+     */
+   protected Ergebniseingang _letzterEingang;
+
+   /**
+     * Flag for the validity of the relation LetzterEingang
+     */
+   protected boolean _relchk_LetzterEingang = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Ergebniseingang}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Ergebniseingang getLetzterEingang() throws EJBException {
+      if (!_relchk_LetzterEingang) {
+         if (null == _details.getID_LetzterEingang()) {
+            _letzterEingang = null;
+         } else if (null == _letzterEingang || !_letzterEingang.getPrimaryKey().equals(_details.getID_LetzterEingang())) {
+            try {
+               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
+               _letzterEingang = home.findByPrimaryKey(_details.getID_LetzterEingang());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find LetzterEingang", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_LetzterEingang = true;
+      }
+      return _letzterEingang;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Ergebniseingang}
+     *
+     * @param letzterEingang the corresponding EJBObject
+     */
+   public void setLetzterEingang(Ergebniseingang letzterEingang) {
+      _letzterEingang = letzterEingang;
+      _details.setID_LetzterEingang(letzterEingang == null ? null : (String)letzterEingang.getPrimaryKey());
+   }
+
+   /**
      * Relation zu UebergeordnetesGebiet
      */
    protected Gebiet _uebergeordnetesGebiet;
@@ -970,51 +1015,6 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
    public void setWahl(Wahl wahl) {
       _wahl = wahl;
       _details.setID_Wahl(wahl == null ? null : (String)wahl.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu LetzterEingang
-     */
-   protected Ergebniseingang _letzterEingang;
-
-   /**
-     * Flag for the validity of the relation LetzterEingang
-     */
-   protected boolean _relchk_LetzterEingang = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Ergebniseingang}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Ergebniseingang getLetzterEingang() throws EJBException {
-      if (!_relchk_LetzterEingang) {
-         if (null == _details.getID_LetzterEingang()) {
-            _letzterEingang = null;
-         } else if (null == _letzterEingang || !_letzterEingang.getPrimaryKey().equals(_details.getID_LetzterEingang())) {
-            try {
-               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
-               _letzterEingang = home.findByPrimaryKey(_details.getID_LetzterEingang());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find LetzterEingang", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_LetzterEingang = true;
-      }
-      return _letzterEingang;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Ergebniseingang}
-     *
-     * @param letzterEingang the corresponding EJBObject
-     */
-   public void setLetzterEingang(Ergebniseingang letzterEingang) {
-      _letzterEingang = letzterEingang;
-      _details.setID_LetzterEingang(letzterEingang == null ? null : (String)letzterEingang.getPrimaryKey());
    }
 
    /**
@@ -1231,82 +1231,6 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
      * @return  {@link Collection} of {@link EJBLocalObject} type {@link Gebiet}
      * @throws EJBException: an error occurred
      */
-   public Collection<Gebiet> getElterngebietCol() throws EJBException {
-      GebietHome gebietHome = GebietHome.HomeFinder.findHome(this);
-      try {
-         return gebietHome.findAllByUntergebiet(_details.getID_Gebiet());
-      } catch (FinderException fe) {
-         throw new EJBException(fe);
-      }
-   }
-
-   /**
-     * Adds the object to the set of entities of the type {@link Gebiet}.
-     *
-     * @param elterngebiet Gebiet-object
-     */
-   public void addElterngebiet(Gebiet elterngebiet) {
-      addID_Elterngebiet((String)elterngebiet.getPrimaryKey());
-   }
-
-   /**
-     * Adds the object to the set of entities of the type {@link Gebiet}.
-     *
-     * @param col {@link Collection} of {@link EJBObject}s, which are added to the set.
-     */
-   public void addAllElterngebietCol(Collection<Gebiet> col) {
-      for (Gebiet elterngebiet : col) {
-         addElterngebiet(elterngebiet);
-      }
-   }
-
-   /**
-     * Adds the object, which is marked by the ID, to the set of entities of the type {@link Elterngebiet}.
-     *
-     * @param id_Elterngebiet ID of Elterngebiet entity
-     * @throws EJBException: an error occurred
-     */
-   public void addID_Elterngebiet(String id_Elterngebiet) throws EJBException {
-      try {
-         Gebiet_GebietModelImpl model =
-            new Gebiet_GebietModelImpl (id_Elterngebiet, _details.getID_Gebiet());
-         Gebiet_GebietDBA.insert (model);
-      } catch (Exception e) {
-         throw new EJBException("Unable to change Table Gebiet_Gebiet Exception: " + //$NON-NLS-1$
-            e.getMessage(), e);
-      }
-   }
-
-   /**
-     * Deletes an entity from the set of entities of the type {@link Gebiet}.
-     *
-     * @param elterngebiet Gebiet-EJBObject, which is removed from the set.
-     */
-   public void removeElterngebiet(Gebiet elterngebiet) {
-      removeID_Elterngebiet((String)elterngebiet.getPrimaryKey());
-   }
-
-   /**
-     * Deletes an entity from the set of entities of the type {@link Gebiet}.
-     *
-     * @param id_Elterngebiet ID of the Gebiet entity to be deleted
-     * @throws EJBException: an error occurred
-     */
-   public void removeID_Elterngebiet(String id_Elterngebiet) throws EJBException {
-      try {
-         Gebiet_GebietDBA.deleteByKey(id_Elterngebiet, _details.getID_Gebiet());
-      } catch (Exception e) {
-         throw new EJBException("Unable to remove the Gebiet Entry from the table Gebiet_Gebiet Exception: " + //$NON-NLS-1$
-            e.getMessage(), e);
-      }
-   }
-
-   /**
-     * Returns the set of entities of the type {@link Gebiet}.
-     *
-     * @return  {@link Collection} of {@link EJBLocalObject} type {@link Gebiet}
-     * @throws EJBException: an error occurred
-     */
    public Collection<Gebiet> getUntergebietCol() throws EJBException {
       GebietHome gebietHome = GebietHome.HomeFinder.findHome(this);
       try {
@@ -1371,6 +1295,82 @@ public abstract class BasicGebietBean extends BMPBeanBase implements EntityBean,
    public void removeID_Untergebiet(String id_Untergebiet) throws EJBException {
       try {
          Gebiet_GebietDBA.deleteByKey(_details.getID_Gebiet(), id_Untergebiet);
+      } catch (Exception e) {
+         throw new EJBException("Unable to remove the Gebiet Entry from the table Gebiet_Gebiet Exception: " + //$NON-NLS-1$
+            e.getMessage(), e);
+      }
+   }
+
+   /**
+     * Returns the set of entities of the type {@link Gebiet}.
+     *
+     * @return  {@link Collection} of {@link EJBLocalObject} type {@link Gebiet}
+     * @throws EJBException: an error occurred
+     */
+   public Collection<Gebiet> getElterngebietCol() throws EJBException {
+      GebietHome gebietHome = GebietHome.HomeFinder.findHome(this);
+      try {
+         return gebietHome.findAllByUntergebiet(_details.getID_Gebiet());
+      } catch (FinderException fe) {
+         throw new EJBException(fe);
+      }
+   }
+
+   /**
+     * Adds the object to the set of entities of the type {@link Gebiet}.
+     *
+     * @param elterngebiet Gebiet-object
+     */
+   public void addElterngebiet(Gebiet elterngebiet) {
+      addID_Elterngebiet((String)elterngebiet.getPrimaryKey());
+   }
+
+   /**
+     * Adds the object to the set of entities of the type {@link Gebiet}.
+     *
+     * @param col {@link Collection} of {@link EJBObject}s, which are added to the set.
+     */
+   public void addAllElterngebietCol(Collection<Gebiet> col) {
+      for (Gebiet elterngebiet : col) {
+         addElterngebiet(elterngebiet);
+      }
+   }
+
+   /**
+     * Adds the object, which is marked by the ID, to the set of entities of the type {@link Elterngebiet}.
+     *
+     * @param id_Elterngebiet ID of Elterngebiet entity
+     * @throws EJBException: an error occurred
+     */
+   public void addID_Elterngebiet(String id_Elterngebiet) throws EJBException {
+      try {
+         Gebiet_GebietModelImpl model =
+            new Gebiet_GebietModelImpl (id_Elterngebiet, _details.getID_Gebiet());
+         Gebiet_GebietDBA.insert (model);
+      } catch (Exception e) {
+         throw new EJBException("Unable to change Table Gebiet_Gebiet Exception: " + //$NON-NLS-1$
+            e.getMessage(), e);
+      }
+   }
+
+   /**
+     * Deletes an entity from the set of entities of the type {@link Gebiet}.
+     *
+     * @param elterngebiet Gebiet-EJBObject, which is removed from the set.
+     */
+   public void removeElterngebiet(Gebiet elterngebiet) {
+      removeID_Elterngebiet((String)elterngebiet.getPrimaryKey());
+   }
+
+   /**
+     * Deletes an entity from the set of entities of the type {@link Gebiet}.
+     *
+     * @param id_Elterngebiet ID of the Gebiet entity to be deleted
+     * @throws EJBException: an error occurred
+     */
+   public void removeID_Elterngebiet(String id_Elterngebiet) throws EJBException {
+      try {
+         Gebiet_GebietDBA.deleteByKey(id_Elterngebiet, _details.getID_Gebiet());
       } catch (Exception e) {
          throw new EJBException("Unable to remove the Gebiet Entry from the table Gebiet_Gebiet Exception: " + //$NON-NLS-1$
             e.getMessage(), e);

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.kiesraad.nl/electiondefinition" targetNamespace="http://www.kiesraad.nl/electiondefinition">
+	<xs:include schemaLocation="simpletypes.xsd"/>
+	<xs:element name="ElectionTree">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Region" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Region">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RegionName"/>
+				<xs:element ref="Committee" minOccurs="0" maxOccurs="3"/>
+			</xs:sequence>
+			<xs:attribute name="RegionNumber" type="xs:short"/>
+			<xs:attribute name="RegionCategory" type="RegionCategoryType" use="required"/>
+			<xs:attribute name="RomanNumerals" type="xs:boolean" default="false"/>
+			<xs:attribute name="SuperiorRegionNumber" type="xs:short"/>
+			<xs:attribute name="SuperiorRegionCategory" type="RegionCategoryType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RegionName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Region name</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Committee">
+		<xs:annotation>
+			<xs:documentation>Committee (e.g. central electoral committee)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="CommitteeCategory" type="CommitteeCategoryType" use="required"/>
+			<xs:attribute name="CommitteeName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>If not set, use region name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AcceptCentralSubmissions" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

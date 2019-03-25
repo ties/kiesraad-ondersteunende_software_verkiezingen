@@ -10,11 +10,8 @@ import java.util.Collection;
 import javax.ejb.EJBException;
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
 import de.ivu.ejb.fw.DBABase;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.modell.impl.BasicGebietDBA;
 import de.ivu.wahl.modell.impl.BasicGebiet_GebietDBA;
@@ -22,12 +19,6 @@ import de.ivu.wahl.modell.impl.BasicGebietsstatusDBA;
 
 public class GebietsstatusBean extends BasicGebietsstatusBean {
   private static final long serialVersionUID = -3078953810941245817L;
-
-  private static final Category LOGGER = Log4J.configure(GebietsstatusBean.class);
-  static {
-    LOGGER.info(Log4J
-        .dumpVersion(GebietsstatusBean.class, Log4J.extractVersion("$Revision: 1.4 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Find all region states of the region by kind of election result and region

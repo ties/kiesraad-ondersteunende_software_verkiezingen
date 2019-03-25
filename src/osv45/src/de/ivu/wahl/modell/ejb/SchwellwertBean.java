@@ -11,22 +11,15 @@ import java.sql.SQLException;
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
-import de.ivu.util.debug.Log4J;
 
 /**
  * SchwellwertBean
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class SchwellwertBean extends BasicSchwellwertBean {
   private static final long serialVersionUID = 1884422045992527943L;
-  private static final Category LOGGER = Log4J.configure(SchwellwertBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(SchwellwertBean.class, Log4J.extractVersion("$Revision: 1.7 $"))); //$NON-NLS-1$
-  }
 
   /**
    * Find threshold by election and name
@@ -40,7 +33,7 @@ public class SchwellwertBean extends BasicSchwellwertBean {
   public String ejbFindByWahlAndName(String id_Wahl, String name)
       throws ObjectNotFoundException, FinderException {
     try {
-      // Sondernutzung der GG Wahlberechtigte für allgemeine Schwellwerte !
+      // Sondernutzung der GG Wahlberechtigte fï¿½r allgemeine Schwellwerte !
       return findSingle(retrieveIDs("select " + ID_SCHWELLWERT + " from " + TABLENAME + " where " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
           + ID_WAHL + "=?  and " + NAME + "=?", new Object[]{id_Wahl, name})); //$NON-NLS-1$ //$NON-NLS-2$
     } catch (SQLException se) {

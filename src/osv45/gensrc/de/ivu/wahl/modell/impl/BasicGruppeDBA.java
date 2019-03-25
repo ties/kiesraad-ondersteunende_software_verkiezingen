@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Gruppe.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicGruppeDBA extends DBABase {
@@ -72,28 +72,55 @@ public abstract class BasicGruppeDBA extends DBABase {
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_WAHL)) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(SCHLUESSEL.toUpperCase())) != null) {
+         m._schluessel = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(SCHLUESSEL)) != null) {
          m._schluessel = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(GRUPPENART.toUpperCase())) != null) {
          m._gruppenart = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(GRUPPENART)) != null) {
+         m._gruppenart = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(NAMELANG.toUpperCase())) != null) {
+         m._nameLang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(NAMELANG)) != null) {
          m._nameLang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(NAMEKURZ.toUpperCase())) != null) {
          m._nameKurz = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(NAMEKURZ)) != null) {
+         m._nameKurz = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(KAUTIONGESTELLT.toUpperCase())) != null) {
          m._kautionGestellt = r.getBoolean(idx.intValue());
       }
+      if ((idx = columns.get(KAUTIONGESTELLT)) != null) {
+         m._kautionGestellt = r.getBoolean(idx.intValue());
+      }
       if ((idx = columns.get(FARBE.toUpperCase())) != null) {
+         m._farbe = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(FARBE)) != null) {
          m._farbe = r.getString(idx.intValue());
       }
    }
@@ -109,28 +136,28 @@ public abstract class BasicGruppeDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_WAHL.toUpperCase())) {
+      if (columns.containsKey(ID_WAHL.toUpperCase()) || columns.containsKey(ID_WAHL)) {
          p.setString(idx++, m._id_Wahl);
       }
-      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase()) || columns.containsKey(ID_LISTENKOMBINATION)) {
          p.setString(idx++, m._id_Listenkombination);
       }
-      if (columns.containsKey(SCHLUESSEL.toUpperCase())) {
+      if (columns.containsKey(SCHLUESSEL.toUpperCase()) || columns.containsKey(SCHLUESSEL)) {
          p.setInt(idx++, m._schluessel);
       }
-      if (columns.containsKey(GRUPPENART.toUpperCase())) {
+      if (columns.containsKey(GRUPPENART.toUpperCase()) || columns.containsKey(GRUPPENART)) {
          p.setInt(idx++, m._gruppenart);
       }
-      if (columns.containsKey(NAMELANG.toUpperCase())) {
+      if (columns.containsKey(NAMELANG.toUpperCase()) || columns.containsKey(NAMELANG)) {
          p.setString(idx++, m._nameLang);
       }
-      if (columns.containsKey(NAMEKURZ.toUpperCase())) {
+      if (columns.containsKey(NAMEKURZ.toUpperCase()) || columns.containsKey(NAMEKURZ)) {
          p.setString(idx++, m._nameKurz);
       }
-      if (columns.containsKey(KAUTIONGESTELLT.toUpperCase())) {
+      if (columns.containsKey(KAUTIONGESTELLT.toUpperCase()) || columns.containsKey(KAUTIONGESTELLT)) {
          p.setBoolean(idx++, m._kautionGestellt);
       }
-      if (columns.containsKey(FARBE.toUpperCase())) {
+      if (columns.containsKey(FARBE.toUpperCase()) || columns.containsKey(FARBE)) {
          p.setString(idx++, m._farbe);
       }
       p.setString(idx++, m._id_Gruppe);
@@ -328,21 +355,6 @@ public abstract class BasicGruppeDBA extends DBABase {
    }
 
    /**
-     * Method retrieveIDsByID_Wahl returns a {@link Collection} of Gruppe IDs
-     *
-     * @param id_Wahl searching condition
-
-     * @return a {@link Collection} of Gruppe IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Wahl(String id_Wahl) throws SQLException {
-      return retrieveIDs(
-         "select ID_Gruppe from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Wahl});
-   }
-
-   /**
      * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of Gruppe IDs
      *
      * @param id_Listenkombination searching condition
@@ -357,6 +369,21 @@ public abstract class BasicGruppeDBA extends DBABase {
          "select ID_Gruppe from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Listenkombination});
+   }
+
+   /**
+     * Method retrieveIDsByID_Wahl returns a {@link Collection} of Gruppe IDs
+     *
+     * @param id_Wahl searching condition
+
+     * @return a {@link Collection} of Gruppe IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Wahl(String id_Wahl) throws SQLException {
+      return retrieveIDs(
+         "select ID_Gruppe from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Wahl});
    }
 
    /**

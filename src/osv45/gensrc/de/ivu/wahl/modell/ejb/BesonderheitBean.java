@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Besonderheit as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class BesonderheitBean extends BMPBeanBase implements EntityBean, BesonderheitModel {
@@ -95,6 +95,22 @@ public class BesonderheitBean extends BMPBeanBase implements EntityBean, Besonde
    public Collection<String> ejbFindAll() throws IVUFinderException {
       try {
          return BesonderheitDBA.retrieveAllIDs();
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
+     * @param id_UebergeordneteBesonderheit ID of the objects to be searched
+     * @return  {@link Collection} of the found Besonderheit-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByUebergeordneteBesonderheit(String id_UebergeordneteBesonderheit) throws IVUFinderException {
+      try {
+         return BesonderheitDBA.retrieveIDsByID_UebergeordneteBesonderheit(id_UebergeordneteBesonderheit);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -175,22 +191,6 @@ public class BesonderheitBean extends BMPBeanBase implements EntityBean, Besonde
    public Collection<String> ejbFindAllByPersonendaten(String id_Personendaten) throws IVUFinderException {
       try {
          return BesonderheitDBA.retrieveIDsByID_Personendaten(id_Personendaten);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_UebergeordneteBesonderheit ID of the objects to be searched
-     * @return  {@link Collection} of the found Besonderheit-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByUebergeordneteBesonderheit(String id_UebergeordneteBesonderheit) throws IVUFinderException {
-      try {
-         return BesonderheitDBA.retrieveIDsByID_UebergeordneteBesonderheit(id_UebergeordneteBesonderheit);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -342,6 +342,12 @@ public class BesonderheitBean extends BMPBeanBase implements EntityBean, Besonde
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_UebergeordneteBesonderheit()) {
+         _uebergeordneteBesonderheit = null;
+         _relchk_UebergeordneteBesonderheit = true;
+      } else {
+         _relchk_UebergeordneteBesonderheit = false;
+      }
       if (null == _details.getID_Ergebniseingang()) {
          _ergebniseingang = null;
          _relchk_Ergebniseingang = true;
@@ -372,22 +378,16 @@ public class BesonderheitBean extends BMPBeanBase implements EntityBean, Besonde
       } else {
          _relchk_Personendaten = false;
       }
-      if (null == _details.getID_UebergeordneteBesonderheit()) {
-         _uebergeordneteBesonderheit = null;
-         _relchk_UebergeordneteBesonderheit = true;
-      } else {
-         _relchk_UebergeordneteBesonderheit = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _uebergeordneteBesonderheit = null;
       _ergebniseingang = null;
       _listenkombination = null;
       _gruppe = null;
       _liste = null;
       _personendaten = null;
-      _uebergeordneteBesonderheit = null;
    }
 
    /**
@@ -642,6 +642,51 @@ public class BesonderheitBean extends BMPBeanBase implements EntityBean, Besonde
    }
 
    /**
+     * Relation zu UebergeordneteBesonderheit
+     */
+   protected Besonderheit _uebergeordneteBesonderheit;
+
+   /**
+     * Flag for the validity of the relation UebergeordneteBesonderheit
+     */
+   protected boolean _relchk_UebergeordneteBesonderheit = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Besonderheit}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Besonderheit getUebergeordneteBesonderheit() throws EJBException {
+      if (!_relchk_UebergeordneteBesonderheit) {
+         if (null == _details.getID_UebergeordneteBesonderheit()) {
+            _uebergeordneteBesonderheit = null;
+         } else if (null == _uebergeordneteBesonderheit || !_uebergeordneteBesonderheit.getPrimaryKey().equals(_details.getID_UebergeordneteBesonderheit())) {
+            try {
+               BesonderheitHome home = BesonderheitHome.HomeFinder.findHome(this);
+               _uebergeordneteBesonderheit = home.findByPrimaryKey(_details.getID_UebergeordneteBesonderheit());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find UebergeordneteBesonderheit", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Besonderheit", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_UebergeordneteBesonderheit = true;
+      }
+      return _uebergeordneteBesonderheit;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Besonderheit}
+     *
+     * @param uebergeordneteBesonderheit the corresponding EJBObject
+     */
+   public void setUebergeordneteBesonderheit(Besonderheit uebergeordneteBesonderheit) {
+      _uebergeordneteBesonderheit = uebergeordneteBesonderheit;
+      _details.setID_UebergeordneteBesonderheit(uebergeordneteBesonderheit == null ? null : (String)uebergeordneteBesonderheit.getPrimaryKey());
+   }
+
+   /**
      * Relation zu Ergebniseingang
      */
    protected Ergebniseingang _ergebniseingang;
@@ -864,51 +909,6 @@ public class BesonderheitBean extends BMPBeanBase implements EntityBean, Besonde
    public void setPersonendaten(Personendaten personendaten) {
       _personendaten = personendaten;
       _details.setID_Personendaten(personendaten == null ? null : (String)personendaten.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu UebergeordneteBesonderheit
-     */
-   protected Besonderheit _uebergeordneteBesonderheit;
-
-   /**
-     * Flag for the validity of the relation UebergeordneteBesonderheit
-     */
-   protected boolean _relchk_UebergeordneteBesonderheit = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Besonderheit}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Besonderheit getUebergeordneteBesonderheit() throws EJBException {
-      if (!_relchk_UebergeordneteBesonderheit) {
-         if (null == _details.getID_UebergeordneteBesonderheit()) {
-            _uebergeordneteBesonderheit = null;
-         } else if (null == _uebergeordneteBesonderheit || !_uebergeordneteBesonderheit.getPrimaryKey().equals(_details.getID_UebergeordneteBesonderheit())) {
-            try {
-               BesonderheitHome home = BesonderheitHome.HomeFinder.findHome(this);
-               _uebergeordneteBesonderheit = home.findByPrimaryKey(_details.getID_UebergeordneteBesonderheit());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find UebergeordneteBesonderheit", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Besonderheit", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_UebergeordneteBesonderheit = true;
-      }
-      return _uebergeordneteBesonderheit;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Besonderheit}
-     *
-     * @param uebergeordneteBesonderheit the corresponding EJBObject
-     */
-   public void setUebergeordneteBesonderheit(Besonderheit uebergeordneteBesonderheit) {
-      _uebergeordneteBesonderheit = uebergeordneteBesonderheit;
-      _details.setID_UebergeordneteBesonderheit(uebergeordneteBesonderheit == null ? null : (String)uebergeordneteBesonderheit.getPrimaryKey());
    }
 
    /**

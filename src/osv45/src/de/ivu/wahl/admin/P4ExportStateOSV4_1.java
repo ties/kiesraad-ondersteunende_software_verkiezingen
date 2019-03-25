@@ -8,7 +8,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export control of form OSV4_1
  * 
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class P4ExportStateOSV4_1 extends DialogStateHolder {
   private static final long serialVersionUID = 2881500456234979925L;

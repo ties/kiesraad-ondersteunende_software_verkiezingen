@@ -17,7 +17,7 @@ import de.ivu.wahl.modell.exception.ImportException;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public abstract class AbstractImportMetadata extends AbstractImportEML {
 
@@ -56,8 +56,8 @@ public abstract class AbstractImportMetadata extends AbstractImportEML {
     _electionDomainId = readElectionDomainId(electionIdentifier);
     if (_electionDomainId == null && _electionCategory.isElectionDomainIdNeeded()) {
       LOGGER.error(Messages.bind(MessageKeys.Error_NoElectionDomainIdFoundIn_0, source));
-      throw new ImportException(Messages
-          .bind(MessageKeys.Error_NoElectionDomainIdFoundIn_0, source));
+      throw new ImportException(
+          Messages.bind(MessageKeys.Error_NoElectionDomainIdFoundIn_0, source));
     } else if (_electionDomainId != null && !electionCategory.isElectionDomainIdNeeded()) {
       LOGGER.error(Messages.bind(MessageKeys.Error_NoElectionDomainIdExpectedFor_0, art));
       throw new ImportException(Messages.getString(Messages

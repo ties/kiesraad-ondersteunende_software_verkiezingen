@@ -41,16 +41,12 @@ import de.ivu.wahl.i18n.Messages;
 /**
  * Base class for an Entity Enterprise Java Bean with Bean Managed Persistence
  * 
- * @author cos@ivu.de - IVU Traffic Technologies AG
+ * @author D. Cosic - IVU Traffic Technologies AG
  */
 public abstract class BMPBeanBase extends IVUBeanBase implements EntityBean {
 
-  /** long */
   private static final long serialVersionUID = 8755777932335927827L;
   final static Category LOGGER = Log4J.configure(BMPBeanBase.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(BMPBeanBase.class, Log4J.extractVersion("$Revision: 1.7 $"))); //$NON-NLS-1$
-  }
 
   private static final Factory<? extends DBABase> __dbaFactory = new Factory<DBABase>("DBA", //$NON-NLS-1$
       "DBAClass"); //$NON-NLS-1$
@@ -389,8 +385,10 @@ public abstract class BMPBeanBase extends IVUBeanBase implements EntityBean {
         }
         return modelObj;
       } else {
-        throw new NoSuchEntityException(Messages
-            .bind(MessageKeys.Error_0_MitDerPK_1_KonnteNichtGefundenWerden, modelClass, pkObj));
+        throw new NoSuchEntityException(
+            Messages.bind(MessageKeys.Error_0_MitDerPK_1_KonnteNichtGefundenWerden,
+                modelClass,
+                pkObj));
       }
     } catch (InvocationTargetException ite) {
       Throwable targetException = ite.getTargetException();

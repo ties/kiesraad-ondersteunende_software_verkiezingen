@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Sitzverteilung.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class SitzverteilungDBA extends DBABase {
@@ -66,19 +66,37 @@ public class SitzverteilungDBA extends DBABase {
       if ((idx = columns.get(ID_SITZVERTEILUNG.toUpperCase())) != null) {
          m._id_Sitzverteilung = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_SITZVERTEILUNG)) != null) {
+         m._id_Sitzverteilung = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTE.toUpperCase())) != null) {
          m._id_Liste = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTE)) != null) {
+         m._id_Liste = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(SITZEGESAMTZAHL.toUpperCase())) != null) {
+         m._sitzeGesamtzahl = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(SITZEGESAMTZAHL)) != null) {
          m._sitzeGesamtzahl = r.getInt(idx.intValue());
       }
    }
@@ -94,19 +112,19 @@ public class SitzverteilungDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_LISTE.toUpperCase())) {
+      if (columns.containsKey(ID_LISTE.toUpperCase()) || columns.containsKey(ID_LISTE)) {
          p.setString(idx++, m._id_Liste);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase()) || columns.containsKey(ID_LISTENKOMBINATION)) {
          p.setString(idx++, m._id_Listenkombination);
       }
-      if (columns.containsKey(SITZEGESAMTZAHL.toUpperCase())) {
+      if (columns.containsKey(SITZEGESAMTZAHL.toUpperCase()) || columns.containsKey(SITZEGESAMTZAHL)) {
          p.setInt(idx++, m._sitzeGesamtzahl);
       }
       p.setString(idx++, m._id_Sitzverteilung);
@@ -297,6 +315,23 @@ public class SitzverteilungDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of Sitzverteilung IDs
+     *
+     * @param id_Listenkombination searching condition
+
+     * @return a {@link Collection} of Sitzverteilung IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Listenkombination(String id_Listenkombination)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Sitzverteilung from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Listenkombination});
+   }
+
+   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of Sitzverteilung IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -341,23 +376,6 @@ public class SitzverteilungDBA extends DBABase {
          "select ID_Sitzverteilung from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Gruppe});
-   }
-
-   /**
-     * Method retrieveIDsByID_Listenkombination returns a {@link Collection} of Sitzverteilung IDs
-     *
-     * @param id_Listenkombination searching condition
-
-     * @return a {@link Collection} of Sitzverteilung IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Listenkombination(String id_Listenkombination)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Sitzverteilung from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Listenkombination});
    }
 
    /**

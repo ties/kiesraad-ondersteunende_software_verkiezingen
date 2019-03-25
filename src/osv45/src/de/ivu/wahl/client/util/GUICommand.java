@@ -9,7 +9,7 @@ import java.util.Map;
  * wird in der entsprechenden JSP umgesetzt. im ApplicationBean werden Listen von f�r den
  * Angemeldeten Anwender zul�ssigen Befehlen zusammengestellt und bereitgehalten.
  * 
- * @author klie@ivu.de Copyright (c) 2002-5 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author P. Kliem Copyright (c) 2002-5 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public class GUICommand implements Serializable {

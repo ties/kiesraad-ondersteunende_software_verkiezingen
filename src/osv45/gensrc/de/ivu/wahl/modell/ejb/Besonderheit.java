@@ -19,7 +19,7 @@ import de.ivu.wahl.modell.BesonderheitModel;
   * Interface for the entity Besonderheit as Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface Besonderheit extends EJBLocalObject, BesonderheitModel {
@@ -39,6 +39,21 @@ public interface Besonderheit extends EJBLocalObject, BesonderheitModel {
      */
    BesonderheitModel getDetails();
 
+
+   /**
+     * Navigation to the associated entity of the type {@link Besonderheit}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   Besonderheit getUebergeordneteBesonderheit() throws EJBException;
+
+   /**
+     * Setting of the associated entity of the type {@link Besonderheit}
+     *
+     * @param uebergeordneteBesonderheit the corresponding EJBObject
+     */
+   void setUebergeordneteBesonderheit(Besonderheit uebergeordneteBesonderheit);
 
    /**
      * Navigation to the associated entity of the type {@link Ergebniseingang}
@@ -114,21 +129,6 @@ public interface Besonderheit extends EJBLocalObject, BesonderheitModel {
      * @param personendaten the corresponding EJBObject
      */
    void setPersonendaten(Personendaten personendaten);
-
-   /**
-     * Navigation to the associated entity of the type {@link Besonderheit}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   Besonderheit getUebergeordneteBesonderheit() throws EJBException;
-
-   /**
-     * Setting of the associated entity of the type {@link Besonderheit}
-     *
-     * @param uebergeordneteBesonderheit the corresponding EJBObject
-     */
-   void setUebergeordneteBesonderheit(Besonderheit uebergeordneteBesonderheit);
 
    /**
      * Returns the set of entities of the type {@link Besonderheit}.

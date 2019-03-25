@@ -22,7 +22,7 @@ import de.ivu.wahl.result.i18n.Messages;
  * which lot is drawn. If no decision is available any more, the calculation must be terminated by
  * throwing a {@link DrawingLotsException}.
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public class DrawingLotsCallbackImpl implements DrawingLotsCallback {
   private int _count = 0;

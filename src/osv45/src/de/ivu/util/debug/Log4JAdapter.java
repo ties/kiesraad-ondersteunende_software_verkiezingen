@@ -11,7 +11,7 @@ import java.net.URL;
 import org.apache.log4j.Category;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface Log4JAdapter {
   /**

@@ -3,7 +3,7 @@ package de.ivu.wahl.modell.impl;
 /**
  * Gebiet_GebietDBA
  *
- * @author cos@ivu.de  (c) 2003-4 IVU Traffic Technologies AG
+ * @author D. Cosic  (c) 2003-4 IVU Traffic Technologies AG
  */
 
 import java.sql.Connection;
@@ -17,14 +17,10 @@ import de.ivu.util.debug.Log4J;
 public class Gebiet_GebietDBA extends BasicGebiet_GebietDBA {
   private static final long serialVersionUID = 6084196511194345637L;
   private static final Category LOGGER = Log4J.configure(Gebiet_GebietDBA.class);
-  static {
-    LOGGER
-        .info(Log4J.dumpVersion(Gebiet_GebietDBA.class, Log4J.extractVersion("$Revision: 1.4 $"))); //$NON-NLS-1$
-  }
 
   /**
-   * Füllt die Tabelle Gebiet_Gebiet mit generationsübergreifenden Vorfahre-Nachkomme-Referenzen
-   * anhand der Daten in Tabelle Gebiet. Schon früher eingetragene Daten werden übersprungen (kann
+   * Fï¿½llt die Tabelle Gebiet_Gebiet mit generationsï¿½bergreifenden Vorfahre-Nachkomme-Referenzen
+   * anhand der Daten in Tabelle Gebiet. Schon frï¿½her eingetragene Daten werden ï¿½bersprungen (kann
    * also mehrmalls aufgerufen werden).
    * 
    * @throws SQLException bei einem Datenbankproblem

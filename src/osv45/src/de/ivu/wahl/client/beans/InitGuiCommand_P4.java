@@ -13,7 +13,7 @@ import static de.ivu.wahl.anwender.Rechte.R_ADM_STIMMBEZIRKE_EDIT;
 import static de.ivu.wahl.anwender.Rechte.R_EXPORT;
 import static de.ivu.wahl.anwender.Rechte.R_FREIGABE;
 import static de.ivu.wahl.anwender.Rechte.R_IMPORT;
-import static de.ivu.wahl.anwender.Rechte.R_UPLOAD;
+import static de.ivu.wahl.anwender.Rechte.R_RE_INDEX_DATABASE;
 import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_GEMEINDE;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_STIMMBEZIRK;
@@ -204,6 +204,10 @@ public abstract class InitGuiCommand_P4 extends InitGuiCommand implements Applic
     helper.addCommand(Command.ADM_PROPS,
         "Grundeinstellungen_aendern", "Grundeinstellungen_aendern_titel", "adm_props.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 
+    helper.setRights(R_RE_INDEX_DATABASE);
+    helper.addCommand(Command.ADM_RE_INDEX_DATABASE,
+        "re_index_database", "re_index_database_titel", "adm_re_index_database.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+
     final String titleKey;
     final String nameKey;
     if (isGrOrBcOrGc()) {
@@ -224,14 +228,6 @@ public abstract class InitGuiCommand_P4 extends InitGuiCommand implements Applic
       helper.addCommand(Command.ADM_N10_1_EXPORT,
           "Export_P4_N10_1", "Export_P4_titel_N10_1", "adm_n10_1_export.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
     }
-
-    helper.setRights(R_UPLOAD);
-    helper.addCommand(Command.UPLOAD_RGTEXT,
-        "Upload_rgtext", "Upload_rgtext_titel", "rgtextUpload.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-
-    helper.setRights(R_UPLOAD);
-    helper
-        .addCommand(Command.RESET_RGTEXT, "Reset_rgtext", "Reset_rgtext_titel", "rgtextReset.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**
@@ -310,6 +306,11 @@ public abstract class InitGuiCommand_P4 extends InitGuiCommand implements Applic
             || ElectionCategory.AB.equals(electionCategory)) {
           cmd = helper.addCommand(Command.EML510c,
               "Export_P4_EML510c", "Export_P4_titel_EML510c", "P4_Export_EML510c.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+          cmd.setNurWurzelgebiet(true);
+
+          // OSV-2080: Export OSV4_1 and 510d in P4_HSB for PS1 and AB elections
+          cmd = helper.addCommand(Command.OSV4_1,
+              "Export_P4_OSV4_1", "Export_P4_titel_OSV4_1", "P4_Export_OSV4_1.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
           cmd.setNurWurzelgebiet(true);
         } else {
           cmd = helper.addCommand(Command.O3,

@@ -13,7 +13,7 @@ import de.ivu.wahl.AnwContext;
 /**
  * Interface for result import messages containing voting results from GUI or eml file respectively
  * 
- * @author cos@ivu.de klie@ivu.de - IVU Traffic Technologies AG
+ * @author D. Cosic P. Kliem - IVU Traffic Technologies AG
  */
 
 public interface EingangMsg {

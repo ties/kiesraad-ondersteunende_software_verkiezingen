@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity ListenkombinationZulassung as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase implements EntityBean, ListenkombinationZulassungModel {
@@ -105,6 +105,22 @@ public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase im
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Gruppe ID of the objects to be searched
+     * @return  {@link Collection} of the found ListenkombinationZulassung-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByGruppe(String id_Gruppe) throws IVUFinderException {
+      try {
+         return ListenkombinationZulassungDBA.retrieveIDsByID_Gruppe(id_Gruppe);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Ergebniseingang ID of the objects to be searched
      * @return  {@link Collection} of the found ListenkombinationZulassung-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -128,22 +144,6 @@ public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase im
    public Collection<String> ejbFindAllByListenkombination(String id_Listenkombination) throws IVUFinderException {
       try {
          return ListenkombinationZulassungDBA.retrieveIDsByID_Listenkombination(id_Listenkombination);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Gruppe ID of the objects to be searched
-     * @return  {@link Collection} of the found ListenkombinationZulassung-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByGruppe(String id_Gruppe) throws IVUFinderException {
-      try {
-         return ListenkombinationZulassungDBA.retrieveIDsByID_Gruppe(id_Gruppe);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -230,6 +230,12 @@ public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase im
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_Gruppe()) {
+         _gruppe = null;
+         _relchk_Gruppe = true;
+      } else {
+         _relchk_Gruppe = false;
+      }
       if (null == _details.getID_Ergebniseingang()) {
          _ergebniseingang = null;
          _relchk_Ergebniseingang = true;
@@ -242,19 +248,13 @@ public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase im
       } else {
          _relchk_Listenkombination = false;
       }
-      if (null == _details.getID_Gruppe()) {
-         _gruppe = null;
-         _relchk_Gruppe = true;
-      } else {
-         _relchk_Gruppe = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _gruppe = null;
       _ergebniseingang = null;
       _listenkombination = null;
-      _gruppe = null;
    }
 
    /**
@@ -374,6 +374,51 @@ public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase im
    }
 
    /**
+     * Relation zu Gruppe
+     */
+   protected Gruppe _gruppe;
+
+   /**
+     * Flag for the validity of the relation Gruppe
+     */
+   protected boolean _relchk_Gruppe = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Gruppe}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Gruppe getGruppe() throws EJBException {
+      if (!_relchk_Gruppe) {
+         if (null == _details.getID_Gruppe()) {
+            _gruppe = null;
+         } else if (null == _gruppe || !_gruppe.getPrimaryKey().equals(_details.getID_Gruppe())) {
+            try {
+               GruppeHome home = GruppeHome.HomeFinder.findHome(this);
+               _gruppe = home.findByPrimaryKey(_details.getID_Gruppe());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Gruppe", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Gruppe", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Gruppe = true;
+      }
+      return _gruppe;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Gruppe}
+     *
+     * @param gruppe the corresponding EJBObject
+     */
+   public void setGruppe(Gruppe gruppe) {
+      _gruppe = gruppe;
+      _details.setID_Gruppe(gruppe == null ? null : (String)gruppe.getPrimaryKey());
+   }
+
+   /**
      * Relation zu Ergebniseingang
      */
    protected Ergebniseingang _ergebniseingang;
@@ -461,51 +506,6 @@ public abstract class BasicListenkombinationZulassungBean extends BMPBeanBase im
    public void setListenkombination(Listenkombination listenkombination) {
       _listenkombination = listenkombination;
       _details.setID_Listenkombination(listenkombination == null ? null : (String)listenkombination.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu Gruppe
-     */
-   protected Gruppe _gruppe;
-
-   /**
-     * Flag for the validity of the relation Gruppe
-     */
-   protected boolean _relchk_Gruppe = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Gruppe}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Gruppe getGruppe() throws EJBException {
-      if (!_relchk_Gruppe) {
-         if (null == _details.getID_Gruppe()) {
-            _gruppe = null;
-         } else if (null == _gruppe || !_gruppe.getPrimaryKey().equals(_details.getID_Gruppe())) {
-            try {
-               GruppeHome home = GruppeHome.HomeFinder.findHome(this);
-               _gruppe = home.findByPrimaryKey(_details.getID_Gruppe());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Gruppe", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Gruppe", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Gruppe = true;
-      }
-      return _gruppe;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Gruppe}
-     *
-     * @param gruppe the corresponding EJBObject
-     */
-   public void setGruppe(Gruppe gruppe) {
-      _gruppe = gruppe;
-      _details.setID_Gruppe(gruppe == null ? null : (String)gruppe.getPrimaryKey());
    }
 
    /**

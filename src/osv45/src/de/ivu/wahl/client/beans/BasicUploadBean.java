@@ -33,11 +33,12 @@ import de.ivu.wahl.dataimport.IImportEML;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.util.EMLFilenameCheck;
+import de.ivu.wahl.wus.reportgen.RgConstants;
 
 /**
  * Gemeinsame Funktionen aller Beans, die Upload-Funktionalität bereit stellen
  * 
- * @author cos@ivu.de - IVU Traffic Technologies AG
+ * @author D. Cosic - IVU Traffic Technologies AG
  */
 public abstract class BasicUploadBean implements Executer, Serializable {
   private static final long serialVersionUID = 3786965277688743366L;
@@ -51,7 +52,6 @@ public abstract class BasicUploadBean implements Executer, Serializable {
 
   protected CommandMap _commandMap = new CommandMapImpl();
 
-  
   PropertyHandling _propHandling = null;
 
   /**
@@ -119,6 +119,10 @@ public abstract class BasicUploadBean implements Executer, Serializable {
     File dpath = getPropertyHandling().getFileProperty(PROP_UPLOADDIR);
     String unterverzeichnis = EMLFilenameCheck.getUnterverzeichnis(EMLFilenameCheck
         .reduceFilenameFromSlashAsPrefix(fileName));
+
+    if (RgConstants.PATH_FRAGMENT_OTHERS.equals(unterverzeichnis)) {
+      return;
+    }
 
     File parentFile = new File(dpath, unterverzeichnis);
     File realFile = new File(parentFile, fileName);

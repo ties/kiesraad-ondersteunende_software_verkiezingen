@@ -8,7 +8,7 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
-<jsp:useBean id="uplBean" scope="session" class="de.ivu.wahl.client.beans.UploadBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%  
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "dateiExpVerzeichnis"; //$NON-NLS-1$

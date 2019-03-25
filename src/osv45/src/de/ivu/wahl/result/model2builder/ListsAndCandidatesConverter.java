@@ -7,7 +7,6 @@
 package de.ivu.wahl.result.model2builder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -24,10 +23,8 @@ import de.ivu.wahl.modell.GruppeComposite.Listenkandidat;
 import de.ivu.wahl.modell.Wahldaten;
 import de.ivu.wahl.result.Candidate;
 import de.ivu.wahl.result.CandidateList;
-import de.ivu.wahl.result.MultimapUtil;
 import de.ivu.wahl.result.Util;
 import de.ivu.wahl.result.builder.CandidatesBuilder;
-import de.ivu.wahl.result.determination.P3List;
 import de.ivu.wahl.result.i18n.MessageKeys;
 import de.ivu.wahl.result.i18n.Messages;
 import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
@@ -35,14 +32,13 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
 /**
  * Helper to the ModelToBuilderConversion that performs the conversion of lists and candidates.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 class ListsAndCandidatesConverter {
   private static final Logger LOGGER = Logger.getLogger(ModelToBuilderConversion.class);
 
   private final CandidatesBuilder candidatesBuilder;
   private final Set<Candidate> deceasedCandidates = new HashSet<Candidate>();
-  private final Map<String, Collection<P3List>> combinations = new HashMap<String, Collection<P3List>>();
 
   /**
    * Constructor
@@ -90,20 +86,10 @@ class ListsAndCandidatesConverter {
         votesMap.put(candidateList, votes);
       }
 
-      // store information about combined lists
-      P3List p3List = candidatesBuilder.finishP3List();
-      String combinationId = gruppe.getId_Listenkombination();
-      if (combinationId != null) {
-        MultimapUtil.addToCollection(combinations, combinationId, p3List);
-      }
+      candidatesBuilder.finishP3List();
     }
 
     setDeceasedCandidates();
-    if (ElectionSubcategory.EK.equals(electionSubcategory) && !combinations.isEmpty()) {
-      throw new UnsupportedOperationException(
-          Messages.getString(de.ivu.wahl.i18n.MessageKeys.Error_FoundCombinedListAtEKElection));
-    }
-    createCombinedLists();
 
     return votesMap;
   }
@@ -182,21 +168,10 @@ class ListsAndCandidatesConverter {
    */
   private void setDeceasedCandidates() {
     if (!deceasedCandidates.isEmpty()) {
-      LOGGER.info(Messages.applyPattern("Deceased candidate(s): {0}.",
+      LOGGER.info(Messages.applyPattern("Deceased candidate(s): {0}.", //$NON-NLS-1$
           Util.displayNamedObjects(deceasedCandidates)));
     }
     candidatesBuilder.setDeceasedCandidates(deceasedCandidates);
-  }
-
-  /**
-   * Inform the candidatesBuilder about the combined lists
-   */
-  private void createCombinedLists() {
-    for (String combinationId : combinations.keySet()) {
-      Collection<P3List> p3Lists = combinations.get(combinationId);
-      CombinedListKey combinedListExternalKey = new CombinedListKey(combinationId);
-      candidatesBuilder.combineLists(combinedListExternalKey, p3Lists);
-    }
   }
 
 }

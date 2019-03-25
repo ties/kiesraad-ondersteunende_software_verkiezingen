@@ -13,7 +13,7 @@ package de.ivu.wahl.result.result;
  * For each value of this enum there must be a text resource in
  * /osv_alg/src/de/ivu/wahl/result/i18n/messages.properties
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum StepType {
   FIRST_ASSIGNMENT(1),

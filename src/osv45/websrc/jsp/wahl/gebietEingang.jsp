@@ -2,7 +2,7 @@
  *******************************************************************************
  * Eingabe des Ergebnisses einer Erfassungseinheit
  *
- * author:  cos@ivu.de, IVU Traffic Technologies AG
+ * author:  D. Cosic, IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ page pageEncoding="ISO-8859-1" contentType="text/html; charset=UTF-8"%>
@@ -10,24 +10,24 @@
 <%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.anwender.Rechte"%>
-<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
-<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <%@ page import="de.ivu.wahl.eingang.GUIEingangMsg " %>
-<%@ page import="de.ivu.wahl.modell.GebietInfo" %>
 <%@ page import="de.ivu.wahl.client.beans.*" %>
 <%@ page import="de.ivu.wahl.client.util.*"%>
-<%@ page import="org.apache.log4j.Logger"%>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
+<%@ page import="de.ivu.wahl.modell.GebietInfo" %>
 <%@ page import="de.ivu.wahl.modell.ErgebniseingangKonstanten"%>
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
 <%@ page import="de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="java.lang.StringBuffer"%>
 <%@ page import="java.util.HashSet"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.Set"%>
+<%@ page import="org.apache.log4j.Logger"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
+<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
@@ -58,6 +58,7 @@
 <c:set target="${map}" property="gebietInfo" value="${gebietInfo}"/>
 <c:set var="gebietName" value="<%= ClientHelper.forHTML(((GebietInfo)map.get("gebietInfo")).getName()) %>" scope="page"/>
 
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ergEingabe"; //$NON-NLS-1$
@@ -89,6 +90,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
    if (systemInfo.getWahlEbene() == GebietModel.EBENE_PSB) {
       isEbenePSB = true;
    }
+   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
    
    Set<String> errorList = new HashSet<String>();
 %>
@@ -103,11 +105,16 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
 <c:set var="erlaubenUrl" value="<%= erlaubenUrl %>" scope="page"/>
 <c:set var="isEbenePSB" value="<%= isEbenePSB %>" scope="page"/>
 <c:set var="lastStatus" value="${guiEingangMsg.status}" scope="page"/>
-<c:set var="lastStatus" value="${guiEingangMsg.status}" scope="page"/>
 <c:set var="isDoubleInput" value="${not systemInfo.singleInput}" scope="page"/>
 <c:set var="isFileImportNeededAtFirst" value="${systemInfo.fileInputWithManualConfirmation and guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_1}" scope="page"/>
 <c:set var="keyForViewlock" value="${appBean.anwContext.keyForViewlock}" scope="page"/>
 <c:set var="isLockedByAnotherUser" value="${ appBean.logLocking && !(appBean.INPUT_MAP[gebietInfo.idGebiet] eq keyForViewlock) }" scope="page"/>
+<c:set var="hatRechtFuerErfassung" value="<%= hatRechtFuerErfassung %>" scope="page"/>
+
+<c:set var="ersterErfasser" value="${gebietInfo.ersterErfasser}" scope="page"/>
+<c:set var="aktuellerErfasser" value="${appBean.anwContext.anmeldename}" scope="page"/>
+<c:set var="isZweiterfassung" value="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2}" scope="page"/>
+<c:set var="isZweiterErfasserGleichErsterErfasser" value="${isZweiterfassung && ersterErfasser == aktuellerErfasser}" scope="page"/>
 
 <c:set var="neueingabe" value="${(not empty infoText || not empty confirmationText) && isDoubleInput}" scope="page"/>
 
@@ -151,8 +158,8 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
     /*]]>*/
       </style>
       <script>
-            var contextPath = "<%=request.getContextPath()%>";
-        </script>
+        var contextPath = "<%=request.getContextPath()%>";
+      </script>
       <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
       <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
       <script language="JavaScript" type="text/javascript"><!--
@@ -294,7 +301,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
               <%-- Gebiet gesperrt für diesen Anwender --%>
               <%-- Wenn Eingabesperre entsprechende Auskunft --%>
               <%-- Input by hand is locked --%>
-              <c:when test="${(!gebietInfo.guiEingabeErlaubt and systemInfo.inputmodusComplete) or wahlInfo.freigegeben or appBean.inputDisabled or isLockedByAnotherUser or isFileImportNeededAtFirst}">
+              <c:when test="${(!gebietInfo.guiEingabeErlaubt and systemInfo.inputmodusComplete) or wahlInfo.freigegeben or appBean.inputDisabled or isLockedByAnotherUser or isFileImportNeededAtFirst or isZweiterErfasserGleichErsterErfasser or !hatRechtFuerErfassung}">
                     <%@include file="/jsp/fragments/print_and_help_div.jspf"%>
                     <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
                         &nbsp;
@@ -345,11 +352,16 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                 </c:when>
                                                                 <c:when test="${isLockedByAnotherUser}">
                                                                   <ivu:int key="EingabeWahlgebietNichtMoeglichDa"></ivu:int><br />
-                                                                  <%-- Grund kann nur nachwahl sein --%>
                                                                   <ivu:int key="GebietWirdVonAnderemAnwenderBearbeitet"/>
                                                                 </c:when>
                                                                 <c:when test="${isFileImportNeededAtFirst}">
                                                                   <ivu:int key="GebietBenoetigtZunaechstErgebnisimport"/>
+                                                                </c:when>
+                                                                <c:when test="${isZweiterErfasserGleichErsterErfasser}">
+                                                                  <ivu:int key="ZweiterErfasserGleichErsterErfasser"/>
+                                                                </c:when>
+                                                                <c:when test="${!hatRechtFuerErfassung}">
+                                                                  <ivu:int key="KeinRechtZurErfassung"/>
                                                                 </c:when>
                                                              </c:choose>
                                                              <br />
@@ -608,11 +620,11 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                             <c:if test="${isVisible and isRadioButtons}">
                                                              <tr valign="top" style="height: 18px;">
                                                                 <td><input type="radio" name="<%= ApplicationBeanKonstanten.PREFIX + ErgebniseingangKonstanten.UNTERSCHIEDE_FORM_ELEMENT_NAME %>" value="0" ${empty unterschiedeVorhanden or not unterschiedeVorhanden ? "checked=\"checked\" " : ""} onclick="return collapseSystemGroups()" /></td>
-                                                                <td colspan="${isDoubleInput ? '7' : '6'}"><span><ivu:int key="no"/></span></td>
+                                                                <td colspan="${isDoubleInput ? '7' : '6'}"><span><ivu:int key="yes"/></span></td>
                                                              </tr>
                                                              <tr valign="top" style="height: 18px;">
                                                                 <td><input type="radio" name="<%= ApplicationBeanKonstanten.PREFIX + ErgebniseingangKonstanten.UNTERSCHIEDE_FORM_ELEMENT_NAME %>" value="1" ${not empty unterschiedeVorhanden and unterschiedeVorhanden ? "checked=\"checked\" " : ""} onclick="return expandSystemGroups()" /></td>
-                                                                <td colspan="${isDoubleInput ? '7' : '6'}"><span><ivu:int key="yes"/></span></td>
+                                                                <td colspan="${isDoubleInput ? '7' : '6'}"><span><ivu:int key="no"/></span></td>
                                                              </tr>
                                                             </c:if>
                                                             <%-- Fehlerbox Gruppe --%>
@@ -621,7 +633,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                <c:set var="isCollapsibleGroupErrorExists" value="${isCollapsibleGroupErrorExists or isCollapsible}" />
                                                                <tr id="row${position}_0_error">
                                                                  <td><div class="spacer"></div></td>
-                                                                 <td align="right" colspan="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2 ? '7' : '6'}">
+                                                                 <td align="right" colspan="${isZweiterfassung ? '7' : '6'}">
                                                                    <table border="0" cellspacing="0" cellpadding="0">
                                                                      <tr>
                                                                        <td>
@@ -690,7 +702,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                             <c:if test="${not (position > 0 and wahlInfo.referendum)}">
                                                              <c:choose>
                                                                 <c:when test="${empty farbe}">
-                                                                    <c:if test="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2}">
+                                                                    <c:if test="${isZweiterfassung}">
                                                                        <td class="${classG}" align="center" nowrap="nowrap">
                                                                         <c:choose>
                                                                             <c:when test="${!systemInfo.inputmodusComplete or position <= 0}">
@@ -718,7 +730,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                    </td>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                     <c:if test="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2}">
+                                                                     <c:if test="${isZweiterfassung}">
                                                                        <td class="${classG}" bgcolor='${farbe}' align="center" nowrap="nowrap">
                                                                         <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
                                                                         <input class="ergdisable" type="text" size="10" disabled="disabled" />
@@ -768,12 +780,19 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                 <c:if test="${wahlInfo.referendum}">
                                                                     <c:set var="kposition" value="${position}" scope="page"/>
                                                                     <c:set var="inputId" value="id_${position}_0" scope="page"/>
-                                                                    <c:set var="kpositionForDisplay" value="${position}" scope="page"/>
+                                                                    <c:set var="kpositionForDisplay1" value="${position}" scope="page"/>
+                                                                    <c:if test="${kname == 'Voor' && isEbenePSB}">
+                                                                        <c:set var="kpositionForDisplay2" value="E" scope="page"/>
+                                                                    </c:if>
+                                                                    <c:if test="${kname == 'Tegen' && isEbenePSB}">
+                                                                        <c:set var="kpositionForDisplay2" value="F" scope="page"/>
+                                                                    </c:if>
                                                                 </c:if>
                                                                 <c:if test="${!wahlInfo.referendum}">
                                                                     <c:set var="kposition" value="${position}_${kandidat.listenposition}" scope="page"/>
                                                                     <c:set var="inputId" value="id_${kposition}" scope="page"/>
-                                                                    <c:set var="kpositionForDisplay" value="${position}.${kandidat.listenposition}" scope="page"/>
+                                                                    <c:set var="kpositionForDisplay1" value="${position}.${kandidat.listenposition}" scope="page"/>
+                                                                    <c:set var="kpositionForDisplay2" value="${position}.${kandidat.listenposition}" scope="page"/>
                                                                 </c:if>
                                                                 <c:set var="kstimmen" value="${gruppenergebnis.daten[kandidat.listenposition]}" scope="page"/>
                                                                 <c:set var="kfehler" value="${gruppenergebnis.kandidatenfehlermap[kandidat.listenposition]}" scope="page"/>
@@ -788,7 +807,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                     <% errorList.add((String) map.get("kfehler")); %>
                                                                     <tr id="row${kposition}_error">
                                                                        <td><div class="spacer"></div></td>
-                                                                      <td align="right" colspan="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2 ? '7' : '6'}">
+                                                                      <td align="right" colspan="${isZweiterfassung ? '7' : '6'}">
                                                                       <table border="0" cellspacing="0" cellpadding="0">
                                                                         <tr>
                                                                             <td class="${classK}">
@@ -807,12 +826,12 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                 </c:if>
                                                                  <tr id="row${kposition}">
                                                                     <td width="3%">&nbsp;</td>
-                                                                    <td class="${classK}" width="3%"><b><small>${kpositionForDisplay}</small></b></td>
+                                                                    <td class="${classK}" width="3%"><b><small>${kpositionForDisplay1}</small></b></td>
                                                                     <td class="${classK}"><small><b>${kname}</b></small></td>
                                                 
                                                                      <c:choose>
                                                                         <c:when test="${empty kfarbe}">
-                                                                             <c:if test="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2}">
+                                                                             <c:if test="${isZweiterfassung}">
                                                                                 <td class="${classK}" align="center" nowrap="nowrap">
                                                                                     <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
                                                                                     <input class="ergdisable" type="text" size="10" disabled="disabled" />
@@ -831,7 +850,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                             </td>
                                                                         </c:when>
                                                                         <c:otherwise>
-                                                                             <c:if test="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2}">
+                                                                             <c:if test="${isZweiterfassung}">
                                                                                <td bgcolor='${farbe}' align="center" nowrap="nowrap">
                                                                                     <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
                                                                                     <input class="ergdisable" type="text" size="10" disabled="disabled" />
@@ -850,7 +869,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                            </td>
                                                                         </c:otherwise>
                                                                      </c:choose>
-                                                                    <td class="${classK}" colspan="3"><small><b>${kpositionForDisplay}</b></small></td>
+                                                                    <td class="${classK}" colspan="3"><small><b>${kpositionForDisplay2}</b></small></td>
                                                                  </tr>
                                                               </c:forEach>
                                                                 <%-- Bei kompletter Eingabe der Stimmen (Kandidaten und Parteien) , erfolg die Eingebe der Parteistimmen erst nach den Kandidaten --%>
@@ -858,7 +877,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                     <c:if test="${not empty gruppefehler}">
                                                                     <tr id="row${position}_${numberofcandidates + 1}_error">
                                                                        <td><div class="spacer"></div></td>
-                                                                       <td align="right" colspan="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2 ? '7' : '6'}">
+                                                                       <td align="right" colspan="${isZweiterfassung ? '7' : '6'}">
                                                                           <table border="0" cellspacing="0" cellpadding="0">
                                                                               <tr>
                                                                                <td>
@@ -885,7 +904,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                     </c:if>
                                                                      <c:choose>
                                                                         <c:when test="${empty farbe}">
-                                                                            <c:if test="${isDoubleInput && guiEingangMsg.source == ergebniseingangModelKonstanten.SOURCE_GUI_2}">
+                                                                            <c:if test="${isZweiterfassung}">
                                                                                 <td align="center" nowrap="nowrap">
                                                                                     <img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="2" height="18" align="top" />
                                                                                     <input class="ergdisable" type="text" size="10" disabled="disabled" />

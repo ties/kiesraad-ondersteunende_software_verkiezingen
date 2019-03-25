@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Konflikt as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicKonfliktBean extends BMPBeanBase implements EntityBean, KonfliktModel {
@@ -103,13 +103,13 @@ public abstract class BasicKonfliktBean extends BMPBeanBase implements EntityBea
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_Ergebniseingang ID of the objects to be searched
+     * @param id_LosAlternative ID of the objects to be searched
      * @return  {@link Collection} of the found Konflikt-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
+   public Collection<String> ejbFindAllByLosAlternative(String id_LosAlternative) throws IVUFinderException {
       try {
-         return KonfliktDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
+         return KonfliktDBA.retrieveIDsByID_LosAlternative(id_LosAlternative);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -119,13 +119,13 @@ public abstract class BasicKonfliktBean extends BMPBeanBase implements EntityBea
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
-     * @param id_LosAlternative ID of the objects to be searched
+     * @param id_Ergebniseingang ID of the objects to be searched
      * @return  {@link Collection} of the found Konflikt-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
      */
-   public Collection<String> ejbFindAllByLosAlternative(String id_LosAlternative) throws IVUFinderException {
+   public Collection<String> ejbFindAllByErgebniseingang(String id_Ergebniseingang) throws IVUFinderException {
       try {
-         return KonfliktDBA.retrieveIDsByID_LosAlternative(id_LosAlternative);
+         return KonfliktDBA.retrieveIDsByID_Ergebniseingang(id_Ergebniseingang);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -226,24 +226,24 @@ public abstract class BasicKonfliktBean extends BMPBeanBase implements EntityBea
 
    @Override
    protected void checkRelations() {
-      if (null == _details.getID_Ergebniseingang()) {
-         _ergebniseingang = null;
-         _relchk_Ergebniseingang = true;
-      } else {
-         _relchk_Ergebniseingang = false;
-      }
       if (null == _details.getID_LosAlternative()) {
          _losAlternative = null;
          _relchk_LosAlternative = true;
       } else {
          _relchk_LosAlternative = false;
       }
+      if (null == _details.getID_Ergebniseingang()) {
+         _ergebniseingang = null;
+         _relchk_Ergebniseingang = true;
+      } else {
+         _relchk_Ergebniseingang = false;
+      }
    }
 
    @Override
    protected void resetRelations() {
-      _ergebniseingang = null;
       _losAlternative = null;
+      _ergebniseingang = null;
    }
 
    /**
@@ -354,51 +354,6 @@ public abstract class BasicKonfliktBean extends BMPBeanBase implements EntityBea
    }
 
    /**
-     * Relation zu Ergebniseingang
-     */
-   protected Ergebniseingang _ergebniseingang;
-
-   /**
-     * Flag for the validity of the relation Ergebniseingang
-     */
-   protected boolean _relchk_Ergebniseingang = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Ergebniseingang}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Ergebniseingang getErgebniseingang() throws EJBException {
-      if (!_relchk_Ergebniseingang) {
-         if (null == _details.getID_Ergebniseingang()) {
-            _ergebniseingang = null;
-         } else if (null == _ergebniseingang || !_ergebniseingang.getPrimaryKey().equals(_details.getID_Ergebniseingang())) {
-            try {
-               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
-               _ergebniseingang = home.findByPrimaryKey(_details.getID_Ergebniseingang());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Ergebniseingang", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Ergebniseingang = true;
-      }
-      return _ergebniseingang;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Ergebniseingang}
-     *
-     * @param ergebniseingang the corresponding EJBObject
-     */
-   public void setErgebniseingang(Ergebniseingang ergebniseingang) {
-      _ergebniseingang = ergebniseingang;
-      _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
-   }
-
-   /**
      * Relation zu LosAlternative
      */
    protected Alternative _losAlternative;
@@ -441,6 +396,51 @@ public abstract class BasicKonfliktBean extends BMPBeanBase implements EntityBea
    public void setLosAlternative(Alternative losAlternative) {
       _losAlternative = losAlternative;
       _details.setID_LosAlternative(losAlternative == null ? null : (String)losAlternative.getPrimaryKey());
+   }
+
+   /**
+     * Relation zu Ergebniseingang
+     */
+   protected Ergebniseingang _ergebniseingang;
+
+   /**
+     * Flag for the validity of the relation Ergebniseingang
+     */
+   protected boolean _relchk_Ergebniseingang = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Ergebniseingang}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Ergebniseingang getErgebniseingang() throws EJBException {
+      if (!_relchk_Ergebniseingang) {
+         if (null == _details.getID_Ergebniseingang()) {
+            _ergebniseingang = null;
+         } else if (null == _ergebniseingang || !_ergebniseingang.getPrimaryKey().equals(_details.getID_Ergebniseingang())) {
+            try {
+               ErgebniseingangHome home = ErgebniseingangHome.HomeFinder.findHome(this);
+               _ergebniseingang = home.findByPrimaryKey(_details.getID_Ergebniseingang());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Ergebniseingang", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Ergebniseingang", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Ergebniseingang = true;
+      }
+      return _ergebniseingang;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Ergebniseingang}
+     *
+     * @param ergebniseingang the corresponding EJBObject
+     */
+   public void setErgebniseingang(Ergebniseingang ergebniseingang) {
+      _ergebniseingang = ergebniseingang;
+      _details.setID_Ergebniseingang(ergebniseingang == null ? null : (String)ergebniseingang.getPrimaryKey());
    }
 
    /**

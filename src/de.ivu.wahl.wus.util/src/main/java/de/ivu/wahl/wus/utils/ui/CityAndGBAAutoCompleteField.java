@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Control;
  * This class adds support for GBA characters for a control. GBA characters are shown as proposals.
  * It works similar to the JFace AutoCompleteField
  * 
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class CityAndGBAAutoCompleteField {
 

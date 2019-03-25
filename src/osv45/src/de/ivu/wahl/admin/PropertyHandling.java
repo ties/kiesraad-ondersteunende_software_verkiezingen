@@ -10,10 +10,12 @@ import java.io.File;
 
 import javax.ejb.EJBException;
 
+import de.ivu.wahl.client.beans.PropertyProvider;
+
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
-public interface PropertyHandling {
+public interface PropertyHandling extends PropertyProvider {
 
   /**
    * Lesen einer bezeichneten Property

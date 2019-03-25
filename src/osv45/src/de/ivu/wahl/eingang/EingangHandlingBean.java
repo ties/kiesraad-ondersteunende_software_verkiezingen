@@ -37,6 +37,7 @@ import javax.ejb.EJBException;
 import javax.ejb.FinderException;
 import javax.ejb.Local;
 import javax.ejb.ObjectNotFoundException;
+import javax.ejb.RemoveException;
 import javax.ejb.Stateless;
 
 import org.apache.log4j.Category;
@@ -49,6 +50,7 @@ import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.WahlStatelessSessionBeanBase;
 import de.ivu.wahl.admin.StateHandling;
+import de.ivu.wahl.client.beans.KeyForViewlockTruncator;
 import de.ivu.wahl.eingang.GUIEingangMsg.Gruppendaten;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
@@ -58,6 +60,7 @@ import de.ivu.wahl.modell.Gebietsart;
 import de.ivu.wahl.modell.GebietsstatusModel;
 import de.ivu.wahl.modell.GruppeKonstanten;
 import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
+import de.ivu.wahl.modell.Plus;
 import de.ivu.wahl.modell.SchwellwertModel;
 import de.ivu.wahl.modell.StimmergebnisModel;
 import de.ivu.wahl.modell.WahlModel;
@@ -84,7 +87,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
  * SessionBean mit den wesentlichen Verarbeitungsfunktionen bei der Eingabe der Erfassungseinheiten
  * und administrativer Nachrichten �ber Dialog oder per Datei.
  * 
- * @author klie@ivu.de cos@ivu.de - IVU Traffic Technologies AG
+ * @author P. Kliem D. Cosic - IVU Traffic Technologies AG
  */
 @Stateless
 @Local(EingangHandling.class)
@@ -205,7 +208,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
               .bind(MessageKeys.Logger_UnableToRemoveLockForRegionWithId_0_ForUser_1_StillLockedBy_2,
                   id_Gebiet,
                   anwContext.getAnmeldename(),
-                  keyForViewlock);
+                  KeyForViewlockTruncator.truncate(keyForViewlock));
           logLocking(anwContext, message);
         }
       }
@@ -248,7 +251,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
             .bind(MessageKeys.Logger_UnableToLockRegionWithId_0_ForUser_1_StillLockedBy_2,
                 id_Gebiet,
                 anwContext.getAnmeldename(),
-                keyForViewlock);
+                KeyForViewlockTruncator.truncate(keyForViewlock));
         logLocking(anwContext, message);
       }
     }
@@ -631,6 +634,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
    * @throws EJBException general problem
    */
   private void fillMsgMetaData(GUIEingangMsg msg, Gebiet region, int source) throws EJBException {
+    boolean isReferendum = getWahlInfo().isReferendum();
+
     // über Gruppen des Gebietes iterieren
     Collection<GruppeGebietsspezifisch> gruppeGebietsspezifischCol = region
         .getGruppeGebietsspezifischCol();
@@ -670,7 +675,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
             gd.addKandidat(kandidatenposition,
                 (personendaten.getPraefix() != null ? personendaten.getPraefix() + " " : "") + personendaten.getNachname() //$NON-NLS-1$ //$NON-NLS-2$
                     + (personendaten.getInitialen() != null ? (", " + personendaten.getInitialen()) //$NON-NLS-1$
-                        : ""), getWahlInfo().isReferendum() ? getAdminHandling().getProperty(Konstanten.KEY_REFERENDUM_ANSW + gruppenposition) : null); //$NON-NLS-1$
+                        : ""), isReferendum ? getAdminHandling().getProperty(Konstanten.KEY_REFERENDUM_ANSW + gruppenposition) : null); //$NON-NLS-1$
             msg.setStimmen(gruppenposition, kandidatenposition, 0);
           }
         }
@@ -1483,7 +1488,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
 
   private boolean isFinalResult(EingangMsg msg) {
     boolean isFinalInput = msg.getSource() == ErgebniseingangKonstanten.SOURCE_FILE_IMPORT;
-    isFinalInput |= SystemInfo.getSystemInfo().isSingleInput()
+    isFinalInput |= SystemInfo.getSystemInfo().getInputMode().isSingleInput()
         || msg.getSource() == ErgebniseingangKonstanten.SOURCE_GUI_2;
     return msg.getStatus() == ErgebniseingangKonstanten.STATE_OK && isFinalInput;
   }
@@ -1545,7 +1550,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
             .getPosition()) {
           int val = agStimmzuordnung.getGruppeGebietsspezifisch().getGebiet().getWahlberechtigte();
           if (val >= 0) {
-            supRegionResult.setStimmen(val);
+            boolean throwException = false;
+            supRegionResult.setStimmen(Plus.truncate(val, throwException));
           }
         }
         supRegionResults.put(agStimmzuordnung, supRegionResult);
@@ -1558,12 +1564,13 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
               .getPosition()) {
         int val = agStimmzuordnung.getGruppeGebietsspezifisch().getGebiet().getWahlberechtigte();
         if (val >= 0) {
-          supRegionResult.setStimmen(val);
+          boolean throwException = false;
+          supRegionResult.setStimmen(Plus.truncate(val, throwException));
         }
 
       } else {
-        supRegionResult.setStimmen(supRegionResult.getStimmen() + delta);
-
+        boolean throwException = false;
+        supRegionResult.setStimmen(Plus.plus(supRegionResult.getStimmen(), delta, throwException));
       }
     }
   }
@@ -1665,7 +1672,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
         if (gruppeGebietsspezifisch.getPosition() == GUELTIGE.getPosition()
             || gruppeGebietsspezifisch.getPosition() == UNGUELTIGE.getPosition()
             || gruppeGebietsspezifisch.getPosition() == LEER.getPosition()) {
-          anzahlWaehler += stimmergebnis.getStimmen();
+          boolean throwException = false;
+          anzahlWaehler = Plus.plus(anzahlWaehler, stimmergebnis.getStimmen(), throwException);
         }
       }
       // Read candidate results if there are any
@@ -1723,7 +1731,8 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
         model.setID_Gebiet(gg.getID_Gebiet());
         model.setStimmart(stimmart);
         model.setWahlergebnisart(msg.getWahlergebnisart());
-        model.setStimmen(stimmen);
+        boolean throwException = false;
+        model.setStimmen(Plus.truncate(stimmen, throwException));
         stimmergebnis.setDetails(model);
         stimmergebnis.setGruppeGebietsspezifisch(gg);
         stimmergebnis.setListenkandidatur(listenkandidatur);
@@ -1815,7 +1824,7 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
    * ist <code>Comparable</code> und implementiert korrekt <code>equals()</code> und
    * <code>hashCode()</code>.
    * 
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   protected static class Stimmzuordnung implements Comparable<Stimmzuordnung> {
 

@@ -9,10 +9,10 @@ import de.ivu.wahl.auswertung.erg.Ergebnis;
 import de.ivu.wahl.modell.GebietModel;
 
 /**
- * Objekt mit Informationen für Kandidaten, welche sowohl Direktkandidaten als auch Listenkandidaten
- * sein können.
+ * Objekt mit Informationen fï¿½r Kandidaten, welche sowohl Direktkandidaten als auch Listenkandidaten
+ * sein kï¿½nnen.
  * 
- * @author apa@ivu.de
+ * @author apa
  * @autor tst
  */
 public class KandidatenListe extends Ergebnis {

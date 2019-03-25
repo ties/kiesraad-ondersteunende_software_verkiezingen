@@ -10,7 +10,7 @@ import java.util.List;
 import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 
 /**
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReportNameComponentsP5CSV extends AbstractReportNameComponents {
 

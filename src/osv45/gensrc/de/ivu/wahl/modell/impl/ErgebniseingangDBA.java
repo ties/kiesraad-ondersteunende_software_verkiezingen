@@ -28,7 +28,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Ergebniseingang.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ErgebniseingangDBA extends DBABase {
@@ -77,34 +77,67 @@ public class ErgebniseingangDBA extends DBABase {
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERFASSUNGSEINHEIT.toUpperCase())) != null) {
+         m._id_Erfassungseinheit = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERFASSUNGSEINHEIT)) != null) {
          m._id_Erfassungseinheit = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_WAHL.toUpperCase())) != null) {
          m._id_Wahl = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_WAHL)) != null) {
+         m._id_Wahl = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ANWENDERNAME.toUpperCase())) != null) {
+         m._anwenderName = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ANWENDERNAME)) != null) {
          m._anwenderName = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ZEITSTEMPEL.toUpperCase())) != null) {
          m._zeitstempel = r.getTimestamp(idx.intValue());
       }
+      if ((idx = columns.get(ZEITSTEMPEL)) != null) {
+         m._zeitstempel = r.getTimestamp(idx.intValue());
+      }
       if ((idx = columns.get(HERKUNFT.toUpperCase())) != null) {
+         m._herkunft = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(HERKUNFT)) != null) {
          m._herkunft = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(WAHLERGEBNISART.toUpperCase())) != null) {
          m._wahlergebnisart = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(WAHLERGEBNISART)) != null) {
+         m._wahlergebnisart = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(UNTERSCHIEDEVORHANDEN.toUpperCase())) != null) {
+         m._unterschiedeVorhanden = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(UNTERSCHIEDEVORHANDEN)) != null) {
          m._unterschiedeVorhanden = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(STATUS.toUpperCase())) != null) {
          m._status = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(STATUS)) != null) {
+         m._status = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(ERGEBNISHASH.toUpperCase())) != null) {
          m._ergebnisHash = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ERGEBNISHASH)) != null) {
+         m._ergebnisHash = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(FEHLERMELDUNG.toUpperCase())) != null) {
+         m._fehlermeldung = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(FEHLERMELDUNG)) != null) {
          m._fehlermeldung = r.getString(idx.intValue());
       }
    }
@@ -120,34 +153,34 @@ public class ErgebniseingangDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERFASSUNGSEINHEIT.toUpperCase())) {
+      if (columns.containsKey(ID_ERFASSUNGSEINHEIT.toUpperCase()) || columns.containsKey(ID_ERFASSUNGSEINHEIT)) {
          p.setString(idx++, m._id_Erfassungseinheit);
       }
-      if (columns.containsKey(ID_WAHL.toUpperCase())) {
+      if (columns.containsKey(ID_WAHL.toUpperCase()) || columns.containsKey(ID_WAHL)) {
          p.setString(idx++, m._id_Wahl);
       }
-      if (columns.containsKey(ANWENDERNAME.toUpperCase())) {
+      if (columns.containsKey(ANWENDERNAME.toUpperCase()) || columns.containsKey(ANWENDERNAME)) {
          p.setString(idx++, m._anwenderName);
       }
-      if (columns.containsKey(ZEITSTEMPEL.toUpperCase())) {
+      if (columns.containsKey(ZEITSTEMPEL.toUpperCase()) || columns.containsKey(ZEITSTEMPEL)) {
          p.setTimestamp(idx++, m._zeitstempel);
       }
-      if (columns.containsKey(HERKUNFT.toUpperCase())) {
+      if (columns.containsKey(HERKUNFT.toUpperCase()) || columns.containsKey(HERKUNFT)) {
          p.setInt(idx++, m._herkunft);
       }
-      if (columns.containsKey(WAHLERGEBNISART.toUpperCase())) {
+      if (columns.containsKey(WAHLERGEBNISART.toUpperCase()) || columns.containsKey(WAHLERGEBNISART)) {
          p.setInt(idx++, m._wahlergebnisart);
       }
-      if (columns.containsKey(UNTERSCHIEDEVORHANDEN.toUpperCase())) {
+      if (columns.containsKey(UNTERSCHIEDEVORHANDEN.toUpperCase()) || columns.containsKey(UNTERSCHIEDEVORHANDEN)) {
          p.setInt(idx++, m._unterschiedeVorhanden);
       }
-      if (columns.containsKey(STATUS.toUpperCase())) {
+      if (columns.containsKey(STATUS.toUpperCase()) || columns.containsKey(STATUS)) {
          p.setInt(idx++, m._status);
       }
-      if (columns.containsKey(ERGEBNISHASH.toUpperCase())) {
+      if (columns.containsKey(ERGEBNISHASH.toUpperCase()) || columns.containsKey(ERGEBNISHASH)) {
          p.setString(idx++, m._ergebnisHash);
       }
-      if (columns.containsKey(FEHLERMELDUNG.toUpperCase())) {
+      if (columns.containsKey(FEHLERMELDUNG.toUpperCase()) || columns.containsKey(FEHLERMELDUNG)) {
          p.setString(idx++, m._fehlermeldung);
       }
       p.setString(idx++, m._id_Ergebniseingang);
@@ -353,6 +386,21 @@ public class ErgebniseingangDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Wahl returns a {@link Collection} of Ergebniseingang IDs
+     *
+     * @param id_Wahl searching condition
+
+     * @return a {@link Collection} of Ergebniseingang IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Wahl(String id_Wahl) throws SQLException {
+      return retrieveIDs(
+         "select ID_Ergebniseingang from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Wahl});
+   }
+
+   /**
      * Method retrieveIDsByID_Erfassungseinheit returns a {@link Collection} of Ergebniseingang IDs
      *
      * @param id_Erfassungseinheit searching condition
@@ -367,21 +415,6 @@ public class ErgebniseingangDBA extends DBABase {
          "select ID_Ergebniseingang from " + TABLENAME + " where ID_Erfassungseinheit=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Erfassungseinheit});
-   }
-
-   /**
-     * Method retrieveIDsByID_Wahl returns a {@link Collection} of Ergebniseingang IDs
-     *
-     * @param id_Wahl searching condition
-
-     * @return a {@link Collection} of Ergebniseingang IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Wahl(String id_Wahl) throws SQLException {
-      return retrieveIDs(
-         "select ID_Ergebniseingang from " + TABLENAME + " where ID_Wahl=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Wahl});
    }
 
    /**

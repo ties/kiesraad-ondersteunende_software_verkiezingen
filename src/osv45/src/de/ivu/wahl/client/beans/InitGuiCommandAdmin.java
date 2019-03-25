@@ -14,7 +14,7 @@ import de.ivu.wahl.dataimport.AbstractImportEML;
 import de.ivu.wahl.modell.GebietModel;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class InitGuiCommandAdmin extends InitGuiCommand implements ApplicationBeanKonstanten {
 

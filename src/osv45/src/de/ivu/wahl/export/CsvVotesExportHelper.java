@@ -35,7 +35,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * Helper to generte the CSV for the votes export file "osv4-3".
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class CsvVotesExportHelper {
   private static final char SEMICOLON = ';';

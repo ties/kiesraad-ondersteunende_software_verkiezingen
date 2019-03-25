@@ -12,7 +12,7 @@ import de.ivu.wahl.result.result.ElectionResult;
 /**
  * Determines the number of seats for the P2 lists belonging to a given P3 list.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ElectionResultForP2ListsDeterminator
     extends

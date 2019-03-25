@@ -12,7 +12,7 @@ import de.ivu.wahl.result.NamedObject;
  * Tagging interface for different kinds of "lists", like CandidateLists, P2Lists, P3Lists and
  * P42Lists.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface GeneralList extends NamedObject {
 

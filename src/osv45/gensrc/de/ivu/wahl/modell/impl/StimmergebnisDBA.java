@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Stimmergebnis.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class StimmergebnisDBA extends DBABase {
@@ -70,25 +70,49 @@ public class StimmergebnisDBA extends DBABase {
       if ((idx = columns.get(ID_STIMMERGEBNIS.toUpperCase())) != null) {
          m._id_Stimmergebnis = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_STIMMERGEBNIS)) != null) {
+         m._id_Stimmergebnis = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_GEBIET.toUpperCase())) != null) {
          m._id_Gebiet = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GEBIET)) != null) {
+         m._id_Gebiet = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GRUPPEGEBIETSSPEZIFISCH.toUpperCase())) != null) {
+         m._id_GruppeGebietsspezifisch = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_GRUPPEGEBIETSSPEZIFISCH)) != null) {
          m._id_GruppeGebietsspezifisch = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTENKANDIDATUR.toUpperCase())) != null) {
          m._id_Listenkandidatur = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKANDIDATUR)) != null) {
+         m._id_Listenkandidatur = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(WAHLERGEBNISART.toUpperCase())) != null) {
+         m._wahlergebnisart = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(WAHLERGEBNISART)) != null) {
          m._wahlergebnisart = r.getInt(idx.intValue());
       }
       if ((idx = columns.get(STIMMEN.toUpperCase())) != null) {
          m._stimmen = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(STIMMEN)) != null) {
+         m._stimmen = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(STIMMART.toUpperCase())) != null) {
+         m._stimmart = r.getInt(idx.intValue());
+      }
+      if ((idx = columns.get(STIMMART)) != null) {
          m._stimmart = r.getInt(idx.intValue());
       }
    }
@@ -104,25 +128,25 @@ public class StimmergebnisDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_GEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_GEBIET.toUpperCase()) || columns.containsKey(ID_GEBIET)) {
          p.setString(idx++, m._id_Gebiet);
       }
-      if (columns.containsKey(ID_GRUPPEGEBIETSSPEZIFISCH.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPEGEBIETSSPEZIFISCH.toUpperCase()) || columns.containsKey(ID_GRUPPEGEBIETSSPEZIFISCH)) {
          p.setString(idx++, m._id_GruppeGebietsspezifisch);
       }
-      if (columns.containsKey(ID_LISTENKANDIDATUR.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKANDIDATUR.toUpperCase()) || columns.containsKey(ID_LISTENKANDIDATUR)) {
          p.setString(idx++, m._id_Listenkandidatur);
       }
-      if (columns.containsKey(WAHLERGEBNISART.toUpperCase())) {
+      if (columns.containsKey(WAHLERGEBNISART.toUpperCase()) || columns.containsKey(WAHLERGEBNISART)) {
          p.setInt(idx++, m._wahlergebnisart);
       }
-      if (columns.containsKey(STIMMEN.toUpperCase())) {
+      if (columns.containsKey(STIMMEN.toUpperCase()) || columns.containsKey(STIMMEN)) {
          p.setInt(idx++, m._stimmen);
       }
-      if (columns.containsKey(STIMMART.toUpperCase())) {
+      if (columns.containsKey(STIMMART.toUpperCase()) || columns.containsKey(STIMMART)) {
          p.setInt(idx++, m._stimmart);
       }
       p.setString(idx++, m._id_Stimmergebnis);
@@ -319,6 +343,23 @@ public class StimmergebnisDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of Stimmergebnis IDs
+     *
+     * @param id_Ergebniseingang searching condition
+
+     * @return a {@link Collection} of Stimmergebnis IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Ergebniseingang(String id_Ergebniseingang)
+      throws SQLException {
+
+      return retrieveIDs(
+         "select ID_Stimmergebnis from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Ergebniseingang});
+   }
+
+   /**
      * Method retrieveIDsByID_GruppeGebietsspezifisch returns a {@link Collection} of Stimmergebnis IDs
      *
      * @param id_GruppeGebietsspezifisch searching condition
@@ -365,23 +406,6 @@ public class StimmergebnisDBA extends DBABase {
          "select ID_Stimmergebnis from " + TABLENAME + " where ID_Listenkandidatur=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Listenkandidatur});
-   }
-
-   /**
-     * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of Stimmergebnis IDs
-     *
-     * @param id_Ergebniseingang searching condition
-
-     * @return a {@link Collection} of Stimmergebnis IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Ergebniseingang(String id_Ergebniseingang)
-      throws SQLException {
-
-      return retrieveIDs(
-         "select ID_Stimmergebnis from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Ergebniseingang});
    }
 
    /**

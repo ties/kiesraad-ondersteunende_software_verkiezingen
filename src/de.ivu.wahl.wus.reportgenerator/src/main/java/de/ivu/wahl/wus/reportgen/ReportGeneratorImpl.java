@@ -695,9 +695,9 @@ public class ReportGeneratorImpl implements ReportGenerator {
     File output = fp.getOutputFile();
 
     try {
-      OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(output),
-          "Windows-1252"); //$NON-NLS-1$
+      OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(output), "UTF-8"); //$NON-NLS-1$
       try {
+        writer.write('\ufeff'); // UTF-8 byte order marker (BOM), see OSV-1908
         writer.append(csv);
       } finally {
         writer.close();

@@ -26,7 +26,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
  * Converts the information relevant to the Determination of the Election Result to the model
  * expected by the algorithm. This is done using some builders.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ModelToBuilderConversion {
   private static final Logger LOGGER = Logger.getLogger(ModelToBuilderConversion.class);

@@ -9,7 +9,7 @@ package de.ivu.wahl.export;
 /**
  * Attribute and element names used for Report Generator schema
  * 
- * @author ugo@ivu.de, IVU Traffic Technologies AG
+ * @author U. Müller, IVU Traffic Technologies AG
  */
 public interface XMLTags {
 
@@ -19,6 +19,7 @@ public interface XMLTags {
   String RG_CONTEST_NAME = "ContestName"; //$NON-NLS-1$
   String RG_DATE_OF_MEETING = "DateOfMeeting"; //$NON-NLS-1$
   String RG_TIME_OF_MEETING = "TimeOfMeeting"; //$NON-NLS-1$
+  String RG_ORGANIZING_MUNICIPALITY = "OrganizingMunicipality"; //$NON-NLS-1$
   String RG_DATE_OF_MEETING_O1P20 = "DateOfMeetingO1P20"; //$NON-NLS-1$
   String RG_TIME_OF_MEETINGP20 = "TimeOfMeetingP20"; //$NON-NLS-1$
   String RG_DATE_PUBLICATION_VOTE_VALUES = "PublicationVoteValuesDate"; //$NON-NLS-1$
@@ -143,6 +144,7 @@ public interface XMLTags {
   String RG_REJECTION_ADDRESS = "AddressLineForRejection"; //$NON-NLS-1$
   String RG_REJECTION_LOCATION = "LocationForRejection"; //$NON-NLS-1$
   String RG_REJECTION_POSTALCODE = "PostalCodeForRejection"; //$NON-NLS-1$
+  String RG_REPRESENTATIVE_BODY = "RepresentativeBody"; //$NON-NLS-1$
   // EML 510 and 520
   String RG_AFFILIATION_VOTES = "AffiliationVotes"; //$NON-NLS-1$
   String ATTR_PUBLICATION_LANGUAGE = "PublicationLanguage"; //$NON-NLS-1$

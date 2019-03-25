@@ -18,7 +18,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class KonstantenWrapperMap implements Map<String, Object>, Serializable {
   private static final long serialVersionUID = 5403038935021989663L;

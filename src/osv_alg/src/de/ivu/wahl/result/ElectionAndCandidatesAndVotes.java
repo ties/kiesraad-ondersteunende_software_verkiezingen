@@ -14,7 +14,7 @@ import java.util.Map;
  * <p>
  * Immutable.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ElectionAndCandidatesAndVotes extends ElectionAndCandidates {
 

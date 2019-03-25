@@ -8,7 +8,7 @@ package de.ivu.wahl.mbean.dbinit;
 /**
  * Database Initialisation
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface DBInitService {
   /**

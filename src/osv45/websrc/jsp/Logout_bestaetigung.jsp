@@ -3,6 +3,7 @@ Abmeldebestätigung mit Link zur erneuten Anmeldung
 --%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp" import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
+<%@include file="/jsp/fragments/common_headers.jspf"%>
 <html>
   <head>
     <title><ivu:int key="Abmeldung_erfolgt_titel"/></title>

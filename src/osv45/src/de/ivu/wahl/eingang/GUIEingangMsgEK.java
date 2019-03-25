@@ -18,7 +18,7 @@ import de.ivu.wahl.modell.GruppeKonstanten;
 /**
  * Wrapps GUIEingangMsg with some additional information for the EK (first chamber) election.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 
 public class GUIEingangMsgEK implements Serializable {

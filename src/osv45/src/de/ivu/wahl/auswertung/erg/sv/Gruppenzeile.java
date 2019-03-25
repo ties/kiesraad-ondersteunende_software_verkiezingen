@@ -12,7 +12,7 @@ import de.ivu.wahl.modell.GruppeGebietsspezifischModel;
 import de.ivu.wahl.modell.GruppeModel;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class Gruppenzeile implements Serializable, Comparable<Gruppenzeile> {
   private static final long serialVersionUID = -5655263391212026093L;

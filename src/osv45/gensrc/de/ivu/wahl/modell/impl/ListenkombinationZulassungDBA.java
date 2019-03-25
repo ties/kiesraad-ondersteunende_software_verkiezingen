@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity ListenkombinationZulassung.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class ListenkombinationZulassungDBA extends DBABase {
@@ -64,16 +64,31 @@ public class ListenkombinationZulassungDBA extends DBABase {
       if ((idx = columns.get(ID_LISTENKOMBINATIONZULASSUNG.toUpperCase())) != null) {
          m._id_ListenkombinationZulassung = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATIONZULASSUNG)) != null) {
+         m._id_ListenkombinationZulassung = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
       if ((idx = columns.get(ID_LISTENKOMBINATION.toUpperCase())) != null) {
          m._id_Listenkombination = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_LISTENKOMBINATION)) != null) {
+         m._id_Listenkombination = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GRUPPE.toUpperCase())) != null) {
          m._id_Gruppe = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GRUPPE)) != null) {
+         m._id_Gruppe = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ZUGELASSEN.toUpperCase())) != null) {
+         m._zugelassen = r.getBoolean(idx.intValue());
+      }
+      if ((idx = columns.get(ZUGELASSEN)) != null) {
          m._zugelassen = r.getBoolean(idx.intValue());
       }
    }
@@ -89,16 +104,16 @@ public class ListenkombinationZulassungDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase())) {
+      if (columns.containsKey(ID_ERGEBNISEINGANG.toUpperCase()) || columns.containsKey(ID_ERGEBNISEINGANG)) {
          p.setString(idx++, m._id_Ergebniseingang);
       }
-      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase())) {
+      if (columns.containsKey(ID_LISTENKOMBINATION.toUpperCase()) || columns.containsKey(ID_LISTENKOMBINATION)) {
          p.setString(idx++, m._id_Listenkombination);
       }
-      if (columns.containsKey(ID_GRUPPE.toUpperCase())) {
+      if (columns.containsKey(ID_GRUPPE.toUpperCase()) || columns.containsKey(ID_GRUPPE)) {
          p.setString(idx++, m._id_Gruppe);
       }
-      if (columns.containsKey(ZUGELASSEN.toUpperCase())) {
+      if (columns.containsKey(ZUGELASSEN.toUpperCase()) || columns.containsKey(ZUGELASSEN)) {
          p.setBoolean(idx++, m._zugelassen);
       }
       p.setString(idx++, m._id_ListenkombinationZulassung);
@@ -286,6 +301,21 @@ public class ListenkombinationZulassungDBA extends DBABase {
    }
 
    /**
+     * Method retrieveIDsByID_Gruppe returns a {@link Collection} of ListenkombinationZulassung IDs
+     *
+     * @param id_Gruppe searching condition
+
+     * @return a {@link Collection} of ListenkombinationZulassung IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Gruppe(String id_Gruppe) throws SQLException {
+      return retrieveIDs(
+         "select ID_ListenkombinationZulassung from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Gruppe});
+   }
+
+   /**
      * Method retrieveIDsByID_Ergebniseingang returns a {@link Collection} of ListenkombinationZulassung IDs
      *
      * @param id_Ergebniseingang searching condition
@@ -317,21 +347,6 @@ public class ListenkombinationZulassungDBA extends DBABase {
          "select ID_ListenkombinationZulassung from " + TABLENAME + " where ID_Listenkombination=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Listenkombination});
-   }
-
-   /**
-     * Method retrieveIDsByID_Gruppe returns a {@link Collection} of ListenkombinationZulassung IDs
-     *
-     * @param id_Gruppe searching condition
-
-     * @return a {@link Collection} of ListenkombinationZulassung IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Gruppe(String id_Gruppe) throws SQLException {
-      return retrieveIDs(
-         "select ID_ListenkombinationZulassung from " + TABLENAME + " where ID_Gruppe=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Gruppe});
    }
 
    /**

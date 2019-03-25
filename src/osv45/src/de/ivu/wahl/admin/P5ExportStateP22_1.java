@@ -8,7 +8,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export control of proces verbal P22
  * 
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public class P5ExportStateP22_1 extends DialogStateHolder {
   private static final long serialVersionUID = 3529937111482911921L;

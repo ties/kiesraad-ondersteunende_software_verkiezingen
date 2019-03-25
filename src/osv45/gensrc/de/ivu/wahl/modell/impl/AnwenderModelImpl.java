@@ -22,7 +22,7 @@ import de.ivu.wahl.modell.AnwenderModel;
   * Contains the list of properties including the IDs of the associated objects.
   * A navigation is not implemented (1:1, 1:n, m:n)
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 
@@ -58,6 +58,7 @@ public class AnwenderModelImpl extends ModelImpl implements AnwenderModel, Seria
       setName(other._name);
       setAnwendername(other._anwendername);
       setPasswordHash(other._passwordHash);
+      setSalt(other._salt);
       setFehlversucheAnmeldung(other._fehlversucheAnmeldung);
       setLetzterZugriff(other._letzterZugriff);
    }
@@ -193,6 +194,32 @@ public class AnwenderModelImpl extends ModelImpl implements AnwenderModel, Seria
    }
 
    /**
+     * Type : VARCHAR Name : Salt
+     */
+   protected String _salt;
+
+   /**
+     * Sets the value of salt in the entity Anwender
+     *
+     * @param salt new value of the attribute salt
+     */
+   public void setSalt(String salt) {
+      if (different(_salt, salt)) {
+         _salt = checkLength(salt, AnwenderModel.SALT_LENGTH);
+         setModified();
+      }
+   }
+
+   /**
+     * Gets the value of salt in the entity Anwender
+     *
+     * @return value of the attribute salt
+     */
+   public String getSalt() {
+      return _salt;
+   }
+
+   /**
      * Type : INT Name : FehlversucheAnmeldung
      */
    protected int _fehlversucheAnmeldung;
@@ -293,6 +320,9 @@ public class AnwenderModelImpl extends ModelImpl implements AnwenderModel, Seria
          }
          if (getPasswordHash() != null) {
             string +=  ", passwordHash = " + getPasswordHash(); //$NON-NLS-1$
+         }
+         if (getSalt() != null) {
+            string +=  ", salt = " + getSalt(); //$NON-NLS-1$
          }
          string +=  ", fehlversucheAnmeldung = " + getFehlversucheAnmeldung(); //$NON-NLS-1$
          if (getLetzterZugriff() != null) {

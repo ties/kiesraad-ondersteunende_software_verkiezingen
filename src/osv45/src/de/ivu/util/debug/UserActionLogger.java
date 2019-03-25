@@ -12,7 +12,7 @@ import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.wus.loggerinterface.IUserActionLogger;
 
 /**
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class UserActionLogger implements IUserActionLogger {
 

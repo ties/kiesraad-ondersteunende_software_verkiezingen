@@ -15,7 +15,7 @@ import de.ivu.wahl.modell.ejb.service.VoteValues;
 /**
  * Utility class to provide the total weighted votes per party for the Netherlands.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class WeightedVotesByGroup implements Serializable {
   private static final long serialVersionUID = 2321173923485126514L;

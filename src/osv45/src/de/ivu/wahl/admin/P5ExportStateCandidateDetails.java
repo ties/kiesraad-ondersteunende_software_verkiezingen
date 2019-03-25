@@ -6,7 +6,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export control of candidate details
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 @Deprecated
 public class P5ExportStateCandidateDetails extends DialogStateHolder {

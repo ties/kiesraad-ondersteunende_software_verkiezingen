@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Gebiet_Ergebniseingang.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class Gebiet_ErgebniseingangDBA extends DBABase {
@@ -58,7 +58,13 @@ public class Gebiet_ErgebniseingangDBA extends DBABase {
       if ((idx = columns.get(ID_GEBIET.toUpperCase())) != null) {
          m._id_Gebiet = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_GEBIET)) != null) {
+         m._id_Gebiet = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_ERGEBNISEINGANG.toUpperCase())) != null) {
+         m._id_Ergebniseingang = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_ERGEBNISEINGANG)) != null) {
          m._id_Ergebniseingang = r.getString(idx.intValue());
       }
    }
@@ -239,22 +245,6 @@ public class Gebiet_ErgebniseingangDBA extends DBABase {
    }
 
    /**
-     * Gets a {@link Collection} of IDs from Ergebniseingang-entities, which is described by
-     * N:M relation Gebiet_Ergebniseingang and ID_Gebiet.
-     *
-     * @param id_Gebiet searching condition
-
-     * @return a {@link Collection} of Ergebniseingang IDs
-     * @throws SQLException Communication with database is failing
-     */
-   public static Collection<String> retrieveIDsByID_Gebiet(String id_Gebiet) throws SQLException {
-      return retrieveIDs(
-         "select ID_Ergebniseingang from " + TABLENAME + " where ID_Gebiet=?",  //$NON-NLS-1$
-          //$NON-NLS-1$
-         new Object[]{id_Gebiet});
-   }
-
-   /**
      * Gets a {@link Collection} of IDs from Gebiet-entities, which is described by
      * N:M relation Gebiet_Ergebniseingang and ID_Ergebniseingang.
      *
@@ -270,5 +260,21 @@ public class Gebiet_ErgebniseingangDBA extends DBABase {
          "select ID_Gebiet from " + TABLENAME + " where ID_Ergebniseingang=?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{id_Ergebniseingang});
+   }
+
+   /**
+     * Gets a {@link Collection} of IDs from Ergebniseingang-entities, which is described by
+     * N:M relation Gebiet_Ergebniseingang and ID_Gebiet.
+     *
+     * @param id_Gebiet searching condition
+
+     * @return a {@link Collection} of Ergebniseingang IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsByID_Gebiet(String id_Gebiet) throws SQLException {
+      return retrieveIDs(
+         "select ID_Ergebniseingang from " + TABLENAME + " where ID_Gebiet=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{id_Gebiet});
    }
 }

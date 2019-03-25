@@ -28,7 +28,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Anwender.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class AnwenderDBA extends DBABase {
@@ -48,12 +48,14 @@ public class AnwenderDBA extends DBABase {
    public static final String ANWENDERNAME_QUAL = "Anwender.Anwendername"; //$NON-NLS-1$
    public static final String PASSWORDHASH = "PasswordHash"; //$NON-NLS-1$
    public static final String PASSWORDHASH_QUAL = "Anwender.PasswordHash"; //$NON-NLS-1$
+   public static final String SALT = "Salt"; //$NON-NLS-1$
+   public static final String SALT_QUAL = "Anwender.Salt"; //$NON-NLS-1$
    public static final String FEHLVERSUCHEANMELDUNG = "FehlversucheAnmeldung"; //$NON-NLS-1$
    public static final String FEHLVERSUCHEANMELDUNG_QUAL = "Anwender.FehlversucheAnmeldung"; //$NON-NLS-1$
    public static final String LETZTERZUGRIFF = "LetzterZugriff"; //$NON-NLS-1$
    public static final String LETZTERZUGRIFF_QUAL = "Anwender.LetzterZugriff"; //$NON-NLS-1$
 
-   private static final String[] COLUMNS = {ID_ANWENDER,ID_GEBIET,NAME,ANWENDERNAME,PASSWORDHASH,FEHLVERSUCHEANMELDUNG,LETZTERZUGRIFF};
+   private static final String[] COLUMNS = {ID_ANWENDER,ID_GEBIET,NAME,ANWENDERNAME,PASSWORDHASH,SALT,FEHLVERSUCHEANMELDUNG,LETZTERZUGRIFF};
    private static final MetaContainer META_CONTAINER = new MetaContainer(TABLENAME, COLUMNS);
 
    /**
@@ -69,22 +71,49 @@ public class AnwenderDBA extends DBABase {
       if ((idx = columns.get(ID_ANWENDER.toUpperCase())) != null) {
          m._id_Anwender = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_ANWENDER)) != null) {
+         m._id_Anwender = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ID_GEBIET.toUpperCase())) != null) {
+         m._id_Gebiet = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ID_GEBIET)) != null) {
          m._id_Gebiet = r.getString(idx.intValue());
       }
       if ((idx = columns.get(NAME.toUpperCase())) != null) {
          m._name = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(NAME)) != null) {
+         m._name = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(ANWENDERNAME.toUpperCase())) != null) {
+         m._anwendername = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(ANWENDERNAME)) != null) {
          m._anwendername = r.getString(idx.intValue());
       }
       if ((idx = columns.get(PASSWORDHASH.toUpperCase())) != null) {
          m._passwordHash = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(PASSWORDHASH)) != null) {
+         m._passwordHash = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(SALT.toUpperCase())) != null) {
+         m._salt = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(SALT)) != null) {
+         m._salt = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(FEHLVERSUCHEANMELDUNG.toUpperCase())) != null) {
          m._fehlversucheAnmeldung = r.getInt(idx.intValue());
       }
+      if ((idx = columns.get(FEHLVERSUCHEANMELDUNG)) != null) {
+         m._fehlversucheAnmeldung = r.getInt(idx.intValue());
+      }
       if ((idx = columns.get(LETZTERZUGRIFF.toUpperCase())) != null) {
+         m._letzterZugriff = r.getTimestamp(idx.intValue());
+      }
+      if ((idx = columns.get(LETZTERZUGRIFF)) != null) {
          m._letzterZugriff = r.getTimestamp(idx.intValue());
       }
    }
@@ -100,22 +129,25 @@ public class AnwenderDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(ID_GEBIET.toUpperCase())) {
+      if (columns.containsKey(ID_GEBIET.toUpperCase()) || columns.containsKey(ID_GEBIET)) {
          p.setString(idx++, m._id_Gebiet);
       }
-      if (columns.containsKey(NAME.toUpperCase())) {
+      if (columns.containsKey(NAME.toUpperCase()) || columns.containsKey(NAME)) {
          p.setString(idx++, m._name);
       }
-      if (columns.containsKey(ANWENDERNAME.toUpperCase())) {
+      if (columns.containsKey(ANWENDERNAME.toUpperCase()) || columns.containsKey(ANWENDERNAME)) {
          p.setString(idx++, m._anwendername);
       }
-      if (columns.containsKey(PASSWORDHASH.toUpperCase())) {
+      if (columns.containsKey(PASSWORDHASH.toUpperCase()) || columns.containsKey(PASSWORDHASH)) {
          p.setString(idx++, m._passwordHash);
       }
-      if (columns.containsKey(FEHLVERSUCHEANMELDUNG.toUpperCase())) {
+      if (columns.containsKey(SALT.toUpperCase()) || columns.containsKey(SALT)) {
+         p.setString(idx++, m._salt);
+      }
+      if (columns.containsKey(FEHLVERSUCHEANMELDUNG.toUpperCase()) || columns.containsKey(FEHLVERSUCHEANMELDUNG)) {
          p.setInt(idx++, m._fehlversucheAnmeldung);
       }
-      if (columns.containsKey(LETZTERZUGRIFF.toUpperCase())) {
+      if (columns.containsKey(LETZTERZUGRIFF.toUpperCase()) || columns.containsKey(LETZTERZUGRIFF)) {
          p.setTimestamp(idx++, m._letzterZugriff);
       }
       p.setString(idx++, m._id_Anwender);
@@ -168,6 +200,9 @@ public class AnwenderDBA extends DBABase {
       }
       if (columns.containsKey(PASSWORDHASH)) {
          values.add(toString(m.getPasswordHash()));
+      }
+      if (columns.containsKey(SALT)) {
+         values.add(toString(m.getSalt()));
       }
       if (columns.containsKey(FEHLVERSUCHEANMELDUNG)) {
          values.add(toString(m.getFehlversucheAnmeldung()));
@@ -413,6 +448,36 @@ public class AnwenderDBA extends DBABase {
          "select ID_Anwender from " + TABLENAME + " where PasswordHash like ?",  //$NON-NLS-1$
           //$NON-NLS-1$
          new Object[]{passwordHash});
+   }
+
+   /**
+     * Method retrieveIDsBySalt returns a {@link Collection} of Anwender IDs
+     *
+     * @param salt searching condition
+
+     * @return a {@link Collection} of Anwender IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsBySalt(String salt) throws SQLException {
+      return retrieveIDs(
+         "select ID_Anwender from " + TABLENAME + " where Salt=?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{salt});
+   }
+
+   /**
+     * Method retrieveIDsLikeSalt returns a {@link Collection} of Anwender IDs
+     *
+     * @param salt searching condition
+
+     * @return a {@link Collection} of Anwender IDs
+     * @throws SQLException Communication with database is failing
+     */
+   public static Collection<String> retrieveIDsLikeSalt(String salt) throws SQLException {
+      return retrieveIDs(
+         "select ID_Anwender from " + TABLENAME + " where Salt like ?",  //$NON-NLS-1$
+          //$NON-NLS-1$
+         new Object[]{salt});
    }
 
    /**

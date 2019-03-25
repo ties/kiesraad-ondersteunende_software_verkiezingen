@@ -57,11 +57,14 @@ public class MessageKeys {
   public static final String Error_KeinePersonendatenMitKey_0_Gefunden = "Error_KeinePersonendatenMitKey_0_Gefunden"; //$NON-NLS-1$
   public static final String Error_KeineWDGruppeFuerSchluessel_0_Gefunden = "Error_KeineWDGruppeFuerSchluessel_0_Gefunden"; //$NON-NLS-1$
   public static final String Error_NichtDefiniert_GruppeMitSchluessel_0 = "Error_NichtDefiniert_GruppeMitSchluessel_0"; //$NON-NLS-1$
+  public static final String Error_SingleInputAndCompleteInputNotAllowed = "Error_SingleInputAndCompleteInputNotAllowed"; //$NON-NLS-1$
   public static final String Error_UngueltigerGruppenschluessel_0 = "Error_UngueltigerGruppenschluessel_0"; //$NON-NLS-1$
   public static final String Error_UnbekanntesGebiet = "Error_UnbekanntesGebiet"; //$NON-NLS-1$
   public static final String Error_UnbekannteWahlart_0 = "Error_UnbekannteWahlart_0"; //$NON-NLS-1$
   public static final String Error_UnbekannteWahlebene_0 = "Error_UnbekannteWahlebene_0"; //$NON-NLS-1$
   public static final String Error_UngueltigeAdressdatenFuer_0 = "Error_UngueltigeAdressdatenFuer_0"; //$NON-NLS-1$
+  public static final String Error_UngueltigerWahlgebietName = "Error_UngueltigerWahlgebietName"; //$NON-NLS-1$
+  public static final String Error_UngueltigerWahlName = "Error_UngueltigerWahlName"; //$NON-NLS-1$
   public static final String Error_UngueltigesDatumsFormat = "Error_UngueltigesDatumsFormat"; //$NON-NLS-1$
   public static final String Error_UngueltigesZeitFormat = "Error_UngueltigesZeitFormat"; //$NON-NLS-1$
   public static final String Error_UngueltigesZipFormat = "Error_UngueltigesZipFormat"; //$NON-NLS-1$
@@ -138,6 +141,10 @@ public class MessageKeys {
   public static final String Error_EML510c_KonnteNichtExportiertWerden = "Error_EML510c_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_EmptyEml_KonnteNichtExportiertWerden = "Error_EmptyEml_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_GewBen_KonnteNichtExportiertWerden = "Error_GewBen_KonnteNichtExportiertWerden"; //$NON-NLS-1$
+  public static final String Error_Model_I_KonnteNichtExportiertWerden = "Error_Model_I_KonnteNichtExportiertWerden"; //$NON-NLS-1$
+  public static final String Error_Model_II_KonnteNichtExportiertWerden = "Error_Model_II_KonnteNichtExportiertWerden"; //$NON-NLS-1$
+  public static final String Error_Model_II_Appendix1_KonnteNichtExportiertWerden = "Error_Model_II_Appendix1_KonnteNichtExportiertWerden"; //$NON-NLS-1$
+  public static final String Error_Model_II_Appendix2_KonnteNichtExportiertWerden = "Error_Model_II_Appendix2_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_N10_1_KonnteNichtExportiertWerden = "Error_N10_1_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_N11_KonnteNichtExportiertWerden = "Error_N11_KonnteNichtExportiertWerden"; //$NON-NLS-1$
   public static final String Error_O3_KonnteNichtExportiertWerden = "Error_O3_KonnteNichtExportiertWerden"; //$NON-NLS-1$
@@ -156,6 +163,7 @@ public class MessageKeys {
   public static final String Msg_ReportdateienErfolgreichExportiert_0 = "Msg_ReportdateienErfolgreichExportiert_0"; //$NON-NLS-1$ 
   public static final String Msg_FehlerAufgetreten_SieheLogDatei = "Msg_FehlerAufgetreten_SieheLogDatei"; //$NON-NLS-1$ 
   public static final String Msg_PasswortAendernNichtMoeglich2MinWarten = "Msg_PasswortAendernNichtMoeglich2MinWarten"; //$NON-NLS-1$ 
+  public static final String Msg_Passwort_veraendern_error_Passwort_zu_kurz = "Msg_Passwort_veraendern_error_Passwort_zu_kurz"; //$NON-NLS-1$
   public static final String MSg_Schwellwertfestlegung = "Msg_Schwellwertfestlegung"; //$NON-NLS-1$ 
   public static final String Msg_SchwellwertfestlegungParteien = "Msg_SchwellwertfestlegungParteien"; //$NON-NLS-1$ 
   public static final String Msg_Partei = "Msg_Partei"; //$NON-NLS-1$
@@ -329,8 +337,6 @@ public class MessageKeys {
   public static final String VerzeichnisWurdeNichtAngelegt = "VerzeichnisWurdeNichtAngelegt"; //$NON-NLS-1$
   public static final String DateinameWurdeNichtAngegeben = "DateinameWurdeNichtAngegeben"; //$NON-NLS-1$
   public static final String Msg_UploadVonDateiMitErfassungseinheitGestartet = "Msg_UploadVonDateiMitErfassungseinheitGestartet"; //$NON-NLS-1$
-  public static final String Msg_UploadRgTextsGestartet = "Msg_UploadRgTextsGestartet "; //$NON-NLS-1$
-  public static final String Msg_ResetRgTextsGestartet = "Msg_ResetRgTextsGestartet "; //$NON-NLS-1$
   public static final String Logger_GotSecure = "Logger_GotSecure"; //$NON-NLS-1$
   public static final String Logger_KonnteApplicationBeanNichtErmittelnFuerDieErmittlungDesZeitstempels = "Logger_KonnteApplicationBeanNichtErmittelnFuerDieErmittlungDesZeitstempels"; //$NON-NLS-1$
   public static final String Logger_DidNotGetPreviousStepId = "Logger_DidNotGetPreviousStepId"; //$NON-NLS-1$
@@ -544,17 +550,8 @@ public class MessageKeys {
   public static final String CandidateDetailsExportGenerator_yes = "CandidateDetailsExportGenerator_yes"; //$NON-NLS-1$
   public static final String CandidateDetailsExportGenerator_yesInOtherDistrict = "CandidateDetailsExportGenerator_yesInOtherDistrict"; //$NON-NLS-1$
 
-  public static final String ResetReportGeneratorTextsHandler_deleteFileError = "ResetReportGeneratorTextsHandler_deleteFileError"; //$NON-NLS-1$
-  public static final String ResetReportGeneratorTextsHandler_errorDialogResetTitle = "ResetReportGeneratorTextsHandler_errorDialogResetTitle"; //$NON-NLS-1$
-  public static final String ResetReportGeneratorTextsHandler_fileDeleted = "ResetReportGeneratorTextsHandler_fileDeleted"; //$NON-NLS-1$
-  public static final String ResetReportGeneratorTextsHandler_unableToDeleteFile = "ResetReportGeneratorTextsHandler_unableToDeleteFile"; //$NON-NLS-1$
-  public static final String ResetReportGeneratorTextsHandler_resetCompletedSuccessfully = "ResetReportGeneratorTextsHandler_resetCompletedSuccessfully"; //$NON-NLS-1$
-  public static final String Error_ReportGeneratorTexts_unzipError = "Error_ReportGeneratorTexts_unzipError"; //$NON-NLS-1$
-  public static final String Error_ReportGeneratorTexts_readZipFileError = "Error_ReportGeneratorTexts_readZipFileError"; //$NON-NLS-1$
-  public static final String Error_ReportGeneratorTexts_notAllowedError = "Error_ReportGeneratorTexts_notAllowedError"; //$NON-NLS-1$
   public static final String Msg_EnterValidFilename = "Msg_EnterValidFilename"; //$NON-NLS-1$
-  public static final String Msg_UploadRgTextFileSuccessful = "Msg_UploadRgTextFileSuccessful"; //$NON-NLS-1$
-  public static final String Logger_ReportGeneratorTexts_extractedFile = "Logger_ReportGeneratorTexts_extractedFile"; //$NON-NLS-1$
-  public static final String Logger_ReportGeneratorTexts_entryIgnored = "Logger_ReportGeneratorTexts_entryIgnored"; //$NON-NLS-1$
-  public static final String Error_UploadingRgTextFile = "Error_UploadingRgTextFile"; //$NON-NLS-1$
+  public static final String Msg_ReIndexDatabaseSuccessful = "Msg_ReIndexDatabaseSuccessful"; //$NON-NLS-1$
+  public static final String Msg_ReIndexDatabaseFailed = "Msg_ReIndexDatabaseFailed"; //$NON-NLS-1$
+  public static final String Error_ValuesAbove_0_notSupported = "Error_ValuesAbove_0_notSupported"; //$NON-NLS-1$
 }

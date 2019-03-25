@@ -11,7 +11,7 @@ import de.ivu.wahl.i18n.Messages;
 import de.ivu.wahl.modell.GebietModel;
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public interface ApplicationBeanKonstanten {
 

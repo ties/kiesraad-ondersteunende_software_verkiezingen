@@ -11,7 +11,7 @@ import java.util.List;
  * Report name components for creating most documents of the former program P2 - model I1 and
  * omission letters.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReportNameComponentsP2 extends AbstractReportNameComponents {
 

@@ -21,10 +21,7 @@ import javax.ejb.EJBException;
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.GruppeGebietsspezifischGruppeComposite;
 import de.ivu.wahl.modell.GruppeGebietsspezifischModel;
 import de.ivu.wahl.modell.GruppeModel;
@@ -34,19 +31,13 @@ import de.ivu.wahl.modell.impl.GruppeGebietsspezifischDBA;
 import de.ivu.wahl.modell.impl.GruppeGebietsspezifischGruppeCompositeImpl;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBean {
   private static final long serialVersionUID = 7851027871136929781L;
 
-  private static final Category LOGGER = Log4J.configure(GruppeGebietsspezifischBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(GruppeGebietsspezifischBean.class, Log4J
-        .extractVersion("$Revision: 1.18 $"))); //$NON-NLS-1$
-  }
-
   /**
-   * Führt eine Suche mit einem (oder keinem) erwarteten Ergebnis aus
+   * Fï¿½hrt eine Suche mit einem (oder keinem) erwarteten Ergebnis aus
    * 
    * @param query Suchanfrage (mit Platzhaltern)
    * @param params Parameter der Anfrage
@@ -65,11 +56,11 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * @param id_Gebiet Primärschlüssel des Gebiets
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
    * @param position Position auf dem Wahlzettel (bzw. Pseudo-Position bei Pseudo-Gruppen)
-   * @return Primärschlüssel der gefundenen GruppeGebietsspezifisch
+   * @return Primï¿½rschlï¿½ssel der gefundenen GruppeGebietsspezifisch
    * @throws ObjectNotFoundException wenn keine Instanz gefunden werden konnte
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public String ejbFindByGebietAndPosition(String id_Gebiet, int position)
@@ -80,12 +71,12 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * @param id_Gruppe Primärschlüssel der Gruppe
-   * @param id_Gebiet Primärschlüssel des Gebiets
-   * @return Primärschlüssel der GruppeGebietsspezifisch an der Kreuzung von gegebener Gruppe mit
+   * @param id_Gruppe Primï¿½rschlï¿½ssel der Gruppe
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
+   * @return Primï¿½rschlï¿½ssel der GruppeGebietsspezifisch an der Kreuzung von gegebener Gruppe mit
    *         gegebenem Gebiet, wenn eindeutig
    * @throws ObjectNotFoundException wenn keine Instanz gefunden werden konnte
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public String ejbFindByGruppeAndGebiet(String id_Gruppe, String id_Gebiet)
@@ -95,11 +86,11 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * @param id_Gruppe Primärschlüssel der Gruppe
-   * @param id_Gebiet Primärschlüssel des Gebiets
-   * @return Primärschlüssel aller GruppeGebietsspezifisch an der Kreuzung von gegebener Gruppe mit
+   * @param id_Gruppe Primï¿½rschlï¿½ssel der Gruppe
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
+   * @return Primï¿½rschlï¿½ssel aller GruppeGebietsspezifisch an der Kreuzung von gegebener Gruppe mit
    *         gegebenem Gebiet
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllByGruppeAndGebiet(String id_Gruppe, String id_Gebiet)
@@ -114,9 +105,9 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * @param id_Gebiet Primärschlüssel des Gebiets
-   * @return Primärschlüssel aller GruppeGebietsspezifisch eines Gebiets, sortiert nach der Position
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
+   * @return Primï¿½rschlï¿½ssel aller GruppeGebietsspezifisch eines Gebiets, sortiert nach der Position
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllByGebietOrderByPosition(String id_Gebiet)
@@ -134,7 +125,7 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
    * @param id_Gebiet PG of region object Gebiet
    * @param gruppenschluessel Key for group or party
    * @return PK of the corresponding region specific group
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public String ejbFindByGebietAndGruppenschluessel(String id_Gebiet, int gruppenschluessel)
@@ -147,10 +138,10 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * @param id_Gruppe Primärschlüssel der Gruppe
-   * @return Primärschlüssel aller GruppeGebietsspezifisch einer Gruppe, geordnet nach Gebietsart
+   * @param id_Gruppe Primï¿½rschlï¿½ssel der Gruppe
+   * @return Primï¿½rschlï¿½ssel aller GruppeGebietsspezifisch einer Gruppe, geordnet nach Gebietsart
    *         und Position der jeweiligen Gebiete
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllByGruppeOrderByGebietsartAndPosition(String id_Gruppe)
@@ -169,10 +160,10 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   /**
    * @param position Position im betroffenen Gebiet (entspricht der Wahlzettelposition wo
    *          zutreffend)
-   * @param gebietIDs Gebiete über die gesucht wird
-   * @return Primärschlüssel aller GruppeGebietsspezifisch auf einer bestimmten Position in einer
+   * @param gebietIDs Gebiete ï¿½ber die gesucht wird
+   * @return Primï¿½rschlï¿½ssel aller GruppeGebietsspezifisch auf einer bestimmten Position in einer
    *         Gruppe von Gebieten
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllByPositionAndGebietCol(int position,
@@ -197,9 +188,9 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * @param id_Wahl Primärschlüssel der Wahl
-   * @return Primärschlüssel aller GruppeGebietsspezifisch der Wahl
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @param id_Wahl Primï¿½rschlï¿½ssel der Wahl
+   * @return Primï¿½rschlï¿½ssel aller GruppeGebietsspezifisch der Wahl
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllByWahl(String id_Wahl) throws FinderException, EJBException {
@@ -231,14 +222,14 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
   }
 
   /**
-   * Liefert die Primärschlüssel aller auf der Liste oder direkt zugelassenen
+   * Liefert die Primï¿½rschlï¿½ssel aller auf der Liste oder direkt zugelassenen
    * GruppeGebietsspezifisch eines Gebietes (also die, die eine Zeile auf dem Wahlzettel
    * beanspruchen)
    * 
-   * @param id_Gebiet Primärschlüssel des Gebiets
-   * @return Primärschlüssel aller auf der Liste oder direkt zugelassenen GruppeGebietsspezifisch
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets
+   * @return Primï¿½rschlï¿½ssel aller auf der Liste oder direkt zugelassenen GruppeGebietsspezifisch
    *         eines Gebietes
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllZugelassenByGebietSortByPosition(String id_Gebiet)
@@ -256,11 +247,11 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
    * Sucht nach erhaltenen Stimmanzahl die Gruppe/Gruppen im Gebiet mit der maximalen Stimmanzahl
    * heraus.
    * 
-   * @param id_Gebiet Primärschlüssel des Gebiets, in dem gesucht wird
-   * @param wahlergebnisart Wahlergebnisart, für die der/die Gewinner gesucht wird/werden
-   * @param stimmart Stimmart, für die der/die Gewinner gesucht wird/werden
-   * @return Primärschlüssel der Gruppe/Gruppen im Gebiet mit der maximalen Stimmanzahl
-   * @throws FinderException genereller Fehler bei der Durchführung der Suche
+   * @param id_Gebiet Primï¿½rschlï¿½ssel des Gebiets, in dem gesucht wird
+   * @param wahlergebnisart Wahlergebnisart, fï¿½r die der/die Gewinner gesucht wird/werden
+   * @param stimmart Stimmart, fï¿½r die der/die Gewinner gesucht wird/werden
+   * @return Primï¿½rschlï¿½ssel der Gruppe/Gruppen im Gebiet mit der maximalen Stimmanzahl
+   * @throws FinderException genereller Fehler bei der Durchfï¿½hrung der Suche
    * @throws EJBException bei einem allgemeinem Problem
    */
   public Collection<String> ejbFindAllGewinnerByGebiet(String id_Gebiet,
@@ -282,7 +273,7 @@ public class GruppeGebietsspezifischBean extends BasicGruppeGebietsspezifischBea
 
   /**
    * @return zusammengesetztes Wert-Objekt welches ein {@link GruppeGebietsspezifischModel} mit
-   *         einem {@link GruppeModel} und für der zugehörigen Kandidatenliste bündelt
+   *         einem {@link GruppeModel} und fï¿½r der zugehï¿½rigen Kandidatenliste bï¿½ndelt
    * @throws EJBException bei einem allgemeinem Problem
    */
   public GruppeGebietsspezifischGruppeComposite getGruppeGebietsspezifischGruppeComposite()

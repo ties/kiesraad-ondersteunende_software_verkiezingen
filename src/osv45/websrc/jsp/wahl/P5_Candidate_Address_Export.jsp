@@ -19,13 +19,14 @@
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
-<%  
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
+<%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "CandidateAddressExport"; //$NON-NLS-1$
 
 String breite = "100%"; //$NON-NLS-1$
 String prefix = ApplicationBeanKonstanten.PREFIX;
-int subwork = ClientHelper.getIntParameter(request.getParameter(ApplicationBeanKonstanten.PREFIX+"subwork"), 0); //$NON-NLS-1$
+int subwork = ClientHelper.getIntParameter(request.getParameter(prefix + "subwork"), 0); //$NON-NLS-1$
 DialogStateHolder state = admBean.getP5ExportStateCandidateAddress();
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 
@@ -39,43 +40,13 @@ String i18nText = "Export_Cand_Address_text"; //$NON-NLS-1$
     <title><ivu:int key="<%=i18nName%>"/></title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery.autocomplete.css">
-    <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.autocomplete.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/gbadata.js"></script>
-    <script type="text/javascript">
-        function doit(i, j, msec) {
-            //alert("doit");
-            var k = i;
-            var l = j;
-            if (k <= 50) {
-                //alert("doit");
-                eval("document.p" + k + ".src = '<%= request.getContextPath() %>/img/lila.gif'");
-                k++;
-                window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-            } else {
-                eval("document.p" + l + ".src = '<%= request.getContextPath() %>/img/leer.gif'");
-                if (k == 101) {
-                    k = -1;
-                    l = -1;
-                }
-                k++;
-                l++;
-                window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
-            } 
-        }
-            
-        function transp() {
-            var divTag = document.getElementById("content");
-            divTag.style.filter = "alpha(Opacity=60, FinishOpacity=0, Style=0, StartX=0, StartY=0, FinishX=1000, FinishY=1000)";
-            
-            var divTag = document.getElementById("trans");
-            divTag.className = "trans";
-            
-            var statusbalken  = document.getElementById("statusbalken");
-            statusbalken.style.display = 'inline';
-            doit(0,0,100);          
-        }
+   <script>
+     var contextPath = "<%=request.getContextPath()%>";
    </script>
+   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
    <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
 </head>
 <body class="hghell" onload="sc()">
@@ -138,11 +109,11 @@ String i18nText = "Export_Cand_Address_text"; //$NON-NLS-1$
                                                         <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                             <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
                                                             <% if (admBean._adminMsgExport != null && !admBean._adminMsgExport.isEmpty()) { %>
-                                                                <p style="color:red;"><b><%= admBean._adminMsgExport %></b></p>
+                                                                <p style="color:red;"><b><%=ClientHelper.forHTML(admBean._adminMsgExport)%></b></p>
                                                                     <% admBean._adminMsgExport = null; 
                                                             }
                                                             if (admBean._adminMsgExportConfirmation != null && !admBean._adminMsgExportConfirmation.isEmpty()) { %>
-                                                                <p style="color:green;"><b><%= admBean._adminMsgExportConfirmation %></b></p>
+                                                                <p style="color:green;"><b><%=ClientHelper.forHTML(admBean._adminMsgExportConfirmation)%></b></p>
                                                                     <% admBean._adminMsgExportConfirmation = null; 
                                                             } %>
                                                             <br/>
@@ -150,7 +121,7 @@ String i18nText = "Export_Cand_Address_text"; //$NON-NLS-1$
                                                                 <ivu:int key="<%=i18nText%>"/>
                                                                 <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 1em;">
                                                                     <% if (admBean._adminWarningOverride != null && !admBean._adminWarningOverride.isEmpty()) {%>
-                                                                        <p class="warningMessage"><b><%= admBean._adminWarningOverride %><br/>
+                                                                        <p class="warningMessage"><b><%= ClientHelper.forHTML(admBean._adminWarningOverride) %><br/>
                                                                             <ivu:int key="Datei_Ueberschreiben"/> </b></p>
                                                                         <% admBean._adminWarningOverride = null; %> 
                                                                         <input type="hidden" value="1" name="<%=ApplicationBeanKonstanten.PREFIX%>force"/>
@@ -177,13 +148,13 @@ String i18nText = "Export_Cand_Address_text"; //$NON-NLS-1$
                                                         <%
                                                           if (admBean._adminMsgExport != null && !admBean._adminMsgExport.isEmpty() ){
                                                         %>
-                                                            <p style="color:red;"><b><%=admBean._adminMsgExport%></b></p>
+                                                            <p style="color:red;"><b><%=ClientHelper.forHTML(admBean._adminMsgExport)%></b></p>
                                                             <% admBean._adminMsgExport = null;
                                                           
                                                           }
                                                           if (admBean._adminMsgExportConfirmation != null && !admBean._adminMsgExportConfirmation.isEmpty() ){
                                                         %>
-                                                            <p style="color:green;"><b><%=admBean._adminMsgExportConfirmation%></b></p>
+                                                            <p style="color:green;"><b><%=ClientHelper.forHTML(admBean._adminMsgExportConfirmation)%></b></p>
                                                             <% admBean._adminMsgExportConfirmation = null;
                                                           } %>
                                                         <ivu:form action="<%=urlExp%>" onsubmit="transp();">

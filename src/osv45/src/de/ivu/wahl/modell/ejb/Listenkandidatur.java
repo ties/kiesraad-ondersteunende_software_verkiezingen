@@ -9,7 +9,7 @@ import javax.ejb.EJBLocalObject;
  * denotes that the candidate is nominated on the P2-list on the given list position (int
  * getListenplatz()).
  * 
- * @author cos@ivu.de (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic (c) 2003 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface Listenkandidatur extends BasicListenkandidatur {

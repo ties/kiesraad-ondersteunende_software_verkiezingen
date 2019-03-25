@@ -36,6 +36,7 @@ import nu.xom.Element;
 
 import de.ivu.ejb.IVUBeanBase;
 import de.ivu.wahl.WahlInfo;
+import de.ivu.wahl.client.beans.PropertyWithDefaultValuesProvider;
 import de.ivu.wahl.dataimport.XMLTags;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
@@ -45,7 +46,6 @@ import de.ivu.wahl.modell.PublicationLanguage;
 import de.ivu.wahl.modell.ejb.Alternative;
 import de.ivu.wahl.modell.ejb.Besonderheit;
 import de.ivu.wahl.modell.ejb.DHondtQuotient;
-import de.ivu.wahl.modell.ejb.FiktiveSitzverteilung;
 import de.ivu.wahl.modell.ejb.Gebiet;
 import de.ivu.wahl.modell.ejb.Gruppe;
 import de.ivu.wahl.modell.ejb.GruppeGebietsspezifisch;
@@ -53,24 +53,23 @@ import de.ivu.wahl.modell.ejb.Konflikt;
 import de.ivu.wahl.modell.ejb.Liste;
 import de.ivu.wahl.modell.ejb.Listenkandidatur;
 import de.ivu.wahl.modell.ejb.ListenkandidaturErgebnis;
-import de.ivu.wahl.modell.ejb.Listenkombination;
-import de.ivu.wahl.modell.ejb.ListenkombinationZulassung;
 import de.ivu.wahl.modell.ejb.ListenplatzNeu;
 import de.ivu.wahl.modell.ejb.ListenplatzNeuHome;
 import de.ivu.wahl.modell.ejb.Personendaten;
 import de.ivu.wahl.modell.ejb.Restsitzverteilung;
 import de.ivu.wahl.modell.ejb.SitzberechnungErgebnis;
 import de.ivu.wahl.modell.ejb.Unterverteilung;
+import de.ivu.wahl.result.Fraction;
 import de.ivu.wahl.result.drawlots.DecisionType;
+import de.ivu.wahl.result.gsda.GsdaParameters;
 import de.ivu.wahl.result.result.AssignmentType;
 import de.ivu.wahl.result.result.Distribution;
-import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 import de.ivu.wahl.wus.reportgen.EMLMessageType;
 
 /**
  * Helper class for creating the rg:RG520 element.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 @SuppressWarnings("synthetic-access")
 public class RG520Helper extends BasicRGHelper {
@@ -110,23 +109,22 @@ public class RG520Helper extends BasicRGHelper {
       boolean forProtocolAppendix) {
     Element rg520 = createRGElement(RG_520_ELEMENT);
     if (!forProtocolAppendix) {
-      String dateStr = bean.getPropertyHandling().getProperty(RG_DATE_OF_MEETING_O1P20);
+      String dateStr = getProperty(RG_DATE_OF_MEETING_O1P20);
       rg520.appendChild(createRGElementWithValue(RG_DATE_OF_MEETING_O1P20,
           XMLHelper.createDateString(dateStr)));
     }
 
     if (!forCandidateLetters && !forProtocolAppendix) {
-      String timeStr = bean.getPropertyHandling().getProperty(RG_TIME_OF_MEETINGP20);
+      String timeStr = getProperty(RG_TIME_OF_MEETINGP20);
       rg520.appendChild(createRGElementWithValue(RG_TIME_OF_MEETINGP20, timeStr));
 
       // For EK only
-      String dateStr = bean.getPropertyHandling().getProperty(RG_DATE_PUBLICATION_VOTE_VALUES);
+      String dateStr = getProperty(RG_DATE_PUBLICATION_VOTE_VALUES);
       if (dateStr != null && dateStr.length() > 0) {
         rg520.appendChild(createRGElementWithValue(RG_DATE_PUBLICATION_VOTE_VALUES,
             XMLHelper.createDateString(dateStr)));
       }
-      String numberOfPublication = bean.getPropertyHandling()
-          .getProperty(RG_NUMBER_PUBLICATION_VOTE_VALUES);
+      String numberOfPublication = getProperty(RG_NUMBER_PUBLICATION_VOTE_VALUES);
       if (numberOfPublication != null && numberOfPublication.length() > 0) {
         rg520.appendChild(createRGElementWithValue(RG_NUMBER_PUBLICATION_VOTE_VALUES,
             numberOfPublication));
@@ -152,24 +150,23 @@ public class RG520Helper extends BasicRGHelper {
       appendOverviewOfListsAndDistricts(rg520, gebiete);
       SortedMap<Integer, VotesByRegionNumber> groupsAndDistrictsAndVotes = appendOverviewOfListsAndDistrictsAndVotes(rg520);
       appendElectoralQuota(rg520, id_Ergebniseingang, groupsAndDistrictsAndVotes);
-      appendResultWithoutRegardingCombinedLists(rg520, id_Ergebniseingang);
-      appendCheckingCombinedLists(rg520, id_Ergebniseingang);
+      // appendResultWithoutRegardingCombinedLists(rg520, id_Ergebniseingang);
+      appendCheckingCombinedLists(rg520); // creates an empty element
       List<SitzberechnungErgebnis> firstAssignment = appendFirstAssignment(rg520,
           id_Ergebniseingang);
       appendNiemeyerAssignment(rg520, id_Ergebniseingang, firstAssignment);
       appendDHondtAssignment(rg520, id_Ergebniseingang);
       appendAbsoluteMajority(rg520, id_Ergebniseingang);
       appendExhaustedLists(rg520, id_Ergebniseingang);
-      appendAssignmentsWithinCombinedLists(rg520, id_Ergebniseingang);
-      appendAssignmentWithinCombinedListsLines(rg520, id_Ergebniseingang);
+      // appendAssignmentsWithinCombinedLists(rg520, id_Ergebniseingang);
+      // appendAssignmentWithinCombinedListsLines(rg520, id_Ergebniseingang);
       appendAssignmentsWithinListGroups(rg520, id_Ergebniseingang, groupsAndDistrictsAndVotes);
       rg520.appendChild(createOverviewOfCandidatesAndResults(id_Ergebniseingang));
       rg520.appendChild(createOverviewOfElectedCandidates(id_Ergebniseingang));
     }
     rg520.appendChild(bean.createVoterObjectionsRG());
-    if (forCandidateLetters) {
-      rg520.appendChild(createLetterForElectedCandidates());
-    }
+    rg520.appendChild(createLetterForElectedCandidates());
+
     return rg520;
   }
 
@@ -345,156 +342,12 @@ public class RG520Helper extends BasicRGHelper {
     return fraction;
   }
 
-  private void appendResultWithoutRegardingCombinedLists(Element parent, String id_Ergebniseingang) {
-    try {
-      Collection<FiktiveSitzverteilung> fiktiveSitzergebnisse = bean.getFiktiveSitzverteilungHome()
-          .findAllByErgebniseingang(id_Ergebniseingang);
-      if (fiktiveSitzergebnisse.isEmpty()) {
-        return;
-      }
-
-      Element child = createRGElement(RG_WITHOUT_COMBINED_LISTS);
-      parent.appendChild(child);
-
-      SortedMap<Integer, Integer> gruppenschluesselUndSitze = new TreeMap<Integer, Integer>();
-      for (FiktiveSitzverteilung fiktiveSitzverteilung : fiktiveSitzergebnisse) {
-        int seats = fiktiveSitzverteilung.getSitzeGesamtzahl();
-        Gruppe gruppe = fiktiveSitzverteilung.getGruppe();
-        gruppenschluesselUndSitze.put(gruppe.getSchluessel(), seats);
-      }
-
-      List<ListenkombinationZulassung> lkzCol = findListenkombinationZulassung(id_Ergebniseingang);
-
-      for (Integer gruppenschluessel : gruppenschluesselUndSitze.keySet()) {
-        int seats = gruppenschluesselUndSitze.get(gruppenschluessel);
-        Element listAndSeats = createRGElement(RG_LISTS_SEATS);
-        listAndSeats.addAttribute(new Attribute(ATTR_SEATS, String.valueOf(seats)));
-        listAndSeats
-            .addAttribute(new Attribute(ATTR_LIST_NUMBER, String.valueOf(gruppenschluessel)));
-        String combinedListId = getCombinedListIdForList(lkzCol, gruppenschluessel);
-        if (combinedListId != null) {
-          listAndSeats.addAttribute(new Attribute(ATTR_COMBINATION_ID, combinedListId));
-        }
-
-        child.appendChild(listAndSeats);
-      }
-    } catch (FinderException e) {
-      e.printStackTrace();
-      throw new EJBException(Messages.bind(MessageKeys.Error_FehlerBeimLesenDer_0,
-          "FiktiveSitzverteilung"), e); //$NON-NLS-1$
-    }
-  }
-
-  private String getCombinedListIdForList(List<ListenkombinationZulassung> lkzCol,
-      Integer gruppenschluessel) {
-    for (ListenkombinationZulassung listenkombinationZulassung : lkzCol) {
-      if (listenkombinationZulassung.getGruppe() != null
-          && listenkombinationZulassung.getGruppe().getSchluessel() == gruppenschluessel) {
-        return listenkombinationZulassung.getListenkombination().getID_Listenkombination();
-      }
-    }
-    return null;
-  }
-
   /**
-   * To generate the CheckingCombinedLists element, load all ListenkombinationZulassung. A
-   * ListenkombinationZulassung may refer to a combined list or to a P3-list that is part of a
-   * combined list.
+   * The CheckingCombinedLists element is always empty.
    */
-  private void appendCheckingCombinedLists(Element rg520, String id_Ergebniseingang) {
-    List<ListenkombinationZulassung> lkzCol = findListenkombinationZulassung(id_Ergebniseingang);
-    if (lkzCol.size() == 0) {
-      Element result = createRGElement(RG_CHECK_COMBINED_LISTS);
-      rg520.appendChild(result);
-      return;
-    }
-    Map<String, Integer> listVotes = getVotesForP3ListsAndCombinations(lkzCol);
-
+  private void appendCheckingCombinedLists(Element rg520) {
     Element result = createRGElement(RG_CHECK_COMBINED_LISTS);
-
-    // Now iterate again to generate the XML structure - very close to table structure
-    String idListenkombination = null;
-    Integer combinedListVotes = null;
-    for (ListenkombinationZulassung lkz : lkzCol) {
-      if (lkz.getID_Gruppe() == null) {
-        // Start new combined list
-        if (combinedListVotes != null) {
-          // But first finish the previous combined list
-          Element line = createRGElement(RG_CHECK_COMBINED_LISTS_LINE);
-          Element child = createRGElementWithValue(RG_VOTES_COMBINED_LIST, combinedListVotes);
-          line.appendChild(child);
-          result.appendChild(line);
-        }
-        idListenkombination = lkz.getID_Listenkombination(); // remember for later
-        combinedListVotes = listVotes.get(idListenkombination); // remember for later
-      } else {
-        // add a P3-list within the combined list
-        Element line = createListToCombinedList(idListenkombination, listVotes, lkz);
-        result.appendChild(line);
-        idListenkombination = null; // only append id to first line of combined list
-      }
-    }
-    if (combinedListVotes != null) {
-      // Finally finish the last combined list
-      Element line = createRGElement(RG_CHECK_COMBINED_LISTS_LINE);
-      Element child = createRGElementWithValue(RG_VOTES_COMBINED_LIST, combinedListVotes);
-      line.appendChild(child);
-      result.appendChild(line);
-    }
-
     rg520.appendChild(result);
-  }
-
-  private List<ListenkombinationZulassung> findListenkombinationZulassung(String id_Ergebniseingang) {
-    try {
-      List<ListenkombinationZulassung> lkzCol = new ArrayList<ListenkombinationZulassung>(bean
-          .getListenkombinationZulassungHome().findAllByErgebniseingang(id_Ergebniseingang));
-      Collections.sort(lkzCol, new LKZComparator());
-      return lkzCol;
-    } catch (FinderException e) {
-      e.printStackTrace();
-      throw new EJBException(Messages.bind(MessageKeys.Error_FehlerBeimLesenDer_0,
-          "ListenkombinationZulassung"), e); //$NON-NLS-1$
-    }
-  }
-
-  private Map<String, Integer> getVotesForP3ListsAndCombinations(List<ListenkombinationZulassung> lkzCol) {
-    Map<String, Integer> listVotes = votesHelper.getVotesForP3ListsAnd0ForCombinations();
-
-    // First time we iterate is only to add up the votes of the combined list.
-    for (ListenkombinationZulassung lkz : lkzCol) {
-      if (lkz.getID_Gruppe() != null && lkz.isZugelassen()) {
-        String idListenkombination = lkz.getID_Listenkombination();
-        String idGruppe = lkz.getGruppe().getID_Gruppe();
-        Integer votes1 = listVotes.get(idGruppe);
-        Integer votes2 = listVotes.get(idListenkombination);
-        if (votes1 != null) {
-          if (votes2 != null) {
-            listVotes.put(idListenkombination, votes2 + votes1);
-          } else {
-            listVotes.put(idListenkombination, votes1);
-          }
-        }
-      }
-    }
-    return listVotes;
-  }
-
-  /**
-   * Creates a &lt;CheckingCombinedLists&gt; node
-   */
-  private Element createListToCombinedList(String idListenkombination,
-      Map<String, Integer> listVotes,
-      ListenkombinationZulassung lkz) {
-    Element line = createRGElement(RG_CHECK_COMBINED_LISTS_LINE);
-    if (idListenkombination != null) {
-      line.appendChild(createRGElementWithValue(RG_COMBINED_LIST_ID, idListenkombination));
-    }
-    line.appendChild(createRGElementWithValue(RG_NUMBER_LIST, lkz.getGruppe().getSchluessel()));
-    line.appendChild(createRGElementWithValue(RG_VOTES_FOR_LIST,
-        listVotes.get(lkz.getGruppe().getID_Gruppe())));
-    line.appendChild(createRGElementWithValue(RG_REGARDED, String.valueOf(lkz.isZugelassen())));
-    return line;
   }
 
   /**
@@ -823,18 +676,17 @@ public class RG520Helper extends BasicRGHelper {
       // All first Assignments
       Element result = createRGElement(RG_NIEMEYER_ASSIGNMENT);
       for (SitzberechnungErgebnis firstAss : firstAssignment) {
+        Fraction minimumForLargestRemainder = GsdaParameters
+            .getB3_minimumForLargestRemainder(WahlInfo.getWahlInfo().getElectionSubcategory());
         int votes = firstAss.getZaehler();
         // Find out which P42-list is allowed to take part in the Niemeyer assignment (needs >= 75%
         // of KT), see OSVI-1171, i.e.
         // votes >= 3 / 4 * gueltigeStimmen / anzahlSitze
         // 4 * votes * anzahlSitze >= 3 * gueltigeStimmen
-        long lhs = 4L * votes * anzahlSitze;
-        long rhs = 3L * gueltigeStimmen;
-        if (WahlInfo.getWahlInfo().getElectionCategory().equals(ElectionCategory.BC)) {
-          // See OSV-1296: For BC elections, the relevant fraction is 1/2, not 3/4
-          lhs = 2L * votes * anzahlSitze;
-          rhs = 1L * gueltigeStimmen;
-        }
+        // See OSVI-1466: For BC elections, the relevant fraction is 1/4, not 3/4
+
+        long lhs = minimumForLargestRemainder.getDenominator() * votes * anzahlSitze;
+        long rhs = minimumForLargestRemainder.getNumerator() * gueltigeStimmen;
         if (lhs >= rhs) {
           Element line = createRGElement(RG_NIEMEYER_ASSIGNMENT_LINE);
           line.appendChild(createListOrCombinedList(firstAss, false, Distribution.P42));
@@ -1033,132 +885,6 @@ public class RG520Helper extends BasicRGHelper {
     }
   }
 
-  /**
-   * Create for each sub-distribution within a combined list an EML element
-   * <AssignmentWithinCombinedLists>.
-   */
-  private void appendAssignmentsWithinCombinedLists(Element rg520, String id_Ergebniseingang) {
-    try {
-      Collection<SitzberechnungErgebnis> sbes = bean.getSitzberechnungErgebnisHome()
-          .findAllByErgebniseingangAndVerteilung(id_Ergebniseingang, Distribution.P3.getId());
-      SitzberechnungErgebnisHelper sbeHelper = new SitzberechnungErgebnisHelper(sbes);
-
-      List<Unterverteilung> subDistributions = getSubdistributionsInCombinedLists(id_Ergebniseingang);
-
-      List<Konflikt> konflikteNiemeyer = getKonflikte(id_Ergebniseingang, DecisionType.NIEMEYER_P3);
-      List<Konflikt> konflikteDHondt = getKonflikte(id_Ergebniseingang, DecisionType.DHONDT_P3);
-
-      for (Unterverteilung uv : subDistributions) {
-        String id_Listenkombination = uv.getID_Listenkombination();
-        Element awcl = createRGElementWithAttribute(RG_ASSIGNMENT_COMBINED_LISTS,
-            ATTR_COMBINATION_ID,
-            id_Listenkombination);
-        Element quota = createRGElement(RG_QUOTA);
-        quota.appendChild(createFractionRG(uv.getStimmen(), uv.getSitze()));
-        awcl.appendChild(quota);
-
-        // For each P3-list in the combined list, find out the votes, first assignment seats,
-        // Niemeyer seats, Niemeyer remainder
-        SortedMap<Integer, Element> listNumberAndLine = new TreeMap<Integer, Element>();
-        int priorSeats = 0;
-        for (String id_Gruppe : sbeHelper.getChildren(id_Listenkombination)) {
-          priorSeats += createAssignmentWithinCombinedListsLine(sbeHelper,
-              id_Gruppe,
-              listNumberAndLine);
-        }
-        for (Element line : listNumberAndLine.values()) {
-          awcl.appendChild(line);
-        }
-        awcl.addAttribute(new Attribute(ATTR_PRIOR_SEATS, String.valueOf(priorSeats)));
-        awcl.addAttribute(new Attribute(ATTR_NEW_SEATS, String.valueOf(uv.getSitze() - priorSeats)));
-
-        // Special cases: drawing lots (Niemeyer), exhausted list, d'Hondt
-        List<Konflikt> decisionsNiemeyer = getDecisionsForCombinedList(konflikteNiemeyer,
-            id_Listenkombination);
-        appendAllottings(awcl, decisionsNiemeyer, Distribution.P3);
-        appendExhaustedP3Lists(awcl, id_Listenkombination, sbeHelper);
-        List<Konflikt> decisionsDHondt = getDecisionsForCombinedList(konflikteDHondt,
-            id_Listenkombination);
-        Collection<Restsitzverteilung> rsList = bean.getRestsitzverteilungHome()
-            .findAllByListenkombination(id_Ergebniseingang, id_Listenkombination);
-        appendDHondtAssignment(awcl, rsList, decisionsDHondt, "P13", Distribution.P3); //$NON-NLS-1$
-
-        rg520.appendChild(awcl);
-      }
-    } catch (FinderException e) {
-      throw new EJBException(Messages.bind(MessageKeys.Error_FehlerBeimLesenDer_0,
-          "Sitzberechnungsergebnisse"), e); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   */
-  private void appendAssignmentWithinCombinedListsLines(Element rg520, String id_Ergebniseingang) {
-    try {
-      Collection<SitzberechnungErgebnis> sbes = bean.getSitzberechnungErgebnisHome()
-          .findAllByErgebniseingangAndVerteilung(id_Ergebniseingang, Distribution.P3.getId());
-      SitzberechnungErgebnisHelper sbeHelper = new SitzberechnungErgebnisHelper(sbes);
-
-      List<Unterverteilung> subDistributions = getSubdistributionsInCombinedLists(id_Ergebniseingang);
-      for (Unterverteilung uv : subDistributions) {
-        Element firstLine = createFirstAssignmentWithinCombineListsLine(uv);
-        rg520.appendChild(firstLine);
-
-        // For each P3-list in the combined list, find out the votes, first assignment seats,
-        // Niemeyer seats, Niemeyer remainder
-        SortedMap<Integer, Element> listNumberAndLine = new TreeMap<Integer, Element>();
-        for (String id_Gruppe : sbeHelper.getChildren(uv.getID_Listenkombination())) {
-          createAssignmentWithinCombinedListsLine(sbeHelper, id_Gruppe, listNumberAndLine);
-        }
-        for (Element line : listNumberAndLine.values()) {
-          rg520.appendChild(line);
-        }
-
-      }
-    } catch (FinderException e) {
-      throw new EJBException(Messages.bind(MessageKeys.Error_FehlerBeimLesenDer_0,
-          "Sitzberechnungsergebnisse"), e); //$NON-NLS-1$
-    }
-  }
-
-  private Element createFirstAssignmentWithinCombineListsLine(Unterverteilung uv) {
-    Element firstLine = createRGElement(RG_ASSIGNMENT_COMBINED_LISTS_LINE);
-    Element id = createRGElementWithAttribute(RG_LIST_COMBINED_LIST,
-        ATTR_COMBINATION_ID,
-        uv.getID_Listenkombination());
-    firstLine.appendChild(id);
-
-    Element quota = createRGElement(RG_QUOTA);
-    quota.appendChild(createFractionRG(uv.getStimmen(), uv.getSitze()));
-    firstLine.appendChild(quota);
-
-    firstLine.appendChild(createRGElementWithValue(RG_VOTES, uv.getStimmen()));
-    return firstLine;
-  }
-
-  private List<Unterverteilung> getSubdistributionsInCombinedLists(String id_Ergebniseingang)
-      throws FinderException {
-    List<Unterverteilung> subDistributions = new ArrayList<Unterverteilung>(bean
-        .getUnterverteilungHome().findAllForP3(id_Ergebniseingang));
-    Collections.sort(subDistributions, new Comparator<Unterverteilung>() {
-      public int compare(Unterverteilung x, Unterverteilung y) {
-        return x.getID_Listenkombination().compareTo(y.getID_Listenkombination());
-      }
-    });
-    return subDistributions;
-  }
-
-  private List<Konflikt> getDecisionsForCombinedList(List<Konflikt> konflikte,
-      String id_Listenkombination) {
-    List<Konflikt> result = new ArrayList<Konflikt>();
-    for (Konflikt konflikt : konflikte) {
-      if (belongsToCombinedList(konflikt, id_Listenkombination)) {
-        result.add(konflikt);
-      }
-    }
-    return result;
-  }
-
   private List<Konflikt> getDecisionsForP3Lists(List<Konflikt> konflikte, String id_Gruppe) {
     List<Konflikt> result = new ArrayList<Konflikt>();
     for (Konflikt konflikt : konflikte) {
@@ -1167,26 +893,6 @@ public class RG520Helper extends BasicRGHelper {
       }
     }
     return result;
-  }
-
-  private boolean belongsToCombinedList(Konflikt konflikt, String id_Listenkombination) {
-    try {
-      Gruppe gruppe = konflikt.getAlternativeCol().iterator().next().getGruppe();
-      if (gruppe == null) {
-        return false;
-      }
-      Listenkombination listenkombination = gruppe.getListenkombination();
-      if (listenkombination == null) {
-        return false;
-      }
-      return listenkombination.getID_Listenkombination().equals(id_Listenkombination);
-    } catch (NullPointerException e) {
-      LOGGER.error("Error in belongsToCombinedList()", e); //$NON-NLS-1$
-      return false;
-    } catch (NoSuchElementException e) {
-      LOGGER.error("Error in belongsToCombinedList()", e); //$NON-NLS-1$
-      return false;
-    }
   }
 
   /**
@@ -1210,17 +916,6 @@ public class RG520Helper extends BasicRGHelper {
   }
 
   /**
-   * Adds XML elements for exhausted P3-lists, if needed
-   */
-  private void appendExhaustedP3Lists(Element awcl,
-      String combId,
-      SitzberechnungErgebnisHelper sbeHelper) {
-    Collection<SitzberechnungErgebnis> exhaustedLists = sbeHelper
-        .getExhaustedListAssignments(combId);
-    appendExhaustedLists(awcl, exhaustedLists, Distribution.P3);
-  }
-
-  /**
    * Adds XML elements for exhausted P2-lists, if needed
    */
   private void appendExhaustedP2Lists(Element awlg,
@@ -1229,34 +924,6 @@ public class RG520Helper extends BasicRGHelper {
     Collection<SitzberechnungErgebnis> exhaustedLists = sbeHelper
         .getExhaustedListAssignments(id_Gruppe);
     appendExhaustedLists(awlg, exhaustedLists, Distribution.P2);
-  }
-
-  /**
-   * Creates a new Element and adds it under the key of the P3-list to the given map
-   * assignmentWithinCombinedListsLines
-   * 
-   * @return the number of seats from the first assignment (votes / quota) truncated
-   */
-  private int createAssignmentWithinCombinedListsLine(SitzberechnungErgebnisHelper sbeHelper,
-      String id_Gruppe,
-      SortedMap<Integer, Element> listNumberAndLine) {
-    Element line = createRGElement(RG_ASSIGNMENT_COMBINED_LISTS_LINE);
-    SitzberechnungErgebnis firstAss = sbeHelper.getFirstAssignment(id_Gruppe);
-    int gruppeSchluessel = firstAss.getGruppe().getSchluessel();
-    line.appendChild(createRGElementWithAttribute(RG_LIST_COMBINED_LIST,
-        ATTR_LIST_NUMBER,
-        String.valueOf(gruppeSchluessel)));
-    line.appendChild(createRGElementWithValue(RG_VOTES, firstAss.getZaehler()));
-    int priorSeats = firstAss.getSitze();
-    line.appendChild(createRGElementWithValue(RG_PRIOR_SEATS, priorSeats));
-    line.appendChild(createRGElementWithValue(RG_NEW_SEATS, sbeHelper.getNiemeyerSeats(id_Gruppe)));
-    Element remainder = createRGElement(RG_REMAINDER);
-    remainder.appendChild(createFractionRG(firstAss.getZaehlerVomRest(),
-        firstAss.getNennerVomRest()));
-    line.appendChild(remainder);
-    listNumberAndLine.put(gruppeSchluessel, line);
-
-    return priorSeats;
   }
 
   private void appendAssignmentsWithinListGroups(Element rg520,
@@ -1270,6 +937,7 @@ public class RG520Helper extends BasicRGHelper {
       List<Unterverteilung> subDistributions = new ArrayList<Unterverteilung>(bean
           .getUnterverteilungHome().findAllForP2(id_Ergebniseingang));
       Collections.sort(subDistributions, new Comparator<Unterverteilung>() {
+        @Override
         public int compare(Unterverteilung x, Unterverteilung y) {
           return x.getID_Gruppe().compareTo(y.getID_Gruppe());
         }
@@ -1424,19 +1092,24 @@ public class RG520Helper extends BasicRGHelper {
     data.appendChild(createElementWithRepositoryValue(RG_REJECTION_ADDRESS, null));
     data.appendChild(createElementWithRepositoryValue(RG_REJECTION_LOCATION, null));
     data.appendChild(createElementWithRepositoryValue(RG_REJECTION_POSTALCODE, null));
+    data.appendChild(createElementWithRepositoryValue(RG_REPRESENTATIVE_BODY, null));
     return data;
   }
 
   private Element createElementWithRepositoryValue(String name, String alternativeName) {
-    String value = bean.getPropertyHandling().getProperty(name);
+    String value = getProperty(name);
     if (StringUtils.isEmpty(value) && !StringUtils.isEmpty(alternativeName)) {
-      value = bean.getPropertyHandling().getProperty(alternativeName);
+      value = getProperty(alternativeName);
     }
     return createRGElementWithValue(name, value);
   }
 
+  private String getProperty(String name) {
+    return new PropertyWithDefaultValuesProvider(bean.getPropertyHandling()).getProperty(name);
+  }
+
   private void addElementWithRepositoryDateValue(Element parent, String name) {
-    String value = bean.getPropertyHandling().getProperty(name);
+    String value = getProperty(name);
     if (value != null) {
       parent.appendChild(createRGElementWithValue(name, XMLHelper.createDateString(value)));
     }
@@ -1456,8 +1129,7 @@ public class RG520Helper extends BasicRGHelper {
   private Element createListOrCombinedList(SitzberechnungErgebnis sbe,
       boolean districtNumberForIndependentLists,
       Distribution distribution) {
-    return createListOrCombinedList(sbe.getListenkombination(),
-        sbe.getGruppe(),
+    return createListOrCombinedList(sbe.getGruppe(),
         sbe.getListe(),
         districtNumberForIndependentLists,
         distribution);
@@ -1466,55 +1138,28 @@ public class RG520Helper extends BasicRGHelper {
   private Element createListOrCombinedList(Restsitzverteilung rs) {
     Distribution distribution = Distribution.byId(rs.getVerteilung());
     if (Distribution.P42.equals(distribution)) {
-      return createListOrCombinedList(rs.getListenkombination(),
-          rs.getGruppe(),
-          null,
-          true,
-          distribution);
+      return createListOrCombinedList(rs.getGruppe(), null, true, distribution);
     } else if (Distribution.P3.equals(distribution) || Distribution.FICTITIOUS.equals(distribution)) {
-      return createListOrCombinedList(null, rs.getGruppe(), null, true, distribution);
+      return createListOrCombinedList(rs.getGruppe(), null, true, distribution);
     } else if (Distribution.P2.equals(distribution)) {
-      return createListOrCombinedList(null, null, rs.getListe(), true, distribution);
+      return createListOrCombinedList(null, rs.getListe(), true, distribution);
     } else {
       // Should never happen
-      return createListOrCombinedList(rs.getListenkombination(),
-          rs.getGruppe(),
-          rs.getListe(),
-          true,
-          distribution);
+      return createListOrCombinedList(rs.getGruppe(), rs.getListe(), true, distribution);
     }
   }
 
   private Element createListOrCombinedList(Alternative los, Distribution distribution) {
-    return createListOrCombinedList(los.getListenkombination(),
-        los.getGruppe(),
-        los.getListe(),
-        false,
-        distribution);
+    return createListOrCombinedList(los.getGruppe(), los.getListe(), false, distribution);
   }
 
-  private Element createListOrCombinedList(Listenkombination lk,
-      Gruppe gruppe,
+  private Element createListOrCombinedList(Gruppe gruppe,
       Liste liste,
       boolean districtNumberForIndependentLists,
       Distribution distribution) {
     Element id = createRGElement(RG_LIST_COMBINED_LIST);
 
-    if (lk != null && distribution.equals(Distribution.P42)) {
-      // Display a combined list with all the containing P3-lists
-      id.addAttribute(new Attribute(ATTR_COMBINATION_ID, lk.getID_Listenkombination()));
-      SortedSet<Integer> listNumbers = new TreeSet<Integer>();
-      for (ListenkombinationZulassung lkz : lk.getListenkombinationZulassungCol()) {
-        Gruppe gruppeInLK = lkz.getGruppe();
-        if (gruppeInLK != null && lkz.isZugelassen()) {
-          listNumbers.add(gruppeInLK.getSchluessel());
-        }
-      }
-      for (Integer listNumber : listNumbers) {
-        // create <rg:ListInCombination>
-        id.appendChild(createRGElementWithValue(RG_LIST_IN_COMBINATION, listNumber));
-      }
-    } else if (gruppe != null && !distribution.equals(Distribution.P2)) {
+    if (gruppe != null && !distribution.equals(Distribution.P2)) {
       // Display a P3-list (Party) with the number of the list
       String key = String.valueOf(gruppe.getSchluessel());
       id.addAttribute(new Attribute(ATTR_LIST_NUMBER, key));
@@ -1705,6 +1350,7 @@ public class RG520Helper extends BasicRGHelper {
           .findAllByErgebniseingangAndGewaehlt(id_Ergebniseingang));
       // Sort candidates by name
       Collections.sort(electedCol, new Comparator<ListenkandidaturErgebnis>() {
+        @Override
         public int compare(ListenkandidaturErgebnis lke1, ListenkandidaturErgebnis lke2) {
           Personendaten p1 = lke1.getListenkandidatur().getPersonendaten();
           Personendaten p2 = lke2.getListenkandidatur().getPersonendaten();
@@ -1777,33 +1423,13 @@ public class RG520Helper extends BasicRGHelper {
   // *********** Some special Comparators ************
 
   /**
-   * Sort checked lists in combinations: combination results ordered by id, each combination result
-   * followed by its P3-lists ordered by key
-   * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
-   */
-  private class LKZComparator implements Comparator<ListenkombinationZulassung> {
-    public int compare(final ListenkombinationZulassung l1, final ListenkombinationZulassung l2) {
-      if (!l1.getID_Listenkombination().equals(l2.getID_Listenkombination())) {
-        return l1.getID_Listenkombination().compareTo(l2.getID_Listenkombination());
-      }
-      if (l1.getID_Gruppe() == null) {
-        return -1;
-      }
-      if (l2.getID_Gruppe() == null) {
-        return 1;
-      }
-      return Integer.signum(l1.getGruppe().getSchluessel() - l2.getGruppe().getSchluessel());
-    }
-  }
-
-  /**
    * Sort assignment lines: first combination results ordered by id, followed by its P3-lists
    * ordered by key
    * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   private class AssignmentComparator implements Comparator<SitzberechnungErgebnis> {
+    @Override
     public int compare(final SitzberechnungErgebnis sbe1, final SitzberechnungErgebnis sbe2) {
       if (sbe1.getSchrittnummer() != sbe2.getSchrittnummer()) {
         return Integer.signum(sbe1.getSchrittnummer() - sbe2.getSchrittnummer());
@@ -1825,9 +1451,10 @@ public class RG520Helper extends BasicRGHelper {
    * Sort assignment lines: first combination results ordered by id, followed by its P3-lists
    * ordered by key
    * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   private class RestsitzverteilungComparator implements Comparator<Restsitzverteilung> {
+    @Override
     public int compare(final Restsitzverteilung sbe1, final Restsitzverteilung sbe2) {
       if (sbe1.getID_Listenkombination() != null && sbe2.getID_Listenkombination() != null) {
         return sbe1.getID_Listenkombination().compareTo(sbe2.getID_Listenkombination());

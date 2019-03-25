@@ -12,7 +12,7 @@ import de.ivu.wahl.result.Fraction;
  * Supplementary information containing the number of votes of the list and the remainder according
  * to Niemeyer of the list that receive the assignment.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class AssignmentSupplementWithRemainderFraction extends AssignmentSupplementVotes {
   private final Fraction remainder;

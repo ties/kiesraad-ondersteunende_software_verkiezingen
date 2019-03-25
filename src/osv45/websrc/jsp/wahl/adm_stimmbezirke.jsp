@@ -1,31 +1,30 @@
 <jsp:directive.page import="de.ivu.wahl.client.util.ClientHelper" />
 <jsp:directive.page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" />
-<%@ page import="de.ivu.wahl.modell.GebietModel"%>
 <%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.IImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.ImportElectionMetadata"%>
+<%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
+<%@ page import="de.ivu.wahl.client.beans.Command"%>
 <%@ page import="de.ivu.wahl.client.beans.WahlImportBean"%>
+<%@ page import="de.ivu.wahl.modell.GebietModel"%>
+<%@ page import="de.ivu.wahl.modell.WahlModel"%>
+<%@ page import="de.ivu.wahl.modell.ejb.Gebiet"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
-<%@ page import="de.ivu.wahl.client.beans.Command"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Collection"%>
-<%@ page import="java.util.Collections"%>
-<%@ page import="java.util.Comparator"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.List"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.Map.Entry"%>
-<%@ page import="de.ivu.wahl.modell.WahlModel"%>
-<%@ page import="de.ivu.wahl.modell.ejb.Gebiet"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="impBean" scope="session" class="de.ivu.wahl.client.beans.WahlImportBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
+
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "admStimmbez"; //$NON-NLS-1$
 
@@ -42,10 +41,8 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
     // check for locks of other users
     boolean lockByOtherUser = false;
     String keyForViewlock = appBean.getAnwContext().getKeyForViewlock();
-    final Iterator<Entry<String, String>> iter = appBean.getINPUT_MAP().entrySet().iterator();
-    while (iter.hasNext()) {
-        Entry<String, String> entry = iter.next();
-        if (!entry.getValue().equals(keyForViewlock)) {
+    for (String value : appBean.getINPUT_MAP().values()) {
+        if (!value.equals(keyForViewlock)) {
             lockByOtherUser = true;
             break;
         }
@@ -56,11 +53,7 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
   <title><ivu:int key="<%= newSBs ? "Neue_Wahl_importieren_titel" : "Stimmbezirke_bearbeiten_titel" %>"/></title>
   <%
     response.setDateHeader("Last-Modified", -1); //$NON-NLS-1$
-    response.setDateHeader ("Expires", 0); // prevents caching at the proxy server //$NON-NLS-1$
-    response.setHeader("Cache-Control","no-cache"); // HTTP 1.1 //$NON-NLS-1$ //$NON-NLS-2$
-    response.setHeader("Pragma","no-cache"); // HTTP 1.0 //$NON-NLS-1$ //$NON-NLS-2$
     
-    IImportEML impDef = impBean.getImportMetadata();
     SystemInfo systemInfo =  SystemInfo.getSystemInfo();
     String wurzelgebietName = BundleHelper.getBundleString("Stimmbezirke_bearbeiten"); //$NON-NLS-1$
     if (newSBs) {
@@ -92,24 +85,16 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
         postalVoteOfficeSelectable = wahlInfo.isPostalVoteOfficeSelectable();
     }
     
-    Collection<GebietModel> stimmbezirkeUnsorted = admBean.getStimmbezirkeToAdmin();
-    List<GebietModel> stimmbezirke = new ArrayList<GebietModel>(stimmbezirkeUnsorted);
-    Collections.sort(stimmbezirke, new Comparator<GebietModel>() {
-        public int compare(GebietModel g1, GebietModel g2) {
-          return Integer.signum(g1.getNummer() - g2.getNummer());
-        }
-    });
+    List<GebietModel> stimmbezirke = admBean.getStimmbezirkeSortedByNummer();
     String prefix = ApplicationBeanKonstanten.PREFIX;
     
   %>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/wahl2002.css" />
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/jquery.autocomplete.css">
-  <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-1.3.2.js"></script>
+  <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery.autocomplete.js"></script>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/gbadata.js"></script>
   <script>
-        var contextPath = "<%=request.getContextPath()%>";
-
     <% if (!stimmbezirke.isEmpty()) {%>
         // GBA support
         $(document).ready(function(){<%
@@ -118,6 +103,9 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
         }%>
         });<%
     }%>         
+  </script>
+  <script>
+        var contextPath = "<%=request.getContextPath()%>";
   </script>
   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/osv.js"></script>
   <script language="javascript" type="text/javascript" src="<%= request.getContextPath() %>/js/sc.js"></script>
@@ -218,7 +206,7 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
   <div class="hghell">
    <fieldset style="border: 1px solid #093C69; padding: 15px; margin: 15px;">
     <legend>
-     <b><%= wurzelgebietName %></b>
+     <b><%= ClientHelper.forHTML(wurzelgebietName) %></b>
     </legend>
         <% if (admBean._adminMsgStimmbezFile != null && !admBean._adminMsgStimmbezFile.isEmpty()){%>
             <p style="color:red;"><b><%= ClientHelper.forHTML(admBean._adminMsgStimmbezFile, true) %></b></p>
@@ -238,7 +226,7 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
             <% } %>
                 <ivu:form name="logout" action="/osv?cmd=app_logout">
                     <br/>
-                    <b><ivu:int key="Abmelden_von"/> <%=appBean.getAnwContext().getAnmeldename()%></b>
+                    <b><ivu:int key="Abmelden_von"/> <%=ClientHelper.forHTML(appBean.getAnwContext().getAnmeldename())%></b>
                 <div style="padding: 1em; text-align: center">
                     <input id="box2" style="cursor:pointer" type="submit" value="<%=BundleHelper.getBundleString("Abmelden_jetzt") %>" name="logout">
                     </div>

@@ -10,7 +10,7 @@
  * ACHTUNG: Die Möglichkeit, die Freigabe zurückzunehmen ist ein spezielles Recht und eine
  * extra Rechtegruppe gebunden. Für den Wahlabend, sollten wirklich nur wenige diese Möglichkeit haben!
  *
- * author:  klie@ivu.de  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  P. Kliem  Copyright (c) 2002 Statistisches Bundesamt und IVU Traffic Technologies AG
  * $Id: adm_freigabe.jsp,v 1.19 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
@@ -33,8 +33,9 @@
     td {line-height: 15px}
    </style>
  </head>
- <body class='hghell'><%
- 
+ <body class='hghell'>
+<%@include file="/jsp/fragments/common_headers.jspf"%>
+<%
   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
   String prefix = ApplicationBeanKonstanten.PREFIX;
   String formurl = ClientHelper.generateURL(request, null, "adm_freigabe", -1, true);
@@ -93,7 +94,7 @@
                <td width="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
                <td valign="top"><% 
                 if (!wahlInfo.darfWahlFreigegebenWerden()){ %>  
-                            <p><ivu:int key="Freigabe_nicht_erfolgt"/> <ivu:int key="Noch_Nicht_Alle_Ergebniseingaenge"/></p><%
+                            <p><ivu:int key="Noch_Nicht_Alle_Ergebniseingaenge"/></p><%
                     } else if (wahlInfo.getStatus() == WahlModel.STATE_METADATA_P5){ %>  
                             <p><ivu:int key="Freigabe_nicht_erfolgt"/> <ivu:int key="Sitzverteilung_Kein_Ergebniseingang"/></p><%
                     } else if (wahlInfo.getStatus() == WahlModel.STATE_NEW_RESULT){ %> 

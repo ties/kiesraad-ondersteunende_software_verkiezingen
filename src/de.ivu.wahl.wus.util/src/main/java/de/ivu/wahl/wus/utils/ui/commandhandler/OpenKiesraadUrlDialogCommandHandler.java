@@ -12,7 +12,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import de.ivu.wahl.wus.utils.ui.dialog.KiesraadUrlDialog;
 
 /**
- * @author tdu@ivu.de
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class OpenKiesraadUrlDialogCommandHandler extends AbstractHandler implements IHandler {
 

@@ -16,7 +16,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionCategory;
 /**
  * To create an instance, use the factory method.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class ReportNameComponentsP4 implements ReportNameComponents, ReportNameComponentsSetter {
   private static final String UNDERSCORE = "_";

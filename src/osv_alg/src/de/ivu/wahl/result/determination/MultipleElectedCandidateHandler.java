@@ -36,7 +36,7 @@ import de.ivu.wahl.result.result.CandidateResult.Elected;
  * setCandidateElectedOnOtherP3List() and setSuccessorForCandidateElectedOnOtherP3List() are called
  * on the respective CandidateResults.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class MultipleElectedCandidateHandler {
   private final ElectionAndCandidatesAndVotes ecv;

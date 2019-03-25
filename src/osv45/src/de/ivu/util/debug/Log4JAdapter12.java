@@ -18,7 +18,7 @@ import org.apache.log4j.PropertyConfigurator;
 import de.ivu.util.config.Extract;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class Log4JAdapter12 implements Log4JAdapter {
 

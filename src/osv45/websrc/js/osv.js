@@ -4,18 +4,18 @@ function doit(i, j, msec)
   var l = j;
   if (k <= 50)
   {
-    eval("document.p" + k + ".src = '"+contextPath+"/img/lila.gif'");
+    document["p" + k].src = contextPath + "/img/lila.gif";
     k++;
-    window.setTimeout("doit(" + k + "," + l + "," + msec + ")", msec);
+    window.setTimeout(function() { doit(k, l, msec); }, msec);
   } else {
-     eval("document.p" + l + ".src = '"+contextPath+"/img/leer.gif'");
+     document["p" + l].src = contextPath + "/img/leer.gif";
      if (k == 101) {
         k = -1;
         l = -1;
      }
      k++;
      l++;
-     window.setTimeout("doit(" + k + "," + l + "," + msec +")", msec);
+     window.setTimeout(function() { doit(k, l, msec); }, msec);
   } 
 }
 
@@ -29,7 +29,6 @@ function transp() {
     var statusbalken  = document.getElementById("statusbalken");
     statusbalken.style.display = 'inline';
     doit(0,0,100);          
-
 }
 
 function moveCursor(sourceId, destId) {

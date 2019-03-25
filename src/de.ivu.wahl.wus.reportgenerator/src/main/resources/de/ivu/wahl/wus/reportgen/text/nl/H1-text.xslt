@@ -10,9 +10,6 @@
 
     <xsl:param name="H1_030_KandidatenOpDeLijst" select="'Kandidaten op de lijst'"/>
     <xsl:param name="H1_040_Vervangers" select="'Vervanger(s) voor het herstel van verzuimen'"/>
-    <xsl:param name="H1_050_GemachtigdeVoorLijstencombinatie" select="'Gemachtigde voor het verbinden van de lijst tot een lijstencombinatie'"/>
-    <xsl:param name="H1_060_nietEK" select="'(niet bij de Eerste Kamerverkiezing)'"/>
-    <xsl:param name="H1_070_plaatsvervangerGemachtigdeLijstencombinatie" select="'Plaatsvervanger(s) van de gemachtigde:'"/>
 
     <xsl:param name="H1_100_InTeLeveren" select="'In te leveren bij de kandidatenlijst'"/>
     <xsl:param name="H1_110_IkBenVerplicht" select="'Ik ben verplicht de volgende bijlag(e) in te leveren bij de kandidatenlijst (aanvinken wat van toepassing is):'"/>
@@ -29,7 +26,7 @@
 
     <xsl:param name="H1_200_Ondertekening" select="'Ondertekening door de inleveraar'"/>
     <xsl:param name="H1_205_NaamEnVoorletters" select="'Naam en voorletters'"/>
-    <xsl:param name="H1_210_PostadresPostcodePlaats" select="'Postadres, Postcode en plaats'"/>
+    <xsl:param name="H1_210_PostadresPostcodePlaats" select="'Postadres, postcode en plaats'"/>
     <xsl:param name="H1_220_Datum" select="'Datum'"/>
     <xsl:param name="H1_230_Handtekening" select="'Handtekening'"/>
     

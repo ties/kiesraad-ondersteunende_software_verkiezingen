@@ -14,7 +14,7 @@ import java.util.List;
  * Corresponds to the values of the EML element &lt;eml:ElectionCategory&gt;
  * <p>
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public enum ElectionCategory {
   /** Should be used instead of null */

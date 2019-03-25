@@ -20,7 +20,7 @@ import de.ivu.wahl.result.determination.P42List;
  * A DrawingLotsIdentifier is a view on an DrawingLotsAlternative by showing Objects that are
  * identifyable from external (from the persistency layer).
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class DrawingLotsIdentifier {
   private final CombinedList combinedList;

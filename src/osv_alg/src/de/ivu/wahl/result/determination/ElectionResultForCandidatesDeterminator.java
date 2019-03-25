@@ -33,7 +33,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
 /**
  * Determines the elected candidates and the new order on the list for one P3List.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 class ElectionResultForCandidatesDeterminator {
 

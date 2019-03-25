@@ -8,7 +8,7 @@ package de.ivu.wahl.admin;
 /**
  * Dialog-State and constant holder for export control of form empty eml
  * 
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  */
 public class P4ExportStateEmptyEml extends DialogStateHolder {
   private static final long serialVersionUID = 3529937111482911921L;

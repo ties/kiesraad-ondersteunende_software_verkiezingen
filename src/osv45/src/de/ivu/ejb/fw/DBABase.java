@@ -20,9 +20,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import org.apache.log4j.Category;
 
@@ -31,7 +31,7 @@ import de.ivu.util.debug.Log4J;
 /**
  * Basisklasse f�r die Zugriffe auf die Datenbank
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public abstract class DBABase extends DatabaseAccess {
   private static final long serialVersionUID = -268547960178033157L;
@@ -69,7 +69,7 @@ public abstract class DBABase extends DatabaseAccess {
   }
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   protected static class KomplexSQL {
     private final String _sql;
@@ -415,7 +415,7 @@ public abstract class DBABase extends DatabaseAccess {
   }
 
   /**
-   * @author cos@ivu.de, IVU Traffic Technologies AG
+   * @author D. Cosic, IVU Traffic Technologies AG
    */
   protected static class MetaContainer {
     private static final Category ILOGGER = Log4J.configure(MetaContainer.class);
@@ -446,8 +446,10 @@ public abstract class DBABase extends DatabaseAccess {
         Connection con = DatabaseAccess.connect();
         try {
           DatabaseMetaData metaData = con.getMetaData();
-          // String catalog = con.getCatalog();
-          String catalog = "osv"; //$NON-NLS-1$
+          String catalog = con.getCatalog();
+          if (catalog == null) {
+            catalog = "osv"; //$NON-NLS-1$
+          }
           String schema = null;
 
           ResultSet pkRS = metaData.getPrimaryKeys(catalog, schema, _tableName);
@@ -478,7 +480,7 @@ public abstract class DBABase extends DatabaseAccess {
             columns.put(entry.getValue(), entry.getKey());
           }
           // Schnittmenge mit den Spalten bilden, die zur Generierungszeit bekannt waren
-          columns.keySet().retainAll(Arrays.asList(_origColumnsUpper));
+          behalteSpaltenZurGenerierungszeit(columns);
           _pks = pks;
           _columns = columns;
         } catch (SQLException e) {
@@ -489,6 +491,19 @@ public abstract class DBABase extends DatabaseAccess {
         }
       }
       return _columns;
+    }
+
+    /**
+     * Schnittmenge mit den Spalten bilden, die zur Generierungszeit bekannt waren
+     */
+    private void behalteSpaltenZurGenerierungszeit(Map<String, Integer> columns) {
+      List<String> origColumnsUpperList = Arrays.asList(_origColumnsUpper);
+      Iterator<String> iterator = columns.keySet().iterator();
+      while (iterator.hasNext()) {
+        if (!origColumnsUpperList.contains(iterator.next().toUpperCase())) {
+          iterator.remove();
+        }
+      }
     }
 
     /**

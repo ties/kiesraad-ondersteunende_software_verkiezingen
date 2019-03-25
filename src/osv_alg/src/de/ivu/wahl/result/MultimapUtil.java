@@ -19,7 +19,7 @@ import java.util.Set;
  * a new value into one of the Lists or Sets respectively that corresponds to a given key. If the
  * multimap does not contain the key, yet, a new Lists or Sets respectively is inserted.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public class MultimapUtil {
   public static <K, V> List<V> addToList(Map<K, List<V>> multimap, K key, V value) {

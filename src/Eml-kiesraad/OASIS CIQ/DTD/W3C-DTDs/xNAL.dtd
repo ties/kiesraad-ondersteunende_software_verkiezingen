@@ -1,0 +1,33 @@
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+		xNAL: eXtensible Name and Address Language
+		This is an XML document type definition (DTD) for defining name(s) and addresse(s).
+		A name is defined for "A Person" or "An Organisation".
+		One can store multiple addresses. Eg. Address Change history
+		An Organisation can be: Company, Institution, School, Club, a group, etc
+		Date of Original Creation of xNAL: 1 March 2001 
+		Copyright(c) 2000, OASIS. All Rights Reserved [http://www.oasis-open.org]
+		Contact: Customer Information Quality Technical Committee, OASIS
+		Version: 2.0 [MAJOR RELEASE] - Creation Date: 01 May 2002
+		Last Update: 24 July 2002
+		Last Modified By: Ram Kumar
+		Previous Version: 1.0
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!--Here xNL & xAL DTDs are defined as external entities.  --> 
+<!-- xNL : Name Markup Language; xAL : Address Markup Language -->
+<!ENTITY % xNL SYSTEM "xNL.dtd"> 
+<!ENTITY % xAL SYSTEM "xAL.dtd"> 
+
+%xNL;
+%xAL;
+
+<!--A container for names and addresses. Any number of names can be assosiated 
+	with any number of addresses.-->
+<!ELEMENT xNAL (Record+)>
+<!--Version: DTD version. This attribute is not used for schema and exists only for 
+	DTD compatibility.-->
+<!ATTLIST xNAL			Version						CDATA #FIXED "2.0">
+
+<!-- A container for a record --> 
+<!ELEMENT Record (xNL?, xAL?)>
+

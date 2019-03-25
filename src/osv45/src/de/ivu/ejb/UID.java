@@ -26,7 +26,7 @@ import java.util.TimeZone;
  * <p>
  * Reset to 1.1.2009 as the begining of counting (12.05.2009)
  * 
- * @author cos@ivu.de
+ * @author D. Cosic
  * @since 2.0.2
  */
 public final class UID {

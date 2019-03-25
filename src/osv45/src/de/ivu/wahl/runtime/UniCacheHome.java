@@ -12,7 +12,7 @@ import javax.ejb.FinderException;
 import de.ivu.ejb.IVUBeanBase;
 
 /**
- * @author COS@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface UniCacheHome extends EJBLocalHome {
 

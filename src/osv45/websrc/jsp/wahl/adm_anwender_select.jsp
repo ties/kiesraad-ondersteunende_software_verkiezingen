@@ -13,18 +13,15 @@
  * Anwender wählen
  * Zeigt alle Anwender zum Auswahlen
  *
- * author:  tst@ivu.de cos@ivu.de Copyright (c) 2002-8 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * author:  T. Stach, D. Cosic Copyright (c) 2002-8 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
+<%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
-   response.setHeader("Cache-Control","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ // HTTP 1.1
-   response.setHeader("Pragma","no-cache"); //$NON-NLS-1$ //$NON-NLS-2$ // HTTP 1.0
-   response.setDateHeader ("Expires", 0); //$NON-NLS-1$ // prevents caching at the proxy server 
-
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    String prefix = ApplicationBeanKonstanten.PREFIX;
    String id_anw_param = "ANW_"+ prefix +"id_anwender";  //$NON-NLS-1$ //$NON-NLS-2$

@@ -18,7 +18,7 @@ import java.io.Serializable;
  * session, and create new steps, which can be empty, contain a copy of the most recent step, or a
  * copy of an arbitrary earlier step.
  * 
- * @author Dr. Domagoj Cosic (cos@ivu.de)
+ * @author Dr. Domagoj Cosic (D. Cosic)
  * @created 25. Mai 2001
  */
 

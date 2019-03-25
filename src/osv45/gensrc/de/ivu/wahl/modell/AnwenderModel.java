@@ -16,7 +16,7 @@ import de.ivu.ejb.bmp.Model;
   * Contains the list of properties including the IDs of the associated objects.
   * A navigation is not implemented (1:1, 1:n, m:n)
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public interface AnwenderModel extends Model {
@@ -112,6 +112,26 @@ public interface AnwenderModel extends Model {
      * The size is limited by the database.
      */
    public static final int PASSWORDHASH_LENGTH = 200;
+
+   /**
+     * Sets the value of salt in the entity Anwender
+     *
+     * @param salt new value of the attribute salt
+     */
+   void setSalt(String salt);
+
+   /**
+     * Gets the value of salt in the entity Anwender
+     *
+     * @return value of the attribute salt
+     */
+   String getSalt();
+
+   /**
+     * The maximum size of salt
+     * The size is limited by the database.
+     */
+   public static final int SALT_LENGTH = 200;
 
    /**
      * Sets the value of fehlversucheAnmeldung in the entity Anwender

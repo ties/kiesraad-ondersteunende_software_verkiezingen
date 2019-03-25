@@ -8,7 +8,7 @@ package de.ivu.wahl.modell;
 
 
 /**
- * @author mur@ivu.de, IVU Traffic Technologies AG
+ * @author M. Murdfield, IVU Traffic Technologies AG
  */
 public interface ErgebniseingangKonstanten {
 

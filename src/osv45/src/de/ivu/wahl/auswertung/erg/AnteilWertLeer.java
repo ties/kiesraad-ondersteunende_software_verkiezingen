@@ -12,7 +12,7 @@ import de.ivu.util.debug.Log4J;
 /**
  * Leerer AnteilWert zur Markierung nicht existenter Eintr�ge
  * 
- * @author cos@ivu.de - IVU Traffic Technologies AG
+ * @author D. Cosic - IVU Traffic Technologies AG
  */
 public class AnteilWertLeer extends AnteilWert {
   private static final long serialVersionUID = -2278980895498167847L;

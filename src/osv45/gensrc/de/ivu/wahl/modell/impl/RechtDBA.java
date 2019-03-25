@@ -27,7 +27,7 @@ import de.ivu.ejb.fw.DBABase;
   * Implementation of the persistency layer for the entity Recht.
   * Contains all SQL access functions.
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public class RechtDBA extends DBABase {
@@ -58,7 +58,13 @@ public class RechtDBA extends DBABase {
       if ((idx = columns.get(ID_RECHT.toUpperCase())) != null) {
          m._id_Recht = r.getString(idx.intValue());
       }
+      if ((idx = columns.get(ID_RECHT)) != null) {
+         m._id_Recht = r.getString(idx.intValue());
+      }
       if ((idx = columns.get(NAME.toUpperCase())) != null) {
+         m._name = r.getString(idx.intValue());
+      }
+      if ((idx = columns.get(NAME)) != null) {
          m._name = r.getString(idx.intValue());
       }
    }
@@ -74,7 +80,7 @@ public class RechtDBA extends DBABase {
       int idx = 1;
       Map<String, Integer> columns = META_CONTAINER.getColumns();
       p.setQueryTimeout(QUERY_TIMEOUT);
-      if (columns.containsKey(NAME.toUpperCase())) {
+      if (columns.containsKey(NAME.toUpperCase()) || columns.containsKey(NAME)) {
          p.setString(idx++, m._name);
       }
       p.setString(idx++, m._id_Recht);

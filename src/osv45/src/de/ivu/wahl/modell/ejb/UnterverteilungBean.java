@@ -5,24 +5,17 @@ import java.util.Collection;
 
 import javax.ejb.FinderException;
 
-import org.apache.log4j.Category;
-
 import de.ivu.ejb.IVUFinderException;
 import de.ivu.ejb.fw.DBABase;
-import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.modell.impl.UnterverteilungDBA;
 
 /**
  * UnterverteilungBean
  * 
- * @author jon@ivu.de (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author J. Nottebaum (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 public class UnterverteilungBean extends BasicUnterverteilungBean {
   private static final long serialVersionUID = 8121532146432498292L;
-  private static final Category LOGGER = Log4J.configure(UnterverteilungBean.class);
-  static {
-    LOGGER.info(Log4J.dumpVersion(UnterverteilungBean.class, Log4J.extractVersion("$Revision: 1.1 $"))); //$NON-NLS-1$
-  }
 
   public Collection<String> ejbFindAllForP3(String id_Ergebniseingang) throws FinderException {
     try {

@@ -7,7 +7,7 @@ import javax.ejb.FinderException;
 /**
  * RestsitzverteilungHome
  * 
- * @author jon@ivu.de (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author J. Nottebaum (c) 2009 Statistisches Bundesamt und IVU Traffic Technologies AG
  */
 
 public interface RestsitzverteilungHome extends BasicRestsitzverteilungHome {

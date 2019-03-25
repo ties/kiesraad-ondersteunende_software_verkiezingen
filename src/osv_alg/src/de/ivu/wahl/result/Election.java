@@ -16,7 +16,7 @@ import de.ivu.wahl.wus.electioncategory.ElectionSubcategory;
  * <p>
  * Immutable.
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface Election {
 

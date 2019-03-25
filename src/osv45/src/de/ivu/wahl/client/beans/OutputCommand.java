@@ -9,7 +9,7 @@ package de.ivu.wahl.client.beans;
 import java.io.Writer;
 
 /**
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public interface OutputCommand {
   /**

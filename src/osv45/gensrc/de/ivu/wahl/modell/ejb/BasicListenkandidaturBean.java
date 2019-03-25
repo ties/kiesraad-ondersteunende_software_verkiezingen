@@ -29,7 +29,7 @@ import de.ivu.wahl.modell.impl.*;
   * Implementation for the entity Listenkandidatur as BMP Entity Bean.
   * The navigation (1:1, 1:n, m:n) is contained
   *
-  * @author cos@ivu.de  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+  * @author D. Cosic  (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
   * @version $Id: tablegen.properties,v 1.36 2009/10/12 09:33:21 jon Exp $
   */
 public abstract class BasicListenkandidaturBean extends BMPBeanBase implements EntityBean, ListenkandidaturModel {
@@ -112,6 +112,22 @@ public abstract class BasicListenkandidaturBean extends BMPBeanBase implements E
      * Bean-supporting method by EJB standard.
      * Method for support of the navigation of the Bean model.
      *
+     * @param id_Liste ID of the objects to be searched
+     * @return  {@link Collection} of the found Listenkandidatur-entities
+     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
+     */
+   public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
+      try {
+         return ListenkandidaturDBA.retrieveIDsByID_Liste(id_Liste);
+      } catch (SQLException se) {
+         throw new IVUFinderException (se.getMessage(), se);
+      }
+   }
+
+   /**  
+     * Bean-supporting method by EJB standard.
+     * Method for support of the navigation of the Bean model.
+     *
      * @param id_Personendaten ID of the objects to be searched
      * @return  {@link Collection} of the found Listenkandidatur-entities
      * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
@@ -135,22 +151,6 @@ public abstract class BasicListenkandidaturBean extends BMPBeanBase implements E
    public Collection<String> ejbFindAllByWahl(String id_Wahl) throws IVUFinderException {
       try {
          return ListenkandidaturDBA.retrieveIDsByID_Wahl(id_Wahl);
-      } catch (SQLException se) {
-         throw new IVUFinderException (se.getMessage(), se);
-      }
-   }
-
-   /**  
-     * Bean-supporting method by EJB standard.
-     * Method for support of the navigation of the Bean model.
-     *
-     * @param id_Liste ID of the objects to be searched
-     * @return  {@link Collection} of the found Listenkandidatur-entities
-     * @throws IVUFinderException if an error occurred while searching (does NOT mean "not found".
-     */
-   public Collection<String> ejbFindAllByListe(String id_Liste) throws IVUFinderException {
-      try {
-         return ListenkandidaturDBA.retrieveIDsByID_Liste(id_Liste);
       } catch (SQLException se) {
          throw new IVUFinderException (se.getMessage(), se);
       }
@@ -235,6 +235,12 @@ public abstract class BasicListenkandidaturBean extends BMPBeanBase implements E
 
    @Override
    protected void checkRelations() {
+      if (null == _details.getID_Liste()) {
+         _liste = null;
+         _relchk_Liste = true;
+      } else {
+         _relchk_Liste = false;
+      }
       if (null == _details.getID_Personendaten()) {
          _personendaten = null;
          _relchk_Personendaten = true;
@@ -247,19 +253,13 @@ public abstract class BasicListenkandidaturBean extends BMPBeanBase implements E
       } else {
          _relchk_Wahl = false;
       }
-      if (null == _details.getID_Liste()) {
-         _liste = null;
-         _relchk_Liste = true;
-      } else {
-         _relchk_Liste = false;
-      }
    }
 
    @Override
    protected void resetRelations() {
+      _liste = null;
       _personendaten = null;
       _wahl = null;
-      _liste = null;
    }
 
    /**
@@ -379,6 +379,51 @@ public abstract class BasicListenkandidaturBean extends BMPBeanBase implements E
    }
 
    /**
+     * Relation zu Liste
+     */
+   protected Liste _liste;
+
+   /**
+     * Flag for the validity of the relation Liste
+     */
+   protected boolean _relchk_Liste = false;
+
+   /**
+     * Navigation to the associated entity of the type {@link Liste}
+     *
+     * @return the corresponding EJBObject
+     * @throws EJBException: an error occurred
+     */
+   public Liste getListe() throws EJBException {
+      if (!_relchk_Liste) {
+         if (null == _details.getID_Liste()) {
+            _liste = null;
+         } else if (null == _liste || !_liste.getPrimaryKey().equals(_details.getID_Liste())) {
+            try {
+               ListeHome home = ListeHome.HomeFinder.findHome(this);
+               _liste = home.findByPrimaryKey(_details.getID_Liste());
+            } catch (ObjectNotFoundException onfe) {
+               throw new EJBException("Unable to find Liste", onfe); //$NON-NLS-1$
+            } catch (FinderException fe) {
+               throw new EJBException("Probably DB inconsistence in table Liste", fe); //$NON-NLS-1$
+            }
+         }
+         _relchk_Liste = true;
+      }
+      return _liste;
+   }
+
+   /**
+     * Setting of the associated entity of the type {@link Liste}
+     *
+     * @param liste the corresponding EJBObject
+     */
+   public void setListe(Liste liste) {
+      _liste = liste;
+      _details.setID_Liste(liste == null ? null : (String)liste.getPrimaryKey());
+   }
+
+   /**
      * Relation zu Personendaten
      */
    protected Personendaten _personendaten;
@@ -466,51 +511,6 @@ public abstract class BasicListenkandidaturBean extends BMPBeanBase implements E
    public void setWahl(Wahl wahl) {
       _wahl = wahl;
       _details.setID_Wahl(wahl == null ? null : (String)wahl.getPrimaryKey());
-   }
-
-   /**
-     * Relation zu Liste
-     */
-   protected Liste _liste;
-
-   /**
-     * Flag for the validity of the relation Liste
-     */
-   protected boolean _relchk_Liste = false;
-
-   /**
-     * Navigation to the associated entity of the type {@link Liste}
-     *
-     * @return the corresponding EJBObject
-     * @throws EJBException: an error occurred
-     */
-   public Liste getListe() throws EJBException {
-      if (!_relchk_Liste) {
-         if (null == _details.getID_Liste()) {
-            _liste = null;
-         } else if (null == _liste || !_liste.getPrimaryKey().equals(_details.getID_Liste())) {
-            try {
-               ListeHome home = ListeHome.HomeFinder.findHome(this);
-               _liste = home.findByPrimaryKey(_details.getID_Liste());
-            } catch (ObjectNotFoundException onfe) {
-               throw new EJBException("Unable to find Liste", onfe); //$NON-NLS-1$
-            } catch (FinderException fe) {
-               throw new EJBException("Probably DB inconsistence in table Liste", fe); //$NON-NLS-1$
-            }
-         }
-         _relchk_Liste = true;
-      }
-      return _liste;
-   }
-
-   /**
-     * Setting of the associated entity of the type {@link Liste}
-     *
-     * @param liste the corresponding EJBObject
-     */
-   public void setListe(Liste liste) {
-      _liste = liste;
-      _details.setID_Liste(liste == null ? null : (String)liste.getPrimaryKey());
    }
 
    /**

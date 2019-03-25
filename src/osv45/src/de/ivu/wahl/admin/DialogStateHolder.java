@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Dialog-State and constant holder for export control
  * 
- * @author cos@ivu.de, IVU Traffic Technologies AG
+ * @author D. Cosic, IVU Traffic Technologies AG
  */
 public class DialogStateHolder implements Serializable {
   private static final long serialVersionUID = -5144938836055463223L;

@@ -7,7 +7,7 @@
 package de.ivu.wahl.wus.loggerinterface;
 
 /**
- * @author tdu@ivu.de, IVU Traffic Technologies AG
+ * @author T. Ducke, IVU Traffic Technologies AG
  * @version $Id: IUserActionLogger.java,v 1.1 2009/09/04 10:25:19 tdu Exp $
  */
 public interface IUserActionLogger {

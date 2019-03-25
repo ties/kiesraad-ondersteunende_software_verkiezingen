@@ -10,7 +10,7 @@ package de.ivu.wahl.result.determination;
  * This is just a dummy interface without implementation. This type is used as type parameter for
  * the assignmentParent type of P42List
  * 
- * @author jon@ivu.de, IVU Traffic Technologies AG
+ * @author J. Nottebaum, IVU Traffic Technologies AG
  */
 public interface ParentOfP42List extends GeneralList {
   // no code required

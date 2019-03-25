@@ -26,7 +26,7 @@ import de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein;
  * Basic data object containing voting results, used to hold input data from GUI or file and results
  * for display
  * 
- * @author ugo@ivu.de cos@ivu.de klie@ivu.de - IVU Traffic Technologies AG
+ * @author U. Müller D. Cosic P. Kliem - IVU Traffic Technologies AG
  */
 public abstract class BasicEingangMsg implements EingangMsg, Serializable {
 
@@ -295,7 +295,7 @@ public abstract class BasicEingangMsg implements EingangMsg, Serializable {
   /**
    * Result for one party/group
    * 
-   * @author ugo@ivu.de, IVU Traffic Technologies AG
+   * @author U. Müller, IVU Traffic Technologies AG
    */
   public class Gruppenergebnis {
 
