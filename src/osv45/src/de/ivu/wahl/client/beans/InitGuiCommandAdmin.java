@@ -8,7 +8,6 @@ package de.ivu.wahl.client.beans;
 
 import java.util.Map;
 
-import de.ivu.wahl.anwender.Rechte;
 import de.ivu.wahl.client.util.GUICommand;
 import de.ivu.wahl.dataimport.AbstractImportEML;
 import de.ivu.wahl.modell.GebietModel;
@@ -64,21 +63,17 @@ public class InitGuiCommandAdmin extends InitGuiCommand implements ApplicationBe
     InitGuiCommandHelper helper = new InitGuiCommandHelper(this, jspLevelWorkName,
         befehleInitial[LEVEL_ADMIN], LEVEL_ADMIN);
 
-    String name;
-
-    helper.setRights(Rechte.R_ADM_WAHLCREATEREMOVE);
     helper.addCommand(Command.ADM_NEUE_WAHL,
-        "Neue_Wahl_importieren", "Neue_Wahl_importieren_titel", "wahlImport.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "Neue_Wahl_importieren", "Neue_Wahl_importieren_titel", JspPage.WAHL_IMPORT); //$NON-NLS-1$//$NON-NLS-2$
 
     if (AbstractImportEML.MODE_DB_P4 == _wahlModus && GebietModel.EBENE_PSB == _wahlEbene) {
-      helper.setRights(Rechte.R_ADM_WAHLCREATEREMOVE);
-      helper.addCommand(Command.ADM_STIMMBEZIRKE,
-          "Neue_Stimmbezirke_erzeugen", "Neue_Stimmbezirke_erzeugen_titel", "adm_stimmbezirke.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+      helper
+          .addCommand(Command.ADM_STIMMBEZIRKE,
+              "Neue_Stimmbezirke_erzeugen", "Neue_Stimmbezirke_erzeugen_titel", JspPage.ADM_STIMMBEZIRKE_CREATE); //$NON-NLS-1$//$NON-NLS-2$
     }
 
-    helper.setRights(null);
     helper.addCommand(Command.ANWENDER_VERAENDERN_PASSWORT,
-        "Passwort_veraendern", "Passwort_veraendern_titel", "adm_anwender_change_pw.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "Passwort_veraendern", "Passwort_veraendern_titel", JspPage.ADM_ANWENDER_CHANGE_PW); //$NON-NLS-1$//$NON-NLS-2$
   }
 
   /**
@@ -95,15 +90,14 @@ public class InitGuiCommandAdmin extends InitGuiCommand implements ApplicationBe
 
     GUICommand cmd;
 
-    helper.setRights(null);
     helper.setGuiClass(GUICommand.GUI_CLASS_6);
 
     // hilfe cmd kommt in alle Arrays hinten dran
-    cmd = helper.addCommand(Command.HELP, "Hilfe", "Hilfe_titel", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    cmd = helper.addCommand(Command.HELP, "Hilfe", "Hilfe_titel", JspPage.HELP); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
 
     // logout cmd kommt in alle Arrays hinten dran
-    cmd = helper.addCommand(Command.SONST_LOGOUT, "Abmelden", "Abmelden_titel", "logout.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    cmd = helper.addCommand(Command.SONST_LOGOUT, "Abmelden", "Abmelden_titel", JspPage.LOGOUT); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
   }
 

@@ -68,7 +68,6 @@ Amstelhoek
 Amstelveen
 Amstenrade
 Amsterdam
-Amsterdam Zuidoost
 Amsterdam-Duivendrecht
 Andel
 Andelst
@@ -284,7 +283,6 @@ Breedenbroek
 Breezand
 Breezanddijk
 Breskens
-Breugel
 Breukelen
 Breukeleveen
 Brielle
@@ -872,6 +870,7 @@ Hemrik
 Hendrik-Ido-Ambacht
 Hengelo
 Hengelo (Gld)
+Hengelo (O)
 Hengevelde
 Hengstdijk
 Hensbroek
@@ -892,7 +891,6 @@ Heukelom
 Heukelum
 Heumen
 Heusden
-HEUSDEN GEM HEUSDEN
 Heveadorp
 Heythuysen
 Hezingen
@@ -1096,7 +1094,6 @@ Kommerzijl
 Koningsbosch
 Koningslust
 Koog aan de Zaan
-Koolwijk
 Kootstertille
 Kootwijk
 Kootwijkerbroek
@@ -1971,7 +1968,6 @@ Soest
 Soesterberg
 Someren
 Sommelsdijk
-Son
 Son en Breugel
 Sondel
 Sonnega

@@ -41,9 +41,9 @@ public class InitGuiCommandEP_P4 extends InitGuiCommand_P4 implements Applicatio
 
   @Override
   protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
-    helper.setRights(null);
-    GUICommand cmd = helper.addCommand(Command.GEB_ERG_KAN,
-        "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    GUICommand cmd = helper
+        .addCommand(Command.GEB_ERG_KAN,
+            "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", JspPage.GEBIET_ERGEBNIS_KANDIDAT); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setNurGebiete(true);
   }
 

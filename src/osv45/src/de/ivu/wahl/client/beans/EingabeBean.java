@@ -24,12 +24,13 @@ import nu.xom.Document;
 import de.ivu.ejb.EJBUtil;
 import de.ivu.util.debug.UserActionLogger;
 import de.ivu.util.session.Step;
+import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.WahlInfo;
 import de.ivu.wahl.admin.PropertyHandling;
 import de.ivu.wahl.admin.PropertyHandlingBean;
-import de.ivu.wahl.anwender.Rechte;
+import de.ivu.wahl.anwender.Recht;
 import de.ivu.wahl.auswertung.erg.ResultSummary;
 import de.ivu.wahl.client.util.ClientHelper;
 import de.ivu.wahl.eingang.EingangHandling;
@@ -63,8 +64,8 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
 /**
  * Organisiert die Eingabe von Gebietsergebnissen
  * 
- * @author D. Cosic M. Murdfield P. Kliem T. Ducke 
- * (c) 2003-2016 Statistisches Bundesamt und IVU Traffic Technologies AG
+ * @author D. Cosic M. Murdfield P. Kliem T. Ducke (c) 2003-2016 Statistisches Bundesamt und IVU
+ *         Traffic Technologies AG
  */
 
 public class EingabeBean implements Executer, Serializable {
@@ -88,12 +89,15 @@ public class EingabeBean implements Executer, Serializable {
    * @param request Der Request mit allen Informationen
    * @param n Anzahl der Commands
    */
+  @Override
   public void executeCommand(HttpServletRequest request, int n) {
     String cmd = request.getParameter("cmd" + (n == 0 ? "" : "" + n)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    AnwContext anwContext = getAnwContext(request);
+
     if (cmd != null) {
-      if (cmd.equals("eingabe_eingabe")) { //$NON-NLS-1$
+      if (checkRights(Action.EINGABE_EINGABE, anwContext, cmd)) {
         setGuiMsg(request);
-      } else if (cmd.equals("eingabe_erlauben")) { //$NON-NLS-1$
+      } else if (checkRights(Action.EINGABE_ERLAUBEN, anwContext, cmd)) {
         allowManualInput(request);
       } else {
         final String message = Messages.bind(MessageKeys.Error_Command_0_Unknown, cmd);
@@ -101,6 +105,10 @@ public class EingabeBean implements Executer, Serializable {
         throw new RuntimeException(message);
       }
     }
+  }
+
+  private boolean checkRights(Action action, AnwContext anwContext, String cmd) {
+    return new RightsChecker().checkRights(action, anwContext, cmd);
   }
 
   /**
@@ -427,7 +435,8 @@ public class EingabeBean implements Executer, Serializable {
             forDisplay);
         int oldSource = geMsg.getSource();
         if (oldSource != newSource) {
-          LOGGER.info("EingabeBean.getGUIMsg(): Fetching new GUIEingangMsg, bypass the cache. This solves OSV-1652. If this log line occurs often, review OSV-1652.");
+          LOGGER
+              .info("EingabeBean.getGUIMsg(): Fetching new GUIEingangMsg, bypass the cache. This solves OSV-1652. If this log line occurs often, review OSV-1652.");
           geMsg = getEingangHandling().getGUIMsg(getAnwContext(request),
               gebietsart,
               gebietsnummer,
@@ -536,7 +545,7 @@ public class EingabeBean implements Executer, Serializable {
    * @param request
    */
   private void allowManualInput(HttpServletRequest request) {
-    if (getAnwContext(request).checkRight(Rechte.R_EINGABE_ERLAUBEN)) {
+    if (getAnwContext(request).checkRight(Recht.R_EINGABE_ERLAUBEN)) {
       GUIEingangMsg geMsg = (GUIEingangMsg) ClientHelper.getStep(request).get(GUI_EE_EINGANG_KEY);
       getEingangHandling().setGUIEingabeErlaubt(getAnwContext(request),
           geMsg.getGebietsartErfassungseinheit(),
@@ -544,5 +553,4 @@ public class EingabeBean implements Executer, Serializable {
           true);
     }
   }
-
 }

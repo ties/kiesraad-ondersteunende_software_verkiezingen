@@ -45,9 +45,9 @@ public class InitGuiCommandTK_P4 extends InitGuiCommand_P4 implements Applicatio
   protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
     GUICommand cmd;
 
-    helper.setRights(null);
-    cmd = helper.addCommand(Command.GEB_ERG_KAN,
-        "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    cmd = helper
+        .addCommand(Command.GEB_ERG_KAN,
+            "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", JspPage.GEBIET_ERGEBNIS_KANDIDAT); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setNurGebiete(true);
     // if the Level is CSB the list of candidates are defined for a deeper Level
     if (_ebene == GebietModel.EBENE_CSB) {
@@ -57,7 +57,7 @@ public class InitGuiCommandTK_P4 extends InitGuiCommand_P4 implements Applicatio
     if (_ebene == GebietModel.EBENE_CSB) {
       cmd = helper
           .addCommand(Command.GEB_ERG_KAN_ZUS,
-              "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidatZusammenfassung.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+              "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", JspPage.GEBIET_ERGEBNIS_KANDIDAT_ZUSAMMENFASSUNG); //$NON-NLS-1$ //$NON-NLS-2$
       // if the Level is CSB the list of candidates are defined for a deeper Level
       cmd.setNurWurzelgebiet(true);
     }

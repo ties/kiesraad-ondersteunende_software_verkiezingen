@@ -82,7 +82,7 @@ public class SitzberechnungErgebnisBean extends BasicSitzberechnungErgebnisBean 
               + BasicSitzberechnungErgebnisDBA.ID_ERGEBNISEINGANG
               + "=? and " //$NON-NLS-1$
               + BasicSitzberechnungErgebnisDBA.SCHRITTTYP
-              + " =?and " + BasicSitzberechnungErgebnisDBA.VERTEILUNG //$NON-NLS-1$
+              + " =? and " + BasicSitzberechnungErgebnisDBA.VERTEILUNG //$NON-NLS-1$
               + " =?", new Object[]{id_Ergebniseingang, Integer.valueOf(typ), Integer.valueOf(verteilung)}); //$NON-NLS-1$
     } catch (SQLException se) {
       throw new IVUFinderException(se.getMessage(), se);

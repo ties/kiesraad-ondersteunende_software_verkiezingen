@@ -9,6 +9,8 @@
 <%@ page import="de.ivu.wahl.GebietsBaum" %>
 <%@ page import="de.ivu.wahl.modell.GebietModel" %>
 <%@ page import="de.ivu.wahl.modell.GebietInfo" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatenListe" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean" %>
@@ -40,6 +42,7 @@ String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
  String formurl = ClientHelper.generateURL(request, null, "adm_Kandidaten_waehlbar", -1, true);
  String titel = BundleHelper.getBundleString("Kandidat_waehlbar_titel");  
  String breite = "100%";
+ String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_KANDIDAT_WAEHLBAR); 
  WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 %>
 <html>
@@ -78,6 +81,9 @@ String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>
+        <% if (!rechteFehler.isEmpty())  { %>
+           <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <ivu:form name="appstate" action="<%= formurl %>" >
            <table width="<%=breite %>" cellspacing="0" cellpadding="0" border="0"
                 align="center" class="hghell">
@@ -266,5 +272,6 @@ String helpKey = "admKandidatWaehlbar"; //$NON-NLS-1$
                 </tbody>
             </table>
         </ivu:form>
+        <% } %>
     </body>
 </html>

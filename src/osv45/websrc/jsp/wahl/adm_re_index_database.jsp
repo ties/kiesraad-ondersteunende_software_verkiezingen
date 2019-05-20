@@ -8,7 +8,9 @@
  --%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page import="de.ivu.wahl.AnwContext" %>
-<%@ page import="de.ivu.wahl.anwender.Rechte" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
@@ -19,11 +21,12 @@
 <%
   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
   String prefix = ApplicationBeanKonstanten.PREFIX;
-  String formurl = ClientHelper.generateURL(request, null, AdministrationBean.CMD_ADM_RE_INDEX_DATABASE, -1, true);
-  boolean hatFZRecht = appBean.getAnwContext().checkRight(Rechte.R_RE_INDEX_DATABASE);
+  String formurl = ClientHelper.generateURL(request, null, Action.CMD_ADM_RE_INDEX_DATABASE.getKey(), -1, true);
+  boolean hatFZRecht = appBean.getAnwContext().checkRight(Recht.R_RE_INDEX_DATABASE);
   
   String helpKey = "admReIndexDatabase";
   String breite = "100%";
+  String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_RE_INDEX_DATABASE); 
 
   String errorMsg = null;
   String confirmationMsg = null;
@@ -50,6 +53,9 @@
    <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
     <td valign="top">
+     <% if (!rechteFehler.isEmpty())  { %>
+       <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+     <% } else { %>
      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
       <tr>
        <td width="5" class="hggrau">&nbsp;</td>
@@ -103,6 +109,7 @@
        <td width="10">&nbsp;</td>
       </tr>
      </table>
+     <% } %>
     </td>
    </tr>
   </table>

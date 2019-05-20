@@ -4,6 +4,26 @@
  */
 package de.ivu.wahl.client.beans;
 
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_EML510C;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_EMPTY_EML;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_N10_1;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_N11;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_O3;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_OSV4_1;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_OSV4_4;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_OSV4_5;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_OSV4_6;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_REFERENDUM;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_T11;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_VOTES_CSV;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_EXPORT_P4_WRR83;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_PROP_EINGABE_N11;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_PROP_EINGABE_O3;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_PROP_EINGABE_OSV4_4;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_PROP_EINGABE_OSV4_5;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_PROP_EINGABE_T11;
+import static de.ivu.wahl.client.beans.Action.EXP_P4_PROP_EINGABE_WRR83;
+
 import de.ivu.wahl.BasiseinstellungMultiMap;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.i18n.MessageKeys;
@@ -14,7 +34,7 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
  * 
  * @author J. Nottebaum, IVU Traffic Technologies AG
  */
-enum ExportP4Type implements ExportP4Commands {
+enum ExportP4Type {
   O3(EXP_P4_EXPORT_P4_O3, ReportTemplateEnum.O3, EXP_P4_PROP_EINGABE_O3, Konstanten.PROP_O3_D1,
       MessageKeys.Error_O3_KonnteNichtExportiertWerden),
 
@@ -54,32 +74,32 @@ enum ExportP4Type implements ExportP4Commands {
   OSV4_6(EXP_P4_EXPORT_P4_OSV4_6, ReportTemplateEnum.OSV4_6,
       MessageKeys.Error_OSV4_6_KonnteNichtExportiertWerden);
 
-  private final String exportCommand;
+  private final Action exportAction;
   private final ReportTemplateEnum template;
   private final String errorMsgKey;
-  private final String propertiesCommand;
+  private final Action propertiesAction;
   private final BasiseinstellungMultiMap propertiesMap;
 
   @SuppressWarnings("hiding")
-  ExportP4Type(String exportCommand,
+  ExportP4Type(Action exportAction,
       ReportTemplateEnum template,
-      String propertiesCommand,
+      Action propertiesAction,
       BasiseinstellungMultiMap propertiesMap,
       String errorMsgKey) {
-    this.exportCommand = exportCommand;
+    this.exportAction = exportAction;
     this.template = template;
-    this.propertiesCommand = propertiesCommand;
+    this.propertiesAction = propertiesAction;
     this.propertiesMap = propertiesMap;
     this.errorMsgKey = errorMsgKey;
   }
 
   @SuppressWarnings("hiding")
-  ExportP4Type(String exportCommand, ReportTemplateEnum template, String errorMsgKey) {
-    this(exportCommand, template, null, null, errorMsgKey);
+  ExportP4Type(Action exportAction, ReportTemplateEnum template, String errorMsgKey) {
+    this(exportAction, template, null, null, errorMsgKey);
   }
 
-  public String getExportCommand() {
-    return exportCommand;
+  public Action getExportAction() {
+    return exportAction;
   }
 
   public ReportTemplateEnum getTemplate() {
@@ -90,8 +110,8 @@ enum ExportP4Type implements ExportP4Commands {
     return errorMsgKey;
   }
 
-  public String getPropertiesCommand() {
-    return propertiesCommand;
+  public Action getPropertiesAction() {
+    return propertiesAction;
   }
 
   public BasiseinstellungMultiMap getPropertiesMap() {

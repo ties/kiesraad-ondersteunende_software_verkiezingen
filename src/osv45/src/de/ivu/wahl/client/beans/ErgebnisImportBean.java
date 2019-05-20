@@ -11,12 +11,15 @@ import static de.ivu.wahl.client.beans.ApplicationBean.getAnwContext;
 import static java.io.File.separatorChar;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.ejb.EJBException;
 import javax.servlet.http.HttpServletRequest;
@@ -108,6 +111,17 @@ public class ErgebnisImportBean extends BasicUploadBean {
 
       @Override
       void execute(HttpServletRequest request) {
+        AnwContext anwContext = getAnwContext(request);
+        String rechteFehler = AnwContext.getErrorIfRightsAreMissing(JspPage.ERGEBNIS_IMPORT,
+            anwContext);
+
+        if (!rechteFehler.isEmpty()) {
+          StringWriter writer = new StringWriter();
+          PrintWriter printWriter = new BRPrintWriter(writer);
+          error(printWriter, rechteFehler, new RuntimeException(rechteFehler));
+          return;
+        }
+
         SystemInfo sI = SystemInfo.getSystemInfo();
         // Requestparameter auslesen
         int gebietsart = Integer.parseInt(request.getParameter(ApplicationBeanKonstanten.LEVEL));
@@ -145,7 +159,7 @@ public class ErgebnisImportBean extends BasicUploadBean {
                   // START
 
                   // Hier werden die Dateien ins Archiv geschrieben
-                  writeFileIntoArchiveFolder(item, importEML510);
+                  File realFile = writeFileIntoArchiveFolder(item, importEML510, true);
 
                   String fileName = item.getName();
                   fileName = new File(fileName.replace('\\', separatorChar)).getName();
@@ -157,6 +171,7 @@ public class ErgebnisImportBean extends BasicUploadBean {
                     URL url510 = handler.add(remoteHost, "/" + fileName, input); //$NON-NLS-1$
                     importEML510.setEML510(url510);
                     printWriter.println();
+                    importEML510.putFile(realFile, input);
                   }
                 }
               }
@@ -172,35 +187,17 @@ public class ErgebnisImportBean extends BasicUploadBean {
               && importEML510.getFehlermeldung() == null) {
             final HttpSession session = request.getSession(false);
             int defaultSessionTimeout = session.getMaxInactiveInterval();
-            try {
-              session
-                  .setAttribute("defaultSessionTimeout", Integer.toString(defaultSessionTimeout)); //$NON-NLS-1$
-              session.setMaxInactiveInterval(60 * 60); // set to 60 minutes
 
-              readMsg(getAnwContext(request),
-                  importEML510.getEML510(),
-                  importEML510.getGebietsart(),
-                  importEML510.getGebietsNr());
-              String filename = importEML510.getEML510().getPath();
-              WahlInfo wahlInfo = WahlInfo.getWahlInfo(getAnwContext(request));
-              String gebietname = wahlInfo.getName4Gebiet(importEML510.getGebietsart(),
-                  importEML510.getGebietsNr());
-              importEML510.reset();
-              importEML510.setStatus(AbstractImportEML.STATUS_KOMPLETT);
-              importEML510.setLastFileName(filename);
-              importEML510.setLastGebietName(gebietname);
-              importEML510.setLastImport(new SimpleDateFormat().format(new Date()));
+            try {
+              saveFiles(importEML510.getFilesMap());
+              basicExecute(request, importEML510, printWriter, session, defaultSessionTimeout);
+
             } catch (Exception e) {
-              String fehler = e.getMessage() == null ? Messages
-                  .getString(MessageKeys.Msg_UnbekannterFehlerBeimEinlesenDerDaten) : e
-                  .getMessage();
-              importEML510.reset();
-              importEML510.setFehlermeldung(fehler);
+              importEML510.setStatus(AbstractImportEML.STATUS_ERROR);
+              importEML510.setFehlermeldung(e.getMessage());
               error(printWriter, e.getMessage(), e);
-            } finally {
-              long interval = System.currentTimeMillis() - session.getLastAccessedTime();
-              session.setMaxInactiveInterval((int) (interval / 1000 + defaultSessionTimeout));
             }
+
           } else if (importEML510.getStatus() != AbstractImportEML.STATUS_URL_KOMPLETT
               && importEML510.getFehlermeldung() != null) {
             // if there is a Error while Hash-Input, do not reset the Importdefinition and try to
@@ -212,6 +209,48 @@ public class ErgebnisImportBean extends BasicUploadBean {
         }
 
         request.setAttribute("output", writer.getBuffer().toString()); //$NON-NLS-1$
+      }
+
+      private void saveFiles(Map<File, byte[]> filesMap) throws IOException {
+        for (File realFile : filesMap.keySet()) {
+          FileOutputStream fout = new FileOutputStream(realFile);
+          fout.write(filesMap.get(realFile));
+          fout.close();
+        }
+      }
+
+      private void basicExecute(HttpServletRequest request,
+          ImportEML510 importEML510,
+          PrintWriter printWriter,
+          final HttpSession session,
+          int defaultSessionTimeout) {
+        try {
+          session.setAttribute("defaultSessionTimeout", Integer.toString(defaultSessionTimeout)); //$NON-NLS-1$
+          session.setMaxInactiveInterval(60 * 60); // set to 60 minutes
+
+          readMsg(getAnwContext(request),
+              importEML510.getEML510(),
+              importEML510.getGebietsart(),
+              importEML510.getGebietsNr());
+          String filename = importEML510.getEML510().getPath();
+          WahlInfo wahlInfo = WahlInfo.getWahlInfo(getAnwContext(request));
+          String gebietname = wahlInfo.getName4Gebiet(importEML510.getGebietsart(),
+              importEML510.getGebietsNr());
+          importEML510.reset();
+          importEML510.setStatus(AbstractImportEML.STATUS_KOMPLETT);
+          importEML510.setLastFileName(filename);
+          importEML510.setLastGebietName(gebietname);
+          importEML510.setLastImport(new SimpleDateFormat().format(new Date()));
+        } catch (Exception e) {
+          String fehler = e.getMessage() == null ? Messages
+              .getString(MessageKeys.Msg_UnbekannterFehlerBeimEinlesenDerDaten) : e.getMessage();
+          importEML510.reset();
+          importEML510.setFehlermeldung(fehler);
+          error(printWriter, e.getMessage(), e);
+        } finally {
+          long interval = System.currentTimeMillis() - session.getLastAccessedTime();
+          session.setMaxInactiveInterval((int) (interval / 1000 + defaultSessionTimeout));
+        }
       }
     });
   }

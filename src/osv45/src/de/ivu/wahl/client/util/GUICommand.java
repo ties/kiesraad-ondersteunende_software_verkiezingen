@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.ivu.wahl.anwender.Recht;
+
 /**
  * Kleines Hilfobjekt zum erfassen, von durch den Anwender anstossbaren Aktionen Die Visualisierung
  * wird in der entsprechenden JSP umgesetzt. im ApplicationBean werden Listen von f�r den
@@ -33,8 +35,8 @@ public class GUICommand implements Serializable {
   private int _viewNr = -1;
 
   // ben�tigtes Recht (Konstanten in de.ivu.wahl.anwender.Rechte)
-  // null beduetet, es ist kein recht erforderlich
-  private String _recht = null;
+  // R_ALWAYS_ALLOWED bedeutet, es ist kein recht erforderlich
+  private Recht _recht = Recht.R_ALWAYS_ALLOWED;
 
   // wenn true dann abh�ngigkeit von land
   private boolean _gebietsabhaengig = false;
@@ -67,13 +69,6 @@ public class GUICommand implements Serializable {
   // Soll der Befehl nur Angezeigt werden, wenn die Freigabe durch den Bundeswahlleiter NOCH NICHT
   // erfolgt ist
   private boolean _nurNichtFreigegeben = false;
-
-  // ist ein recht eingetragen, wird dieses ben�tigt, damir der Befehl auch ohne Freigabe sichtbar
-  // wird
-  private String _rechtOderFreigabe = null;
-
-  // Wahl muss geschlossen und und dieses recht vorhanden, dann kann der befehl gesehen werden
-  private String _rechtUndGeschlossen = null;
 
   // Wahl soll auf allen Leveln angezeigt werden. z.B. Command zum Abmelden vom System
   private boolean _alleLevel = false;
@@ -113,7 +108,7 @@ public class GUICommand implements Serializable {
 
   public GUICommand(String bezeichnung,
       int viewNr,
-      String recht,
+      Recht recht,
       boolean gebietsabhaengig,
       String tooltip,
       String guiClass) {
@@ -175,7 +170,7 @@ public class GUICommand implements Serializable {
   /**
    * @return Recht, das f�r die Ausf�hrung n�tig ist
    */
-  public String getRecht() {
+  public Recht getRecht() {
     return _recht;
   }
 
@@ -234,38 +229,6 @@ public class GUICommand implements Serializable {
    */
   public void setNurNichtFreigegeben(boolean nurNichtFreigegeben) {
     _nurNichtFreigegeben = nurNichtFreigegeben;
-  }
-
-  /**
-   * @return Recht, das n�tig ist, um diesen Befehl vor der Freigabe zu nutzen (impliziert nach
-   *         Freigabe immer nutzbar)
-   */
-  public String getRechtOderFreigabe() {
-    return _rechtOderFreigabe;
-  }
-
-  /**
-   * @param recht Recht, das n�tig ist, um diesen Befehl vor der Freigabe zu nutzen (impliziert nach
-   *          Freigabe immer nutzbar)
-   */
-  public void setRechtOderFreigabe(String recht) {
-    _rechtOderFreigabe = recht;
-  }
-
-  /**
-   * @return Recht, das n�tig ist, um diesen Befehl nach dem Schlie�en der Wahl zu nutzen
-   *         (impliziert sonst gar nicht nutzbar!)
-   */
-  public String getRechtUndGeschlossen() {
-    return _rechtUndGeschlossen;
-  }
-
-  /**
-   * @param recht Recht, das n�tig ist, um diesen Befehl nach dem Schlie�en der Wahl zu nutzen
-   *          (impliziert sonst gar nicht nutzbar!)
-   */
-  public void setRechtUndGeschlossen(String recht) {
-    _rechtUndGeschlossen = recht;
   }
 
   /**

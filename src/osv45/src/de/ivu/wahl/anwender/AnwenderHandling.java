@@ -73,7 +73,7 @@ public interface AnwenderHandling {
    * @return <code>true</code>, wenn der Anwender darf
    * @throws EJBException wenn es nicht m�glich war, die Rechte des Anwenders zu ermitteln
    */
-  boolean checkRight(AnwContext ac, String right) throws EJBException;
+  boolean checkRight(AnwContext ac, de.ivu.wahl.anwender.Recht right) throws EJBException;
 
   /**
    * Legt Admin und System-Anwender an.

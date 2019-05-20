@@ -98,7 +98,7 @@ public class ErgebnisImportHandlerDb extends AbstractErgebnisImportHandler {
       model.setStatus(ErgebniseingangKonstanten.STATE_ERROR);
 
       int herkunft = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT;
-      if (SystemInfo.getSystemInfo().isFileInputWithManualConfirmation()) {
+      if (SystemInfo.getSystemInfo().isManualConfirmationNeededAfterFileImport()) {
         herkunft = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT_AS_FIRST_INPUT;
       }
       model.setHerkunft(herkunft);

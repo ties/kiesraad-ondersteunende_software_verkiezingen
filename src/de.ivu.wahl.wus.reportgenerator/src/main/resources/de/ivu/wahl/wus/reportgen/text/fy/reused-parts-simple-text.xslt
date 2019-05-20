@@ -5,6 +5,7 @@
     <xsl:param name="RP_ChapterElection_HetGaatOmVerkiezingVanLeden" select="'It giet om de ferkiezing fan:'" />
     <xsl:param name="RP_ChapterElection_HetGaatOmKandidatenlijst" select="'It giet om de kandidatelist foar de ferkiezing fan:'" />
     <xsl:param name="RP_ChapterElection_VoorDeProvincie" select="' voor de provincie '" />
+    <xsl:param name="RP_ChapterElection_VoorHetOpenbaarLichaam" select="' voor het openbaar lichaam '" />
 
     <xsl:param name="RP_ChapterPartyName_AanduidingVan" select="'De politike groepearring'" />
     <xsl:param name="RP_ChapterPartyName_AanduidingVan_H3" select="'Oantsjutting fan de politike groepearring'" />

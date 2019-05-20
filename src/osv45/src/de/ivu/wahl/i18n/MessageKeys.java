@@ -242,6 +242,7 @@ public class MessageKeys {
   public static final String Logger_EsWurdeKeinAnwenderMitDemNamen_0_gefunden = "Logger_EsWurdeKeinAnwenderMitDemNamen_0_gefunden"; //$NON-NLS-1$
   public static final String Logger_DefaultUserNotFound = "Logger_DefaultUserNotFound"; //$NON-NLS-1$
   public static final String Logger_BeimLogin_0 = "Logger_BeimLogin_0"; //$NON-NLS-1$
+  public static final String Msg_AdminCannotBeAnwender = "Msg_AdminCannotBeAnwender"; //$NON-NLS-1$
 
   public static final String Logger_DateinameFuer_0_1 = "Logger_DateinameFuer_0_1"; //$NON-NLS-1$ 
   public static final String Logger_Datei_0_istZumLesenEingegangen = "Logger_Datei_0_istZumLesenEingegangen"; //$NON-NLS-1$ 
@@ -554,4 +555,8 @@ public class MessageKeys {
   public static final String Msg_ReIndexDatabaseSuccessful = "Msg_ReIndexDatabaseSuccessful"; //$NON-NLS-1$
   public static final String Msg_ReIndexDatabaseFailed = "Msg_ReIndexDatabaseFailed"; //$NON-NLS-1$
   public static final String Error_ValuesAbove_0_notSupported = "Error_ValuesAbove_0_notSupported"; //$NON-NLS-1$
+
+  public static final String ERROR_RightsMissing = "ERROR_RightsMissing"; //$NON-NLS-1$
+  public static final String ERROR_ErrorWhenCheckingRights = "ERROR_ErrorWhenCheckingRights"; //$NON-NLS-1$
+  public static final String ERROR_NotLoggedIn = "ERROR_NotLoggedIn"; //$NON-NLS-1$
 }

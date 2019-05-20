@@ -11,9 +11,7 @@ import static de.ivu.wahl.Konstanten.PROP_ELECTION_MODE;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Category;
-
-import de.ivu.util.debug.Log4J;
+import de.ivu.ejb.EJBUtil;
 import de.ivu.wahl.admin.PropertyHandling;
 import de.ivu.wahl.admin.PropertyHandlingBean;
 import de.ivu.wahl.i18n.MessageKeys;
@@ -26,7 +24,15 @@ import de.ivu.wahl.wus.reportgen.i18n.Messages;
  */
 public class SystemInfo implements Serializable, Cloneable {
   private static final long serialVersionUID = -6961353557086785634L;
-  private static final Category LOGGER = Log4J.configure(SystemInfo.class);
+
+  static PropertyHandling _propHandling = null;
+
+  private static PropertyHandling getPropertyHandling() {
+    if (_propHandling == null) {
+      _propHandling = lookupLocal(PropertyHandlingBean.class.getSimpleName());
+    }
+    return _propHandling;
+  }
 
   private final transient AuthorityLevel _wahlEbene;
   private final transient int _wahlModus;
@@ -34,9 +40,6 @@ public class SystemInfo implements Serializable, Cloneable {
 
   static SystemInfo __systemInfo;
 
-  /**
-   * @return SystemInfo
-   */
   public static SystemInfo getSystemInfo() {
     if (__systemInfo == null) {
       __systemInfo = new SystemInfo();
@@ -44,19 +47,12 @@ public class SystemInfo implements Serializable, Cloneable {
     return __systemInfo;
   }
 
-  /**
-   * Privater Konstruktor zum Erzeugen von WahlInfo aus Daten einer Wahl. Wird nur von der
-   * Factory-Methode verwendet.
-   */
-  public SystemInfo() {
+  private SystemInfo() {
     _wahlModus = getPropertyHandling().getIntProperty(PROP_ELECTION_MODE);
     _wahlEbene = AuthorityLevel.byId(getPropertyHandling().getIntProperty(PROP_ELECTION_LEVEL));
     _installationSuffix = getPropertyHandling().getProperty(Konstanten.PROP_INSTALLATION_SUFFIX);
   }
 
-  /**
-   * @return wahlEbene.
-   */
   public int getWahlEbene() {
     return _wahlEbene == null ? 0 : _wahlEbene.getId();
   }
@@ -72,15 +68,15 @@ public class SystemInfo implements Serializable, Cloneable {
     return getEbenenklartext();
   }
 
+  public String getInstallationSuffix() {
+    return _installationSuffix == null ? "" : _installationSuffix; //$NON-NLS-1$
+  }
+
   /**
    * @return wahlModus.
    */
   public int getWahlModus() {
     return _wahlModus;
-  }
-
-  public String getInstallationSuffix() {
-    return _installationSuffix == null ? "" : _installationSuffix; //$NON-NLS-1$
   }
 
   /**
@@ -98,16 +94,18 @@ public class SystemInfo implements Serializable, Cloneable {
     return getInputMode().isFileInputWithManualConfirmation();
   }
 
-  static PropertyHandling _propHandling = null;
-
   /**
-   * @return {@link PropertyHandling}
+   * This is the case if the input mode is INPUT_MODE_FILE_WITH_MANUAL_CONFIRMATION or if the input
+   * mode is INPUT_MODE_DOUBLE in P4_HSB and P4_CSB. See OSV-2087.
+   * 
+   * @return true, if a manual confirmation is needed after the result has been imported as EML
+   *         file.
    */
-  private static PropertyHandling getPropertyHandling() {
-    if (_propHandling == null) {
-      _propHandling = lookupLocal(PropertyHandlingBean.class.getSimpleName());
-    }
-    return _propHandling;
+  public boolean isManualConfirmationNeededAfterFileImport() {
+    return getInputMode().isFileInputWithManualConfirmation() //
+        || (getInputMode().isDoubleInput() //
+        && ("P4_HSB".equals(EJBUtil.getProgramSpecificAffix()) //$NON-NLS-1$
+        || "P4_CSB".equals(EJBUtil.getProgramSpecificAffix()))); //$NON-NLS-1$
   }
 
   /**

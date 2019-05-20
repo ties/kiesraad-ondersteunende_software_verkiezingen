@@ -1,5 +1,8 @@
 <%@ page import="de.ivu.wahl.AnwContext"%>
 <%@ page import="de.ivu.wahl.Konstanten"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.i18n.Messages"%>
@@ -21,12 +24,13 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%@include file="/jsp/fragments/common_headers_no_cache.jspf"%>
 <%
-String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
-String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
+   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
+   String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
 
    String prefix = ApplicationBeanKonstanten.PREFIX;
-   String urlChange    = "/osv?cmd=adm_change_pw&" + ClientHelper.getParametersDoNotStartWith(request, prefix); //$NON-NLS-1$
+   String urlChange    = "/osv?cmd=" + Action.CMD_ADM_CHANGE_PW.getKey() + "&" + ClientHelper.getParametersDoNotStartWith(request, prefix); //$NON-NLS-1$//$NON-NLS-2$
    String breite = "100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_ANWENDER_CHANGE_PW); 
    String errorMsg = null;
    String confirmationMsg = null;
    if (admBean._adminMsg != null && !admBean._adminMsg.isEmpty()) {
@@ -88,6 +92,9 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
    <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
+         <% if (!rechteFehler.isEmpty())  { %>
+            <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td width="5" class="hggrau">&nbsp;</td>
@@ -175,6 +182,7 @@ String helpKey = "admAnwenderChangePW"; //$NON-NLS-1$
                <td width="10">&nbsp;</td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

@@ -105,8 +105,8 @@ public class AnwRechte implements Serializable {
    * @param right das Recht, das gepr�ft wird
    * @return <code>true</code>, wenn der Anwender darf
    */
-  public boolean checkRight(String right) {
-    return _rights.contains(right);
+  public boolean checkRight(de.ivu.wahl.anwender.Recht right) {
+    return _rights.contains(right.getKey());
   }
 
   /**
@@ -117,8 +117,10 @@ public class AnwRechte implements Serializable {
    * @param gebietsnummer Nummer des gepr�ften Gebietes
    * @return <code>true</code>, wenn der Anwender darf
    */
-  public boolean checkRightForGebiet(String right, int gebietsart, int gebietsnummer) {
-    return _rights.contains(right)
+  public boolean checkRightForGebiet(de.ivu.wahl.anwender.Recht right,
+      int gebietsart,
+      int gebietsnummer) {
+    return _rights.contains(right.getKey())
         && _gebiete.contains(new GebietHierarchie.GebietKey(gebietsart, gebietsnummer));
   }
 }

@@ -1,17 +1,20 @@
 <jsp:directive.page import="de.ivu.wahl.client.util.ClientHelper" />
 <jsp:directive.page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" />
-<%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
-<%@ page import="de.ivu.wahl.dataimport.IImportEML"%>
-<%@ page import="de.ivu.wahl.dataimport.ImportElectionMetadata"%>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.Command"%>
 <%@ page import="de.ivu.wahl.client.beans.WahlImportBean"%>
+<%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
+<%@ page import="de.ivu.wahl.dataimport.IImportEML"%>
+<%@ page import="de.ivu.wahl.dataimport.ImportElectionMetadata"%>
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
 <%@ page import="de.ivu.wahl.modell.ejb.Gebiet"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Collection"%>
 <%@ page import="java.util.Iterator"%>
@@ -47,6 +50,11 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
             break;
         }
     }
+
+    String breite = "100%"; //$NON-NLS-1$
+    String rechteFehler = newSBs ? 
+        appBean.getErrorIfRightsAreMissing(JspPage.ADM_STIMMBEZIRKE_CREATE) : 
+        appBean.getErrorIfRightsAreMissing(JspPage.ADM_STIMMBEZIRKE_EDIT); 
 %>
 <html>
  <head>
@@ -145,16 +153,18 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
   </div>
   
   <% 
-    String url = "/osv?"
-    + "cmd=adm_import_Stimmbezirke&"
-    + "ts=" + System.currentTimeMillis() + "&"
+    String url = "/osv?"  //$NON-NLS-1$
+    + "cmd=" + Action.CMD_ADM_IMPORT_STIMMBEZIRKE.getKey() + "&" //$NON-NLS-1$ //$NON-NLS-2$
+    + "ts=" + System.currentTimeMillis() + "&" //$NON-NLS-1$ //$NON-NLS-2$
         + ClientHelper.getParametersDoNotStartWith(request, ApplicationBeanKonstanten.PREFIX);
     
-    String formurlAnzahl = ClientHelper.generateURL(request, null, AdministrationBean.CMD_ADM_STIMMBEZIRK_ANZAHL, -1, true);
-    String breite = "100%"; 
+    String formurlAnzahl = ClientHelper.generateURL(request, null, Action.CMD_ADM_STIMMBEZIRK_ANZAHL.getKey(), -1, true);
   
     if (wahlInfo == null || wahlInfo.isFreigegeben() || lockByOtherUser){%>
   <div class="hghell">
+                    <% if (!rechteFehler.isEmpty())  { %>
+                      <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                    <% } else { %>
                     <table width="<%=breite %>" cellspacing="0" cellpadding="0" border="0" class="hghell">
                         <tbody>
                             <tr>
@@ -201,9 +211,13 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
                             </tr>
                         </tbody>
                     </table>
+                    <% } %>
   </div>
 <% } else { %>
   <div class="hghell">
+   <% if (!rechteFehler.isEmpty())  { %>
+     <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+   <% } else { %>
    <fieldset style="border: 1px solid #093C69; padding: 15px; margin: 15px;">
     <legend>
      <b><%= ClientHelper.forHTML(wurzelgebietName) %></b>
@@ -297,7 +311,7 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
                                                 int summeWahlberechtigte = 0;
                                                 while (iterator.hasNext()){
                                                     GebietModel stimmbezirk  = iterator.next();
-                                                    String urlLoeschen = ClientHelper.generateURL(request, null, "adm_Stimmbezirk_loeschen", -1, true)+"&"+prefix+"id="+stimmbezirk.getID_Gebiet();
+                                                    String urlLoeschen = ClientHelper.generateURL(request, null, Action.CMD_ADM_STIMMBEZIRK_LOESCHEN.getKey(), -1, true) + "&" + prefix + "id=" + stimmbezirk.getID_Gebiet();
                                                     summeWahlberechtigte = summeWahlberechtigte + stimmbezirk.getWahlberechtigte();
                                                 if (first) { %>
                                                       <tr class="hgformular">
@@ -423,6 +437,7 @@ String helpKey = "admStimmbez"; //$NON-NLS-1$
             </ivu:form>
         <% } %>
     </fieldset>
+    <% } %>
   </div>
 <% } %>
         </div>

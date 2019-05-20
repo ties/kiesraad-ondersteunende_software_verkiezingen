@@ -6,15 +6,18 @@
 <%@ page import="de.ivu.wahl.WahlInfo" %>
 <%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.GebietsBaum" %>
-<%@ page import="de.ivu.wahl.modell.GebietModel" %>
-<%@ page import="de.ivu.wahl.modell.GebietInfo" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean" %>
 <%@ page import="de.ivu.wahl.client.beans.NavigationBean" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
+<%@ page import="de.ivu.wahl.modell.GebietModel" %>
+<%@ page import="de.ivu.wahl.modell.GebietInfo" %>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
 <%@ page import="de.ivu.wahl.modell.ejb.Gebiet"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%--
  *******************************************************************************
  * List of all provinces with the correspondig vote values
@@ -33,9 +36,11 @@
  
  Collection<Gebiet> provincesListe = appBean.getProvinces();
  
- String formurl = ClientHelper.generateURL(request, null, AdministrationBean.CMD_ADM_VOTE_VALUES, -1, true);
+ String formurl = ClientHelper.generateURL(request, null, Action.CMD_ADM_VOTE_VALUES.getKey(), -1, true);
  String titel = BundleHelper.getBundleString("Vote_Values_titel"); //$NON-NLS-1$ 
  String breite = "100%"; //$NON-NLS-1$
+ String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_VOTE_VALUES); 
+
  WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 
  String confirmationMsg = null;
@@ -92,6 +97,9 @@
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <ivu:form name="appstate" action="<%= formurl %>" >
            <table width="<%=breite %>" cellspacing="0" cellpadding="0" border="0" align="center" class="hghell">
                 <tbody>
@@ -233,6 +241,7 @@
                 </tbody>
             </table>
         </ivu:form>
+        <% } %>
     </jsp:body>
     </jsp:element>
 </html>

@@ -14,10 +14,12 @@ Weitgehend identische JSP-Seiten:
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.ExportWithParametersState"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
-<%@ page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -33,6 +35,7 @@ String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ExpAppendixWrr83"; //$NON-NLS-1$
 
 String breite = "100%";
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.P4_EXPORT_OSV4_6); 
 String prefix = ApplicationBeanKonstanten.PREFIX;
 int subwork = ClientHelper.getIntParameter(request.getParameter(prefix+"subwork"), 0);
 DialogStateHolder state = expP4Bean.getP4ExportStateOSV4_4();
@@ -89,6 +92,9 @@ boolean legende = false;
                <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
+                     <% if (!rechteFehler.isEmpty())  { %>
+                       <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                     <% } else { %>
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                         <tr>
                            <td width="5" class="hggrau">&nbsp;</td>
@@ -214,7 +220,7 @@ boolean legende = false;
                                                          </tr><%
                                                          if (selectedKey != null) {
                                                            
-                                                           String formurl = "/osv?cmd=" + ExportP4Commands.EXP_P4_PROP_EINGABE_OSV4_4 + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
+                                                           String formurl = "/osv?cmd=" + Action.EXP_P4_PROP_EINGABE_OSV4_4.getKey() + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
                                                            + "&" + ClientHelper.getAllParameters(request, true); %>
                                                           <tr>
                                                            <td style="border: 1px solid rgb(9, 60, 105); padding-left: 1em width: 100%;">
@@ -304,7 +310,7 @@ boolean legende = false;
                                                     </table>
                                                  </fieldset>
                                      <% } else if (ExportWithParametersState.STATUS_P4_D2 == state._modus){
-                                            String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_OSV4_6 + "&" + ClientHelper.getAllParameters (request);
+                                            String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_OSV4_6.getKey() + "&" + ClientHelper.getAllParameters (request);
                                                    %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
                                                  <tr>
@@ -385,7 +391,7 @@ boolean legende = false;
                                                     // reset export status
                                                     expP4Bean.resetExportStateOSV4_4();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_OSV4_6 + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                                    String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_OSV4_6.getKey() + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                         %>
                                         <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                     <legend><b><ivu:int key="Export_P4_Appendix_O3"/></b></legend>
@@ -424,6 +430,7 @@ boolean legende = false;
                             <td></td>
                             </tr>
                      </table>
+                     <% } %>
                   </td>
                </tr>
             </table>

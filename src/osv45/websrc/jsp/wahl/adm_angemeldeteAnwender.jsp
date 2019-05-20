@@ -8,13 +8,15 @@
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.wahl.anwender.Anmeldung" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="java.util.Vector" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
-<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
@@ -23,7 +25,8 @@
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "admAngemeldeteAnw"; //$NON-NLS-1$
 
-String breite = "100%";
+String breite = "100%"; //$NON-NLS-1$
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_ANGEMELDETE_ANWENDER); 
 %>
 <html>
 <head>
@@ -39,11 +42,9 @@ String breite = "100%";
    <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
-      <% if (!appBean.checkRight(de.ivu.wahl.anwender.Rechte.R_ADM_ANGEMELDETE))  { // %>
-         <p>
-            <%-- möglicherweise hier was nettes reinschreiben für normale Anwender, die in die Admjnistration wechseln --%>
-         </p>
-      <% } else { %>
+         <% if (!rechteFehler.isEmpty())  { %>
+            <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td width="5" class="hggrau">&nbsp;</td>

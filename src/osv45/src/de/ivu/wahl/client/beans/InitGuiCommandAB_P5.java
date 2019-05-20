@@ -38,9 +38,8 @@ public class InitGuiCommandAB_P5 extends InitGuiCommand_P5 implements Applicatio
 
   @Override
   protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
-    helper.setRights(null);
     helper
         .addCommand(Command.GEB_ERG_KAN_ZUS,
-            "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidatZusammenfassung.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", JspPage.GEBIET_ERGEBNIS_KANDIDAT_ZUSAMMENFASSUNG); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

@@ -6,7 +6,7 @@ CREATE TABLE Alternative (
        ID_Liste             VARCHAR(13),
        ID_Personendaten     VARCHAR(15),
        Nummer               INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Anwender (
        ID_Anwender          VARCHAR(30) NOT NULL PRIMARY KEY,
@@ -17,7 +17,7 @@ CREATE TABLE Anwender (
        Salt                 VARCHAR(200),
        FehlversucheAnmeldung INTEGER,
        LetzterZugriff       TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Besonderheit (
        ID_Besonderheit      VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -31,7 +31,7 @@ CREATE TABLE Besonderheit (
        Anzahl               INTEGER,
        Text                 VARCHAR(4000),
        Nummer               INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE DHondtQuotient (
        ID_DHondtQuotient    VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -40,7 +40,7 @@ CREATE TABLE DHondtQuotient (
        Zaehler              INTEGER,
        Nenner               INTEGER,
        SitzAusRestanteil    SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Ergebniseingang (
        ID_Ergebniseingang   VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -54,14 +54,14 @@ CREATE TABLE Ergebniseingang (
        Status               INTEGER,
        ErgebnisHash         VARCHAR(100),
        Fehlermeldung        LONG VARCHAR
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE FiktiveSitzverteilung (
        ID_FiktiveSitzverteilung    VARCHAR(13) NOT NULL PRIMARY KEY,
        ID_Ergebniseingang   VARCHAR(13),
        ID_Gruppe            VARCHAR(13),
        SitzeGesamtzahl      INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Gebiet (
        ID_Gebiet            VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -81,19 +81,19 @@ CREATE TABLE Gebiet (
        Postalvote           SMALLINT,
        VoteValue            INTEGER,
        Zipcode              VARCHAR(12)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Gebiet_Ergebniseingang (
        ID_Gebiet            VARCHAR(13) NOT NULL,
        ID_Ergebniseingang   VARCHAR(13) NOT NULL,
        PRIMARY KEY (ID_Gebiet,ID_Ergebniseingang)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Gebiet_Gebiet (
        ID_Elterngebiet      VARCHAR(13) NOT NULL,
        ID_Untergebiet       VARCHAR(13) NOT NULL,
        PRIMARY KEY (ID_Elterngebiet, ID_Untergebiet)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Gebietsstatus (
        ID_Gebietsstatus     VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -103,7 +103,7 @@ CREATE TABLE Gebietsstatus (
        Korrekturnummer      INTEGER,
        AnzahlErgebnisseKumuliert INTEGER,
        Vollstaendig         SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Gruppe (
        ID_Gruppe            VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -115,7 +115,7 @@ CREATE TABLE Gruppe (
        NameKurz             VARCHAR(80),
        KautionGestellt      SMALLINT,
        Farbe                VARCHAR(200)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE GruppeGebietsspezifisch (
        ID_GruppeGebietsspezifisch VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -125,7 +125,7 @@ CREATE TABLE GruppeGebietsspezifisch (
        ID_Liste             VARCHAR(13),
        Position             INTEGER,
        ListeZugelassen      SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Konflikt (
        ID_Konflikt          VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -133,7 +133,7 @@ CREATE TABLE Konflikt (
        ID_LosAlternative    VARCHAR(13),
        Nummer               INTEGER,
        Konfliktart          INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Liste (
        ID_Liste             VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -144,7 +144,7 @@ CREATE TABLE Liste (
        Name                 VARCHAR(80),       
        GeschlechtSichtbar   SMALLINT,
        PublicationLanguage  VARCHAR(5)       
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Listenkandidatur (
        ID_Listenkandidatur  VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -152,7 +152,7 @@ CREATE TABLE Listenkandidatur (
        ID_Wahl              VARCHAR(100),
        ID_Personendaten     VARCHAR(15),
        Listenplatz          INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE ListenkandidaturErgebnis (
        ID_ListenkandidaturErgebnis  VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -164,13 +164,13 @@ CREATE TABLE ListenkandidaturErgebnis (
        BevorzugtGewaehlt    SMALLINT,
        Losteilnehmer        SMALLINT,
        Losgewinner          SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Listenkombination (
        ID_Listenkombination VARCHAR(13) NOT NULL PRIMARY KEY,
        ID_Wahl              VARCHAR(100),
        Bezeichnung          CHAR(1)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE ListenkombinationZulassung (
        ID_ListenkombinationZulassung VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -178,14 +178,14 @@ CREATE TABLE ListenkombinationZulassung (
        ID_Listenkombination VARCHAR(13) NOT NULL,
        ID_Gruppe            VARCHAR(13),
        Zugelassen           SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE ListenplatzNeu (
        ID_ListenplatzNeu    VARCHAR(13) NOT NULL PRIMARY KEY,
        ID_Liste             VARCHAR(13) NOT NULL,
        ID_Ergebniseingang   VARCHAR(13) NOT NULL,
        Geaendert            SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Personendaten (
        ID_Personendaten     VARCHAR(15) NOT NULL PRIMARY KEY,
@@ -204,36 +204,36 @@ CREATE TABLE Personendaten (
        Kontakt_PLZ          VARCHAR(200),
        Kontakt_Strasse      VARCHAR(200),
        Benennbar            SMALLINT DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Recht (
        ID_Recht             VARCHAR(30) NOT NULL PRIMARY KEY,
        Name                 VARCHAR(200)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Rechtegruppe (
        ID_Rechtegruppe      VARCHAR(30) NOT NULL PRIMARY KEY,
        Name                 VARCHAR(200),
        Beschreibung         VARCHAR(200)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Rechtegruppe_Anwender (
        ID_Rechtegruppe      VARCHAR(30) NOT NULL,
        ID_Anwender          VARCHAR(30) NOT NULL,
        PRIMARY KEY (ID_Rechtegruppe, ID_Anwender)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Rechtegruppe_Recht (
        ID_Rechtegruppe      VARCHAR(30) NOT NULL,
        ID_Recht             VARCHAR(30) NOT NULL,
        PRIMARY KEY (ID_Rechtegruppe, ID_Recht)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Repository (
        ID_Repository        VARCHAR(13) NOT NULL PRIMARY KEY,
        Name                 VARCHAR(200) NOT NULL UNIQUE,
        Wert                 VARCHAR(4000)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Restsitzverteilung (
        ID_Restsitzverteilung VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -245,7 +245,7 @@ CREATE TABLE Restsitzverteilung (
        Sitze                INTEGER,
        SitzeRest            INTEGER,
        SitzeGesamtZuVerteilen INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Schwellwert (
        ID_Schwellwert       VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -253,7 +253,7 @@ CREATE TABLE Schwellwert (
        Name                 VARCHAR(200),
        Schwellwertart       INTEGER,
        Wert                 DECIMAL(12,2)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE SitzberechnungErgebnis (
        ID_SitzberechnungErgebnis VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -272,7 +272,7 @@ CREATE TABLE SitzberechnungErgebnis (
        ZaehlerVomRest       INTEGER,
        NennerVomRest        INTEGER,
        Losentscheid         SMALLINT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Sitzverteilung (
        ID_Sitzverteilung    VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -281,7 +281,7 @@ CREATE TABLE Sitzverteilung (
        ID_Gruppe            VARCHAR(13),
        ID_Listenkombination VARCHAR(13),
        SitzeGesamtzahl      INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Stimmergebnis (
        ID_Stimmergebnis     VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -292,14 +292,14 @@ CREATE TABLE Stimmergebnis (
        Wahlergebnisart      INTEGER,
        Stimmen              INTEGER,
        Stimmart             INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE StimmergebnisseUntergebiete (
        ID_StimmergebnisseUntergebiete VARCHAR(13) NOT NULL PRIMARY KEY,
        ID_Ergebniseingang   VARCHAR(13),
        ID_Gebiet            VARCHAR(13),
        ErgebnisseXML        TEXT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Unterverteilung (
        ID_Unterverteilung   VARCHAR(13) NOT NULL PRIMARY KEY,
@@ -308,7 +308,7 @@ CREATE TABLE Unterverteilung (
        ID_Listenkombination VARCHAR(13),
        Stimmen              INTEGER,
        Sitze                INTEGER
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Wahl (
        ID_Wahl              VARCHAR(100) NOT NULL PRIMARY KEY,
@@ -332,7 +332,7 @@ CREATE TABLE Wahl (
        Status               INTEGER,
        Freigegeben          TIMESTAMP NULL,
        LetzteAenderung      TIMESTAMP NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE Alternative ADD FOREIGN KEY(ID_Konflikt) REFERENCES Konflikt (ID_Konflikt);
 ALTER TABLE Alternative ADD FOREIGN KEY (ID_Listenkombination) REFERENCES Listenkombination (ID_Listenkombination);

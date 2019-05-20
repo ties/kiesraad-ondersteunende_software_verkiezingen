@@ -1,9 +1,4 @@
-
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.AnwContext"%>
-<%@ page import="de.ivu.wahl.Konstanten"%><%--
+<%--
  *******************************************************************************
  * Eingangshistorie
  * Alle Ergebniseingänge chronologisch sortiert.
@@ -15,17 +10,24 @@
  * $Id: Status_Gebiet.jsp,v 1.17 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
-<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
-<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
+<%@ page import="de.ivu.wahl.GebietsBaum" %>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.AnwContext"%>
+<%@ page import="de.ivu.wahl.Konstanten"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.auswertung.*" %>
 <%@ page import="de.ivu.wahl.modell.*" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.*" %>
 <%@ page import="de.ivu.wahl.client.beans.*" %>
 <%@ page import="de.ivu.wahl.client.util.*" %>
-<%@ page import="org.apache.log4j.Category" %>
-<%@ page import="de.ivu.wahl.GebietsBaum" %>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="java.util.Date" %>
+<%@ page import="org.apache.log4j.Category" %>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
+<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
@@ -60,8 +62,9 @@ String helpKey = "statusGebiet"; //$NON-NLS-1$
        erg =  appBean.getEingangshistorie(level,gebietNr);
     }
    
-   String breite ="100%"; //$NON-NLS-1$
-   
+  String breite ="100%"; //$NON-NLS-1$
+  String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.STATUS_GEBIET); 
+
   boolean isReferendum = appBean.getWahlInfo().isReferendum();
   if (isReferendum) {
      helpKey = "statusGebietRef"; //$NON-NLS-1$
@@ -112,6 +115,9 @@ String helpKey = "statusGebiet"; //$NON-NLS-1$
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <tr>
       <td valign="top">
+         <% if (!rechteFehler.isEmpty())  { %>
+           <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td colspan="3"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="10"></td>
@@ -193,6 +199,7 @@ String helpKey = "statusGebiet"; //$NON-NLS-1$
                <td colspan="3" height="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

@@ -15,11 +15,13 @@
 <jsp:directive.page import="de.ivu.wahl.Basiseinstellung"/>
 <jsp:directive.page import="de.ivu.wahl.client.util.GUICommand"/>
 <jsp:directive.page import="java.util.List"/>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.i18n.Messages"%>
-<%@ page import="de.ivu.wahl.i18n.MessageKeys"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.i18n.Messages"%>
+<%@ page import="de.ivu.wahl.i18n.MessageKeys"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"  %>
@@ -29,6 +31,7 @@
 <%
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    String breite = "100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_PROPS); 
    String prefix = ApplicationBeanKonstanten.PREFIX;
    int subwork = ClientHelper.getIntParameter(request.getParameter(prefix + "subwork"), 0); //$NON-NLS-1$
    SystemInfo systemInfo = SystemInfo.getSystemInfo();
@@ -97,6 +100,9 @@
    <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
+         <% if (!rechteFehler.isEmpty())  { %>
+           <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td width="5" class="hggrau">&nbsp;</td>
@@ -286,6 +292,7 @@
                <td width="10">&nbsp;</td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

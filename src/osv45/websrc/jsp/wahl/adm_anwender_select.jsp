@@ -1,12 +1,14 @@
-<%@ page import="de.ivu.wahl.modell.ejb.Anwender" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
-<%@ page import="java.util.Iterator" %>
+<%@ page import="de.ivu.wahl.modell.ejb.Anwender" %>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="java.util.Collection"%>
-<%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Collection"%>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List"%>
 
 <%--
  *******************************************************************************

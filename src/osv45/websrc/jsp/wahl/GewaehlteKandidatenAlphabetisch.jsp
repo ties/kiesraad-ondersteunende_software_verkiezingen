@@ -7,7 +7,8 @@
 <%@ page import="de.ivu.wahl.WahlInfo" %>
 <%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.GebietsBaum" %>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatenListe" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatInfo"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
@@ -44,8 +45,9 @@ String helpKey = "gewKandAlpha"; //$NON-NLS-1$
  KandidatenListe kandidatenListe = appBean.getGewaehltKandidatenForGebietAlphabetisch(idErgebniseingang, gebietInfo.getID_Gebiet()); 
  String titel = kandidatenListe.getErgBezeichnung();  
  String breite = "100%";
+ String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.GEWAEHLTE_KANDIDATEN_ALPHABETISCH); 
  AnwContext anwContext = appBean.getAnwContext();
- boolean darfBerechnen = anwContext.checkRight(Rechte.R_SITZVERTEILUNG_BERECHNEN);
+ boolean darfBerechnen = anwContext.checkRight(Recht.R_SITZVERTEILUNG_BERECHNEN);
 %>
 <html>
     <head>
@@ -78,6 +80,9 @@ String helpKey = "gewKandAlpha"; //$NON-NLS-1$
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <table width="<%=breite %>" cellspacing="0" cellpadding="0" border="0" class="hghell">
             <tbody>
                 <tr>
@@ -296,6 +301,7 @@ String helpKey = "gewKandAlpha"; //$NON-NLS-1$
                 </tr>
             </tbody>
         </table>
+        <% } %>
     </body>
 </html>
 

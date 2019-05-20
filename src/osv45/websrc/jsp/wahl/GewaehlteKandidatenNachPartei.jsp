@@ -7,7 +7,8 @@
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.AnwContext"%>
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatenListe"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.kandidat.KandidatInfo"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
@@ -44,10 +45,11 @@ String helpKey = "gewKandPartei"; //$NON-NLS-1$
   GebietInfo gebietInfo = (GebietInfo)node.getUserObject();
 
   AnwContext anwContext = appBean.getAnwContext();
-  boolean darfBerechnen = anwContext.checkRight(Rechte.R_SITZVERTEILUNG_BERECHNEN);
+  boolean darfBerechnen = anwContext.checkRight(Recht.R_SITZVERTEILUNG_BERECHNEN);
   KandidatenListe kandidatenListe = appBean.getGewaehltKandidatenForGebietOrderByGruppe(id_ergebniseingang, gebietInfo.getID_Gebiet());
   String titel = kandidatenListe.getErgBezeichnung();  
-  String breite = "100%";
+  String breite = "100%"; //$NON-NLS-1$
+  String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.GEWAEHLTE_KANDIDATEN_NACH_PARTEI); 
 %>
 <html>
     <head>
@@ -88,6 +90,9 @@ if   (appBean.isIE  ()) { //%> body {
         <div class="hgschwarz" style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <table class="hghell" align="center" border="0" cellpadding="0" cellspacing="0" width="<%=breite%>">
             <tbody>
                 <tr>
@@ -191,12 +196,12 @@ if   (appBean.isIE  ()) { //%> body {
                                                                                 int i = 1;
                                                                                 for (KandidatInfo kandidatInfo : kandidatenListe.getKandidaten()) { %> 
                                                                                     <%
-                                                                                   String kandidatpartei = ClientHelper.forHTML(kandidatInfo.getGruppennameKurz());
+                                                                                    String kandidatpartei = kandidatInfo.getGruppennameKurz();
                                                                                     String nachname = kandidatInfo.getNachname();
-                                                                                    String anker ="";
+                                                                                    String anker = "";
                                                                                     if (aktuellerParteiname == null  || !aktuellerParteiname.equals(kandidatpartei)) { 
                                                                                        aktuellerParteiname = kandidatpartei;
-                                                                                        String name = "name='" + aktuellerParteiname + "'";
+                                                                                        String name = "name='" + ClientHelper.forHTML(aktuellerParteiname) + "'";
                                                                                         if (firstTime){
                                                                                             anker = "";
                                                                                             firstTime = false;%>
@@ -207,7 +212,7 @@ if   (appBean.isIE  ()) { //%> body {
                                                                                             anker = "<a style='text-decoration:none' href='#oben'>[<img src='"+request.getContextPath()+"/img/icon/pfeil_oben.gif' width='16' height='18' border='0' alt=''>" + BundleHelper.getBundleString("NachOben") + " ]</a>"; %>
                                                                                             <tr>
                                                                                                 <td colspan="3" height="45" align="left" style="vertical-align:bottom; font-weight: bold; font-style: italic";"><%=ClientHelper.forHTML(aktuellerParteiname)%></td>
-                                                                                                <td colspan="1" height="45" align="right" style="vertical-align:bottom;"><a <%=ClientHelper.forHTML(name)%> ><%=anker%></a></td>
+                                                                                                <td colspan="1" height="45" align="right" style="vertical-align:bottom;"><a <%=name%> ><%=anker%></a></td>
                                                                                             </tr><%
                                                                                         }%>
                                                                                         <tr class="hgeeeeee" style="font-weight: bold;">
@@ -287,5 +292,6 @@ if   (appBean.isIE  ()) { //%> body {
                 </tr>
             </tbody>
         </table>
+        <% } %>
     </body>
 </html>

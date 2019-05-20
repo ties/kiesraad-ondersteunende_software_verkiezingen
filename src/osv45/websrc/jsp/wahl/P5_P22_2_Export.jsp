@@ -8,10 +8,12 @@
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.P5ExportStateP22_2"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
-<%@ page import="de.ivu.wahl.client.beans.ExportP5Commands"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
 <%@ page import="de.ivu.wahl.export.XMLTags"%>
@@ -28,6 +30,7 @@ String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "P221Export"; //$NON-NLS-1$
 
 String breite = "100%"; //$NON-NLS-1$
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.P5_P22_2_EXPORT); 
 String prefix = ApplicationBeanKonstanten.PREFIX;
 int subwork = ClientHelper.getIntParameter(request.getParameter(prefix + "subwork"), 0); //$NON-NLS-1$
 DialogStateHolder state = admBean.getP5ExportStateP22_2();
@@ -87,6 +90,9 @@ boolean legende = false;
             <table width="<%=breite%>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
                <tr>
                   <td valign="top">
+                     <% if (!rechteFehler.isEmpty())  { %>
+                       <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                     <% } else { %>
                      <table width="<%=breite%>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                          <tr>
                            <td colspan="3"><img src="<%=request.getContextPath()%>/img/icon/blind.gif" width="1" height="10"></td>
@@ -216,7 +222,7 @@ boolean legende = false;
                                                           </td>
                                                          </tr><%
                                                            if (selectedKey != null) {
-                                                               String formurl = "/osv?cmd=" + ExportP5Commands.CMD_ADM_PROP_EINGABE_P22_2_1 + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
+                                                               String formurl = "/osv?cmd=" + Action.CMD_ADM_PROP_EINGABE_P22_2_1.getKey() + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
                                                                    + "&" + ClientHelper.getAllParameters(request, true);
                                                          %>
                                                           <tr>
@@ -318,7 +324,7 @@ boolean legende = false;
                                                  </fieldset>
                                      <%
                                        } else if (P5ExportStateP22_2.STATUS_P22_2_D2 == state._modus){
-                                            String urlExp = "/osv?cmd=" + ExportP5Commands.CMD_ADM_EXPORT_P22_2 + "&" + ClientHelper.getAllParameters(request);
+                                            String urlExp = "/osv?cmd=" + Action.CMD_ADM_EXPORT_P22_2.getKey() + "&" + ClientHelper.getAllParameters(request);
                                         %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
                                                  <tr>
@@ -392,7 +398,7 @@ boolean legende = false;
                                             // reset export status
                                             admBean.resetExportStateP22_2();
                                             //forward to Werkmap
-                                            String urlExp = "/osv?cmd=" + ExportP5Commands.CMD_ADM_EXPORT_P22_2 + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
+                                            String urlExp = "/osv?cmd=" + Action.CMD_ADM_EXPORT_P22_2.getKey() + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK);
                                             %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="Export_P22_1"/></b></legend>
@@ -448,6 +454,7 @@ boolean legende = false;
                             <td></td>
                             </tr>
                      </table>
+                     <% } %>
                   </td>
                </tr>
             </table>

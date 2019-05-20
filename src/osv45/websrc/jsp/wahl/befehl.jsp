@@ -32,11 +32,11 @@
    String backgroundColor = appBean.getBackgroundColor();
    String breite = "100%"; //$NON-NLS-1$
    String aktuellerNodePath = request.getParameter(ApplicationBeanKonstanten.NAVI_ANKER);
-   int work  =  ClientHelper.getWork(request, ApplicationBeanKonstanten.WORK_INITIAL);
+   int work = ClientHelper.getWork(request, ApplicationBeanKonstanten.WORK_INITIAL);
    int level = ClientHelper.getLevel(request, appBean.getGebietArtAngemAnw());
-   int gebietNr  =  ClientHelper.getGebietNr(request, appBean.getGebietNrAngemAnw());
+   int gebietNr = ClientHelper.getGebietNr(request, appBean.getGebietNrAngemAnw());
   
-   String sichtAuf    = ""; //$NON-NLS-1$
+   String sichtAuf = ""; //$NON-NLS-1$
    if (  level != ApplicationBeanKonstanten.LEVEL_ADMIN 
       && level != ApplicationBeanKonstanten.LEVEL_NACHRICHT 
       && gebietNr != -1 ){   

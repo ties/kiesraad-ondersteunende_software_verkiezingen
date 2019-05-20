@@ -4,10 +4,13 @@
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.NavigationErgebnis" %>
 <%@ page import="de.ivu.wahl.anwender.AnwenderHandling" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
 <%@ page import="de.ivu.wahl.anwender.Rechte" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.i18n.Messages"%>
 <%@ page import="de.ivu.wahl.i18n.MessageKeys"%>
@@ -70,7 +73,7 @@
    List<String> ignoreList = new ArrayList<String>();
    ignoreList.add(ApplicationBeanKonstanten.WORK);
    ignoreList.add(id_anw_param);
-   String urlSave = "/osv?cmd=adm_saveAnwender&" + ClientHelper.workIs(nextStep) + '&' + ClientHelper.getAllParameters(request, ignoreList, true); //$NON-NLS-1$
+   String urlSave = "/osv?cmd=" + Action.CMD_ADM_SAVE_ANWENDER.getKey() + "&" + ClientHelper.workIs(nextStep) + '&' + ClientHelper.getAllParameters(request, ignoreList, true); //$NON-NLS-1$//$NON-NLS-2$
    AnwenderHandling anwHandling = appBean.getAnwenderHandling();
    Collection<RechtegruppeModel> rgs =  anwHandling.getAllRechtegruppen();
    String errorMsg = null;
@@ -88,6 +91,9 @@
     if (newAnw) {
         helpKey = "admAnwenderEdit"; //$NON-NLS-1$
     }
+    String rechteFehler = newAnw
+        ? appBean.getErrorIfRightsAreMissing(JspPage.ADM_ANWENDER_CREATE)
+        : appBean.getErrorIfRightsAreMissing(JspPage.ADM_ANWENDER_EDIT);
    %>
 <html>
    <head>
@@ -154,6 +160,9 @@
          <%@include file="/jsp/fragments/help_row.jspf"%>
          <tr>
             <td valign="top">
+               <% if (!rechteFehler.isEmpty())  { %>
+                 <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+               <% } else { %>
                <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                   <tr>
                      <td width="5" class="hggrau">&nbsp;</td>
@@ -305,6 +314,7 @@
                      <td height="10">&nbsp;</td>
                   </tr>
                </table>
+               <% } %>
             </td>
          </tr>
       </table>

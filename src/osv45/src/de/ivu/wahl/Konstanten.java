@@ -20,11 +20,11 @@ import de.ivu.wahl.util.BundleHelper;
 
 public interface Konstanten {
   /** Version des Wahlabwicklungssystems */
-  String VERSION_P4 = "2.23.6"; //$NON-NLS-1$
-  String VERSION_P5 = "2.23.6"; //$NON-NLS-1$
+  String VERSION_P4 = "2.24.3"; //$NON-NLS-1$
+  String VERSION_P5 = "2.24.3"; //$NON-NLS-1$
 
   /** Datum aus dem CVS (beim Einchecken vergeben) */
-  String CVS_DATUM = "$Date: 2019-02-16 17:58:52 +0100 (Sa, 16. Feb 2019) $"; //$NON-NLS-1$
+  String CVS_DATUM = "$Date: 2019-04-29 21:59:06 +0200 (Mo, 29. Apr 2019) $"; //$NON-NLS-1$
 
   /** Aus CVS_DATUM automatisch gebildetes Datum in normaler Schreibweise */
   String DATUM = CVS_DATUM.substring(15, 17) + '.' + CVS_DATUM.substring(12, 14) + '.'
@@ -335,7 +335,6 @@ public interface Konstanten {
     private static final long serialVersionUID = -7774900510662017517L;
     {
       addDate(XMLTags.RG_DATE_OF_MEETING, "Export_P4_T11_D1_Datum"); //$NON-NLS-1$
-      addTime(XMLTags.RG_TIME_OF_MEETING, "Export_P4_T11_D1_Time"); //$NON-NLS-1$
       addString(XMLTags.RG_CHAIRMAN_OF_COMMITTEE, "Export_P4_T11_D1_Chairman"); //$NON-NLS-1$
       addString(XMLTags.RG_MEMBER_OF_COMMITTEE_1, "Export_P4_T11_D1_Member_1"); //$NON-NLS-1$
       addString(XMLTags.RG_MEMBER_OF_COMMITTEE_2, "Export_P4_T11_D1_Member_2"); //$NON-NLS-1$

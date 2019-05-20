@@ -1,9 +1,4 @@
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="java.util.List"%>
-<%@ page import="de.ivu.wahl.auswertung.erg.EingangsHistorieErgebnis.EingangsContainer"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.AnwContext"%><%--
+<%--
  *******************************************************************************
  * Eingangshistorie
  * Alle Ergebniseingänge chronologisch sortiert.
@@ -12,17 +7,25 @@
  * author:  M. Murdfield  Copyright (c) 2002-7 Statistisches Bundesamt und IVU Traffic Technologies AG
  *******************************************************************************
  --%>
-<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
-<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
+<%@ page import="de.ivu.wahl.AnwContext"%>
+<%@ page import="de.ivu.wahl.GebietsBaum" %>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
+<%@ page import="de.ivu.wahl.auswertung.erg.EingangsHistorieErgebnis.EingangsContainer"%>
 <%@ page import="de.ivu.wahl.auswertung.*" %>
 <%@ page import="de.ivu.wahl.modell.*" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.*" %>
 <%@ page import="de.ivu.wahl.client.beans.*" %>
 <%@ page import="de.ivu.wahl.client.util.*" %>
 <%@ page import="org.apache.log4j.Category" %>
-<%@ page import="de.ivu.wahl.GebietsBaum" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.List"%>
+<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
+<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
@@ -63,7 +66,8 @@ String helpKey = "status"; //$NON-NLS-1$
 
    List<EingangsHistorieErgebnis.EingangsContainer> erg = appBean.getEingangsStatus();
    String breite ="100%"; //$NON-NLS-1$
-   
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.STATUS); 
+
    boolean isReferendum = appBean.getWahlInfo().isReferendum();
    if (isReferendum) {
       helpKey = "statusRef"; //$NON-NLS-1$
@@ -133,6 +137,9 @@ String helpKey = "status"; //$NON-NLS-1$
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <tr>
       <td valign="top">
+         <% if (!rechteFehler.isEmpty())  { %>
+           <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td>&nbsp;</td>
@@ -207,7 +214,7 @@ String helpKey = "status"; //$NON-NLS-1$
                                                %>
                                                <tr class="<%= j < 1?"hgeeeeee":"hgweiss"%>">
                                                   <td width="15%" valign="top"><nobr><%= cont.getZeitstempel() %></nobr></td>
-                                                  <td width="20%" valign="top"><nobr><a target="status" href="<%= url %>" onclick="javascript:window.open('<%= url %>','status','menubar=no,resizable=yes,scrollbars=yes')"><%= ClientHelper.forHTML(cont.getGebietBez()) %></a></nobr></td>
+                                                  <td width="20%" valign="top"><nobr><%= ClientHelper.forHTML(cont.getGebietBez()) %></nobr></td>
                                                   <td width="7%"  valign="top"><%= ClientHelper.forHTML(cont.getUserID()) %></td>
                                                   <td width="3%" valign="top" align="center"><img src="<%= request.getContextPath() %>/img/icon/<%= cont.getInputTypeImg()%>" width="10" height="10"><%= cont.getInputSequenceType()%></td>
                                                   <td valign="top"><%= ClientHelper.forHTML(cont.getStatusMeldung(), true) %></td>
@@ -237,6 +244,7 @@ String helpKey = "status"; //$NON-NLS-1$
                <td height="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

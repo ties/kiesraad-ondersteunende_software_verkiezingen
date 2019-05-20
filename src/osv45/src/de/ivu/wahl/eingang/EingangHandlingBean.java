@@ -40,6 +40,7 @@ import javax.ejb.ObjectNotFoundException;
 import javax.ejb.RemoveException;
 import javax.ejb.Stateless;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import de.ivu.util.debug.Log4J;
@@ -600,7 +601,9 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
       // should set errors with position
       checkForErrors(msg, msg.getErfassungseinheit());
     } else if (msg.getStatus() == ErgebniseingangKonstanten.STATE_WARNING) {
-      checkForWarnings(msg, getGebietById(id_Gebiet));
+      if (StringUtils.isEmpty(msg.getFehler())) {
+        checkForWarnings(msg, getGebietById(id_Gebiet));
+      }
       if (msg.getSource() == ErgebniseingangKonstanten.SOURCE_GUI_2) {
         // should set warnings with position
         Ergebniseingang firstInput = msg.getErfassungseinheit()
@@ -921,6 +924,18 @@ public class EingangHandlingBean extends WahlStatelessSessionBeanBase implements
             .bind(MessageKeys.Warning_AnzahlDerWaehlerIstGroesserAlsAnzahlWahlberechtigte));
       }
     }
+
+    if (!onlyCheckSums && !GruppeKonstanten.GruppeAllgemein.isVisible(WAEHLER, gebiet)) {
+      /*
+       * votes cast > voters, see OSV-2150
+       */
+      if (waehler > wahlberechtigte) {
+        msg.setStatus(ErgebniseingangKonstanten.STATE_WARNING);
+        msg.addFehler(Messages
+            .bind(MessageKeys.Warning_AnzahlDerWaehlerIstGroesserAlsAnzahlWahlberechtigte));
+      }
+    }
+
     /*
      * invalid + valid + empty votes != total votes cast
      */

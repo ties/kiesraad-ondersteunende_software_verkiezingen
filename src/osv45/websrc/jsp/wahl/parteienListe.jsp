@@ -1,3 +1,5 @@
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.modell.GruppeModel"%>
 <%--
@@ -16,7 +18,8 @@
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <%@include file="/jsp/fragments/common_headers.jspf"%>
 <%
-   String breite = "100%";
+ String breite = "100%"; //$NON-NLS-1$
+ String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.PARTEIEN_LISTE); 
 %>
 <html>
 <head>
@@ -45,6 +48,9 @@
 <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <tr>
       <td valign="top">
+         <% if (!rechteFehler.isEmpty())  { %>
+           <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td width="5" class="hggrau">&nbsp;</td>
@@ -116,6 +122,7 @@
                <td height="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

@@ -5,6 +5,7 @@
  */
 package de.ivu.wahl.client.beans;
 
+import static de.ivu.wahl.client.beans.ApplicationBean.getAnwContext;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.PREFIX;
 import static de.ivu.wahl.client.beans.ExportP4Type.EML510C;
 import static de.ivu.wahl.client.beans.ExportP4Type.EMPTY_EML;
@@ -39,6 +40,7 @@ import nu.xom.Document;
 
 import de.ivu.ejb.EJBUtil;
 import de.ivu.util.debug.UserActionLogger;
+import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.SystemProperty;
@@ -107,13 +109,14 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
   @Override
   public void executeCommand(HttpServletRequest request, int n) {
     String cmd = request.getParameter("cmd" + (n == 0 ? EMPTY_STRING : String.valueOf(n))); //$NON-NLS-1$
+    AnwContext anwContext = getAnwContext(request);
 
     for (ExportP4Type config : ExportP4Type.values()) {
-      if (cmd.equals(config.getExportCommand())) {
+      if (checkRights(config.getExportAction(), anwContext, cmd)) {
         exportP4(request, config);
         return;
       }
-      if (cmd.equals(config.getPropertiesCommand())) {
+      if (checkRights(config.getPropertiesAction(), anwContext, cmd)) {
         // Eingabe von Properties
         DialogStateHolder state = getState(config);
         state._modus = handlePropEingabeAllg(request, config.getPropertiesMap(), state._modus);
@@ -121,6 +124,10 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       }
     }
     throw new RuntimeException(Messages.bind(MessageKeys.Error_Command_0_Unknown, cmd));
+  }
+
+  private boolean checkRights(Action action, AnwContext anwContext, String cmd) {
+    return new RightsChecker().checkRights(action, anwContext, cmd);
   }
 
   /**
@@ -289,8 +296,12 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
           break;
 
         case VOTES_CSV :
+          LOGGER.info("Creating ResultSummary ..."); //$NON-NLS-1$
           ResultSummary resultSummary = getVotesHandling().getResultSummary();
+          LOGGER.info("ResultSummary created"); //$NON-NLS-1$
+          LOGGER.info("Creating CSV ..."); //$NON-NLS-1$
           String csv = getExportHandling().createVotesCsvExport(resultSummary, eml510);
+          LOGGER.info("CSV created"); //$NON-NLS-1$
           rc = new ReportConfigurationCsvExport(filedef, nameComponents, isCSB, template);
           generator.createCsvExportFile(rc, csv);
           break;
@@ -373,7 +384,7 @@ public class ExportP4Bean extends RepositoryPropertyHandler implements Executer,
       boolean forceOverwrite,
       HttpSession session,
       boolean isCreateElm510dInHSB) throws ImportException {
-    
+
     // Try to use the stored EML510 document
     Document result = null;
     if (forceOverwrite) {

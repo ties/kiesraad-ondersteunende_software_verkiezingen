@@ -1,4 +1,6 @@
 <%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
 <%@ page import="de.ivu.wahl.modell.Wahldaten"%>
@@ -24,8 +26,8 @@
    WahlInfo wahlInfo = appBean.getWahlInfo();
    WahlModel wahl = wahlInfo.getWahl();
 
-   String breite ="100%";
-
+   String breite ="100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ELECTION_DETAILS);
 %>
 
 <html>
@@ -55,6 +57,9 @@
    <tr>
       <td width="10"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
       <td valign="top" colspan="2">
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <table border="0" cellspacing="0" cellpadding="1" width="99%">
             <tr class="hgrot">
                <td valign="top">
@@ -146,6 +151,7 @@
                <td height="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

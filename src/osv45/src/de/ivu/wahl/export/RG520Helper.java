@@ -1318,8 +1318,8 @@ public class RG520Helper extends BasicRGHelper {
 
   private int getBreakAfter(int size) {
     if (isEK) {
-      if (size >= 5) {
-        return 5;
+      if (size >= 6) {
+        return 6;
       }
     } else {
       if (size >= 7) {

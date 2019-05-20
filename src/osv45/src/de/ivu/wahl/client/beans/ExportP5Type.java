@@ -4,6 +4,14 @@
  */
 package de.ivu.wahl.client.beans;
 
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_CANDIDATE_ADDRESS;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_KAN_BEN;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_P22_1;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_P22_1_APPENDIX;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_P22_2;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_P22_2_APPENDIX;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_EXPORT_U16;
+
 import de.ivu.wahl.admin.P5ExportStateCandidateAddress;
 import de.ivu.wahl.admin.P5ExportStateKanBen;
 import de.ivu.wahl.admin.P5ExportStateP22_1;
@@ -20,7 +28,7 @@ import de.ivu.wahl.wus.reportgen.ReportTemplateEnum;
  * 
  * @author J. Nottebaum, IVU Traffic Technologies AG
  */
-enum ExportP5Type implements ExportP5Commands {
+enum ExportP5Type {
   P22_1(CMD_ADM_EXPORT_P22_1, P5ExportStateP22_1.STATUS_P22_1_D3,
       MessageKeys.Error_P22_KonnteNichtExportiertWerden, null, ReportTemplateEnum.P22_1),
 
@@ -51,7 +59,7 @@ enum ExportP5Type implements ExportP5Commands {
       ReportTemplateEnum.OSV5_1, ReportTemplateEnum.OSV5_2, ReportTemplateEnum.OSV5_6);
 
   // Command that triggers the export
-  private final String exportCommand;
+  private final Action exportAction;
   // not in use
   private final int finalState;
   // Error message shown to the user in case the export fails
@@ -64,13 +72,13 @@ enum ExportP5Type implements ExportP5Commands {
   private final ReportTemplateEnum[] templateExts;
 
   @SuppressWarnings("hiding")
-  ExportP5Type(String exportCommand,
+  ExportP5Type(Action exportAction,
       int finalState,
       String errorMsgKey,
       ReportOutputFormatEnum reportOutputFormat,
       ReportTemplateEnum template,
       ReportTemplateEnum... templateExts) {
-    this.exportCommand = exportCommand;
+    this.exportAction = exportAction;
     this.errorMsgKey = errorMsgKey;
     this.reportOutputFormat = reportOutputFormat;
     this.finalState = finalState;
@@ -78,8 +86,8 @@ enum ExportP5Type implements ExportP5Commands {
     this.templateExts = templateExts;
   }
 
-  public String getExportCommand() {
-    return exportCommand;
+  public Action getExportAction() {
+    return exportAction;
   }
 
   public int getFinalState() {

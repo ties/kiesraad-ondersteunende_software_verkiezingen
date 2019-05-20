@@ -1,21 +1,22 @@
 <jsp:directive.page import="de.ivu.wahl.client.util.ClientHelper" />
 <jsp:directive.page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" />
-<%@ page import="de.ivu.wahl.modell.GebietModel"%>
-<%@ page import="de.ivu.wahl.modell.Gebietsart"%>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.client.beans.Command"%>
+<%@ page import="de.ivu.wahl.client.beans.InitGuiCommand"%>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.client.beans.WahlImportBean"%>
 <%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.HashCodeSplitter"%>
 <%@ page import="de.ivu.wahl.dataimport.IImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.ImportType"%>
 <%@ page import="de.ivu.wahl.dataimport.SecurityLevel"%>
-<%@ page import="de.ivu.wahl.client.beans.Command"%>
-<%@ page import="de.ivu.wahl.client.beans.WahlImportBean"%>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.client.beans.InitGuiCommand"%>
+<%@ page import="de.ivu.wahl.modell.GebietModel"%>
+<%@ page import="de.ivu.wahl.modell.Gebietsart"%>
 <%@ page import="de.ivu.wahl.modell.WahlModel"%>
 <%@ page import="de.ivu.wahl.modell.ejb.Wahl"%>
 <%@ page import="de.ivu.wahl.modell.ejb.WahlBean"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -25,6 +26,7 @@
 <%
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "wahlImp";
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.WAHL_IMPORT); 
 %>
 <html>
  <head>
@@ -87,6 +89,9 @@ String helpKey = "wahlImp";
    &nbsp;
   </div>
   <div class="hghell">
+   <% if (!rechteFehler.isEmpty())  { %>
+    <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+   <% } else { %>
    <fieldset style="border: 1px solid #093C69; padding: 15px; margin: 15px;">
     <legend>
      <b><ivu:int key="Neue_Wahl_importieren"/></b>
@@ -344,9 +349,10 @@ String helpKey = "wahlImp";
                 <% } %>
         </div>
      <% } %>
-   </fieldset>
+    </fieldset>
+    <% } %>
+   </div>
   </div>
-        </div>
-    </div>
+ </div>
 </body>
 </html>

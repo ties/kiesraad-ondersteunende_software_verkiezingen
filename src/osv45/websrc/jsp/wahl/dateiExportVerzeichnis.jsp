@@ -1,10 +1,11 @@
 <%@ page import="de.ivu.wahl.Konstanten"%>
-<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
-<%@ page import="de.ivu.wahl.Konstanten"%>
-<%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
-<%@ page errorPage="/jsp/MainErrorPage.jsp"%>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
+<%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
+<%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
@@ -13,7 +14,8 @@
 String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "dateiExpVerzeichnis"; //$NON-NLS-1$
 
-String breite = "100%";
+String breite = "100%"; //$NON-NLS-1$
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.DATEI_EXPORT_VERZEICHNIS); 
 %>
 <html>
 <head>
@@ -28,6 +30,9 @@ String breite = "100%";
    <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>
       <td valign="top">
+         <% if (!rechteFehler.isEmpty())  { %>
+           <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+         <% } else { %>
          <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
             <tr>
                <td class="hggrau">&nbsp;</td>
@@ -60,6 +65,7 @@ String breite = "100%";
                <td width="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="10" height="1"></td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

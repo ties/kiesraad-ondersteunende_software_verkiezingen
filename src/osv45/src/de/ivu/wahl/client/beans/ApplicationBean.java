@@ -77,6 +77,7 @@ import de.ivu.wahl.anwender.Anmeldung;
 import de.ivu.wahl.anwender.AnwRechte;
 import de.ivu.wahl.anwender.AnwenderHandling;
 import de.ivu.wahl.anwender.AnwenderHandlingBean;
+import de.ivu.wahl.anwender.Recht;
 import de.ivu.wahl.auswertung.AuswertungHandling;
 import de.ivu.wahl.auswertung.AuswertungHandlingBean;
 import de.ivu.wahl.auswertung.erg.Besonderheiten;
@@ -294,8 +295,11 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
    * @param request Der Request mit allen Informationen
    * @param n Anzahl der Commands
    */
+  @Override
   public void executeCommand(HttpServletRequest request, int n) {
     String cmd = request.getParameter("cmd" + (n == 0 ? "" : "" + n)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    AnwContext anwContext = getAnwContext(request);
+
     if (cmd != null) {
       if (cmd.equals("app_login")) { //$NON-NLS-1$
         // Login
@@ -305,9 +309,9 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       } else if (cmd.equals("app_logout")) { //$NON-NLS-1$
         // Logout
         doLogout(request);
-      } else if (cmd.equals("app_startSitzberechnung")) { //$NON-NLS-1$
+      } else if (checkRights(Action.APP_START_SITZBERECHNUNG, anwContext, cmd)) {
         startSitzberechnung(request);
-      } else if (cmd.equals("app_setKonfliktAlternative")) { //$NON-NLS-1$
+      } else if (checkRights(Action.APP_SET_KONFLIKT_ALTERNATIVE, anwContext, cmd)) {
         _sitzverteilungStatus.setErrorMsg(null);
         setKonfliktAlternative(request);
       } else {
@@ -317,6 +321,10 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
         throw new RuntimeException(message);
       }
     }
+  }
+
+  private boolean checkRights(Action action, AnwContext anwContext, String cmd) {
+    return new RightsChecker().checkRights(action, anwContext, cmd);
   }
 
   /**
@@ -393,7 +401,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
         String keyForViewlock = _anwContext.getKeyForViewlock();
         LOGGER.info(Messages
             .getString(MessageKeys.Logger_AutomatischesAbmeldenNachTimeout_AnwenderID)
-            + _anwContext.getID_Anwender() + " - " + KeyForViewlockTruncator.truncate(keyForViewlock)); //$NON-NLS-1$
+            + _anwContext.getID_Anwender()
+            + " - " + KeyForViewlockTruncator.truncate(keyForViewlock)); //$NON-NLS-1$
         getAnwenderHandling().logout(_anwContext);
         getEingangHandling().removeLockForUser(_anwContext);
         LOGGER.info(Messages.bind(MessageKeys.Logger_GebieteEntsperrtNachAutomatischemAbmelden,
@@ -852,7 +861,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
           GUICommand cmd = _befehleInitial[level].get(i);
 
           // Pruefen der Berechtigung
-          if (cmd.getRecht() == null || anwRechte.checkRight(cmd.getRecht())) {
+          if (cmd.getRecht().isAlwaysAllowed() || anwRechte.checkRight(cmd.getRecht())) {
             addGUICommand(befehle, cmd);
           }
         }
@@ -860,7 +869,7 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
 
       for (GUICommand cmd : _befehleInitial[LEVEL_UNABHAENGIG]) {
         // Pruefen der Berechtigung
-        if (cmd.getRecht() == null || anwRechte.checkRight(cmd.getRecht())) {
+        if (cmd.getRecht().isAlwaysAllowed() || anwRechte.checkRight(cmd.getRecht())) {
           // wenn der Command auf allen Ebenen zu sehen sein soll
           if (cmd.getAlleLevel()) {
             setCommandsToAllLevel(cmd);
@@ -984,7 +993,6 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       vollstaendig = false;
       freigegeben = false;
     }
-    AnwRechte anwRechte = getAnwenderHandling().getAnwRechte(_anwContext);
     boolean isLevelSondergebiet = false;
     List<GUICommand> l = new ArrayList<GUICommand>();
     for (GUICommand cmd : befehle) {
@@ -994,11 +1002,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
           && ((!vollstaendig || !cmd.getNurNichtVollstaendig()) || (!freigegeben && isLevelSondergebiet))
           && (vollstaendig || !cmd.getNurVollstaendig())
           && (wahlArt == STATE_DONT_CARE || wahlArt == 0)
-          && (freigegeben || !cmd.getNurFreigegeben())
-          && (!freigegeben || !cmd.getNurNichtFreigegeben()) && (freigegeben
-          || cmd.getRechtOderFreigabe() == null || anwRechte.checkRight(cmd.getRechtOderFreigabe())))
-          || (vollstaendig && cmd.getRechtUndGeschlossen() != null && anwRechte.checkRight(cmd
-              .getRechtUndGeschlossen()))) {
+          && (freigegeben || !cmd.getNurFreigegeben()) && (!freigegeben || !cmd
+          .getNurNichtFreigegeben()))) {
         // wenn es nicht der Konflikt-Befehl ist
         l.add(cmd);
       }
@@ -1012,8 +1017,8 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
       List<GUICommand> l = new ArrayList<GUICommand>();
       for (GUICommand cmd : befehle) {
         if (cmd.getNurWennRechtAufWurzelgebiet()) {
-          String recht = cmd.getRecht();
-          if (recht == null
+          Recht recht = cmd.getRecht();
+          if (recht.isAlwaysAllowed()
               || anwRechte.checkRightForGebiet(recht,
                   _gebietsartWurzelgebiet,
                   _gebietsnummerWurzelgebiet)) {
@@ -1318,8 +1323,12 @@ public class ApplicationBean implements Executer, Serializable, HttpSessionBindi
     return getAuswertungHandling().getParteienForWahl(_anwContext);
   }
 
-  public boolean checkRight(String right) throws EJBException {
-    return getAnwenderHandling().checkRight(_anwContext, right);
+  public String getErrorIfRightsAreMissing(JspPage jspPage) {
+    return AnwContext.getErrorIfRightsAreMissing(jspPage, _anwContext);
+  }
+
+  public String getErrorIfNotLoggedIn() {
+    return AnwContext.getErrorIfNotLoggedIn(_anwContext);
   }
 
   public Collection<Anmeldung> getAngemeldeteAnwender() throws EJBException {

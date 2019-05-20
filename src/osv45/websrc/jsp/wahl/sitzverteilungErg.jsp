@@ -16,7 +16,9 @@
 <%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.WahlInfo" %>
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.SitzverteilungErg" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.Gruppenzeile"%>
 <%@ page import="de.ivu.wahl.auswertung.erg.sv.SitzverteilungErg"%>
@@ -47,7 +49,8 @@ String helpKey = "sitzverErg"; //$NON-NLS-1$
 
 WahlInfo wahlInfo = appBean.getWahlInfo();
    String id_ergebniseingang = wahlInfo.getWahl().getWurzelgebiet().getID_LetzterEingang();
-   String breite = "100%";
+   String breite = "100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.SITZVERTEILUNG_ERG); 
    
    GebietsBaum gebietsBaum = appBean.getGebietsBaum();
    GebietInfo rootInfo = (GebietInfo)gebietsBaum.getWurzel().getUserObject();
@@ -59,7 +62,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
    nf.setMaximumFractionDigits(2);
    nf.setMinimumFractionDigits(2);
    AnwContext anwContext = appBean.getAnwContext();
-   boolean darfBerechnen = anwContext.checkRight(Rechte.R_SITZVERTEILUNG_BERECHNEN);
+   boolean darfBerechnen = anwContext.checkRight(Recht.R_SITZVERTEILUNG_BERECHNEN);
   %>
 
 <html>
@@ -108,6 +111,9 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                 &nbsp;
             </div>
             <jsp:include page="zwischenstand.jsp"></jsp:include>
+            <% if (!rechteFehler.isEmpty())  { %>
+              <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+            <% } else { %>
             <table width="<%=breite %>" cellspacing="0" cellpadding="0" border="0" class="hghell">
                 <tbody>
                     <tr>
@@ -161,7 +167,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                                                            </tbody>
                                                     </table>
                                                  <%} else if (wahlInfo.getStatus() == WahlModel.STATE_NEW_RESULT){ 
-                                               String formurl = "/osv?cmd=app_startSitzberechnung&"+ ClientHelper.getParametersDoNotStartWith(request, ApplicationBeanKonstanten.PREFIX); %>
+                                               String formurl = "/osv?cmd=" + Action.APP_START_SITZBERECHNUNG.getKey() + "&"+ ClientHelper.getParametersDoNotStartWith(request, ApplicationBeanKonstanten.PREFIX); %>
                                                <ivu:form action="<%=formurl%>" style="margin: 0px;" onsubmit="transp();">
                                                     <table class="hgweiss" border="0" cellpadding="0" cellspacing="0"
                                                         width="<%= breite %>">
@@ -233,7 +239,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                                                         </table>
                                                     <% } else {
                                                        SitzverteilungStatus status = appBean.getSitzverteilungStatus(id_ergebniseingang, request);
-                                                      String formurl = "/osv?cmd=app_setKonfliktAlternative&"+ ClientHelper.getParametersDoNotStartWith(request, ApplicationBeanKonstanten.PREFIX); %>
+                                                      String formurl = "/osv?cmd=" + Action.APP_SET_KONFLIKT_ALTERNATIVE.getKey() + "&"+ ClientHelper.getParametersDoNotStartWith(request, ApplicationBeanKonstanten.PREFIX); %>
                                                       <ivu:form action="<%=formurl%>" style="margin: 0px;" onsubmit="transp();">
                                                             <table class="hgweiss" border="0" cellpadding="0" cellspacing="0"
                                                             width="<%= breite %>">
@@ -574,6 +580,7 @@ WahlInfo wahlInfo = appBean.getWahlInfo();
                     </tr>
                 </tbody>
             </table>
+            <% } %>
         </div>
     </div>
     </body>

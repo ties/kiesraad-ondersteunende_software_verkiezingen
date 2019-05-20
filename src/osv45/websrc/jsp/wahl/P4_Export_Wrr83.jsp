@@ -15,10 +15,12 @@ Weitgehend ähnliche JSP-Seiten:
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.ExportWithParametersState"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
-<%@ page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -35,6 +37,7 @@ String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ExpWrr83"; //$NON-NLS-1$
 
 String breite = "100%"; //$NON-NLS-1$
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.P4_EXPORT_WRR83); 
 String prefix = ApplicationBeanKonstanten.PREFIX;
 int subwork = ClientHelper.getIntParameter(request.getParameter(prefix + "subwork"), 0); //$NON-NLS-1$
 DialogStateHolder p4ES = expP4Bean.getP4ExportStateWrr83();
@@ -95,6 +98,9 @@ String i18nTitle = "Export_P4_titel_Wrr83"; //$NON-NLS-1$
                <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
+                     <% if (!rechteFehler.isEmpty())  { %>
+                       <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                     <% } else { %>
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                         <tr>
                            <td width="5" class="hggrau">&nbsp;</td>
@@ -220,7 +226,7 @@ String i18nTitle = "Export_P4_titel_Wrr83"; //$NON-NLS-1$
                                                          </tr><%
                                                          if (selectedKey != null) {
                                                            
-                                                           String formurl = "/osv?cmd=" + ExportP4Commands.EXP_P4_PROP_EINGABE_WRR83 + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
+                                                           String formurl = "/osv?cmd=" + Action.EXP_P4_PROP_EINGABE_WRR83.getKey() + "&" + ApplicationBeanKonstanten.PREFIX + "subwork=" + subwork 
                                                            + "&"+ClientHelper.getAllParameters(request, true); %>
                                                           <tr>
                                                            <td style="border: 1px solid rgb(9, 60, 105); padding-left: 1em width: 100%;">
@@ -310,7 +316,7 @@ String i18nTitle = "Export_P4_titel_Wrr83"; //$NON-NLS-1$
                                                     </table>
                                                  </fieldset>
                                      <% } else if (ExportWithParametersState.STATUS_P4_D2 == p4ES._modus){
-                                            String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_WRR83 + "&" +ClientHelper.getAllParameters (request);
+                                            String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_WRR83.getKey() + "&" +ClientHelper.getAllParameters (request);
                                                    %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
                                                  <tr>
@@ -391,7 +397,7 @@ String i18nTitle = "Export_P4_titel_Wrr83"; //$NON-NLS-1$
                                                     // reset export status
                                                     expP4Bean.resetP4ExportStateWrr83();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_WRR83 + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                                    String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_WRR83.getKey() + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                         %>
                                         <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
@@ -430,6 +436,7 @@ String i18nTitle = "Export_P4_titel_Wrr83"; //$NON-NLS-1$
                             <td></td>
                             </tr>
                      </table>
+                     <% } %>
                   </td>
                </tr>
             </table>

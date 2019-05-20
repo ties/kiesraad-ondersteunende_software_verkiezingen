@@ -6,8 +6,11 @@
  */
 package de.ivu.wahl.dataimport;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.CreateException;
 import javax.ejb.FinderException;
@@ -42,6 +45,7 @@ public class ImportEML510 extends AbstractImportEML {
   private String _lastGebietName;
   private String _lastFileName;
   private String _lastImport;
+  private final Map<File, byte[]> _filesMap = new HashMap<File, byte[]>();
 
   /**
    * @param level
@@ -207,6 +211,7 @@ public class ImportEML510 extends AbstractImportEML {
     _lastGebietName = null;
     _lastFileName = null;
     _lastImport = null;
+    _filesMap.clear();
   }
 
   @Override
@@ -408,4 +413,11 @@ public class ImportEML510 extends AbstractImportEML {
     return false;
   }
 
+  public void putFile(File file, byte[] bytes) {
+    _filesMap.put(file, bytes);
+  }
+
+  public Map<File, byte[]> getFilesMap() {
+    return _filesMap;
+  }
 }

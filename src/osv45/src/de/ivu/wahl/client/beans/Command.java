@@ -74,6 +74,9 @@ public enum Command {
   /** Export for OSV4_6-Document (Appendix to Wrr83) */
   OSV4_6(66),
 
+  /** Manuelle Eingabe Freigeben */
+  MANUELLE_EINGABE_FREIGEBEN(71),
+
   ANWENDER_ANLEGEN(106),
 
   ANWENDER_VERAENDERN_1_AUSWAHLEN(107),

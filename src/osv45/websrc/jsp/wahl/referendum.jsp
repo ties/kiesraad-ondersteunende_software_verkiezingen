@@ -7,19 +7,21 @@
  *******************************************************************************
  --%>
 <%@ page pageEncoding="ISO-8859-1" contentType="text/html; charset=UTF-8"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.Konstanten"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp" %>
-<%@ page import="de.ivu.wahl.eingang.GUIEingangMsg " %>
+<%@ page import="de.ivu.wahl.Konstanten"%>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.modell.GebietInfo" %>
+<%@ page import="de.ivu.wahl.eingang.GUIEingangMsg " %>
 <%@ page import="de.ivu.wahl.client.beans.*" %>
 <%@ page import="de.ivu.wahl.client.util.*"%>
 <%@ page import="org.apache.log4j.Logger"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
+<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
 
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 <jsp:useBean id="eingabeBean" scope="session" class="de.ivu.wahl.client.beans.EingabeBean" />
@@ -64,6 +66,7 @@ String helpKey = "referendum"; //$NON-NLS-1$
    // holen einer vorbereiteten Eingangsmessage für eine Erfassungseinheit
    GUIEingangMsg guiEingangMsg = eingabeBean.getGUIMsg(request, (GebietInfo)map.get("gebietInfo"), false); //$NON-NLS-1$
    String breite= "100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.REFERENDUM); 
 
 %>
 <c:set var="guiEingangMsg" value="<%= guiEingangMsg %>" scope="page"/>
@@ -117,6 +120,9 @@ String helpKey = "referendum"; //$NON-NLS-1$
             <table border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
                 <tr>
                     <td valign="top">
+                        <% if (!rechteFehler.isEmpty())  { %>
+                          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                        <% } else { %>
                         <table border="0" cellspacing="0" cellpadding="0" class="hghell">
                             <tr>
                                 <td colspan="3" class="hgschwarz"><img alt="nix" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
@@ -214,11 +220,10 @@ String helpKey = "referendum"; //$NON-NLS-1$
                             </tr>
                             <tr><td height="10">&nbsp;</td></tr>
                         </table>
+                        <% } %>
                     </td>
                 </tr>
             </table>
-
-    
            </div>
         </div>
     </jsp:body>

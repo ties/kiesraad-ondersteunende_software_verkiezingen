@@ -67,7 +67,7 @@ public class EingangMsgXML extends BasicEingangMsg {
     }
 
     int source = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT;
-    if (SystemInfo.getSystemInfo().isFileInputWithManualConfirmation()) {
+    if (SystemInfo.getSystemInfo().isManualConfirmationNeededAfterFileImport()) {
       source = ErgebniseingangKonstanten.SOURCE_FILE_IMPORT_AS_FIRST_INPUT;
     }
     setSource(source);

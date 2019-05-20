@@ -64,8 +64,6 @@ import de.ivu.wahl.util.XMLImportHelper;
  */
 public class ImportClientDb extends AbstractImportClient {
 
-  private static final String DEFAULT_TIME_OF_MEETING_T11 = "15:00"; //$NON-NLS-1$
-
   private static final Category LOGGER = Log4J.configure(ImportClientDb.class);
 
   private static boolean __importRunning;
@@ -227,10 +225,6 @@ public class ImportClientDb extends AbstractImportClient {
     }
 
     if (isEK()) {
-      prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
-      prop.setName(de.ivu.wahl.export.XMLTags.RG_TIME_OF_MEETING);
-      prop.setWert(String.valueOf(DEFAULT_TIME_OF_MEETING_T11));
-      _models.add(prop);
       prop = new RepositoryModelImpl(EJBUtil.getUniqueKey());
       prop.setName(de.ivu.wahl.export.XMLTags.RG_DATE_OF_MEETING);
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); //$NON-NLS-1$

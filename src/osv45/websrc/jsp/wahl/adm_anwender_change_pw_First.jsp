@@ -2,6 +2,7 @@
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean"%>
 <%@ page import="de.ivu.wahl.i18n.Messages"%>
 <%@ page import="de.ivu.wahl.i18n.MessageKeys"%>
@@ -32,7 +33,7 @@
    String urlChange = appBean.getInitialURL(request, response, null, false); 
    boolean check = true;
    if ((ac != null &&  ac.isChangePasswordForced()) || appBean.isBeforeInitialPasswordChange()) {
-      urlChange = appBean.getInitialURL(request, response, "cmd=adm_change_pw", false);    //$NON-NLS-1$ 
+      urlChange = appBean.getInitialURL(request, response, "cmd="+ Action.CMD_ADM_CHANGE_PW.getKey(), false); //$NON-NLS-1$ 
    } else {
       // Disable input of new password, show success message
       check = false; 

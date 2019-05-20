@@ -23,6 +23,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 import org.apache.log4j.Logger;
+import org.jboss.annotation.ejb.TransactionTimeout;
 
 import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.WahlInfo;
@@ -75,6 +76,8 @@ public class VotesHandlingBean extends WahlStatelessSessionBeanBase implements V
 
   private static final long serialVersionUID = -1698028693845863132L;
   private static final Logger LOGGER = Logger.getLogger(VotesHandlingBean.class);
+
+  private static final int TRANSACTION_TIMEOUT_MINUTES = 24 * 60; // 24h
 
   @Override
   public Integer getTotalBlankVotes(String id_Ergebniseingang) {
@@ -499,6 +502,7 @@ public class VotesHandlingBean extends WahlStatelessSessionBeanBase implements V
   }
 
   @Override
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
   public ResultSummary getResultSummary() throws EJBException {
     return new ResultSummaryHelper(this).getResultSummary();
   }

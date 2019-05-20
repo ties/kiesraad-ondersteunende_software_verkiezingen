@@ -110,7 +110,7 @@ public abstract class BasicUploadBean implements Executer, Serializable {
   /**
    * Write uploading file into archive folder.
    */
-  protected void writeFileIntoArchiveFolder(FileItem item, IImportEML emlImport)
+  protected File writeFileIntoArchiveFolder(FileItem item, IImportEML emlImport, boolean later)
       throws Exception, FileNotFoundException, IOException {
     String fileName = item.getName();
     fileName = new File(fileName.replace('\\', separatorChar)).getName();
@@ -121,7 +121,7 @@ public abstract class BasicUploadBean implements Executer, Serializable {
         .reduceFilenameFromSlashAsPrefix(fileName));
 
     if (RgConstants.PATH_FRAGMENT_OTHERS.equals(unterverzeichnis)) {
-      return;
+      return null;
     }
 
     File parentFile = new File(dpath, unterverzeichnis);
@@ -129,13 +129,16 @@ public abstract class BasicUploadBean implements Executer, Serializable {
     parentFile.mkdirs();
     if (!parentFile.isDirectory() && !parentFile.canWrite()) {
       emlImport.setFehlermeldung(Messages
-          .bind(MessageKeys.Error_Verzeichnis_0_KonnteNichtAngelegtWerden, parentFile
-              .getPath()));
-      throw new Exception(Messages
-          .getString(MessageKeys.Error_VerzeichnisWurdeNichtAngelegt));
+          .bind(MessageKeys.Error_Verzeichnis_0_KonnteNichtAngelegtWerden, parentFile.getPath()));
+      throw new Exception(Messages.getString(MessageKeys.Error_VerzeichnisWurdeNichtAngelegt));
     }
-    FileOutputStream fout = new FileOutputStream(realFile);
-    fout.write(item.get());
-    fout.close();
+
+    if (!later) {
+      FileOutputStream fout = new FileOutputStream(realFile);
+      fout.write(item.get());
+      fout.close();
+    }
+
+    return realFile;
   }
 }

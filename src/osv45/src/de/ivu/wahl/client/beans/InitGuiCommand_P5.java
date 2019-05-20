@@ -3,15 +3,6 @@
  */
 package de.ivu.wahl.client.beans;
 
-import static de.ivu.wahl.anwender.Rechte.R_ADM_ANGEMELDETE;
-import static de.ivu.wahl.anwender.Rechte.R_ADM_ANW_AENDERN;
-import static de.ivu.wahl.anwender.Rechte.R_ADM_ANW_ANLEGEN;
-import static de.ivu.wahl.anwender.Rechte.R_ADM_KANDIDAT_WAEHLBAR;
-import static de.ivu.wahl.anwender.Rechte.R_ADM_VOTE_VALUES;
-import static de.ivu.wahl.anwender.Rechte.R_EXPORT;
-import static de.ivu.wahl.anwender.Rechte.R_FREIGABE;
-import static de.ivu.wahl.anwender.Rechte.R_IMPORT;
-import static de.ivu.wahl.anwender.Rechte.R_RE_INDEX_DATABASE;
 import static de.ivu.wahl.client.util.GUICommand.GUI_CLASS_1;
 import static de.ivu.wahl.modell.GebietModel.GEBIETSART_WAHLKREIS;
 
@@ -85,71 +76,64 @@ public abstract class InitGuiCommand_P5 extends InitGuiCommand implements Applic
     InitGuiCommandHelper helper = new InitGuiCommandHelper(this, jspLevelWorkName,
         befehleInitial[topLevel], topLevel);
     helper.setGuiClass(GUI_CLASS_1);
-    helper.setRights(R_IMPORT);
 
     helper.addCommand(Command.IMPORT_ERGEBNISSE,
-        "Ergebnisimport_P5", "Ergebnisimport_titel_P5", "ergebnisImport.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-    helper.setRights(null);
-    String gebietErgebnisJsp = isEKElection() ? "gebietErgebnisEK.jsp" : "gebietErgebnis.jsp"; //$NON-NLS-1$ //$NON-NLS-2$
+        "Ergebnisimport_P5", "Ergebnisimport_titel_P5", JspPage.ERGEBNIS_IMPORT); //$NON-NLS-1$ //$NON-NLS-2$
+
+    JspPage jspPage = isEKElection() ? JspPage.GEBIET_ERGEBNIS_EK : JspPage.GEBIET_ERGEBNIS;
     helper.addCommand(Command.GEB_ERG,
         getGebietErgebnisBundleString(),
-        "Gebiet_Ergebnis_titel", gebietErgebnisJsp); //$NON-NLS-1$
+        "Gebiet_Ergebnis_titel", jspPage); //$NON-NLS-1$
 
     createCommandGebietErgebnisKandidat(helper);
 
     GUICommand cmd;
 
     if (isEKElection()) {
-      helper.setRights(R_ADM_VOTE_VALUES);
       helper.addCommand(Command.ADM_VOTE_VALUES,
-          "Vote_Values", "Vote_Values_titel", "adm_vote_values.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          "Vote_Values", "Vote_Values_titel", JspPage.ADM_VOTE_VALUES); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    helper.setRights(R_ADM_KANDIDAT_WAEHLBAR);
     helper.addCommand(Command.ADM_KANDIDAT_WAEHLBAR,
-        "Kandidat_waehlbar", "Kandidat_waehlbar_titel", "adm_kandidat_waehlbar.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "Kandidat_waehlbar", "Kandidat_waehlbar_titel", JspPage.ADM_KANDIDAT_WAEHLBAR); //$NON-NLS-1$ //$NON-NLS-2$
 
-    helper.setRights(null);
     helper.addCommand(Command.AUSW_SITZVERTEILUNG_GEBIET,
-        "Sitzverteilung", "Sitzverteilung_titel", "sitzverteilungErg.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "Sitzverteilung", "Sitzverteilung_titel", JspPage.SITZVERTEILUNG_ERG); //$NON-NLS-1$ //$NON-NLS-2$
 
-    helper.setRights(null);
     cmd = helper
         .addCommand(Command.NLPA,
-            "Gewaehlte_Kandidaten_nach_Partei", "Gewaehlte_Kandidaten_nach_Partei_titel", "GewaehlteKandidatenNachPartei.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            "Gewaehlte_Kandidaten_nach_Partei", "Gewaehlte_Kandidaten_nach_Partei_titel", JspPage.GEWAEHLTE_KANDIDATEN_NACH_PARTEI); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
 
     cmd = helper
         .addCommand(Command.NLA,
-            "Gewaehlte_Kandidaten_Alpha", "Gewaehlte_Kandidaten_Alpha_titel", "GewaehlteKandidatenAlphabetisch.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            "Gewaehlte_Kandidaten_Alpha", "Gewaehlte_Kandidaten_Alpha_titel", JspPage.GEWAEHLTE_KANDIDATEN_ALPHABETISCH); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
 
-    helper.setRights(R_FREIGABE);
     cmd = helper.addCommand(Command.ADM_FREIGABE,
-        "Freigabesteuerung", "Freigabesteuerung_titel", "adm_freigabe.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "Freigabesteuerung", "Freigabesteuerung_titel", JspPage.ADM_FREIGABE); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setNurWurzelgebiet(true);
 
-    helper.setRights(R_EXPORT);
     helper.setGebietsabhaengig(false);
 
     if (modelForProtocol().equals(MODEL_U16)) {
-      helper.addCommand(Command.U16, "Export_U16", "Export_U16_titel", "P5_U16_Export.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      helper.addCommand(Command.U16, "Export_U16", "Export_U16_titel", JspPage.P5_U16_EXPORT); //$NON-NLS-1$ //$NON-NLS-2$
     } else if (modelForProtocol().equals(MODEL_P22_2)) {
-      helper.addCommand(Command.P22, "Export_P22_1", "Export_P22_1_titel", "P5_P22_2_Export.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      helper.addCommand(Command.P22, "Export_P22_1", "Export_P22_1_titel", JspPage.P5_P22_2_EXPORT); //$NON-NLS-1$ //$NON-NLS-2$
     } else {
-      helper.addCommand(Command.P22, "Export_P22_1", "Export_P22_1_titel", "P5_P22_1_Export.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      helper.addCommand(Command.P22, "Export_P22_1", "Export_P22_1_titel", JspPage.P5_P22_1_EXPORT); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    String jspProtocolAppendix = modelForProtocol().equals(MODEL_P22_2)
-        ? "P5_P22_2_Appendix_Export.jsp" //$NON-NLS-1$
-        : "P5_P22_1_Appendix_Export.jsp"; //$NON-NLS-1$
+    JspPage jspProtocolAppendix = modelForProtocol().equals(MODEL_P22_2)
+        ? JspPage.P5_P22_2_APPENDIX_EXPORT
+        : JspPage.P5_P22_1_APPENDIX_EXPORT;
     helper.addCommand(Command.PROTOCOL_APPENDIX,
         "Export_Protocol_Appendix", "Export_Protocol_Appendix_P5_titel", jspProtocolAppendix); //$NON-NLS-1$ //$NON-NLS-2$
     helper.addCommand(Command.GEW_BEN,
-        "Export_Gew_Ben", "Export_Gew_Ben_titel", "P5_Benachrichtigung_Export.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "Export_Gew_Ben", "Export_Gew_Ben_titel", JspPage.P5_BENACHRICHTIGUNG_EXPORT); //$NON-NLS-1$ //$NON-NLS-2$
     helper.addCommand(Command.CAND_ADDRESS,
-        "Export_Cand_Address", "Export_Cand_Address_titel", "P5_Candidate_Address_Export.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "Export_Cand_Address", "Export_Cand_Address_titel", JspPage.P5_CANDIDATE_ADDRESS_EXPORT); //$NON-NLS-1$ //$NON-NLS-2$
     helper.addCommand(Command.EXPORT_VERZEICHNIS,
-        "ExportVerzeichnis", "Export_Verzeichnis_titel", "dateiExportVerzeichnis.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "ExportVerzeichnis", "Export_Verzeichnis_titel", JspPage.DATEI_EXPORT_VERZEICHNIS); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   protected boolean isEKElection() {
@@ -170,34 +154,28 @@ public abstract class InitGuiCommand_P5 extends InitGuiCommand implements Applic
         befehleInitial[LEVEL_ADMIN], LEVEL_ADMIN);
     helper.setGuiClass(GUI_CLASS_1);
 
-    helper.setRights(null);
     helper.addCommand(Command.ANWENDER_VERAENDERN_PASSWORT,
-        "Passwort_veraendern", "Passwort_veraendern_titel", "adm_anwender_change_pw.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "Passwort_veraendern", "Passwort_veraendern_titel", JspPage.ADM_ANWENDER_CHANGE_PW); //$NON-NLS-1$//$NON-NLS-2$
 
-    helper.setRights(R_ADM_ANGEMELDETE);
     helper
         .addCommand(Command.ADM_ANW_LISTE,
-            "Angemeldete_Anwender_anzeigen", "Angemeldete_Anwender_anzeigen_titel", "adm_angemeldeteAnwender.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+            "Angemeldete_Anwender_anzeigen", "Angemeldete_Anwender_anzeigen_titel", JspPage.ADM_ANGEMELDETE_ANWENDER); //$NON-NLS-1$//$NON-NLS-2$
 
-    helper.setRights(R_ADM_ANW_ANLEGEN);
     helper.addCommand(Command.ANWENDER_ANLEGEN,
-        "Anwender_anlegen", "Anwender_anlegen_titel", "adm_anwender_edit.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "Anwender_anlegen", "Anwender_anlegen_titel", JspPage.ADM_ANWENDER_CREATE); //$NON-NLS-1$//$NON-NLS-2$
 
-    helper.setRights(R_ADM_ANW_AENDERN);
     helper.addCommand(Command.ANWENDER_VERAENDERN_1_AUSWAHLEN,
-        "Anwender_veraendern", "Anwender_veraendern_titel", "adm_anwender_select.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "Anwender_veraendern", "Anwender_veraendern_titel", JspPage.ADM_ANWENDER_SELECT_EDIT); //$NON-NLS-1$//$NON-NLS-2$
 
     // die zweite Seite in die HashMap
     helper.addJspPage(Command.ANWENDER_VERAENDERN_2_EDIT,
-        "Anwender_veraendern", "adm_anwender_edit.jsp"); //$NON-NLS-1$//$NON-NLS-2$
+        "Anwender_veraendern", JspPage.ADM_ANWENDER_EDIT); //$NON-NLS-1$
 
-    helper.setRights(R_ADM_ANW_ANLEGEN);
     helper.addCommand(Command.ANWENDER_LOESCHEN,
-        "Anwender_loeschen", "Anwender_loeschen_titel", "adm_anwender_select.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "Anwender_loeschen", "Anwender_loeschen_titel", JspPage.ADM_ANWENDER_SELECT_DELETE); //$NON-NLS-1$//$NON-NLS-2$
 
-    helper.setRights(R_RE_INDEX_DATABASE);
     helper.addCommand(Command.ADM_RE_INDEX_DATABASE,
-        "re_index_database", "re_index_database_titel", "adm_re_index_database.jsp"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        "re_index_database", "re_index_database_titel", JspPage.ADM_RE_INDEX_DATABASE); //$NON-NLS-1$//$NON-NLS-2$
   }
 
   /**
@@ -220,14 +198,16 @@ public abstract class InitGuiCommand_P5 extends InitGuiCommand implements Applic
     if (topLevel != _gebietsartErfassungseinheitMax) {
       cmd = helper.addCommand(Command.GEB_ERG,
           getLowerGebietErgebnisBundleString(),
-          "Gebiet_Ergebnis_titel", "gebietErgebnis.jsp"); //$NON-NLS-1$ //$NON-NLS-2$
+          "Gebiet_Ergebnis_titel", JspPage.GEBIET_ERGEBNIS); //$NON-NLS-1$
       cmd.setNurErfassungseinheit(true); // only deeper level in P5 (top level has another position)
       cmd.setPosition(0);
 
       // if the Level is CSB the list of candidates are defined for a deeper Level
+      JspPage jspPage = isEKElection()
+          ? JspPage.GEBIET_ERGEBNIS_KANDIDAT_EK
+          : JspPage.GEBIET_ERGEBNIS_KANDIDAT;
       cmd = helper.addCommand(Command.GEB_ERG_KAN,
-          "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", //$NON-NLS-1$ //$NON-NLS-2$
-          isEKElection() ? "gebietErgebnisKandidatEK.jsp" : "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$
+          "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", jspPage);//$NON-NLS-1$ //$NON-NLS-2$
       cmd.setNurErfassungseinheit(true);
       cmd.setPosition(1);
     }
@@ -235,16 +215,16 @@ public abstract class InitGuiCommand_P5 extends InitGuiCommand implements Applic
     helper.setGuiClass(GUICommand.GUI_CLASS_6);
 
     // hilfe cmd kommt in alle Arrays hinten dran
-    cmd = helper.addCommand(Command.HELP, "Hilfe", "Hilfe_titel", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    cmd = helper.addCommand(Command.HELP, "Hilfe", "Hilfe_titel", JspPage.HELP); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
 
     // logout cmd kommt in alle Arrays hinten dran
-    cmd = helper.addCommand(Command.SONST_LOGOUT, "Abmelden", "Abmelden_titel", "logout.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    cmd = helper.addCommand(Command.SONST_LOGOUT, "Abmelden", "Abmelden_titel", JspPage.LOGOUT); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
 
     // wahldetails cmd kommt in alle Arrays hinten dran
     cmd = helper.addCommand(Command.SONST_ELECTIONDETAILS,
-        "ElectionDetails", "ElectionDetails_titel", "electiondetails.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        "ElectionDetails", "ElectionDetails_titel", JspPage.ELECTION_DETAILS); //$NON-NLS-1$ //$NON-NLS-2$
     cmd.setAlleLevel(true);
   }
 

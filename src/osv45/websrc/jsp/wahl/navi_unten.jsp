@@ -1,6 +1,6 @@
 <%--
  *******************************************************************************
- * naivgation zu einem Wahlkreis
+ * navigation zu einem Wahlkreis
  * Teil der Navigation zu einem bestimmten Wahlkreis, der über Eingabe der
  * Wahlkreisnummer erreicht werden kann
  *

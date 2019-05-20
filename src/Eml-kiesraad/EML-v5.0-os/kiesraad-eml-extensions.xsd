@@ -331,6 +331,7 @@
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="DEELGEMEENTE"/>
 			<xs:enumeration value="GEMEENTE"/>
+			<xs:enumeration value="KIESCOLLEGE"/>
 			<xs:enumeration value="KIESKRING"/>
 			<xs:enumeration value="PROVINCIE"/>
 			<xs:enumeration value="PROVINCIAAL_KIESKRING"/>

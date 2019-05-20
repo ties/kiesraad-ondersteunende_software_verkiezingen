@@ -17,13 +17,14 @@
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.eingang.GUIEingangMsg"%>
 <%@ page import="de.ivu.wahl.eingang.GUIEingangMsgEK"%>
-<%@ page import="de.ivu.wahl.modell.BasicEingangMsg.Gruppenergebnis"%>
 <%@ page import="de.ivu.wahl.modell.BasicEingangMsg"%>
+<%@ page import="de.ivu.wahl.modell.BasicEingangMsg.Gruppenergebnis"%>
 <%@ page import="de.ivu.wahl.modell.ErgebniseingangKonstanten"%>
 <%@ page import="de.ivu.wahl.modell.GebietInfo"%>
 <%@ page import="de.ivu.wahl.modell.GruppeGebietsspezifischGruppeComposite"%>
@@ -55,6 +56,7 @@
 <%
    String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
    String breite ="100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.GEBIET_ERGEBNIS_EK);
    String helpKey = "gebietErg"; //$NON-NLS-1$
    
    SystemInfo systemInfo = SystemInfo.getSystemInfo();
@@ -88,7 +90,7 @@
    if (gebietInfo.getStatusLetzterEingang() == ErgebniseingangKonstanten.STATE_FIRST_RESULT_OK) {
       isFirstInput = true;
    }
-   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
+   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Recht.R_EINGABE);
    String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKonstanten.GEBE, true);
    %>
 
@@ -155,6 +157,9 @@
    <tr>
       <td width="10"><img alt="" src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
       <td valign="top" colspan="2">
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <table border="0" cellspacing="0" cellpadding="1" width="99%">
             <tr class="hgrot">
                <td valign="top">
@@ -269,6 +274,7 @@
                <td height="10"><img src="<%= request.getContextPath() %>/img/icon/blind.gif" width="1" height="1"></td>
             </tr>
          </table>
+         <% } %>
       </td>
    </tr>
 </table>

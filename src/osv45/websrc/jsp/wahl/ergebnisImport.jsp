@@ -1,17 +1,19 @@
 <jsp:directive.page import="de.ivu.wahl.client.util.ClientHelper" />
 <jsp:directive.page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" />
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page import="de.ivu.wahl.GebietsBaum"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.client.beans.InitGuiCommand"%>
 <%@ page import="de.ivu.wahl.client.beans.OutputCommand"%>
+<%@ page import="de.ivu.wahl.client.beans.ErgebnisImportBean"%>
 <%@ page import="de.ivu.wahl.dataimport.AbstractImportEML"%>
 <%@ page import="de.ivu.wahl.dataimport.HashCodeSplitter"%>
 <%@ page import="de.ivu.wahl.dataimport.ImportEML510"%>
 <%@ page import="de.ivu.wahl.dataimport.SecurityLevel"%>
-<%@ page import="de.ivu.wahl.client.beans.ErgebnisImportBean"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.GebietsBaum"%>
 <%@ page import="de.ivu.wahl.modell.GebietInfo"%>
-<%@ page import="de.ivu.wahl.client.beans.InitGuiCommand"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="javax.swing.tree.DefaultMutableTreeNode"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -34,6 +36,7 @@ ImportEML510 impDef = ergImpBean.getImportEML510(level, gebNr);
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 SystemInfo systemInfo = SystemInfo.getSystemInfo();
 String breite = "100%";
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ERGEBNIS_IMPORT);
 
 boolean isReferendum = wahlInfo.isReferendum();
 if (isReferendum) {
@@ -47,7 +50,7 @@ if ("P4".equals(systemInfo.getModusklartext()) && wahlInfo.isEK()) { //$NON-NLS-
 String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKonstanten.GEBE, true);
 %>
 <c:set var="gebietInfo" value="<%= gebietInfo %>" scope="page"/>
-<c:set var="isShowButtonToGebietEingang" value="<%= systemInfo.isFileInputWithManualConfirmation() %>" scope="page"/>
+<c:set var="isShowButtonToGebietEingang" value="<%= systemInfo.isManualConfirmationNeededAfterFileImport() %>" scope="page"/>
 <c:set var="titel">
 <%= BundleHelper.getBundleString("Ergebnisse_importieren_titel_" + messageKeySuffix) %>
 </c:set>
@@ -104,6 +107,9 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
             style="height: 1px; line-height: 1px; width: 100%;">
             &nbsp;
         </div>
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <div class="hghell">
             <%-- Gebiet gesperrt für diesen Anwender --%>
           <% if ((!(appBean.getAnwContext().getKeyForViewlock().equals(appBean.getINPUT_MAP().get(gebietInfo.getID_Gebiet())))) 
@@ -296,6 +302,7 @@ String urlToGebietEingang = ClientHelper.generateURL(request, ApplicationBeanKon
             </fieldset>
         <% } %>
         </div>
+        <% } %>
     </div>
     </div>
     </body>

@@ -6,10 +6,12 @@
 <%@ page import="de.ivu.wahl.WahlInfo"%>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.P4ExportStateReferendum"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.beans.Command" %>
-<%@ page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
 <%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
 <%@ page import="de.ivu.wahl.client.util.GUICommand"%>
@@ -25,6 +27,7 @@ String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ExpRef"; //$NON-NLS-1$
 
 String breite = "100%";
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.P4_EXPORT_REFERENDUM); 
 DialogStateHolder p4ES = expP4Bean.getP4ExportStateReferendum();
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 
@@ -69,6 +72,9 @@ String i18nTitle = "Export_P4_titel_Referendum"; //$NON-NLS-1$
                <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
+                     <% if (!rechteFehler.isEmpty())  { %>
+                       <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                     <% } else { %>
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                         <tr>
                            <td width="5" class="hggrau">&nbsp;</td>
@@ -151,7 +157,7 @@ String i18nTitle = "Export_P4_titel_Referendum"; //$NON-NLS-1$
                                                     </table>
                                           <% }  
                                                 if (P4ExportStateReferendum.STATUS_P4_D1 == p4ES._modus){ 
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_REFERENDUM + "&" + ClientHelper.getAllParameters (request); //$NON-NLS-1$//$NON-NLS-2$
+                                                    String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_REFERENDUM.getKey() + "&" + ClientHelper.getAllParameters (request); //$NON-NLS-1$//$NON-NLS-2$
                                                    %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
                                                  <tr>
@@ -210,7 +216,7 @@ String i18nTitle = "Export_P4_titel_Referendum"; //$NON-NLS-1$
                                                     // reset export status
                                                     expP4Bean.resetExportStateReferendum();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_REFERENDUM + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+                                                    String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_REFERENDUM.getKey() + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) + "&" + ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
                                             %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
@@ -244,6 +250,7 @@ String i18nTitle = "Export_P4_titel_Referendum"; //$NON-NLS-1$
                            <td width="10">&nbsp;</td>
                         </tr>
                      </table>
+                     <% } %>
                   </td>
                </tr>
             </table>

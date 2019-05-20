@@ -18,13 +18,8 @@ class InitGuiCommandHelper {
   private final Map<String, String> jspLevelWorkName;
   private final GUICommandList commandList;
   private final int level;
-  private String rights;
   private String guiClass = GUI_CLASS_1;
   private boolean gebietsabhaengig = false;
-
-  public void setRights(String rights) {
-    this.rights = rights;
-  }
 
   public void setGuiClass(String guiClass) {
     this.guiClass = guiClass;
@@ -44,13 +39,14 @@ class InitGuiCommandHelper {
     this.level = level;
   }
 
-  public GUICommand addCommand(Command command, String nameKey, String titleKey, String jsp) {
+  public GUICommand addCommand(Command command, String nameKey, String titleKey, JspPage jspPage) {
+    String jsp = jspPage.getFilename();
     String name = parent.getBundleString(nameKey);
     jspLevelWorkName.put(level + "_" + command.getId(), name); //$NON-NLS-1$
     String title = parent.getBundleString(titleKey);
     GUICommand cmd = parent.createCommand(name,
         command,
-        rights,
+        jspPage.getRecht(),
         gebietsabhaengig,
         jsp,
         title,
@@ -59,7 +55,8 @@ class InitGuiCommandHelper {
     return cmd;
   }
 
-  public void addJspPage(Command command, String nameKey, String jsp) {
+  public void addJspPage(Command command, String nameKey, JspPage jspPage) {
+    String jsp = jspPage.getFilename();
     String name = parent.getBundleString(nameKey);
     jspLevelWorkName.put(level + "_" + command.getId(), name); //$NON-NLS-1$
     parent.putToJspMap(command, jsp);

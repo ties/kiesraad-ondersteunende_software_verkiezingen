@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import de.ivu.wahl.anwender.Recht;
 import de.ivu.wahl.client.util.GUICommand;
 import de.ivu.wahl.util.BundleHelper;
 
@@ -79,7 +80,7 @@ public abstract class InitGuiCommand {
    */
   protected GUICommand createCommand(String bezeichnung,
       Command command,
-      String recht,
+      Recht recht,
       boolean gebietsabhaengig,
       String jsp,
       String tooltip,

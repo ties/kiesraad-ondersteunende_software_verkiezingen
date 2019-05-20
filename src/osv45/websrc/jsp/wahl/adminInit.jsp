@@ -9,17 +9,18 @@
  *******************************************************************************
  --%>
 <%@ page import="de.ivu.ejb.EJBUtil"%>
-<%@ page import="de.ivu.wahl.anwender.AnwenderHandling"%>
+<%@ page import="de.ivu.wahl.AnwContext"%>
 <%@ page import="de.ivu.wahl.admin.AdminHandling"%>
+<%@ page import="de.ivu.wahl.anwender.AnwenderHandling"%>
+<%@ page import="de.ivu.wahl.anwender.AnwenderHandlingBean"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
+<%@ page import="de.ivu.wahl.auswertung.AuswertungHandlingBean"%>
 <%@ page import="de.ivu.wahl.auswertung.AuswertungHandling"%>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBean"%>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
-<%@ page import="de.ivu.wahl.AnwContext"%>
+<%@ page import="de.ivu.wahl.client.util.GUICommand" %>
 <%@ page import="de.ivu.wahl.modell.ejb.AnwenderHome"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
-<%@ page import="de.ivu.wahl.client.util.GUICommand" %>
-<%@ page import="de.ivu.wahl.anwender.AnwenderHandlingBean"%>
-<%@ page import="de.ivu.wahl.auswertung.AuswertungHandlingBean"%>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 
 <html>
@@ -46,7 +47,7 @@
         // Berechtigung prüfen
         boolean berechtigt = false;
         AnwContext anwContext = ApplicationBean.getAnwContext(request);
-        if (anwContext != null && anwContext.checkRight(Rechte.R_ADM_ANW_ANLEGEN)) {
+        if (anwContext != null && anwContext.checkRight(Recht.R_ADM_ANW_ANLEGEN)) {
           berechtigt = true;
         } else {
           // in der Datenbank sind noch gar keine Anwender (Einloggen wäre gar nicht möglich!)?

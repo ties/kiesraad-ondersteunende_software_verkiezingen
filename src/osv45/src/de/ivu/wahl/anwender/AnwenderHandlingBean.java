@@ -105,7 +105,8 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#checkRight(de.ivu.wahl.AnwContext, java.lang.String)
    */
-  public boolean checkRight(AnwContext ac, String right) throws EJBException {
+  @Override
+  public boolean checkRight(AnwContext ac, de.ivu.wahl.anwender.Recht right) throws EJBException {
     return getAnwRechte(ac).checkRight(right);
   }
 
@@ -113,6 +114,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#createWurzelAnwender()
    */
+  @Override
   public void createWurzelAnwender() throws EJBException {
     // Administrator
     List<String> id_Rechtegruppen = new ArrayList<String>();
@@ -131,6 +133,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#delAnwender(java.lang.String)
    */
+  @Override
   public void delAnwender(String id_Anwender) throws FinderException, EJBException, RemoveException {
     Anwender anwender = _anwenderHome.findByPrimaryKey(id_Anwender);
 
@@ -151,6 +154,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#getAllGebieteForWahl(java.lang.String, int)
    */
+  @Override
   public List<GebietModel> getAllGebieteForWahl(String id_Wahl, int gebietsart) {
     getWahlInfo(id_Wahl).getWahl().readLock();
     try {
@@ -166,6 +170,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#getAllChildGebieteForGebiet(java.lang.String)
    */
+  @Override
   public List<GebietModel> getAllChildGebieteForGebiet(String id_Gebiet) {
     try {
       return toModelList(GebietHome.HomeFinder.findHome(this)
@@ -180,6 +185,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#getAllRechtegruppen()
    */
+  @Override
   public List<RechtegruppeModel> getAllRechtegruppen() throws EJBException {
     try {
       return toModelList(RechtegruppeHome.HomeFinder.findHome(this).findAll());
@@ -193,6 +199,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#getAngemeldeteAnwender()
    */
+  @Override
   public Collection<Anmeldung> getAngemeldeteAnwender() {
     List<Anmeldung> angemeldeteAnwender = new ArrayList<Anmeldung>(__angemeldeteAnwender);
     sort(angemeldeteAnwender);
@@ -203,6 +210,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#getAngemeldeteAnwender(java.lang.String)
    */
+  @Override
   public Collection<Anmeldung> getAngemeldeteAnwender(String id_Wahl) {
     List<Anmeldung> angemAnwFuerWahl = new ArrayList<Anmeldung>();
     // DruckerClients: pr�fe, wann der letzte Zugriff war
@@ -219,6 +227,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#getAnwRechte(de.ivu.wahl.AnwContext)
    */
+  @Override
   public AnwRechte getAnwRechte(AnwContext ac) throws EJBException {
     return AnwRechte.getAnwRechte(ac);
   }
@@ -227,6 +236,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#initRechteUndRechteGruppen()
    */
+  @Override
   public void initRechteUndRechteGruppen() throws EJBException {
     // zun�chst Erzeugen der Rechtegruppen
     RechtegruppeHome rgh = RechtegruppeHome.HomeFinder.findHome(this);
@@ -317,6 +327,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#logout(de.ivu.wahl.AnwContext)
    */
+  @Override
   public void logout(AnwContext ac) {
     synchronized (__angemeldeteAnwender) {
       for (Anmeldung an : __angemeldeteAnwender) {
@@ -343,6 +354,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#rightsChanged(java.lang.String)
    */
+  @Override
   public void rightsChanged(String id_Anwender) {
     try {
       resetAnwRechte(id_Anwender);
@@ -686,6 +698,7 @@ public class AnwenderHandlingBean extends WahlStatelessSessionBeanBase implement
    * (non-Javadoc)
    * @see de.ivu.wahl.anwender.AnwenderHandling#hasAnwenderGebiet(java.lang.String)
    */
+  @Override
   public boolean hasAnwenderGebiet(String id_Anwender) throws FinderException {
     return _anwenderHome.findByPrimaryKey(id_Anwender).getID_Gebiet() != null;
   }

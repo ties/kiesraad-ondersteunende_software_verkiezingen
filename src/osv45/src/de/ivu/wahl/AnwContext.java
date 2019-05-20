@@ -9,11 +9,14 @@ import static de.ivu.ejb.EJBUtil.lookupLocal;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import de.ivu.util.debug.Log4J;
 import de.ivu.wahl.anwender.AnwenderHandling;
 import de.ivu.wahl.anwender.AnwenderHandlingBean;
+import de.ivu.wahl.anwender.Recht;
+import de.ivu.wahl.client.beans.JspPage;
 import de.ivu.wahl.i18n.MessageKeys;
 import de.ivu.wahl.i18n.Messages;
 
@@ -177,7 +180,7 @@ public class AnwContext implements Serializable {
    * @param right das zu pr�fende Recht
    * @return <code>true</code>, wenn der Anwender darf
    */
-  public boolean checkRight(String right) {
+  public boolean checkRight(Recht right) {
     try {
       AnwenderHandling ah = lookupLocal(AnwenderHandlingBean.class.getSimpleName());
       return ah.checkRight(this, right);
@@ -220,4 +223,41 @@ public class AnwContext implements Serializable {
     }
     return "";
   }
+
+  public static String getErrorIfRightsAreMissing(JspPage jspPage, AnwContext anwContext) {
+    String errorIfNotLoggedIn = getErrorIfNotLoggedIn(anwContext);
+    if (!errorIfNotLoggedIn.isEmpty()) {
+      return errorIfNotLoggedIn;
+    }
+
+    return anwContext.getErrorIfRightsAreMissing(jspPage);
+  }
+
+  public static String getErrorIfNotLoggedIn(AnwContext anwContext) {
+    if (anwContext == null) {
+      return Messages.getString(MessageKeys.ERROR_NotLoggedIn);
+    }
+
+    return StringUtils.EMPTY;
+  }
+
+  public String getErrorIfRightsAreMissing(JspPage jspPage) {
+    de.ivu.wahl.anwender.Recht recht = jspPage.getRecht();
+    if (recht.isAlwaysAllowed()) {
+      return StringUtils.EMPTY;
+    }
+
+    try {
+      boolean ok = checkRight(recht);
+      if (ok) {
+        return StringUtils.EMPTY;
+      } else {
+        return Messages.getString(MessageKeys.ERROR_RightsMissing);
+      }
+    } catch (Throwable exc) {
+      exc.printStackTrace();
+      return Messages.getString(MessageKeys.ERROR_ErrorWhenCheckingRights);
+    }
+  }
+
 }

@@ -1,7 +1,4 @@
-
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="de.ivu.wahl.modell.WahlModel"%>
-<%@ page import="de.ivu.wahl.SystemInfo"%><%--
+<%--
  *******************************************************************************
  * Eingestellte Wahl und Wahlergebnisart freigeben
  * Funktion für Bundeswahlleiter -> Sitzverteilung wird für alle sichtbar und kann
@@ -14,14 +11,19 @@
  * $Id: adm_freigabe.jsp,v 1.19 2011/03/31 12:36:03 tdu Exp $
  *******************************************************************************
  --%>
-<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.Konstanten" %>
+<%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@ page import="de.ivu.wahl.WahlInfo" %>
-<%@ page import="de.ivu.wahl.anwender.Rechte" %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.modell.WahlModel"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page errorPage="/jsp/MainErrorPage.jsp"%>
+<%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="admBean" scope="session" class="de.ivu.wahl.client.beans.AdministrationBean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
 
@@ -38,25 +40,26 @@
 <%
   String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
   String prefix = ApplicationBeanKonstanten.PREFIX;
-  String formurl = ClientHelper.generateURL(request, null, "adm_freigabe", -1, true);
+  String formurl = ClientHelper.generateURL(request, null, Action.CMD_ADM_FREIGABE.getKey(), -1, true);
   SystemInfo systemInfo = SystemInfo.getSystemInfo();
   WahlInfo wahlInfo = appBean.getWahlInfo();
   boolean freigegeben = appBean.isFreigegeben(wahlInfo.getAktuelleWahlergebnisart());
   AnwContext anwContext = appBean.getAnwContext();
-  boolean hatFZRecht = anwContext.checkRight(Rechte.R_FREIGABE_RUECK);
+  boolean hatFZRecht = anwContext.checkRight(Recht.R_FREIGABE_RUECK);
   
   boolean hatVarianten = false;
   boolean eeEntscheidungLiegtVor = false;
 
   boolean isReferendum = wahlInfo.isReferendum();
-  String helpKey = "admFreigabe";
+  String helpKey = "admFreigabe"; //$NON-NLS-1$
   if (isReferendum) {
-     helpKey = "admFreigabeRef";
+     helpKey = "admFreigabeRef"; //$NON-NLS-1$
   }
   
   String titel = freigegeben ? BundleHelper.getBundleString("FreigabeZuruecknehmen") : BundleHelper.getBundleString("FreigabeFreigeben");
-  String breite = "100%";%>
-
+  String breite = "100%"; //$NON-NLS-1$
+  String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_FREIGABE); 
+%>
   <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" align="center" class="hghell">
    <%@include file="/jsp/fragments/help_row.jspf"%>
    <tr>

@@ -1,26 +1,27 @@
-<%@page import="de.ivu.wahl.client.beans.ExportP4Commands"%>
-<%@ page import="de.ivu.wahl.Konstanten"%>
-<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
-<%@ page import="de.ivu.wahl.Konstanten"%>
-<%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
-<%@ page import="de.ivu.wahl.client.beans.Command" %>
-<%@ page errorPage="/jsp/MainErrorPage.jsp"%>
-<%@ page import="de.ivu.wahl.util.BundleHelper"%>
-<%@ page import="java.util.List"%>
-<%@ page import="de.ivu.wahl.client.util.GUICommand"%>
-<%@ page import="de.ivu.wahl.modell.GruppeModel"%>
-<%@ page import="java.util.Collection"%>
-<%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
 <%@ page import="de.ivu.wahl.Basiseinstellung"%>
 <%@ page import="de.ivu.wahl.Basiseinstellung.Typ"%>
-<%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.modell.WahlModel"%>
-<%@ page import="de.ivu.wahl.modell.GebietModel"%>
+<%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
-<%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
+<%@ page import="de.ivu.wahl.WahlInfo"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.admin.DialogStateHolder"%>
 <%@ page import="de.ivu.wahl.admin.P4ExportStateEmptyEml"%>
+<%@ page import="de.ivu.wahl.client.beans.AdministrationBean"%>
+<%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
+<%@ page import="de.ivu.wahl.client.beans.Command" %>
+<%@ page import="de.ivu.wahl.client.beans.RepositoryPropertyHandler"%>
+<%@ page import="de.ivu.wahl.client.util.ClientHelper"%>
+<%@ page import="de.ivu.wahl.client.util.GUICommand"%>
+<%@ page import="de.ivu.wahl.modell.GruppeModel"%>
+<%@ page import="de.ivu.wahl.modell.WahlModel"%>
+<%@ page import="de.ivu.wahl.modell.GebietModel"%>
+<%@ page import="de.ivu.wahl.util.BundleHelper"%>
 <%@ page import="de.ivu.wahl.wus.electioncategory.ElectionCategory"%>
+<%@ page import="java.util.Collection"%>
+<%@ page import="java.util.List"%>
+<%@ page errorPage="/jsp/MainErrorPage.jsp"%>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <jsp:useBean id="expP4Bean" scope="session" class="de.ivu.wahl.client.beans.ExportP4Bean" />
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />
@@ -30,6 +31,7 @@ String backgroundColor = appBean.getBackgroundColor(); // used in included jspf
 String helpKey = "ExpEmpty"; //$NON-NLS-1$
 
 String breite = "100%"; //$NON-NLS-1$
+String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.ADM_EMPTY_EXPORT); 
 DialogStateHolder p4ES = expP4Bean.getP4ExportStateEmptyEml();
 WahlInfo wahlInfo = WahlInfo.getWahlInfo();
 SystemInfo systemInfo = SystemInfo.getSystemInfo();
@@ -89,6 +91,9 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                <%@include file="/jsp/fragments/help_row.jspf"%>
                <tr>
                   <td valign="top">
+                     <% if (!rechteFehler.isEmpty())  { %>
+                        <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+                     <% } else { %>
                      <table width="<%= breite %>" border="0" cellspacing="0" cellpadding="0" class="hghell">
                         <tr>
                            <td width="5" class="hggrau">&nbsp;</td>
@@ -114,7 +119,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                             </fieldset>
                                         <% } else {
                                                 if (P4ExportStateEmptyEml.STATUS_P4_D1 == p4ES._modus){ 
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_EMPTY_EML + "&" +ClientHelper.getAllParameters (request); //$NON-NLS-1$//$NON-NLS-2$
+                                                    String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_EMPTY_EML.getKey() + "&" +ClientHelper.getAllParameters (request); //$NON-NLS-1$//$NON-NLS-2$
                                                    %>
                                               <table border="0" cellspacing="0" cellpadding="1" width="<%= breite %>">
                                                  <tr>
@@ -155,7 +160,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                                                     // reset export status
                                                     expP4Bean.resetExportStateEmptyEml();
                                                     //forward to Werkmap
-                                                    String urlExp = "/osv?cmd=" + ExportP4Commands.EXP_P4_EXPORT_P4_EMPTY_EML + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                                    String urlExp = "/osv?cmd=" + Action.EXP_P4_EXPORT_P4_EMPTY_EML.getKey() + "&" + ClientHelper.workIs(Command.EXPORT_VERZEICHNIS) +"&" +ClientHelper.getAllParameters(request, ApplicationBeanKonstanten.WORK); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                                             %>
                                             <fieldset style="border: 1px solid #093C69; padding: 15px">
                                                         <legend><b><ivu:int key="<%=i18nName%>"/></b></legend>
@@ -189,6 +194,7 @@ if (wahlInfo.getElectionCategory().equals(ElectionCategory.GR) || wahlInfo.getEl
                            <td width="10">&nbsp;</td>
                         </tr>
                      </table>
+                     <% } %>
                   </td>
                </tr>
             </table>

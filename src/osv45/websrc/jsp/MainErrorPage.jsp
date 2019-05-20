@@ -43,19 +43,15 @@
                             if (exception == null) { //%>
                                 <ivu:int key="MainErrorPage.7"/><%
                             } else {%>
-                                <ivu:int key="MainErrorPage.8"/> <%=exception.getMessage()%><br /> <%
+                                <ivu:int key="MainErrorPage.8"/> <%=ClientHelper.forHTML(exception.toString())%><br /> <%
                             }%>
                             <p><a   href='<%= request.getContextPath() + "/osv/logon?r=" + ClientHelper.getRandomString() %>' target='_top'><ivu:int key="MainErrorPage.5"/></a></p><%
-                 if (exception != null) {%>
-                            <p><ivu:int key="MainErrorPage.9"/></p>
-                            <pre><font color="red"><%
-                                CharArrayWriter cw = new java.io.CharArrayWriter();
+                 if (exception != null) {
+                        CharArrayWriter cw = new java.io.CharArrayWriter();
                         PrintWriter pw = new java.io.PrintWriter(cw, true);
                         exception.printStackTrace(pw);
-                        out.println(cw.toString());
-                        System.out.println(cw.toString());%>
-                    </font></pre><%
-              }
+                        System.out.println(cw.toString());
+                 }
              }%>
                 </td>
             </tr>

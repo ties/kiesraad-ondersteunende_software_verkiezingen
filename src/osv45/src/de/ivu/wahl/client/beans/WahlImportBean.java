@@ -6,6 +6,7 @@
  */
 package de.ivu.wahl.client.beans;
 
+import static de.ivu.wahl.client.beans.ApplicationBean.getAnwContext;
 import static java.io.File.separatorChar;
 
 import java.io.PrintWriter;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
 
+import de.ivu.wahl.AnwContext;
 import de.ivu.wahl.Konstanten;
 import de.ivu.wahl.SystemInfo;
 import de.ivu.wahl.dataimport.AbstractImportEML;
@@ -107,6 +109,17 @@ public class WahlImportBean extends BasicUploadBean {
 
           @Override
           void execute(HttpServletRequest request) {
+            AnwContext anwContext = getAnwContext(request);
+            String rechteFehler = AnwContext.getErrorIfRightsAreMissing(JspPage.WAHL_IMPORT,
+                anwContext);
+
+            if (!rechteFehler.isEmpty()) {
+              StringWriter writer = new StringWriter();
+              PrintWriter printWriter = new BRPrintWriter(writer);
+              error(printWriter, rechteFehler, new RuntimeException(rechteFehler));
+              return;
+            }
+
             if (_importMetadata == null || !(_importMetadata instanceof ImportElectionMetadata)) {
               _importMetadata = new ImportElectionMetadata(systemInfo.getWahlModus(), systemInfo
                   .getWahlEbene());
@@ -142,7 +155,7 @@ public class WahlImportBean extends BasicUploadBean {
                               item.getString()));
                     } else {
                       // Hier werden die Dateien ins Archiv geschrieben
-                      writeFileIntoArchiveFolder(item, _importMetadata);
+                      writeFileIntoArchiveFolder(item, _importMetadata, false);
 
                       String fileName = item.getName();
                       String feldName = item.getFieldName();
@@ -192,6 +205,17 @@ public class WahlImportBean extends BasicUploadBean {
 
           @Override
           void execute(HttpServletRequest request) {
+            AnwContext anwContext = getAnwContext(request);
+            String rechteFehler = AnwContext.getErrorIfRightsAreMissing(JspPage.WAHL_IMPORT,
+                anwContext);
+
+            if (!rechteFehler.isEmpty()) {
+              StringWriter writer = new StringWriter();
+              PrintWriter printWriter = new BRPrintWriter(writer);
+              error(printWriter, rechteFehler, new RuntimeException(rechteFehler));
+              return;
+            }
+
             if (_importMetadata == null || !(_importMetadata instanceof ImportReferendumMetadata)) {
               _importMetadata = new ImportReferendumMetadata(systemInfo.getWahlModus(), systemInfo
                   .getWahlEbene());
@@ -221,7 +245,7 @@ public class WahlImportBean extends BasicUploadBean {
                               item.getString()));
                     } else {
                       // Hier werden die Dateien ins Archiv geschrieben
-                      writeFileIntoArchiveFolder(item, _importMetadata);
+                      writeFileIntoArchiveFolder(item, _importMetadata, false);
 
                       String fileName = item.getName();
                       String feldName = item.getFieldName();

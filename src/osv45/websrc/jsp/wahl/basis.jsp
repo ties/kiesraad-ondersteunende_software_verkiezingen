@@ -7,12 +7,12 @@
  * $Id: basis.jsp,v 1.19 2010/11/19 09:45:18 jon Exp $
  *******************************************************************************
  --%>
+<jsp:directive.page import="de.ivu.wahl.client.beans.InitGuiCommand"/>
 <%@ page import="de.ivu.wahl.client.beans.ApplicationBeanKonstanten" %>
 <%@ page import="de.ivu.wahl.client.util.ClientHelper" %>
-<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
-<jsp:directive.page import="de.ivu.wahl.client.beans.InitGuiCommand"/>
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
+<%@ page errorPage="/jsp/MainErrorPage.jsp" %>
 <%@ taglib uri="http://www.ivu.de/taglibs/ivu-wahl-1.0" prefix="ivu" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="appBean" scope="session" class="de.ivu.wahl.client.beans.ApplicationBean" />

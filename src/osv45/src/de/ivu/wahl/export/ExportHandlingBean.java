@@ -1043,6 +1043,7 @@ public class ExportHandlingBean extends WahlStatelessSessionBeanBase implements 
   }
 
   @Override
+  @TransactionTimeout(TRANSACTION_TIMEOUT_MINUTES * 60)
   public String createVotesCsvExport(ResultSummary resultSummary, Document eml510)
       throws EJBException, ImportException {
     return new CsvVotesExportHelper().createCsvExport(resultSummary, eml510, getPropertyHandling());

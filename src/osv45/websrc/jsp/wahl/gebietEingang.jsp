@@ -9,12 +9,14 @@
 <%@ page import="de.ivu.wahl.Konstanten"%>
 <%@ page import="de.ivu.wahl.SystemInfo"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
-<%@ page import="de.ivu.wahl.eingang.GUIEingangMsg " %>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
+<%@ page import="de.ivu.wahl.client.beans.Action" %>
+<%@ page import="de.ivu.wahl.client.beans.JspPage" %>
 <%@ page import="de.ivu.wahl.client.beans.*" %>
 <%@ page import="de.ivu.wahl.client.util.*"%>
-<%@ page import="de.ivu.wahl.modell.GebietInfo" %>
+<%@ page import="de.ivu.wahl.eingang.GUIEingangMsg " %>
 <%@ page import="de.ivu.wahl.modell.ErgebniseingangKonstanten"%>
+<%@ page import="de.ivu.wahl.modell.GebietInfo" %>
 <%@ page import="de.ivu.wahl.modell.GebietModel"%>
 <%@ page import="de.ivu.wahl.modell.GruppeKonstanten.GruppeAllgemein"%>
 <%@ page import="de.ivu.wahl.util.BundleHelper"%>
@@ -67,9 +69,9 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
    WahlInfo wahlInfo = appBean.getWahlInfo();
    
    String eingInput = ApplicationBeanKonstanten.PREFIX;
-   String aktUrl = "/osv?cmd=eingabe_eingabe&" + ClientHelper.getParametersDoNotStartWith(request, eingInput); //$NON-NLS-1$ 
-   String reloadUrl = "/osv?" + ClientHelper.getAllParameters(request); //$NON-NLS-1$
-   String erlaubenUrl = "/osv?cmd=eingabe_erlauben&" + ClientHelper.getParametersDoNotStartWith(request, eingInput); //$NON-NLS-1$
+   String aktUrl = "/osv?cmd=" + Action.EINGABE_EINGABE.getKey() + "&" + ClientHelper.getParametersDoNotStartWith(request, eingInput); //$NON-NLS-1$ 
+   String reloadUrl = "/osv?cmd=" + ClientHelper.getAllParameters(request); //$NON-NLS-1$
+   String erlaubenUrl = "/osv?cmd=" + Action.EINGABE_ERLAUBEN.getKey() + "&" + ClientHelper.getParametersDoNotStartWith(request, eingInput); //$NON-NLS-1$
    // holen einer vorbereiteten Eingangsmessage für eine Erfassungseinheit
    GUIEingangMsg guiEingangMsg = eingabeBean.getGUIMsg(request, (GebietInfo)map.get("gebietInfo"), false); //$NON-NLS-1$
    
@@ -78,6 +80,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
    guiEingangMsg.setInfoText(null);
    guiEingangMsg.setConfirmationText(null);
    String breite= "100%"; //$NON-NLS-1$
+   String rechteFehler = appBean.getErrorIfRightsAreMissing(JspPage.GEBIET_EINGANG);
    int trimSizeRef = 1000;
    int trimSizeRefAnswer = 300;
    
@@ -90,7 +93,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
    if (systemInfo.getWahlEbene() == GebietModel.EBENE_PSB) {
       isEbenePSB = true;
    }
-   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
+   boolean hatRechtFuerErfassung = appBean.getAnwContext().checkRight(Recht.R_EINGABE);
    
    Set<String> errorList = new HashSet<String>();
 %>
@@ -296,6 +299,9 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
               </div>
             </div>
         </div>
+        <% if (!rechteFehler.isEmpty())  { %>
+          <p><b><%= ClientHelper.forHTML(rechteFehler) %></b></p>
+        <% } else { %>
         <div id="trans">
            <c:choose>
               <%-- Gebiet gesperrt für diesen Anwender --%>
@@ -336,16 +342,6 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                                                                 </c:when>
                                                                 <c:when test="${!(gebietInfo.guiEingabeErlaubt) }">
                                                                     <ivu:int key="GebietBereitsPerDateiGefuellt"/>
-                                                                    <%  /* if admin, allow opening for manual input */ 
-                                                                        if (appBean.getAnwContext().checkRight(Rechte.R_EINGABE_ERLAUBEN)) { %>
-                                                                            <br /><br /><ivu:int key="ManuelleEingabenFreigebenHinweis"/>
-                                                                            <ivu:form name="gebieteingabe" action="${erlaubenUrl}">
-                                                                                <div align="center">
-                                                                                    <input id="box2" style="cursor:pointer" type="submit" value="<%= BundleHelper.getBundleString("ManuelleEingabenFreigeben") %>" name="${applicationBeanKonstanten.PREFIX}erlauben">
-                                                                                </div>
-                                                                            </ivu:form> <%
-                                                                        }
-                                                                     %>
                                                                 </c:when>
                                                                 <c:when test="${appBean.inputDisabled}">
                                                                     <ivu:int key="EingabeNichtMoeglichDaEingabesperre"></ivu:int>
@@ -1025,6 +1021,7 @@ String helpKey = "ergEingabe"; //$NON-NLS-1$
                  </c:otherwise>
               </c:choose>
            </div>
+           <% } %>
         </div>
     </jsp:body>
    </jsp:element>

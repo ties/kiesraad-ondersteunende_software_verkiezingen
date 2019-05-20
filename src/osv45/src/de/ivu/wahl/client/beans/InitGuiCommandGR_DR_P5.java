@@ -56,9 +56,9 @@ public abstract class InitGuiCommandGR_DR_P5 extends InitGuiCommand_P5
 
   @Override
   protected void createCommandGebietErgebnisKandidat(InitGuiCommandHelper helper) {
-    helper.setRights(null);
-    helper.addCommand(Command.GEB_ERG_KAN,
-        "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", "gebietErgebnisKandidat.jsp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    helper
+        .addCommand(Command.GEB_ERG_KAN,
+            "Gebiet_Ergebnis_Kandidat", "Gebiet_Ergebnis_Kandidat_titel", JspPage.GEBIET_ERGEBNIS_KANDIDAT); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
 }

@@ -20,7 +20,7 @@
 <%@ page import="de.ivu.wahl.AnwContext" %>
 <%@ page import="de.ivu.wahl.GebietsBaum"%>
 <%@ page import="de.ivu.wahl.WahlInfo"%>
-<%@ page import="de.ivu.wahl.anwender.Rechte"%>
+<%@ page import="de.ivu.wahl.anwender.Recht" %>
 <%@ page import="de.ivu.wahl.auswertung.erg.NavigationErgebnis" %>
 <%@ page import="de.ivu.wahl.client.beans.InitGuiCommand"%>
 <%@ page import="de.ivu.wahl.modell.ErgebniseingangModel" %>
@@ -212,11 +212,22 @@
 
         Command newWork = ApplicationBeanKonstanten.INITIAL_COMMAND; // View results
         if (isErfassungseinheit && gebietInfo.getStatusLetzterEingang() != ErgebniseingangKonstanten.STATE_OK) {
+          // Result input for this region is not finished
           newWork = gui.getErfassungseinheitUnvollstaendigWork(gebietInfo.getStatusLetzterEingang());
-          boolean hatRecht = appBean.getAnwContext().checkRight(Rechte.R_EINGABE);
-          if (!hatRecht) {
-            newWork = ApplicationBeanKonstanten.INITIAL_COMMAND;
+          
+          if (newWork == Command.IMPORT_ERGEBNISSE && !appBean.getAnwContext().checkRight(Recht.R_IMPORT)) {
+            // If result import is selected but is not allowed, try manual input
+            newWork = Command.GEBE;
           }
+          if (newWork == Command.GEBE && !appBean.getAnwContext().checkRight(Recht.R_EINGABE)) {
+            // If manual input is selected but is not allowed, try result import
+            newWork = Command.IMPORT_ERGEBNISSE;
+          }
+          if (newWork == Command.IMPORT_ERGEBNISSE && !appBean.getAnwContext().checkRight(Recht.R_IMPORT)) {
+            // If result import is selected but is not allowed, view results
+            newWork = Command.GEB_ERG;
+          }
+
         } else if (gebietInfo.isWahleinheit()) {
           newWork = Command.GEB_ERG; // View results
         }

@@ -16,6 +16,23 @@ import static de.ivu.wahl.Konstanten.PROP_P22_2;
 import static de.ivu.wahl.Konstanten.PROP_P22_2_APPENDIX;
 import static de.ivu.wahl.Konstanten.PROP_U16_D1;
 import static de.ivu.wahl.Konstanten.PROP_UPLOADDIR;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_CHANGE_PW;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_DEL_ANWENDER;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_FREIGABE;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_IMPORT_STIMMBEZIRKE;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_KANDIDATEN_WAEHLBAR;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE_GEW_BEN;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE_P22_1_1;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE_P22_1_APPENDIX_1;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE_P22_2_1;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE_P22_2_APPENDIX_2;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_PROP_EINGABE_U16_1;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_RE_INDEX_DATABASE;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_SAVE_ANWENDER;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_STIMMBEZIRK_ANZAHL;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_STIMMBEZIRK_LOESCHEN;
+import static de.ivu.wahl.client.beans.Action.CMD_ADM_VOTE_VALUES;
 import static de.ivu.wahl.client.beans.ApplicationBean.getAnwContext;
 import static de.ivu.wahl.client.beans.ApplicationBeanKonstanten.PREFIX;
 import static de.ivu.wahl.client.beans.EingabeBean.removeGUI_ErfassungseinheitEingangsNachrichtFromStep;
@@ -73,6 +90,7 @@ import de.ivu.wahl.admin.StateHandling;
 import de.ivu.wahl.anwender.AnwenderException;
 import de.ivu.wahl.anwender.AnwenderHandling;
 import de.ivu.wahl.anwender.AnwenderHandlingBean;
+import de.ivu.wahl.anwender.Rechte;
 import de.ivu.wahl.client.util.ClientHelper;
 import de.ivu.wahl.dataimport.AbstractImportEML.UploadStreamHandler;
 import de.ivu.wahl.eingang.EingangMsg;
@@ -113,11 +131,7 @@ import de.ivu.wahl.wus.reportgen.RgConstants;
  * @author M. Murdfield, P. Kliem
  */
 
-public class AdministrationBean extends RepositoryPropertyHandler
-    implements
-      ExportP5Commands,
-      Executer,
-      Serializable {
+public class AdministrationBean extends RepositoryPropertyHandler implements Executer, Serializable {
 
   private static final long serialVersionUID = -3964303085550216507L;
 
@@ -132,21 +146,6 @@ public class AdministrationBean extends RepositoryPropertyHandler
   private static final String EJB_ANWENDER = "Anwender"; //$NON-NLS-1$
 
   private static final String PREFIX_CMD = "cmd"; //$NON-NLS-1$
-
-  private static final String CMD_ADM_STIMMBEZIRK_LOESCHEN = "adm_Stimmbezirk_loeschen"; //$NON-NLS-1$
-  private static final String CMD_ADM_IMPORT_STIMMBEZIRKE = "adm_import_Stimmbezirke"; //$NON-NLS-1$
-  public static final String CMD_ADM_STIMMBEZIRK_ANZAHL = "adm_Stimmbezirk_anzahl"; //$NON-NLS-1$
-
-  private static final String CMD_ADM_CHANGE_PW = "adm_change_pw"; //$NON-NLS-1$
-  private static final String CMD_ADM_DEL_ANWENDER = "adm_delAnwender"; //$NON-NLS-1$
-  private static final String CMD_ADM_SAVE_ANWENDER = "adm_saveAnwender"; //$NON-NLS-1$
-  private static final String CMD_ADM_WAHL_ZURUECK = "adm_wahlZurueck"; //$NON-NLS-1$
-  private static final String CMD_ADM_PROP_EINGABE = "adm_propEingabe"; //$NON-NLS-1$
-  private static final String CMD_ADM_FREIGABE = "adm_freigabe"; //$NON-NLS-1$
-  public static final String CMD_ADM_RE_INDEX_DATABASE = "adm_re_index_database"; //$NON-NLS-1$
-  private static final String CMD_ADM_SW_EINGABE_ALLG = "adm_swEingabeAllg"; //$NON-NLS-1$
-  public static final String CMD_ADM_KANDIDATEN_WAEHLBAR = "adm_Kandidaten_waehlbar"; //$NON-NLS-1$
-  public static final String CMD_ADM_VOTE_VALUES = "adm_vote_values"; //$NON-NLS-1$
 
   private static final String PARAM_ANW_NEW_PW1 = PREFIX + "anw_new_pw_1"; //$NON-NLS-1$
   private static final String PARAM_ANW_OLD_PW = PREFIX + "anw_old_pw"; //$NON-NLS-1$
@@ -207,65 +206,63 @@ public class AdministrationBean extends RepositoryPropertyHandler
     AnwContext anwContext = getAnwContext(request);
 
     for (ExportP5Type config : ExportP5Type.values()) {
-      if (cmd.equals(config.getExportCommand())) {
+      if (checkRights(config.getExportAction(), anwContext, cmd)) {
         exportP5(request, config);
         return;
       }
     }
 
-    if (CMD_ADM_KANDIDATEN_WAEHLBAR.equals(cmd)) {
+    if (checkRights(CMD_ADM_KANDIDATEN_WAEHLBAR, anwContext, cmd)) {
       // Eingabe von verstorbenen Kandidaten
       handleKandidatenWaehlbar(request);
-    } else if (CMD_ADM_VOTE_VALUES.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_VOTE_VALUES, anwContext, cmd)) {
       // Eingabe von Stimmgewichten
       handleVoteValues(request);
-    } else if (CMD_ADM_SW_EINGABE_ALLG.equals(cmd)) {
-      // Eingabe von allgemeinen Schwellwerten
-      handleSWEingabeAllg(request);
-    } else if (CMD_ADM_FREIGABE.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_FREIGABE, anwContext, cmd)) {
       // Freigeben der aktuellen Wahl
       handleFreigabe(request);
-    } else if (CMD_ADM_RE_INDEX_DATABASE.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_RE_INDEX_DATABASE, anwContext, cmd)) {
       reIndexStimmergebnis(request);
-    } else if (CMD_ADM_PROP_EINGABE.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE, anwContext, cmd)) {
       // Eingabe von Properties
       handlePropEingabeAllg(request);
-    } else if (CMD_ADM_WAHL_ZURUECK.equals(cmd)) {
-      // Alle Wahl f�r die aktuelle Wahlergebnisart zur�cksetzen
-      wahlZuruecksetzen(request);
-    } else if (CMD_ADM_SAVE_ANWENDER.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_SAVE_ANWENDER, anwContext, cmd)) {
       // Anwenderdaten speichern
       saveAnwender(request);
-    } else if (CMD_ADM_DEL_ANWENDER.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_DEL_ANWENDER, anwContext, cmd)) {
       // Anwenderdaten speichern
       deleteAnwender(request.getParameter(PARAM_ANW_ID_USER), anwContext);
-    } else if (CMD_ADM_CHANGE_PW.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_CHANGE_PW, anwContext, cmd)) {
       // Anwenderdaten speichern
       changePassword(request);
 
       // Eingabe von Properties f�r Exporte
-    } else if (CMD_ADM_PROP_EINGABE_P22_1_1.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE_P22_1_1, anwContext, cmd)) {
       handleProp(ExportP5Type.P22_1, PROP_P22_1_D1, request);
-    } else if (CMD_ADM_PROP_EINGABE_P22_2_1.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE_P22_2_1, anwContext, cmd)) {
       handleProp(ExportP5Type.P22_2, PROP_P22_2, request);
-    } else if (CMD_ADM_PROP_EINGABE_U16_1.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE_U16_1, anwContext, cmd)) {
       handleProp(ExportP5Type.U16, PROP_U16_D1, request);
-    } else if (CMD_ADM_PROP_EINGABE_P22_1_APPENDIX_1.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE_P22_1_APPENDIX_1, anwContext, cmd)) {
       handleProp(ExportP5Type.P22_1_APPENDIX, PROP_P22_1_APPENDIX, request);
-    } else if (CMD_ADM_PROP_EINGABE_P22_2_APPENDIX_2.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE_P22_2_APPENDIX_2, anwContext, cmd)) {
       handleProp(ExportP5Type.P22_2_APPENDIX, PROP_P22_2_APPENDIX, request);
-    } else if (CMD_ADM_PROP_EINGABE_GEW_BEN.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_PROP_EINGABE_GEW_BEN, anwContext, cmd)) {
       handleProp(ExportP5Type.KAN_BEN, PROP_BENACHRICHTIGUNG_GEWAEHLTE, request);
 
-    } else if (CMD_ADM_STIMMBEZIRK_ANZAHL.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_STIMMBEZIRK_ANZAHL, anwContext, cmd)) {
       createStimmbezirke(request);
-    } else if (CMD_ADM_IMPORT_STIMMBEZIRKE.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_IMPORT_STIMMBEZIRKE, anwContext, cmd)) {
       readStimmbezirke(request);
-    } else if (CMD_ADM_STIMMBEZIRK_LOESCHEN.equals(cmd)) {
+    } else if (checkRights(CMD_ADM_STIMMBEZIRK_LOESCHEN, anwContext, cmd)) {
       deleteStimmbezirk(request);
     } else {
       throw new RuntimeException(Messages.bind(MessageKeys.Error_Command_0_Unknown, cmd));
     }
+  }
+
+  private boolean checkRights(Action action, AnwContext anwContext, String cmd) {
+    return new RightsChecker().checkRights(action, anwContext, cmd);
   }
 
   /**
@@ -909,6 +906,12 @@ public class AdministrationBean extends RepositoryPropertyHandler
           if ("true".equals(request.getParameter(PREFIX + id_Rechtegruppe))) { //$NON-NLS-1$
             zukuenftigeAnwRechte.add(id_Rechtegruppe);
           }
+        }
+
+        if (zukuenftigeAnwRechte.contains(Rechte.RG_ADMIN)
+            && zukuenftigeAnwRechte.contains(Rechte.RG_ANWENDER)) {
+          zukuenftigeAnwRechte.remove(Rechte.RG_ANWENDER);
+          _adminMsg = Messages.getString(MessageKeys.Msg_AdminCannotBeAnwender);
         }
 
         boolean modify = false;
